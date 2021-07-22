@@ -7,5 +7,9 @@ build/*
 deploy/*
 modules/*/build/*
 .idea/*
+!/.idea/codeStyles
+/.idea/codeStyles/*
+!/.idea/codeStyles/Project.xml
+!/.idea/codeStyles/codeStyleConfig.xml
 out
 test-run
