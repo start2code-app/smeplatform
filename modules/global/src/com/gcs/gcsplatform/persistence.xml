@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
     <persistence-unit name="gcsplatform" transaction-type="RESOURCE_LOCAL">
-
+        <class>com.gcs.gcsplatform.entity.trade.Trade</class>
+        <class>com.gcs.gcsplatform.entity.trade.OpenedTrade</class>
+        <class>com.gcs.gcsplatform.entity.trade.ClosedTrade</class>
+        <class>com.gcs.gcsplatform.entity.trade.LiveTrade</class>
+        <class>com.gcs.gcsplatform.entity.trade.CallOptionTrade</class>
     </persistence-unit>
 </persistence>
