@@ -32,8 +32,8 @@ public class Counterparty extends BaseIntIdentityIdEntity {
     @Column(name = "`Address4`", length = 50)
     private String address4;
 
-    @Column(name = "biiling_name", length = 50)
-    private String biilingName;
+    @Column(name = "billing_name", length = 50)
+    private String billingName;
 
     @Column(name = "billing_companyname", length = 50)
     private String billingCompanyname;
@@ -321,12 +321,12 @@ public class Counterparty extends BaseIntIdentityIdEntity {
         this.billingCompanyname = billingCompanyname;
     }
 
-    public String getBiilingName() {
-        return biilingName;
+    public String getBillingName() {
+        return billingName;
     }
 
-    public void setBiilingName(String biilingName) {
-        this.biilingName = biilingName;
+    public void setBillingName(String billingName) {
+        this.billingName = billingName;
     }
 
     public String getAddress4() {
