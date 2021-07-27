@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://counterpartyEdit.caption"
+        focusComponent="form"
+        messagesPack="com.gcs.gcsplatform.web.screens.counterparty">
+    <data>
+        <instance id="counterpartyDc"
+                  class="com.gcs.gcsplatform.entity.masterdata.Counterparty">
+            <view extends="_local"/>
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="scrollBox"
+            spacing="true">
+        <scrollBox id="scrollBox"
+                   spacing="true">
+            <form id="form"
+                  dataContainer="counterpartyDc">
+                <column width="350px">
+                    <textField id="nameField"
+                               property="name"/>
+                    <textField id="activeField"
+                               property="active"/>
+                    <textField id="address1Field"
+                               property="address1"/>
+                    <textField id="address2Field"
+                               property="address2"/>
+                    <textField id="address3Field"
+                               property="address3"/>
+                    <textField id="address4Field"
+                               property="address4"/>
+                    <textField id="biilingNameField"
+                               property="biilingName"/>
+                    <textField id="billingCompanynameField"
+                               property="billingCompanyname"/>
+                    <textField id="billingCountryField"
+                               property="billingCountry"/>
+                    <textField id="billingInfo1Field"
+                               property="billingInfo1"/>
+                    <textField id="billingInfo2Field"
+                               property="billingInfo2"/>
+                    <textField id="billingInfo3Field"
+                               property="billingInfo3"/>
+                    <textField id="contactNameField"
+                               property="contactName"/>
+                    <textField id="descriptionField"
+                               property="description"/>
+                    <textField id="emailField"
+                               property="email"/>
+                    <textField id="email1Field"
+                               property="email1"/>
+                    <textField id="email2Field"
+                               property="email2"/>
+                    <textField id="gcAbsField"
+                               property="gcAbs"/>
+                    <textField id="gcCorpField"
+                               property="gcCorp"/>
+                    <textField id="gcEgbField"
+                               property="gcEgb"/>
+                    <textField id="gcEgbpigsField"
+                               property="gcEgbpigs"/>
+                    <textField id="gcEmField"
+                               property="gcEm"/>
+                    <textField id="gcGiltField"
+                               property="gcGilt"/>
+                    <textField id="gcSsaField"
+                               property="gcSsa"/>
+                    <textField id="gcUstField"
+                               property="gcUst"/>
+                    <textField id="specAbsField"
+                               property="specAbs"/>
+                    <textField id="specCorpField"
+                               property="specCorp"/>
+                    <textField id="specEgbField"
+                               property="specEgb"/>
+                    <textField id="specEgbpigsField"
+                               property="specEgbpigs"/>
+                    <textField id="specEmField"
+                               property="specEm"/>
+                    <textField id="specGiltField"
+                               property="specGilt"/>
+                    <textField id="specSsaField"
+                               property="specSsa"/>
+                    <textField id="specUstField"
+                               property="specUst"/>
+                </column>
+            </form>
+        </scrollBox>
+        <hbox id="editActions"
+              spacing="true">
+            <button id="commitAndCloseBtn"
+                    action="windowCommitAndClose"/>
+            <button id="closeBtn"
+                    action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

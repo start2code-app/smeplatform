@@ -1,4 +1,4 @@
-package com.gcs.gcsplatform.web.screens;
+package com.gcs.gcsplatform.web.screens.loginscreen;
 
 import com.haulmont.cuba.gui.Route;
 import com.haulmont.cuba.gui.components.Action;

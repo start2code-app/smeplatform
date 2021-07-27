@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://dealerEdit.caption"
+        focusComponent="form"
+        messagesPack="com.gcs.gcsplatform.web.screens.dealer">
+    <data>
+        <instance id="dealerDc"
+                  class="com.gcs.gcsplatform.entity.masterdata.Dealer">
+            <view extends="_local"/>
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions"
+            spacing="true">
+        <form id="form"
+              dataContainer="dealerDc">
+            <column width="350px">
+                <textField id="dealerField"
+                           property="dealer"/>
+                <textField id="activeField"
+                           property="active"/>
+                <textField id="adminField"
+                           property="admin"/>
+                <textField id="applicationField"
+                           property="application"/>
+                <textField id="dealerNameField"
+                           property="dealerName"/>
+                <textField id="passwordField"
+                           property="password"/>
+                <textField id="sheetField"
+                           property="sheet"/>
+                <textField id="sheetNewField"
+                           property="sheetNew"/>
+            </column>
+        </form>
+        <hbox id="editActions"
+              spacing="true">
+            <button id="commitAndCloseBtn"
+                    action="windowCommitAndClose"/>
+            <button id="closeBtn"
+                    action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://counterpartyBrowse.caption"
+        focusComponent="counterpartiesTable"
+        messagesPack="com.gcs.gcsplatform.web.screens.counterparty">
+    <data readOnly="true">
+        <collection id="counterpartiesDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.Counterparty">
+            <view extends="_local"/>
+            <loader id="counterpartiesDl">
+                <query>
+                    <![CDATA[select e from gcsplatform_Counterparty e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="counterpartiesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="counterpartiesTable"
+                dataLoader="counterpartiesDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="counterpartiesTable"
+                    width="100%"
+                    dataContainer="counterpartiesDc">
+            <actions>
+                <action id="create"
+                        type="create"/>
+                <action id="edit"
+                        type="edit"/>
+                <action id="remove"
+                        type="remove"/>
+            </actions>
+            <columns>
+                <column id="name"/>
+                <column id="active"/>
+                <column id="address1"/>
+                <column id="address2"/>
+                <column id="address3"/>
+                <column id="address4"/>
+                <column id="biilingName"/>
+                <column id="billingCompanyname"/>
+                <column id="billingCountry"/>
+                <column id="billingInfo1"/>
+                <column id="billingInfo2"/>
+                <column id="billingInfo3"/>
+                <column id="contactName"/>
+                <column id="description"/>
+                <column id="email"/>
+                <column id="email1"/>
+                <column id="email2"/>
+                <column id="gcAbs"/>
+                <column id="gcCorp"/>
+                <column id="gcEgb"/>
+                <column id="gcEgbpigs"/>
+                <column id="gcEm"/>
+                <column id="gcGilt"/>
+                <column id="gcSsa"/>
+                <column id="gcUst"/>
+                <column id="specAbs"/>
+                <column id="specCorp"/>
+                <column id="specEgb"/>
+                <column id="specEgbpigs"/>
+                <column id="specEm"/>
+                <column id="specGilt"/>
+                <column id="specSsa"/>
+                <column id="specUst"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="counterpartiesTable.create"/>
+                <button id="editBtn"
+                        action="counterpartiesTable.edit"/>
+                <button id="removeBtn"
+                        action="counterpartiesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions"
+              spacing="true"
+              visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

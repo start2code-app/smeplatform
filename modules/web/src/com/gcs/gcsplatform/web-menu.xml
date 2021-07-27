@@ -11,6 +11,12 @@
     <menu id="application-masterdata"
           caption="mainMsg://menu_config.application-masterdata"
           icon="DATABASE">
+        <item screen="gcsplatform_Counterparty.browse"
+              caption="mainMsg://menu_config.gcsplatform_Counterparty.browse"/>
+        <item screen="gcsplatform_Agent.browse"
+              caption="mainMsg://menu_config.gcsplatform_Agent.browse"/>
+        <item screen="gcsplatform_Dealer.browse"
+              caption="mainMsg://menu_config.gcsplatform_Dealer.browse"/>
     </menu>
     <menu id="administration"
           icon="COG">

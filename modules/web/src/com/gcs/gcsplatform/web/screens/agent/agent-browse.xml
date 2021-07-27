@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://agentBrowse.caption"
+        focusComponent="agentsTable"
+        messagesPack="com.gcs.gcsplatform.web.screens.agent">
+    <data readOnly="true">
+        <collection id="agentsDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.Agent">
+            <view extends="_local">
+                <property name="counterparty"
+                          view="_minimal"/>
+            </view>
+            <loader id="agentsDl">
+                <query>
+                    <![CDATA[select e from gcsplatform_Agent e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="agentsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="agentsTable"
+                dataLoader="agentsDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="agentsTable"
+                    width="100%"
+                    dataContainer="agentsDc">
+            <actions>
+                <action id="create"
+                        type="create"/>
+                <action id="edit"
+                        type="edit"/>
+                <action id="remove"
+                        type="remove"/>
+            </actions>
+            <columns>
+                <column id="counterparty"/>
+                <column id="agentName"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="agentsTable.create"/>
+                <button id="editBtn"
+                        action="agentsTable.edit"/>
+                <button id="removeBtn"
+                        action="agentsTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions"
+              spacing="true"
+              visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>
