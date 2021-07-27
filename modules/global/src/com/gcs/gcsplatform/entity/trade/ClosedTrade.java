@@ -6,4 +6,6 @@ import javax.persistence.Table;
 @Table(name = "closedtrade") // TODO: Add prefix to table name
 @Entity(name = "gcsplatform_ClosedTrade")
 public class ClosedTrade extends Trade {
+
+    private static final long serialVersionUID = -5997009543405135818L;
 }
