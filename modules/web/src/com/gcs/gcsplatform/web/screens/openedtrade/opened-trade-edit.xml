@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://openedTradeEdit.caption"
+        focusComponent="form"
+        messagesPack="com.gcs.gcsplatform.web.screens.openedtrade">
+    <data>
+        <instance id="openedTradeDc"
+                  class="com.gcs.gcsplatform.entity.trade.OpenedTrade">
+            <view extends="_local"/>
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="scrollBox"
+            spacing="true">
+        <scrollBox id="scrollBox"
+                   spacing="true">
+            <form id="form"
+                  dataContainer="openedTradeDc">
+                <column width="350px">
+                    <textField id="bondDescriptionField"
+                               property="bondDescription"/>
+                    <checkBox id="brooverideField"
+                              property="brooveride"/>
+                    <textField id="buybrokerField"
+                               property="buybroker"/>
+                    <textField id="buybrokerageField"
+                               property="buybrokerage"/>
+                    <textField id="buyerField"
+                               property="buyer"/>
+                    <textField id="buyerAgentField"
+                               property="buyerAgent"/>
+                    <textField id="calloptionField"
+                               property="calloption"/>
+                    <textField id="categoryField"
+                               property="category"/>
+                    <textField id="cpair1Field"
+                               property="cpair1"/>
+                    <textField id="cpair2Field"
+                               property="cpair2"/>
+                    <textField id="cpair3Field"
+                               property="cpair3"/>
+                    <dateField id="createdField"
+                               property="created"/>
+                    <textField id="currencyField"
+                               property="currency"/>
+                    <textField id="gbpEquivalentField"
+                               property="gbpEquivalent"/>
+                    <checkBox id="gcField"
+                              property="gc"/>
+                    <textField id="hairCutField"
+                               property="hairCut"/>
+                    <textField id="isinField"
+                               property="isin"/>
+                    <dateField id="maturityDateField"
+                               property="maturityDate"/>
+                    <textField id="nominalField"
+                               property="nominal"/>
+                    <textField id="notesField"
+                               property="notes"/>
+                    <textField id="numdaysField"
+                               property="numdays"/>
+                    <textField id="origtraderefField"
+                               property="origtraderef"/>
+                    <textField id="repoRateField"
+                               property="repoRate"/>
+                    <textField id="sellbrokerField"
+                               property="sellbroker"/>
+                    <textField id="sellbrokerageField"
+                               property="sellbrokerage"/>
+                    <textField id="sellerField"
+                               property="seller"/>
+                    <textField id="sellerAgentField"
+                               property="sellerAgent"/>
+                    <checkBox id="specialField"
+                              property="special"/>
+                    <textField id="startPriceField"
+                               property="startPrice"/>
+                    <textField id="statusField"
+                               property="status"/>
+                    <checkBox id="subsField"
+                              property="subs"/>
+                    <textField id="tradeCurrencyField"
+                               property="tradeCurrency"/>
+                    <dateField id="tradeDateField"
+                               property="tradeDate"/>
+                    <textField id="traderefField"
+                               property="traderef"/>
+                    <dateField id="updatedOnField"
+                               property="updatedOn"/>
+                    <textField id="utiField"
+                               property="uti"/>
+                    <dateField id="valueDateField"
+                               property="valueDate"/>
+                    <textField id="xrate1Field"
+                               property="xrate1"/>
+                    <textField id="xrate2Field"
+                               property="xrate2"/>
+                    <textField id="xrate3Field"
+                               property="xrate3"/>
+                </column>
+            </form>
+        </scrollBox>
+        <hbox id="editActions"
+              spacing="true">
+            <button id="commitAndCloseBtn"
+                    action="windowCommitAndClose"/>
+            <button id="closeBtn"
+                    action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

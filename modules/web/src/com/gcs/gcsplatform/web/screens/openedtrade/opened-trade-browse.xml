@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://openedTradeBrowse.caption"
+        focusComponent="openedTradesTable"
+        messagesPack="com.gcs.gcsplatform.web.screens.openedtrade">
+    <data readOnly="true">
+        <collection id="openedTradesDc"
+                    class="com.gcs.gcsplatform.entity.trade.OpenedTrade">
+            <view extends="_local"/>
+            <loader id="openedTradesDl">
+                <query>
+                    <![CDATA[select e from gcsplatform_OpenedTrade e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="openedTradesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="openedTradesTable"
+                dataLoader="openedTradesDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="openedTradesTable"
+                    width="100%"
+                    dataContainer="openedTradesDc">
+            <actions>
+                <action id="create"
+                        type="create"/>
+                <action id="edit"
+                        type="edit"/>
+                <action id="remove"
+                        type="remove"/>
+            </actions>
+            <columns>
+                <column id="bondDescription"/>
+                <column id="brooveride"/>
+                <column id="buybroker"/>
+                <column id="buybrokerage"/>
+                <column id="buyer"/>
+                <column id="buyerAgent"/>
+                <column id="calloption"/>
+                <column id="category"/>
+                <column id="cpair1"/>
+                <column id="cpair2"/>
+                <column id="cpair3"/>
+                <column id="created"/>
+                <column id="currency"/>
+                <column id="gbpEquivalent"/>
+                <column id="gc"/>
+                <column id="hairCut"/>
+                <column id="isin"/>
+                <column id="maturityDate"/>
+                <column id="nominal"/>
+                <column id="notes"/>
+                <column id="numdays"/>
+                <column id="origtraderef"/>
+                <column id="repoRate"/>
+                <column id="sellbroker"/>
+                <column id="sellbrokerage"/>
+                <column id="seller"/>
+                <column id="sellerAgent"/>
+                <column id="special"/>
+                <column id="startPrice"/>
+                <column id="status"/>
+                <column id="subs"/>
+                <column id="tradeCurrency"/>
+                <column id="tradeDate"/>
+                <column id="traderef"/>
+                <column id="updatedOn"/>
+                <column id="uti"/>
+                <column id="valueDate"/>
+                <column id="xrate1"/>
+                <column id="xrate2"/>
+                <column id="xrate3"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="openedTradesTable.create"/>
+                <button id="editBtn"
+                        action="openedTradesTable.edit"/>
+                <button id="removeBtn"
+                        action="openedTradesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions"
+              spacing="true"
+              visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

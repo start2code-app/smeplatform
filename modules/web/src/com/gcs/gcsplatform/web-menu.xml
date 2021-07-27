@@ -3,6 +3,10 @@
     <menu id="application-trades"
           caption="mainMsg://menu_config.application-trades"
           icon="font-icon:LINE_CHART">
+        <item screen="gcsplatform_OpenedTrade.browse"
+              caption="mainMsg://menu_config.gcsplatform_OpenedTrade.browse"/>
+        <item screen="gcsplatform_ClosedTrade.browse"
+              caption="mainMsg://menu_config.gcsplatform_ClosedTrade.browse"/>
     </menu>
     <menu id="application-invoicing"
           caption="mainMsg://menu_config.application-invoicing"
