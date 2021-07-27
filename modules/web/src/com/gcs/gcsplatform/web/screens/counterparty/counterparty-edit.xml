@@ -31,10 +31,10 @@
                                property="address3"/>
                     <textField id="address4Field"
                                property="address4"/>
-                    <textField id="biilingNameField"
-                               property="biilingName"/>
+                    <textField id="billingNameField"
+                               property="billingName"/>
                     <textField id="billingCompanynameField"
-                               property="billingCompanyname"/>
+                               property="billingCompanyName"/>
                     <textField id="billingCountryField"
                                property="billingCountry"/>
                     <textField id="billingInfo1Field"

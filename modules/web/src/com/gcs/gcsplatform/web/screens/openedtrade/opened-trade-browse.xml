@@ -7,7 +7,9 @@
     <data readOnly="true">
         <collection id="openedTradesDc"
                     class="com.gcs.gcsplatform.entity.trade.OpenedTrade">
-            <view extends="_local"/>
+            <view extends="_local">
+                <property name="trade" view="_local"/>
+            </view>
             <loader id="openedTradesDl">
                 <query>
                     <![CDATA[select e from gcsplatform_OpenedTrade e]]>
@@ -36,46 +38,46 @@
                         type="remove"/>
             </actions>
             <columns>
-                <column id="bondDescription"/>
-                <column id="brooveride"/>
-                <column id="buybroker"/>
-                <column id="buybrokerage"/>
-                <column id="buyer"/>
-                <column id="buyerAgent"/>
-                <column id="calloption"/>
-                <column id="category"/>
-                <column id="cpair1"/>
-                <column id="cpair2"/>
-                <column id="cpair3"/>
-                <column id="created"/>
-                <column id="currency"/>
-                <column id="gbpEquivalent"/>
-                <column id="gc"/>
-                <column id="hairCut"/>
-                <column id="isin"/>
-                <column id="maturityDate"/>
-                <column id="nominal"/>
-                <column id="notes"/>
-                <column id="numdays"/>
-                <column id="origtraderef"/>
-                <column id="repoRate"/>
-                <column id="sellbroker"/>
-                <column id="sellbrokerage"/>
-                <column id="seller"/>
-                <column id="sellerAgent"/>
-                <column id="special"/>
-                <column id="startPrice"/>
-                <column id="status"/>
-                <column id="subs"/>
-                <column id="tradeCurrency"/>
-                <column id="tradeDate"/>
-                <column id="traderef"/>
-                <column id="updatedOn"/>
-                <column id="uti"/>
-                <column id="valueDate"/>
-                <column id="xrate1"/>
-                <column id="xrate2"/>
-                <column id="xrate3"/>
+                <column id="trade.bondDescription"/>
+                <column id="trade.brooveride"/>
+                <column id="trade.buybroker"/>
+                <column id="trade.buybrokerage"/>
+                <column id="trade.buyer"/>
+                <column id="trade.buyerAgent"/>
+                <column id="trade.calloption"/>
+                <column id="trade.category"/>
+                <column id="trade.cpair1"/>
+                <column id="trade.cpair2"/>
+                <column id="trade.cpair3"/>
+                <column id="trade.created"/>
+                <column id="trade.currency"/>
+                <column id="trade.gbpEquivalent"/>
+                <column id="trade.gc"/>
+                <column id="trade.hairCut"/>
+                <column id="trade.isin"/>
+                <column id="trade.maturityDate"/>
+                <column id="trade.nominal"/>
+                <column id="trade.notes"/>
+                <column id="trade.numdays"/>
+                <column id="trade.origtraderef"/>
+                <column id="trade.repoRate"/>
+                <column id="trade.sellbroker"/>
+                <column id="trade.sellbrokerage"/>
+                <column id="trade.seller"/>
+                <column id="trade.sellerAgent"/>
+                <column id="trade.special"/>
+                <column id="trade.startPrice"/>
+                <column id="trade.status"/>
+                <column id="trade.subs"/>
+                <column id="trade.tradeCurrency"/>
+                <column id="trade.tradeDate"/>
+                <column id="trade.traderef"/>
+                <column id="trade.updatedOn"/>
+                <column id="trade.uti"/>
+                <column id="trade.valueDate"/>
+                <column id="trade.xrate1"/>
+                <column id="trade.xrate2"/>
+                <column id="trade.xrate3"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"

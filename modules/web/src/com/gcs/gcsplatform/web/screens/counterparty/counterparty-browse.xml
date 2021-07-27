@@ -43,7 +43,7 @@
                 <column id="address3"/>
                 <column id="address4"/>
                 <column id="biilingName"/>
-                <column id="billingCompanyname"/>
+                <column id="billingCompanyName"/>
                 <column id="billingCountry"/>
                 <column id="billingInfo1"/>
                 <column id="billingInfo2"/>

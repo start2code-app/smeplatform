@@ -7,5 +7,16 @@
     <context:component-scan base-package="com.gcs.gcsplatform"/>
     
     <gui:screens base-packages="com.gcs.gcsplatform.web"/>
+    <bean id="gcsplatform_proxyCreator"
+          class="com.haulmont.cuba.web.sys.remoting.WebRemoteProxyBeanCreator">
+        <property name="serverSelector"
+                  ref="cuba_ServerSelector"/>
+        <property name="remoteServices">
+            <map>
+                <entry key="gcsplatform_CloseTradeService"
+                       value="com.gcs.gcsplatform.service.CloseTradeService"/>
+            </map>
+        </property>
+    </bean>
 
 </beans>

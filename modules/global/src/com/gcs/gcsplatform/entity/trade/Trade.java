@@ -2,21 +2,18 @@ package com.gcs.gcsplatform.entity.trade;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.haulmont.chile.core.annotations.MetaClass;
 import com.haulmont.chile.core.annotations.NumberFormat;
-import com.haulmont.cuba.core.entity.BaseIntIdentityIdEntity;
+import com.haulmont.cuba.core.entity.EmbeddableEntity;
 
-@MappedSuperclass
-@AttributeOverrides({
-        @AttributeOverride(name = "id", column = @Column(name = "TRADE_ID"))
-})
-public abstract class Trade extends BaseIntIdentityIdEntity {
+@MetaClass(name = "gcsplatform_Trade")
+@Embeddable
+public class Trade extends EmbeddableEntity {
 
     private static final long serialVersionUID = -5968057577009538611L;
 
