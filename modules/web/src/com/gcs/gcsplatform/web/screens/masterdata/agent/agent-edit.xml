@@ -2,7 +2,7 @@
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://agentEdit.caption"
         focusComponent="form"
-        messagesPack="com.gcs.gcsplatform.web.screens.agent">
+        messagesPack="com.gcs.gcsplatform.web.screens.masterdata.agent">
     <data>
         <instance id="agentDc"
                   class="com.gcs.gcsplatform.entity.masterdata.Agent">

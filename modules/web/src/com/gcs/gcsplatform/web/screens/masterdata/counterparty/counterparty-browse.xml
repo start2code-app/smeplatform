@@ -3,7 +3,7 @@
         xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
         caption="msg://counterpartyBrowse.caption"
         focusComponent="counterpartiesTable"
-        messagesPack="com.gcs.gcsplatform.web.screens.counterparty">
+        messagesPack="com.gcs.gcsplatform.web.screens.masterdata.counterparty">
     <data readOnly="true">
         <collection id="counterpartiesDc"
                     class="com.gcs.gcsplatform.entity.masterdata.Counterparty">

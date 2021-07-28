@@ -1,36 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
-        caption="msg://openedTradeBrowse.caption"
-        focusComponent="openedTradesTable"
-        messagesPack="com.gcs.gcsplatform.web.screens.openedtrade">
+        caption="msg://closedTradeBrowse.caption"
+        focusComponent="closedTradesTable"
+        messagesPack="com.gcs.gcsplatform.web.screens.trade.closedtrade">
     <data readOnly="true">
-        <collection id="openedTradesDc"
-                    class="com.gcs.gcsplatform.entity.trade.OpenedTrade">
+        <collection id="closedTradesDc"
+                    class="com.gcs.gcsplatform.entity.trade.ClosedTrade">
             <view extends="_local">
                 <property name="trade" view="_local"/>
             </view>
-            <loader id="openedTradesDl">
-                <query><![CDATA[
-                    select e from gcsplatform_OpenedTrade e
-                    where e.trade.status = 'OPEN'
-                    order by e.trade.created]]>
+            <loader id="closedTradesDl">
+                <query>
+                    <![CDATA[select e from gcsplatform_ClosedTrade e]]>
                 </query>
             </loader>
         </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="openedTradesTable"
+    <layout expand="closedTradesTable"
             spacing="true">
         <filter id="filter"
-                applyTo="openedTradesTable"
-                dataLoader="openedTradesDl">
+                applyTo="closedTradesTable"
+                dataLoader="closedTradesDl">
             <properties include=".*"/>
         </filter>
-        <groupTable id="openedTradesTable"
+        <groupTable id="closedTradesTable"
                     width="100%"
-                    dataContainer="openedTradesDc">
+                    dataContainer="closedTradesDc">
             <actions>
                 <action id="create"
                         type="create"/>
@@ -85,11 +83,11 @@
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
                 <button id="createBtn"
-                        action="openedTradesTable.create"/>
+                        action="closedTradesTable.create"/>
                 <button id="editBtn"
-                        action="openedTradesTable.edit"/>
+                        action="closedTradesTable.edit"/>
                 <button id="removeBtn"
-                        action="openedTradesTable.remove"/>
+                        action="closedTradesTable.remove"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions"

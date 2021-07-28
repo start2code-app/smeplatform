@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://openedTradeEdit.caption"
+        messagesPack="com.gcs.gcsplatform.web.screens.trade.openedtrade"
+        extends="com/gcs/gcsplatform/web/screens/trade/tradecontainer/trade-container-edit.xml">
+    <data>
+        <instance id="tradeContainerDc"
+                  class="com.gcs.gcsplatform.entity.trade.OpenedTrade">
+        </instance>
+    </data>
+    <layout>
+        <hbox id="editActions">
+            <button id="closeReopenTradeBtn"
+                    icon="font-icon:CLOSE"
+                    stylename="danger"
+                    caption="msg://closeReopenTradeBtn.caption"/>
+            <button id="closeTradeBtn"
+                    icon="font-icon:CLOSE"
+                    stylename="danger"
+                    caption="msg://closeTradeBtn.caption"/>
+        </hbox>
+    </layout>
+</window>

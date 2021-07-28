@@ -1,4 +1,4 @@
-package com.gcs.gcsplatform.web.screens.dealer;
+package com.gcs.gcsplatform.web.screens.masterdata.dealer;
 
 import com.haulmont.cuba.gui.screen.*;
 import com.gcs.gcsplatform.entity.masterdata.Dealer;

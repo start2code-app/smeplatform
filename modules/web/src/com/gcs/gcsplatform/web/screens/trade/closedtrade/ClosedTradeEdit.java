@@ -1,4 +1,4 @@
-package com.gcs.gcsplatform.web.screens.closedtrade;
+package com.gcs.gcsplatform.web.screens.trade.closedtrade;
 
 import com.haulmont.cuba.gui.screen.*;
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;

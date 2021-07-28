@@ -1,35 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
-        caption="msg://agentBrowse.caption"
-        focusComponent="agentsTable"
-        messagesPack="com.gcs.gcsplatform.web.screens.agent">
+        caption="msg://dealerBrowse.caption"
+        focusComponent="dealersTable"
+        messagesPack="com.gcs.gcsplatform.web.screens.masterdata.dealer">
     <data readOnly="true">
-        <collection id="agentsDc"
-                    class="com.gcs.gcsplatform.entity.masterdata.Agent">
-            <view extends="_local">
-                <property name="counterparty"
-                          view="_minimal"/>
-            </view>
-            <loader id="agentsDl">
+        <collection id="dealersDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.Dealer">
+            <view extends="_local"/>
+            <loader id="dealersDl">
                 <query>
-                    <![CDATA[select e from gcsplatform_Agent e]]>
+                    <![CDATA[select e from gcsplatform_Dealer e]]>
                 </query>
             </loader>
         </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="agentsTable"
+    <layout expand="dealersTable"
             spacing="true">
         <filter id="filter"
-                applyTo="agentsTable"
-                dataLoader="agentsDl">
+                applyTo="dealersTable"
+                dataLoader="dealersDl">
             <properties include=".*"/>
         </filter>
-        <groupTable id="agentsTable"
+        <groupTable id="dealersTable"
                     width="100%"
-                    dataContainer="agentsDc">
+                    dataContainer="dealersDc">
             <actions>
                 <action id="create"
                         type="create"/>
@@ -39,18 +36,24 @@
                         type="remove"/>
             </actions>
             <columns>
-                <column id="counterparty"/>
-                <column id="agentName"/>
+                <column id="dealer"/>
+                <column id="active"/>
+                <column id="admin"/>
+                <column id="application"/>
+                <column id="dealerName"/>
+                <column id="password"/>
+                <column id="sheet"/>
+                <column id="sheetNew"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
                 <button id="createBtn"
-                        action="agentsTable.create"/>
+                        action="dealersTable.create"/>
                 <button id="editBtn"
-                        action="agentsTable.edit"/>
+                        action="dealersTable.edit"/>
                 <button id="removeBtn"
-                        action="agentsTable.remove"/>
+                        action="dealersTable.remove"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions"
