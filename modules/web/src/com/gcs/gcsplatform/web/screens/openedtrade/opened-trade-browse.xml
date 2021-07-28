@@ -11,8 +11,10 @@
                 <property name="trade" view="_local"/>
             </view>
             <loader id="openedTradesDl">
-                <query>
-                    <![CDATA[select e from gcsplatform_OpenedTrade e]]>
+                <query><![CDATA[
+                    select e from gcsplatform_OpenedTrade e
+                    where e.trade.status = 'OPEN'
+                    order by e.trade.created]]>
                 </query>
             </loader>
         </collection>
