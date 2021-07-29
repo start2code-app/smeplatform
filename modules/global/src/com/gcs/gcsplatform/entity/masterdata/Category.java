@@ -8,14 +8,14 @@ import javax.validation.constraints.NotNull;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
 
-@Table(name = "GCSPLATFORM_BROKERAGE_CATEGORY")
-@Entity(name = "gcsplatform_BrokerageCategory")
+@Table(name = "GCSPLATFORM_CATEGORY")
+@Entity(name = "gcsplatform_Category")
 @NamePattern("%s|category")
-public class BrokerageCategory extends StandardEntity {
+public class Category extends StandardEntity {
 
     private static final long serialVersionUID = 1965203073345136048L;
 
-    @Column(name = "CATEGORY", nullable = false, length = 50)
+    @Column(name = "CATEGORY", nullable = false, unique = true, length = 50)
     @NotNull
     private String category;
 

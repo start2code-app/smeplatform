@@ -18,11 +18,11 @@
                 <query>select e from gcsplatform_Dealer e order by e.dealer</query>
             </loader>
         </collection>
-        <collection id="brokerageCategoryDc"
-                    class="com.gcs.gcsplatform.entity.masterdata.BrokerageCategory">
+        <collection id="categoryDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.Category">
             <view extends="_minimal"/>
-            <loader id="brokerageCategoryDl">
-                <query>select e from gcsplatform_BrokerageCategory e order by e.category</query>
+            <loader id="categoryDl">
+                <query>select e from gcsplatform_Category e order by e.category</query>
             </loader>
         </collection>
     </data>

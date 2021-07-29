@@ -1,32 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
-        caption="msg://brokerageCategoryBrowse.caption"
-        focusComponent="brokerageCategoriesTable"
-        messagesPack="com.gcs.gcsplatform.web.screens.brokeragecategory">
+        caption="msg://counterpartyBrokerageBrowse.caption"
+        focusComponent="counterpartyBrokeragesTable"
+        messagesPack="com.gcs.gcsplatform.web.screens.counterpartybrokerage">
     <data readOnly="true">
-        <collection id="brokerageCategoriesDc"
-                    class="com.gcs.gcsplatform.entity.masterdata.BrokerageCategory">
-            <view extends="_local"/>
-            <loader id="brokerageCategoriesDl">
+        <collection id="counterpartyBrokeragesDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerage">
+            <view extends="_local">
+                <property name="counterparty"
+                          view="_minimal"/>
+                <property name="category"
+                          view="_minimal"/>
+            </view>
+            <loader id="counterpartyBrokeragesDl">
                 <query>
-                    <![CDATA[select e from gcsplatform_BrokerageCategory e]]>
+                    <![CDATA[select e from gcsplatform_CounterpartyBrokerage e]]>
                 </query>
             </loader>
         </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="brokerageCategoriesTable"
+    <layout expand="counterpartyBrokeragesTable"
             spacing="true">
         <filter id="filter"
-                applyTo="brokerageCategoriesTable"
-                dataLoader="brokerageCategoriesDl">
+                applyTo="counterpartyBrokeragesTable"
+                dataLoader="counterpartyBrokeragesDl">
             <properties include=".*"/>
         </filter>
-        <groupTable id="brokerageCategoriesTable"
+        <groupTable id="counterpartyBrokeragesTable"
                     width="100%"
-                    dataContainer="brokerageCategoriesDc">
+                    dataContainer="counterpartyBrokeragesDc">
             <actions>
                 <action id="create"
                         type="create"/>
@@ -36,17 +41,20 @@
                         type="remove"/>
             </actions>
             <columns>
+                <column id="counterparty"/>
                 <column id="category"/>
+                <column id="brokerageValue"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
                 <button id="createBtn"
-                        action="brokerageCategoriesTable.create"/>
+                        action="counterpartyBrokeragesTable.create"/>
                 <button id="editBtn"
-                        action="brokerageCategoriesTable.edit"/>
+                        action="counterpartyBrokeragesTable.edit"/>
                 <button id="removeBtn"
-                        action="brokerageCategoriesTable.remove"/>
+                        action="counterpartyBrokeragesTable.remove"/>
+                <button id="test"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions"

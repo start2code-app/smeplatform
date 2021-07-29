@@ -62,8 +62,8 @@ create table GCSPLATFORM_AGENT (
     primary key (ID)
 )^
 -- end GCSPLATFORM_AGENT
--- begin GCSPLATFORM_BROKERAGE_CATEGORY
-create table GCSPLATFORM_BROKERAGE_CATEGORY (
+-- begin GCSPLATFORM_CATEGORY
+create table GCSPLATFORM_CATEGORY (
     ID varchar(32),
     VERSION integer not null,
     CREATE_TS datetime(3),
@@ -77,7 +77,7 @@ create table GCSPLATFORM_BROKERAGE_CATEGORY (
     --
     primary key (ID)
 )^
--- end GCSPLATFORM_BROKERAGE_CATEGORY
+-- end GCSPLATFORM_CATEGORY
 -- begin GCSPLATFORM_DEALER
 create table GCSPLATFORM_DEALER (
     ID varchar(32),
@@ -287,3 +287,22 @@ create table opentrade (
     primary key (TRADE_ID)
 )^
 -- end OPENTRADE
+-- begin GCSPLATFORM_COUNTERPARTY_BROKERAGE
+create table GCSPLATFORM_COUNTERPARTY_BROKERAGE (
+    ID varchar(32),
+    VERSION integer not null,
+    CREATE_TS datetime(3),
+    CREATED_BY varchar(50),
+    UPDATE_TS datetime(3),
+    UPDATED_BY varchar(50),
+    DELETE_TS datetime(3),
+    DELETED_BY varchar(50),
+    --
+    COUNTERPARTY_ID varchar(32) not null,
+    CATEGORY_ID varchar(32) not null,
+    BROKERAGE_VALUE decimal(19, 2) not null,
+    BROKERAGE_TYPE varchar(50) not null,
+    --
+    primary key (ID)
+)^
+-- end GCSPLATFORM_COUNTERPARTY_BROKERAGE

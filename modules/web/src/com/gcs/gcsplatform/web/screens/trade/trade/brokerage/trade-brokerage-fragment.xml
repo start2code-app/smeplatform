@@ -4,22 +4,22 @@
         <instance id="tradeDc"
                   class="com.gcs.gcsplatform.entity.trade.Trade"
                   provided="true"/>
-        <collection id="brokerageCategoryDc"
-                    class="com.gcs.gcsplatform.entity.masterdata.BrokerageCategory"
+        <collection id="categoryDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.Category"
                     provided="true"/>
     </data>
     <layout>
         <form id="brokerageForm"
               dataContainer="tradeDc">
-            <checkBox id="gcField"
+            <checkBox id="gcCheckBox"
                       property="gc"/>
-            <checkBox id="specialField"
+            <checkBox id="specialCheckBox"
                       property="special"/>
-            <checkBox id="brooverideField"
+            <checkBox id="brooverideCheckBox"
                       property="brooveride"/>
-            <lookupPickerField id="brokerageCategoryLookupPickerField"
+            <lookupPickerField id="categoryLookupPickerField"
                                caption="msg://com.gcs.gcsplatform.entity.trade/Trade.category"
-                               optionsContainer="brokerageCategoryDc">
+                               optionsContainer="categoryDc">
                 <actions>
                     <action id="lookup"
                             type="picker_lookup"/>
@@ -28,7 +28,7 @@
                 </actions>
             </lookupPickerField>
             <vbox>
-                <checkBox id="subsField"
+                <checkBox id="subsCheckBox"
                           property="subs"/>
                 <textField id="origtraderefField"
                            property="origtraderef"/>

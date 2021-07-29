@@ -7,9 +7,10 @@
         <class>com.gcs.gcsplatform.entity.trade.ClosedTrade</class>
         <class>com.gcs.gcsplatform.entity.trade.LiveTrade</class>
         <class>com.gcs.gcsplatform.entity.trade.CallOptionTrade</class>
-        <class>com.gcs.gcsplatform.entity.masterdata.BrokerageCategory</class>
+        <class>com.gcs.gcsplatform.entity.masterdata.Category</class>
         <class>com.gcs.gcsplatform.entity.masterdata.Agent</class>
         <class>com.gcs.gcsplatform.entity.masterdata.Counterparty</class>
         <class>com.gcs.gcsplatform.entity.masterdata.Dealer</class>
+        <class>com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerage</class>
     </persistence-unit>
 </persistence>

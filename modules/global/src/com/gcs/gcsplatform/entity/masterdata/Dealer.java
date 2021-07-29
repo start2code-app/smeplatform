@@ -19,7 +19,7 @@ public class Dealer extends StandardEntity {
 
     private static final long serialVersionUID = -2373023222222239327L;
 
-    @Column(name = "DEALER", nullable = false, length = 10)
+    @Column(name = "DEALER", nullable = false, unique = true, length = 10)
     private String dealer;
 
     @NotNull

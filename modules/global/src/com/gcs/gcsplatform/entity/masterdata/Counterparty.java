@@ -14,7 +14,7 @@ public class Counterparty extends StandardEntity {
 
     private static final long serialVersionUID = -1999181841396498391L;
 
-    @Column(name = "COUNTERPARTY", nullable = false, length = 30)
+    @Column(name = "COUNTERPARTY", nullable = false, unique = true, length = 30)
     private String counterparty;
 
     @Column(name = "ADDRESS1", length = 50)
