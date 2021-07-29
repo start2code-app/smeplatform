@@ -40,7 +40,7 @@
             </actions>
             <columns>
                 <column id="counterparty"/>
-                <column id="agentName"/>
+                <column id="agent"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"

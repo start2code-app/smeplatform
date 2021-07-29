@@ -36,13 +36,12 @@
                         type="remove"/>
             </actions>
             <columns>
-                <column id="name"/>
-                <column id="active"/>
+                <column id="counterparty"/>
                 <column id="address1"/>
                 <column id="address2"/>
                 <column id="address3"/>
                 <column id="address4"/>
-                <column id="biilingName"/>
+                <column id="billingName"/>
                 <column id="billingCompanyName"/>
                 <column id="billingCountry"/>
                 <column id="billingInfo1"/>

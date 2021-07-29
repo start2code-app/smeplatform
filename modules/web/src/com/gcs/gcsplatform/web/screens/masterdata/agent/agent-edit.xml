@@ -30,7 +30,7 @@
                     </actions>
                 </pickerField>
                 <textField id="agentNameField"
-                           property="agentName"/>
+                           property="agent"/>
             </column>
         </form>
         <hbox id="editActions"
