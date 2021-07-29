@@ -1,4 +1,4 @@
-package com.gcs.gcsplatform.web.screens.masterdata.agent;
+package com.gcs.gcsplatform.web.screens.agent;
 
 import com.haulmont.cuba.gui.screen.*;
 import com.gcs.gcsplatform.entity.masterdata.Agent;

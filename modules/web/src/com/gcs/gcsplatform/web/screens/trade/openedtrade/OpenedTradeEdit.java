@@ -5,7 +5,6 @@ import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.trade.OpenedTrade;
 import com.gcs.gcsplatform.service.CloseTradeService;
-import com.gcs.gcsplatform.web.screens.trade.tradecontainer.TradeContainerEdit;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;
@@ -17,6 +16,7 @@ import com.haulmont.cuba.gui.app.core.inputdialog.InputParameter;
 import com.haulmont.cuba.gui.components.Button;
 import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.MessageBundle;
+import com.haulmont.cuba.gui.screen.StandardEditor;
 import com.haulmont.cuba.gui.screen.StandardOutcome;
 import com.haulmont.cuba.gui.screen.Subscribe;
 import com.haulmont.cuba.gui.screen.UiController;
@@ -24,7 +24,7 @@ import com.haulmont.cuba.gui.screen.UiDescriptor;
 
 @UiController("gcsplatform_OpenedTrade.edit")
 @UiDescriptor("opened-trade-edit.xml")
-public class OpenedTradeEdit extends TradeContainerEdit<OpenedTrade> {
+public class OpenedTradeEdit extends StandardEditor<OpenedTrade> {
 
     @Inject
     private DataManager dataManager;

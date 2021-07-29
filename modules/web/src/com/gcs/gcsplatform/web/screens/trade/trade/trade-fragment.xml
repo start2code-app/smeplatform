@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fragment xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd">
+    <data>
+        <instance id="tradeDc"
+                  class="com.gcs.gcsplatform.entity.trade.Trade"
+                  provided="true"/>
+        <collection id="counterpartiesDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.Counterparty">
+            <view extends="_local"/>
+            <loader id="counterpartiesDl">
+                <query>select e from gcsplatform_Counterparty e order by e.counterparty</query>
+            </loader>
+        </collection>
+        <collection id="dealersDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.Dealer">
+            <view extends="_minimal"/>
+            <loader id="dealersDl">
+                <query>select e from gcsplatform_Dealer e order by e.dealer</query>
+            </loader>
+        </collection>
+        <collection id="brokerageCategoryDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.BrokerageCategory">
+            <view extends="_minimal"/>
+            <loader id="brokerageCategoryDl">
+                <query>select e from gcsplatform_BrokerageCategory e order by e.category</query>
+            </loader>
+        </collection>
+    </data>
+    <layout spacing="true"
+            expand="tradeTabSheet">
+        <tabSheet id="tradeTabSheet">
+            <tab id="descriptionTab"
+                 caption="msg://descriptionTab.caption"
+                 spacing="true"
+                 margin="true">
+                <form id="descriptionForm"
+                      dataContainer="tradeDc">
+                    <textField id="traderefField"
+                               property="traderef"/>
+                    <textField id="utiField"
+                               property="uti"/>
+                    <textField id="bondDescriptionField"
+                               property="bondDescription"/>
+                    <textField id="isinField"
+                               property="isin"/>
+                    <textField id="currencyField"
+                               property="currency"/>
+                    <textField id="tradeCurrencyField"
+                               property="tradeCurrency"/>
+                    <textField id="nominalField"
+                               property="nominal"/>
+                    <textField id="repoRateField"
+                               property="repoRate"/>
+                    <textField id="startPriceField"
+                               property="startPrice"/>
+                    <textField id="hairCutField"
+                               property="hairCut"/>
+                </form>
+            </tab>
+            <tab id="counterpartiesBrokersTab"
+                 caption="msg://counterpartiesBrokersTab.caption"
+                 spacing="true"
+                 margin="true">
+                <fragment id="counterpartiesBrokersFragment"
+                          screen="gcsplatform_TradeCounterpartiesBrokersFragment"/>
+            </tab>
+            <tab id="brokerageTab"
+                 caption="msg://brokerageTab.caption"
+                 spacing="true"
+                 margin="true">
+                <fragment id="brokerageFragment"
+                          screen="gcsplatform_TradeBrokerageFragment"/>
+            </tab>
+            <tab id="datesTab"
+                 caption="msg://datesTab.caption"
+                 spacing="true"
+                 margin="true">
+                <form id="datesForm"
+                      dataContainer="tradeDc">
+                    <dateField id="valueDateField"
+                               property="valueDate"/>
+                    <dateField id="maturityDateField"
+                               property="maturityDate"
+                               enable="false"/>
+                    <dateField id="tradeDateField"
+                               property="tradeDate"/>
+                    <dateField id="updatedOnField"
+                               property="updatedOn"/>
+                    <dateField id="createdField"
+                               property="created"/>
+                </form>
+            </tab>
+            <tab id="notesTab"
+                 caption="msg://notesTab.caption"
+                 spacing="true"
+                 margin="true">
+                <form id="notesForm"
+                      dataContainer="tradeDc">
+                    <textArea id="notesField"
+                              caption="Notes"
+                              cols="40"
+                              rows="3"/>
+                </form>
+            </tab>
+        </tabSheet>
+    </layout>
+</fragment>

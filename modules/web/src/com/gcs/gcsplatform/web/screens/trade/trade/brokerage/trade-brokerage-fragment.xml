@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fragment xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd">
+    <data>
+        <instance id="tradeDc"
+                  class="com.gcs.gcsplatform.entity.trade.Trade"
+                  provided="true"/>
+        <collection id="brokerageCategoryDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.BrokerageCategory"
+                    provided="true"/>
+    </data>
+    <layout>
+        <form id="brokerageForm"
+              dataContainer="tradeDc">
+            <checkBox id="gcField"
+                      property="gc"/>
+            <checkBox id="specialField"
+                      property="special"/>
+            <checkBox id="brooverideField"
+                      property="brooveride"/>
+            <lookupPickerField id="brokerageCategoryLookupPickerField"
+                               caption="msg://com.gcs.gcsplatform.entity.trade/Trade.category"
+                               optionsContainer="brokerageCategoryDc">
+                <actions>
+                    <action id="lookup"
+                            type="picker_lookup"/>
+                    <action id="clear"
+                            type="picker_clear"/>
+                </actions>
+            </lookupPickerField>
+            <vbox>
+                <checkBox id="subsField"
+                          property="subs"/>
+                <textField id="origtraderefField"
+                           property="origtraderef"/>
+            </vbox>
+            <textField id="SellbrokerageField"
+                       property="sellbrokerage"
+                       enable="false"/>
+            <textField id="BuybrokerageField"
+                       property="buybrokerage"
+                       enable="false"/>
+        </form>
+    </layout>
+</fragment>

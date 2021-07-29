@@ -2,7 +2,7 @@
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://dealerEdit.caption"
         focusComponent="form"
-        messagesPack="com.gcs.gcsplatform.web.screens.masterdata.dealer">
+        messagesPack="com.gcs.gcsplatform.web.screens.dealer">
     <data>
         <instance id="dealerDc"
                   class="com.gcs.gcsplatform.entity.masterdata.Dealer">

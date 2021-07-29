@@ -13,8 +13,7 @@
             <loader id="openedTradesDl">
                 <query><![CDATA[
                     select e from gcsplatform_OpenedTrade e
-                    where e.trade.status = 'OPEN'
-                    order by e.trade.created]]>
+                    order by e.trade.updatedOn desc]]>
                 </query>
             </loader>
         </collection>

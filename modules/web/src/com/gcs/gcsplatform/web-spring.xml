@@ -15,6 +15,8 @@
             <map>
                 <entry key="gcsplatform_CloseTradeService"
                        value="com.gcs.gcsplatform.service.CloseTradeService"/>
+                <entry key="gcsplatform_AgentService"
+                       value="com.gcs.gcsplatform.service.AgentService"/>
             </map>
         </property>
     </bean>

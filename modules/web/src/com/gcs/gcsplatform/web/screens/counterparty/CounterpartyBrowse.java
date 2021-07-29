@@ -1,4 +1,4 @@
-package com.gcs.gcsplatform.web.screens.masterdata.counterparty;
+package com.gcs.gcsplatform.web.screens.counterparty;
 
 import com.haulmont.cuba.gui.screen.*;
 import com.gcs.gcsplatform.entity.masterdata.Counterparty;

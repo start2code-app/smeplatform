@@ -21,6 +21,8 @@
               caption="mainMsg://menu_config.gcsplatform_Agent.browse"/>
         <item screen="gcsplatform_Dealer.browse"
               caption="mainMsg://menu_config.gcsplatform_Dealer.browse"/>
+        <item screen="gcsplatform_BrokerageCategory.browse"
+              caption="mainMsg://menu_config.gcsplatform_BrokerageCategory.browse"/>
     </menu>
     <menu id="administration"
           icon="COG">

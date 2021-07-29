@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fragment xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd">
+    <data>
+        <instance id="tradeDc"
+                  class="com.gcs.gcsplatform.entity.trade.Trade"
+                  provided="true"/>
+        <collection id="counterpartiesDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.Counterparty"
+                    provided="true"/>
+        <collection id="dealersDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.Dealer"
+                    provided="true"/>
+    </data>
+    <layout>
+        <form id="counterpartiesBrokersForm"
+              dataContainer="tradeDc">
+            <groupBox>
+                <lookupPickerField id="buyBrokerLookupPickerField"
+                                   caption="msg://com.gcs.gcsplatform.entity.trade/Trade.buybroker"
+                                   optionsContainer="dealersDc">
+                    <actions>
+                        <action id="lookup"
+                                type="picker_lookup"/>
+                        <action id="clear"
+                                type="picker_clear"/>
+                    </actions>
+                </lookupPickerField>
+                <lookupPickerField id="buyerLookupPickerField"
+                                   caption="msg://com.gcs.gcsplatform.entity.trade/Trade.buyer"
+                                   optionsContainer="counterpartiesDc">
+                    <actions>
+                        <action id="lookup"
+                                type="picker_lookup"/>
+                        <action id="clear"
+                                type="picker_clear"/>
+                    </actions>
+                </lookupPickerField>
+                <lookupPickerField id="buyerAgentLookupPickerField"
+                                   caption="msg://com.gcs.gcsplatform.entity.trade/Trade.buyerAgent"
+                                   metaClass="gcsplatform_Agent">
+                    <actions>
+                        <action id="lookup"
+                                type="picker_lookup"/>
+                        <action id="clear"
+                                type="picker_clear"/>
+                    </actions>
+                </lookupPickerField>
+            </groupBox>
+            <groupBox>
+                <lookupPickerField id="sellBrokerLookupPickerField"
+                                   caption="msg://com.gcs.gcsplatform.entity.trade/Trade.sellbroker"
+                                   optionsContainer="dealersDc">
+                    <actions>
+                        <action id="lookup"
+                                type="picker_lookup"/>
+                        <action id="clear"
+                                type="picker_clear"/>
+                    </actions>
+                </lookupPickerField>
+                <lookupPickerField id="sellerLookupPickerField"
+                                   caption="msg://com.gcs.gcsplatform.entity.trade/Trade.seller"
+                                   optionsContainer="counterpartiesDc">
+                    <actions>
+                        <action id="lookup"
+                                type="picker_lookup"/>
+                        <action id="clear"
+                                type="picker_clear"/>
+                    </actions>
+                </lookupPickerField>
+                <lookupPickerField id="sellerAgentLookupPickerField"
+                                   caption="msg://com.gcs.gcsplatform.entity.trade/Trade.sellerAgent"
+                                   metaClass="gcsplatform_Agent">
+                    <actions>
+                        <action id="lookup"
+                                type="picker_lookup"/>
+                        <action id="clear"
+                                type="picker_clear"/>
+                    </actions>
+                </lookupPickerField>
+            </groupBox>
+        </form>
+    </layout>
+</fragment>

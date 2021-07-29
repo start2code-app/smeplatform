@@ -2,7 +2,7 @@
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://counterpartyEdit.caption"
         focusComponent="form"
-        messagesPack="com.gcs.gcsplatform.web.screens.masterdata.counterparty">
+        messagesPack="com.gcs.gcsplatform.web.screens.counterparty">
     <data>
         <instance id="counterpartyDc"
                   class="com.gcs.gcsplatform.entity.masterdata.Counterparty">
