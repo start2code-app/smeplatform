@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.haulmont.chile.core.annotations.NumberFormat;
 import com.haulmont.cuba.core.entity.StandardEntity;
 
 @Table(name = "GCSPLATFORM_COUNTERPARTY_BROKERAGE", indexes = {
@@ -31,8 +32,9 @@ public class CounterpartyBrokerage extends StandardEntity {
     @NotNull
     private Category category;
 
-    @Column(name = "BROKERAGE_VALUE", nullable = false)
+    @Column(name = "BROKERAGE_VALUE", nullable = false, precision = 10, scale = 4)
     @NotNull
+    @NumberFormat(pattern = "#,##0.0000")
     private BigDecimal brokerageValue;
 
     @NotNull

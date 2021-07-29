@@ -300,7 +300,7 @@ create table GCSPLATFORM_COUNTERPARTY_BROKERAGE (
     --
     COUNTERPARTY_ID varchar(32) not null,
     CATEGORY_ID varchar(32) not null,
-    BROKERAGE_VALUE decimal(19, 2) not null,
+    BROKERAGE_VALUE decimal(10, 4) not null,
     BROKERAGE_TYPE varchar(50) not null,
     --
     primary key (ID)
