@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://brokerageCategoryBrowse.caption"
+        focusComponent="brokerageCategoriesTable"
+        messagesPack="com.gcs.gcsplatform.web.screens.brokeragecategory">
+    <data readOnly="true">
+        <collection id="brokerageCategoriesDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.BrokerageCategory">
+            <view extends="_local"/>
+            <loader id="brokerageCategoriesDl">
+                <query>
+                    <![CDATA[select e from gcsplatform_BrokerageCategory e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="brokerageCategoriesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="brokerageCategoriesTable"
+                dataLoader="brokerageCategoriesDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="brokerageCategoriesTable"
+                    width="100%"
+                    dataContainer="brokerageCategoriesDc">
+            <actions>
+                <action id="create"
+                        type="create"/>
+                <action id="edit"
+                        type="edit"/>
+                <action id="remove"
+                        type="remove"/>
+            </actions>
+            <columns>
+                <column id="category"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="brokerageCategoriesTable.create"/>
+                <button id="editBtn"
+                        action="brokerageCategoriesTable.edit"/>
+                <button id="removeBtn"
+                        action="brokerageCategoriesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions"
+              spacing="true"
+              visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>
