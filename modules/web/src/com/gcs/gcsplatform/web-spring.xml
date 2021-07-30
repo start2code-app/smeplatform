@@ -17,8 +17,8 @@
                        value="com.gcs.gcsplatform.service.CloseTradeService"/>
                 <entry key="gcsplatform_AgentService"
                        value="com.gcs.gcsplatform.service.AgentService"/>
-                <entry key="gcsplatform_CounterpartyBrokerageService"
-                       value="com.gcs.gcsplatform.service.CounterpartyBrokerageService"/>
+                <entry key="gcsplatform_BrokerageService"
+                       value="com.gcs.gcsplatform.service.BrokerageService"/>
                 <entry key="gcsplatform_CounterpartyService"
                        value="com.gcs.gcsplatform.service.CounterpartyService"/>
             </map>

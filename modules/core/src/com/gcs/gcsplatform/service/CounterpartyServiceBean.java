@@ -17,7 +17,7 @@ public class CounterpartyServiceBean implements CounterpartyService {
     @Override
     public Counterparty findCounterparty(String name) {
         return dataManager.load(Counterparty.class)
-                .query("select e from gcsplatform_Counterparty "
+                .query("select e from gcsplatform_Counterparty e "
                         + "where e.counterparty = :name")
                 .parameter("name", name)
                 .optional()

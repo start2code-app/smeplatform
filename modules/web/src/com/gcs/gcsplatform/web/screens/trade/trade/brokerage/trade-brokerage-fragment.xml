@@ -12,11 +12,12 @@
             </loader>
         </collection>
     </data>
-    <layout>
-        <form id="brokerageForm"
-              dataContainer="tradeDc">
-            <groupBox id="brokerageTypeBox"
-                      caption="msg://brokerageTypeBox.caption">
+    <layout spacing="true">
+        <groupBox id="brokerageTypeBox"
+                  caption="msg://brokerageTypeBox.caption"
+                  spacing="true" width="100%">
+            <form id="brokerageTypeForm"
+                  dataContainer="tradeDc">
                 <lookupPickerField id="categoryLookupPickerField"
                                    caption="msg://com.gcs.gcsplatform.entity.trade/Trade.category"
                                    optionsContainer="categoryDc">
@@ -35,25 +36,34 @@
                           property="subThirty"/>
                 <checkBox id="moreThanThirtyCheckBox"
                           property="moreThanThirty"/>
-            </groupBox>
-            <groupBox id="broOverideBox"
-                      caption="msg://broOverideBox.caption">
+            </form>
+        </groupBox>
+        <groupBox id="broOverideBox"
+                  caption="msg://broOverideBox.caption"
+                  spacing="true" width="100%">
+            <form id="broOverideForm"
+                  dataContainer="tradeDc">
                 <checkBox id="broOverideCheckBox"
                           property="brooveride"/>
                 <checkBox id="subsCheckBox"
                           property="subs"/>
                 <textField id="origtraderefField"
                            property="origtraderef"/>
-            </groupBox>
-            <groupBox id="brokerageBox"
-                      caption="msg://brokerageBox.caption">
+            </form>
+        </groupBox>
+        <groupBox id="brokerageBox"
+                  caption="msg://brokerageBox.caption"
+                  spacing="true" width="100%">
+            <form id="brokerageForm"
+                  dataContainer="tradeDc">
                 <textField id="sellBrokerageField"
                            property="sellbrokerage"
                            editable="false"/>
                 <textField id="buyBrokerageField"
                            property="buybrokerage"
                            editable="false"/>
-            </groupBox>
-        </form>
+            </form>
+        </groupBox>
+
     </layout>
 </fragment>

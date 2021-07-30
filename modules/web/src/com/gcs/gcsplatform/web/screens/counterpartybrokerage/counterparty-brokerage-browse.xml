@@ -43,6 +43,7 @@
             <columns>
                 <column id="counterparty"/>
                 <column id="category"/>
+                <column id="brokerageType"/>
                 <column id="brokerageValue"/>
             </columns>
             <rowsCount/>

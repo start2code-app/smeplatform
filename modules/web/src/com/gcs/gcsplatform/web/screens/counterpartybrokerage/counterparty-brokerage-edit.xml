@@ -40,6 +40,9 @@
                                 type="picker_clear"/>
                     </actions>
                 </pickerField>
+                <lookupField id="brokerageTypeField"
+                             optionsEnum="com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerageType"
+                             property="brokerageType"/>
                 <textField id="brokerageValueField"
                            property="brokerageValue"/>
             </column>

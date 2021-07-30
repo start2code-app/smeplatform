@@ -1,17 +1,11 @@
 package com.gcs.gcsplatform.web.screens.trade.trade.brokerage;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
 import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.masterdata.Category;
-import com.gcs.gcsplatform.entity.masterdata.Counterparty;
-import com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerage;
-import com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerageType;
 import com.gcs.gcsplatform.entity.trade.Trade;
-import com.gcs.gcsplatform.service.CounterpartyBrokerageService;
-import com.gcs.gcsplatform.service.CounterpartyService;
+import com.gcs.gcsplatform.service.BrokerageService;
 import com.haulmont.cuba.gui.components.CheckBox;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.LookupPickerField;
@@ -30,9 +24,7 @@ import static com.gcs.gcsplatform.web.util.ScreenUtil.initFieldValueToStringProp
 public class TradeBrokerageFragment extends ScreenFragment {
 
     @Inject
-    protected CounterpartyBrokerageService counterpartyBrokerageService;
-    @Inject
-    protected CounterpartyService counterpartyService;
+    protected BrokerageService brokerageService;
 
     @Inject
     protected TextField<BigDecimal> buyBrokerageField;
@@ -69,7 +61,7 @@ public class TradeBrokerageFragment extends ScreenFragment {
     protected void onAfterInit(AfterInitEvent event) {
         Trade trade = tradeDc.getItem();
         initFieldValueToStringPropertyMapping(categoryLookupPickerField, trade, "category", "category");
-        
+
         if (Boolean.TRUE.equals(trade.getBrooveride())) {
             buyBrokerageField.setEditable(true);
             sellBrokerageField.setEditable(true);
@@ -90,7 +82,7 @@ public class TradeBrokerageFragment extends ScreenFragment {
             broOverideCheckBox.setValue(false);
         } else {
             origtraderefField.setVisible(false);
-            updateBrokerage();
+            updateTradeBrokerage();
         }
     }
 
@@ -107,7 +99,7 @@ public class TradeBrokerageFragment extends ScreenFragment {
             sellBrokerageField.setEditable(false);
             buyBrokerageField.setEditable(false);
         }
-        updateBrokerage();
+        updateTradeBrokerage();
     }
 
     @Subscribe("gcCheckBox")
@@ -119,7 +111,7 @@ public class TradeBrokerageFragment extends ScreenFragment {
             specialCheckBox.setValue(false);
             subThirtyCheckBox.setValue(false);
             moreThanThirtyCheckBox.setValue(false);
-            updateBrokerage();
+            updateTradeBrokerage();
         }
     }
 
@@ -132,7 +124,7 @@ public class TradeBrokerageFragment extends ScreenFragment {
             gcCheckBox.setValue(false);
             subThirtyCheckBox.setValue(false);
             moreThanThirtyCheckBox.setValue(false);
-            updateBrokerage();
+            updateTradeBrokerage();
         }
     }
 
@@ -145,7 +137,7 @@ public class TradeBrokerageFragment extends ScreenFragment {
             specialCheckBox.setValue(false);
             gcCheckBox.setValue(false);
             moreThanThirtyCheckBox.setValue(false);
-            updateBrokerage();
+            updateTradeBrokerage();
         }
     }
 
@@ -158,30 +150,32 @@ public class TradeBrokerageFragment extends ScreenFragment {
             specialCheckBox.setValue(false);
             subThirtyCheckBox.setValue(false);
             gcCheckBox.setValue(false);
-            updateBrokerage();
+            updateTradeBrokerage();
         }
     }
 
-    protected void updateBrokerage() {
-        if (broOverideCheckBox.isChecked() || subsCheckBox.isChecked()) {
+    @Subscribe("categoryLookupPickerField")
+    protected void onCategoryLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Category> event) {
+        if (event.isUserOriginated()) {
+            updateTradeBrokerage();
+        }
+    }
+
+    /**
+     * Updates buybrokerage and sellbrokerage values based on trade counterparty and category.
+     */
+    protected void updateTradeBrokerage() {
+        Trade trade = tradeDc.getItem();
+        if (Boolean.TRUE.equals(trade.getBrooveride()) || Boolean.TRUE.equals(trade.getSubs())) {
             return;
         }
 
-        Trade trade = tradeDc.getItem();
-        Category category = categoryLookupPickerField.getValue();
+        BigDecimal buyBrokerage = brokerageService.findBrokerageValue(trade.getBuyer(), trade.getCategory(),
+                trade.getBrokerageType());
+        trade.setBuybrokerage(buyBrokerage);
 
-        Counterparty buyerCounterparty = counterpartyService.findCounterparty(trade.getBuyer());
-        CounterpartyBrokerage buyerBrokerage = counterpartyBrokerageService.findCounterpartyBrokerage(buyerCounterparty,
-                category, trade.getBrokerageType());
-        if (buyerBrokerage != null) {
-            buyBrokerageField.setValue(buyerBrokerage.getBrokerageValue());
-        }
-
-        Counterparty sellerCounterparty = counterpartyService.findCounterparty(trade.getSeller());
-        CounterpartyBrokerage sellerBrokerage = counterpartyBrokerageService.findCounterpartyBrokerage(sellerCounterparty,
-                category, trade.getBrokerageType());
-        if (sellerBrokerage != null) {
-            sellBrokerageField.setValue(sellerBrokerage.getBrokerageValue());
-        }
+        BigDecimal sellBrokerage = brokerageService.findBrokerageValue(trade.getSeller(), trade.getCategory(),
+                trade.getBrokerageType());
+        trade.setSellbrokerage(sellBrokerage);
     }
 }
