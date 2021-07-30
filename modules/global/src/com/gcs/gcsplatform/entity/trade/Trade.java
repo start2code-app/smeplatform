@@ -2,11 +2,13 @@ package com.gcs.gcsplatform.entity.trade;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerageType;
 import com.haulmont.chile.core.annotations.MetaClass;
 import com.haulmont.chile.core.annotations.NumberFormat;
 import com.haulmont.cuba.core.entity.EmbeddableEntity;
@@ -154,6 +156,20 @@ public class Trade extends EmbeddableEntity {
 
     @Column(name = "GM_SLA")
     private Boolean gmSla;
+
+    @Nullable
+    public CounterpartyBrokerageType getBrokerageType() {
+        if (Boolean.TRUE.equals(gc)) {
+            return CounterpartyBrokerageType.GC;
+        } else if (Boolean.TRUE.equals(special)) {
+            return CounterpartyBrokerageType.SPECIAL;
+        } else if (Boolean.TRUE.equals(subThirty)) {
+            return CounterpartyBrokerageType.SUB_THIRTY;
+        } else if (Boolean.TRUE.equals(moreThanThirty)) {
+            return CounterpartyBrokerageType.MORE_THAN_THIRTY;
+        }
+        return null;
+    }
 
     public Boolean getGmSla() {
         return gmSla;

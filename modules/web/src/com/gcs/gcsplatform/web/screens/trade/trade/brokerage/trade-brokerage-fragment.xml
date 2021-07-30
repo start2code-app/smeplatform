@@ -15,34 +15,45 @@
     <layout>
         <form id="brokerageForm"
               dataContainer="tradeDc">
-            <checkBox id="gcCheckBox"
-                      property="gc"/>
-            <checkBox id="specialCheckBox"
-                      property="special"/>
-            <checkBox id="brooverideCheckBox"
-                      property="brooveride"/>
-            <lookupPickerField id="categoryLookupPickerField"
-                               caption="msg://com.gcs.gcsplatform.entity.trade/Trade.category"
-                               optionsContainer="categoryDc">
-                <actions>
-                    <action id="lookup"
-                            type="picker_lookup"/>
-                    <action id="clear"
-                            type="picker_clear"/>
-                </actions>
-            </lookupPickerField>
-            <vbox>
+            <groupBox id="brokerageTypeBox"
+                      caption="msg://brokerageTypeBox.caption">
+                <lookupPickerField id="categoryLookupPickerField"
+                                   caption="msg://com.gcs.gcsplatform.entity.trade/Trade.category"
+                                   optionsContainer="categoryDc">
+                    <actions>
+                        <action id="lookup"
+                                type="picker_lookup"/>
+                        <action id="clear"
+                                type="picker_clear"/>
+                    </actions>
+                </lookupPickerField>
+                <checkBox id="gcCheckBox"
+                          property="gc"/>
+                <checkBox id="specialCheckBox"
+                          property="special"/>
+                <checkBox id="subThirtyCheckBox"
+                          property="subThirty"/>
+                <checkBox id="moreThanThirtyCheckBox"
+                          property="moreThanThirty"/>
+            </groupBox>
+            <groupBox id="broOverideBox"
+                      caption="msg://broOverideBox.caption">
+                <checkBox id="broOverideCheckBox"
+                          property="brooveride"/>
                 <checkBox id="subsCheckBox"
                           property="subs"/>
                 <textField id="origtraderefField"
                            property="origtraderef"/>
-            </vbox>
-            <textField id="SellbrokerageField"
-                       property="sellbrokerage"
-                       enable="false"/>
-            <textField id="BuybrokerageField"
-                       property="buybrokerage"
-                       enable="false"/>
+            </groupBox>
+            <groupBox id="brokerageBox"
+                      caption="msg://brokerageBox.caption">
+                <textField id="sellBrokerageField"
+                           property="sellbrokerage"
+                           editable="false"/>
+                <textField id="buyBrokerageField"
+                           property="buybrokerage"
+                           editable="false"/>
+            </groupBox>
         </form>
     </layout>
 </fragment>
