@@ -141,6 +141,7 @@ create table livetrade (
     XRATE3 decimal(10, 4),
     SUB_THIRTY boolean,
     MORE_THAN_THIRTY boolean,
+    GM_SLA boolean,
     --
     primary key (TRADE_ID)
 )^
@@ -191,6 +192,7 @@ create table calloptiontrade (
     XRATE3 decimal(10, 4),
     SUB_THIRTY boolean,
     MORE_THAN_THIRTY boolean,
+    GM_SLA boolean,
     --
     primary key (TRADE_ID)
 )^
@@ -241,6 +243,7 @@ create table closedtrade (
     XRATE3 decimal(10, 4),
     SUB_THIRTY boolean,
     MORE_THAN_THIRTY boolean,
+    GM_SLA boolean,
     --
     primary key (TRADE_ID)
 )^
@@ -291,6 +294,7 @@ create table opentrade (
     XRATE3 decimal(10, 4),
     SUB_THIRTY boolean,
     MORE_THAN_THIRTY boolean,
+    GM_SLA boolean,
     --
     primary key (TRADE_ID)
 )^

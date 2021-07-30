@@ -41,7 +41,6 @@
             </actions>
             <columns>
                 <column id="trade.bondDescription"/>
-                <column id="trade.brooveride"/>
                 <column id="trade.buybroker"/>
                 <column id="trade.buybrokerage"/>
                 <column id="trade.buyer"/>
@@ -54,7 +53,6 @@
                 <column id="trade.created"/>
                 <column id="trade.currency"/>
                 <column id="trade.gbpEquivalent"/>
-                <column id="trade.gc"/>
                 <column id="trade.hairCut"/>
                 <column id="trade.isin"/>
                 <column id="trade.maturityDate"/>
@@ -67,10 +65,8 @@
                 <column id="trade.sellbrokerage"/>
                 <column id="trade.seller"/>
                 <column id="trade.sellerAgent"/>
-                <column id="trade.special"/>
                 <column id="trade.startPrice"/>
                 <column id="trade.status"/>
-                <column id="trade.subs"/>
                 <column id="trade.tradeCurrency"/>
                 <column id="trade.tradeDate"/>
                 <column id="trade.traderef"/>
@@ -80,6 +76,13 @@
                 <column id="trade.xrate1"/>
                 <column id="trade.xrate2"/>
                 <column id="trade.xrate3"/>
+                <column id="trade.gc"/>
+                <column id="trade.special"/>
+                <column id="trade.subThirty"/>
+                <column id="trade.moreThanThirty"/>
+                <column id="trade.brooveride"/>
+                <column id="trade.subs"/>
+                <column id="trade.gmSla"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"

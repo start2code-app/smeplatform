@@ -152,6 +152,17 @@ public class Trade extends EmbeddableEntity {
     @Column(name = "MORE_THAN_THIRTY")
     private Boolean moreThanThirty;
 
+    @Column(name = "GM_SLA")
+    private Boolean gmSla;
+
+    public Boolean getGmSla() {
+        return gmSla;
+    }
+
+    public void setGmSla(Boolean gmSla) {
+        this.gmSla = gmSla;
+    }
+
     public Boolean getMoreThanThirty() {
         return moreThanThirty;
     }
