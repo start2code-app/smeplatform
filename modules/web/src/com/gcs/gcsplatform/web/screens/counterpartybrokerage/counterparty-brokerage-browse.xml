@@ -15,7 +15,7 @@
             </view>
             <loader id="counterpartyBrokeragesDl">
                 <query>
-                    <![CDATA[select e from gcsplatform_CounterpartyBrokerage e]]>
+                    <![CDATA[select e from gcsplatform_CounterpartyBrokerage e order by e.counterparty]]>
                 </query>
             </loader>
         </collection>

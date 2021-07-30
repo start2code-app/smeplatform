@@ -8,7 +8,9 @@ import javax.annotation.Nullable;
 public enum CounterpartyBrokerageType implements EnumClass<String> {
 
     GC("GC"),
-    SPECIAL("SPECIAL");
+    SPECIAL("SPECIAL"),
+    SUB_THIRTY("SUB_THIRTY"),
+    MORE_THAN_THIRTY("MORE_THAN_THIRTY");
 
     private String id;
 

@@ -9,6 +9,7 @@ import com.haulmont.cuba.gui.components.CheckBox;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.LookupPickerField;
 import com.haulmont.cuba.gui.components.TextField;
+import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.ScreenFragment;
 import com.haulmont.cuba.gui.screen.Subscribe;
@@ -40,9 +41,16 @@ public class TradeBrokerageFragment extends ScreenFragment {
 
     @Inject
     protected InstanceContainer<Trade> tradeDc;
+    @Inject
+    protected CollectionLoader<Category> categoryDl;
 
     @Subscribe
-    protected void onAttach(AttachEvent event) {
+    protected void onInit(InitEvent event) {
+        categoryDl.load();
+    }
+
+    @Subscribe
+    protected void onAfterInit(AfterInitEvent event) {
         Trade trade = tradeDc.getItem();
         initFieldValueToStringPropertyMapping(categoryLookupPickerField, trade, "category", "category");
     }

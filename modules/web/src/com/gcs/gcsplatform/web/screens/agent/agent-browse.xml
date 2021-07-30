@@ -13,8 +13,7 @@
             </view>
             <loader id="agentsDl">
                 <query>
-                    <![CDATA[select e from gcsplatform_Agent e
-                    where :counterparty is null or e.counterparty = :counterparty]]>
+                    <![CDATA[select e from gcsplatform_Agent e order by e.agent]]>
                 </query>
             </loader>
         </collection>

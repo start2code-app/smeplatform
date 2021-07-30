@@ -146,6 +146,28 @@ public class Trade extends EmbeddableEntity {
     @NumberFormat(pattern = "#,##0.0000")
     private BigDecimal xrate3;
 
+    @Column(name = "SUB_THIRTY")
+    private Boolean subThirty;
+
+    @Column(name = "MORE_THAN_THIRTY")
+    private Boolean moreThanThirty;
+
+    public Boolean getMoreThanThirty() {
+        return moreThanThirty;
+    }
+
+    public void setMoreThanThirty(Boolean moreThanThirty) {
+        this.moreThanThirty = moreThanThirty;
+    }
+
+    public Boolean getSubThirty() {
+        return subThirty;
+    }
+
+    public void setSubThirty(Boolean subThirty) {
+        this.subThirty = subThirty;
+    }
+
     public BigDecimal getXrate3() {
         return xrate3;
     }

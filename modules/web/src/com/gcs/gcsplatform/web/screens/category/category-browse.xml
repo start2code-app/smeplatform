@@ -10,7 +10,7 @@
             <view extends="_local"/>
             <loader id="categoriesDl">
                 <query>
-                    <![CDATA[select e from gcsplatform_Category e]]>
+                    <![CDATA[select e from gcsplatform_Category e order by e.category]]>
                 </query>
             </loader>
         </collection>

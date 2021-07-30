@@ -13,6 +13,7 @@ import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.LookupPickerField;
+import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.Install;
 import com.haulmont.cuba.gui.screen.Screen;
@@ -45,9 +46,22 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
 
     @Inject
     protected InstanceContainer<Trade> tradeDc;
+    @Inject
+    protected CollectionLoader<Dealer> dealersDl;
+    @Inject
+    protected CollectionLoader<Counterparty> counterpartiesDl;
+    @Inject
+    protected CollectionLoader<Agent> agentsDl;
 
     @Subscribe
-    protected void onAttach(AttachEvent event) {
+    protected void onInit(InitEvent event) {
+        counterpartiesDl.load();
+        dealersDl.load();
+        agentsDl.load();
+    }
+
+    @Subscribe
+    protected void onAfterInit(AfterInitEvent event) {
         Trade trade = tradeDc.getItem();
         initFieldValueToStringPropertyMapping(buyBrokerLookupPickerField, trade,"dealer", "buybroker");
         initFieldValueToStringPropertyMapping(buyerLookupPickerField, trade,"counterparty", "buyer");
@@ -61,9 +75,12 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
 
     @Subscribe("buyerAgentLookupPickerField")
     protected void onBuyerAgentLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Agent> event) {
-        if (event.isUserOriginated() && buyerLookupPickerField.getValue() == null) {
+        if (event.isUserOriginated()) {
             Agent agent = event.getValue();
-            buyerLookupPickerField.setValue(agent != null ? agent.getCounterparty() : null);
+            if (agent != null) {
+                buyerLookupPickerField.setValue(agent.getCounterparty());
+            }
+            initAgents(buyerLookupPickerField, buyerAgentLookupPickerField);
         }
     }
 
@@ -71,6 +88,18 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
     protected void onBuyerLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Counterparty> event) {
         if (event.isUserOriginated()) {
             initAgents(buyerLookupPickerField, buyerAgentLookupPickerField);
+            buyerAgentLookupPickerField.clear();
+        }
+    }
+
+    @Subscribe("sellerAgentLookupPickerField")
+    protected void onSellerAgentLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Agent> event) {
+        if (event.isUserOriginated()) {
+            Agent agent = event.getValue();
+            if (agent != null) {
+                sellerLookupPickerField.setValue(agent.getCounterparty());
+            }
+            initAgents(sellerLookupPickerField, sellerAgentLookupPickerField);
         }
     }
 
@@ -78,6 +107,7 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
     protected void onSellerLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Counterparty> event) {
         if (event.isUserOriginated()) {
             initAgents(sellerLookupPickerField, sellerAgentLookupPickerField);
+            sellerAgentLookupPickerField.clear();
         }
     }
 
@@ -87,11 +117,7 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
                 .add("counterparty", View.MINIMAL)
                 .addView(View.MINIMAL)
                 .build());
-        Agent previouslySelectedAgent = agentField.getValue();
         agentField.setOptionsList(agents);
-        if (previouslySelectedAgent != null && agents.contains(previouslySelectedAgent)) {
-            agentField.setValue(previouslySelectedAgent);
-        }
     }
 
     @Install(to = "buyerAgentLookupPickerField.lookup", subject = "screenConfigurer")

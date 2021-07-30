@@ -25,7 +25,7 @@ public class AgentServiceBean implements AgentService {
                 .query("select e from gcsplatform_Agent e")
                 .view(view);
         if (counterparty != null) {
-            query.condition(new JpqlCondition("where e.counterparty = :counterparty"));
+            query.condition(new JpqlCondition("e.counterparty = :counterparty"));
             query.parameter("counterparty", counterparty);
         }
         return query.list();

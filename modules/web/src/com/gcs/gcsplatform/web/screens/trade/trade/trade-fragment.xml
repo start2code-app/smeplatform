@@ -2,29 +2,7 @@
 <fragment xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd">
     <data>
         <instance id="tradeDc"
-                  class="com.gcs.gcsplatform.entity.trade.Trade"
-                  provided="true"/>
-        <collection id="counterpartiesDc"
-                    class="com.gcs.gcsplatform.entity.masterdata.Counterparty">
-            <view extends="_local"/>
-            <loader id="counterpartiesDl">
-                <query>select e from gcsplatform_Counterparty e order by e.counterparty</query>
-            </loader>
-        </collection>
-        <collection id="dealersDc"
-                    class="com.gcs.gcsplatform.entity.masterdata.Dealer">
-            <view extends="_minimal"/>
-            <loader id="dealersDl">
-                <query>select e from gcsplatform_Dealer e order by e.dealer</query>
-            </loader>
-        </collection>
-        <collection id="categoryDc"
-                    class="com.gcs.gcsplatform.entity.masterdata.Category">
-            <view extends="_minimal"/>
-            <loader id="categoryDl">
-                <query>select e from gcsplatform_Category e order by e.category</query>
-            </loader>
-        </collection>
+                  class="com.gcs.gcsplatform.entity.trade.Trade"/>
     </data>
     <layout spacing="true"
             expand="tradeTabSheet">

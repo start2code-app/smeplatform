@@ -5,16 +5,34 @@
                   class="com.gcs.gcsplatform.entity.trade.Trade"
                   provided="true"/>
         <collection id="counterpartiesDc"
-                    class="com.gcs.gcsplatform.entity.masterdata.Counterparty"
-                    provided="true"/>
+                    class="com.gcs.gcsplatform.entity.masterdata.Counterparty">
+            <view extends="_minimal"/>
+            <loader id="counterpartiesDl">
+                <query>select e from gcsplatform_Counterparty e order by e.counterparty</query>
+            </loader>
+        </collection>
         <collection id="dealersDc"
-                    class="com.gcs.gcsplatform.entity.masterdata.Dealer"
-                    provided="true"/>
+                    class="com.gcs.gcsplatform.entity.masterdata.Dealer">
+            <view extends="_minimal"/>
+            <loader id="dealersDl">
+                <query>select e from gcsplatform_Dealer e order by e.dealer</query>
+            </loader>
+        </collection>
+        <collection id="agentsDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.Agent">
+            <view extends="_minimal">
+                <property name="counterparty" view="_minimal"/>
+            </view>
+            <loader id="agentsDl">
+                <query>select e from gcsplatform_Agent e order by e.agent</query>
+            </loader>
+        </collection>
     </data>
     <layout>
         <form id="counterpartiesBrokersForm"
               dataContainer="tradeDc">
-            <groupBox>
+            <groupBox spacing="true"
+                      caption="msg://buyGroupBox.caption">
                 <lookupPickerField id="buyBrokerLookupPickerField"
                                    caption="msg://com.gcs.gcsplatform.entity.trade/Trade.buybroker"
                                    optionsContainer="dealersDc">
@@ -37,7 +55,7 @@
                 </lookupPickerField>
                 <lookupPickerField id="buyerAgentLookupPickerField"
                                    caption="msg://com.gcs.gcsplatform.entity.trade/Trade.buyerAgent"
-                                   metaClass="gcsplatform_Agent">
+                                   optionsContainer="agentsDc">
                     <actions>
                         <action id="lookup"
                                 type="picker_lookup"/>
@@ -46,7 +64,8 @@
                     </actions>
                 </lookupPickerField>
             </groupBox>
-            <groupBox>
+            <groupBox spacing="true"
+                      caption="msg://sellGroupBox.caption">
                 <lookupPickerField id="sellBrokerLookupPickerField"
                                    caption="msg://com.gcs.gcsplatform.entity.trade/Trade.sellbroker"
                                    optionsContainer="dealersDc">
@@ -69,7 +88,7 @@
                 </lookupPickerField>
                 <lookupPickerField id="sellerAgentLookupPickerField"
                                    caption="msg://com.gcs.gcsplatform.entity.trade/Trade.sellerAgent"
-                                   metaClass="gcsplatform_Agent">
+                                   optionsContainer="agentsDc">
                     <actions>
                         <action id="lookup"
                                 type="picker_lookup"/>

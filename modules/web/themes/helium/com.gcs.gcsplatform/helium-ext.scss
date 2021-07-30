@@ -1,7 +1,7 @@
 /* Define your theme modifications inside next mixin */
 @mixin com_gcs_gcsplatform-helium-ext {
 
-  .v-table-row.highlight-row {
+  .highlight-row {
       background-color: pink;
       color: black;
   }

@@ -3,7 +3,7 @@
         caption="msg://openedTradeEdit.caption"
         messagesPack="com.gcs.gcsplatform.web.screens.trade.openedtrade">
     <data>
-        <instance id="tradeContainerDc"
+        <instance id="openedTradeDc"
                   class="com.gcs.gcsplatform.entity.trade.OpenedTrade">
             <instance id="tradeDc"
                       property="trade"/>
@@ -14,10 +14,11 @@
             <loader/>
         </instance>
     </data>
-    <layout>
-        <fragment id="tradeFragment" screen="gcsplatform_TradeFragment"/>
+    <layout expand="tradeBox"
+            spacing="true">
+        <hbox id="tradeBox"/>
         <hbox id="closeTradeActions"
-              width="100%">
+              spacing="true">
             <button id="commitAndCloseBtn"
                     action="windowCommitAndClose"/>
             <button id="closeBtn"
@@ -25,13 +26,11 @@
             <button id="closeReopenTradeBtn"
                     icon="font-icon:CLOSE"
                     stylename="danger"
-                    caption="msg://closeReopenTradeBtn.caption"
-                    align="BOTTOM_RIGHT"/>
+                    caption="msg://closeReopenTradeBtn.caption"/>
             <button id="closeTradeBtn"
                     icon="font-icon:CLOSE"
                     stylename="danger"
-                    caption="msg://closeTradeBtn.caption"
-                    align="BOTTOM_RIGHT"/>
+                    caption="msg://closeTradeBtn.caption"/>
         </hbox>
     </layout>
 </window>

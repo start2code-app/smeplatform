@@ -5,6 +5,7 @@ import java.util.Objects;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.OptionsField;
+import com.haulmont.cuba.gui.components.data.Options;
 
 public class ScreenUtil {
 
@@ -20,23 +21,28 @@ public class ScreenUtil {
      * @param field              - Source field
      * @param entity             - Target entity
      * @param fieldPropertyName  - Property name in field entity (only string type property)
-     * @param entityPropertyName - Property name in target entity (only string type property)
+     * @param targetPropertyName - Property name in target entity (only string type property)
      * @param <V>                - Field type
      * @param <T>                - Entity type contained in field
      */
     public static <V extends HasValue<T> & OptionsField<T, T>, T extends Entity> void initFieldValueToStringPropertyMapping(
-            V field, Entity entity, String fieldPropertyName, String entityPropertyName) {
+            V field, Entity entity, String fieldPropertyName, String targetPropertyName) {
         field.addValueChangeListener(entityValueChangeEvent -> {
             Entity fieldEntityValue = entityValueChangeEvent.getValue();
             String fieldStringValue = null;
             if (fieldEntityValue != null) {
                 fieldStringValue = fieldEntityValue.getValue(fieldPropertyName);
             }
-            entity.setValue(entityPropertyName, fieldStringValue);
+            entity.setValue(targetPropertyName, fieldStringValue);
         });
 
-        String entityStringValue = entity.getValue(entityPropertyName);
-        T defaultFieldValue = field.getOptions().getOptions()
+        Options<T> options = field.getOptions();
+        if (options == null) {
+            return;
+        }
+
+        String entityStringValue = entity.getValue(targetPropertyName);
+        T defaultFieldValue = options.getOptions()
                 .filter(optionEntity -> Objects.equals(entityStringValue, optionEntity.getValue(fieldPropertyName)))
                 .findFirst()
                 .orElse(null);

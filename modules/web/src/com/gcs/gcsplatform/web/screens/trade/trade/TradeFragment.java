@@ -1,9 +1,10 @@
 package com.gcs.gcsplatform.web.screens.trade.trade;
 
-import com.haulmont.cuba.gui.screen.Screen;
+import javax.inject.Inject;
+
+import com.gcs.gcsplatform.entity.trade.Trade;
+import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.ScreenFragment;
-import com.haulmont.cuba.gui.screen.Subscribe;
-import com.haulmont.cuba.gui.screen.Target;
 import com.haulmont.cuba.gui.screen.UiController;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
 
@@ -11,10 +12,10 @@ import com.haulmont.cuba.gui.screen.UiDescriptor;
 @UiDescriptor("trade-fragment.xml")
 public class TradeFragment extends ScreenFragment {
 
+    @Inject
+    protected InstanceContainer<Trade> tradeDc;
 
-    @Subscribe(target = Target.PARENT_CONTROLLER)
-    protected void onBeforeShow(Screen.BeforeShowEvent event) {
-        getScreenData().loadAll();
+    public void setTrade(Trade trade) {
+        tradeDc.setItem(trade);
     }
-
 }

@@ -7,10 +7,13 @@
     <data readOnly="true">
         <collection id="dealersDc"
                     class="com.gcs.gcsplatform.entity.masterdata.Dealer">
-            <view extends="_local"/>
+            <view extends="_local">
+                <property name="user"
+                          view="_minimal"/>
+            </view>
             <loader id="dealersDl">
                 <query>
-                    <![CDATA[select e from gcsplatform_Dealer e]]>
+                    <![CDATA[select e from gcsplatform_Dealer e order by e.dealer]]>
                 </query>
             </loader>
         </collection>
@@ -37,13 +40,7 @@
             </actions>
             <columns>
                 <column id="dealer"/>
-                <column id="active"/>
-                <column id="admin"/>
-                <column id="application"/>
-                <column id="dealerName"/>
-                <column id="password"/>
-                <column id="sheet"/>
-                <column id="sheetNew"/>
+                <column id="user"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"

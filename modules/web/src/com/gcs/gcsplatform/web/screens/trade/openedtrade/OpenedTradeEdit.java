@@ -5,16 +5,22 @@ import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.trade.OpenedTrade;
 import com.gcs.gcsplatform.service.CloseTradeService;
+import com.gcs.gcsplatform.web.screens.trade.trade.TradeFragment;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;
 import com.haulmont.cuba.gui.Dialogs;
+import com.haulmont.cuba.gui.Fragments;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.app.core.inputdialog.DialogActions;
 import com.haulmont.cuba.gui.app.core.inputdialog.DialogOutcome;
 import com.haulmont.cuba.gui.app.core.inputdialog.InputParameter;
 import com.haulmont.cuba.gui.components.Button;
+import com.haulmont.cuba.gui.components.HBoxLayout;
 import com.haulmont.cuba.gui.model.InstanceContainer;
+import com.haulmont.cuba.gui.screen.DialogMode;
+import com.haulmont.cuba.gui.screen.EditedEntityContainer;
+import com.haulmont.cuba.gui.screen.LoadDataBeforeShow;
 import com.haulmont.cuba.gui.screen.MessageBundle;
 import com.haulmont.cuba.gui.screen.StandardEditor;
 import com.haulmont.cuba.gui.screen.StandardOutcome;
@@ -24,21 +30,36 @@ import com.haulmont.cuba.gui.screen.UiDescriptor;
 
 @UiController("gcsplatform_OpenedTrade.edit")
 @UiDescriptor("opened-trade-edit.xml")
+@EditedEntityContainer("openedTradeDc")
+@LoadDataBeforeShow
+@DialogMode(forceDialog = true)
 public class OpenedTradeEdit extends StandardEditor<OpenedTrade> {
 
     @Inject
-    private DataManager dataManager;
-    @Inject
-    private Dialogs dialogs;
-    @Inject
-    private Notifications notifications;
-    @Inject
-    private MessageBundle messageBundle;
-    @Inject
-    private CloseTradeService closeTradeService;
+    protected HBoxLayout tradeBox;
 
     @Inject
-    private InstanceContainer<OpenedTrade> tradeContainerDc;
+    protected DataManager dataManager;
+    @Inject
+    protected Dialogs dialogs;
+    @Inject
+    protected Notifications notifications;
+    @Inject
+    protected MessageBundle messageBundle;
+    @Inject
+    protected CloseTradeService closeTradeService;
+    @Inject
+    protected Fragments fragments;
+
+    @Inject
+    protected InstanceContainer<OpenedTrade> openedTradeDc;
+
+    @Subscribe
+    protected void onAfterShow(AfterShowEvent event) {
+        TradeFragment tradeFragment = fragments.create(this, TradeFragment.class);
+        tradeFragment.setTrade(openedTradeDc.getItem().getTrade());
+        tradeBox.add(tradeFragment.getFragment());
+    }
 
     @Subscribe("closeReopenTradeBtn")
     public void onCloseReopenTradeBtnClick(Button.ClickEvent event) {
@@ -57,7 +78,7 @@ public class OpenedTradeEdit extends StandardEditor<OpenedTrade> {
                                 .add("trade", View.LOCAL)
                                 .addView(View.LOCAL)
                                 .build());
-                        tradeContainerDc.setItem(openedTrade);
+                        openedTradeDc.setItem(openedTrade);
                         notifications.create(Notifications.NotificationType.TRAY)
                                 .withDescription(messageBundle.getMessage("tradeClosedAndReopened"))
                                 .show();

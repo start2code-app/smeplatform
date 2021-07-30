@@ -139,6 +139,8 @@ create table livetrade (
     XRATE1 decimal(10, 4),
     XRATE2 decimal(10, 4),
     XRATE3 decimal(10, 4),
+    SUB_THIRTY boolean,
+    MORE_THAN_THIRTY boolean,
     --
     primary key (TRADE_ID)
 )^
@@ -187,6 +189,8 @@ create table calloptiontrade (
     XRATE1 decimal(10, 4),
     XRATE2 decimal(10, 4),
     XRATE3 decimal(10, 4),
+    SUB_THIRTY boolean,
+    MORE_THAN_THIRTY boolean,
     --
     primary key (TRADE_ID)
 )^
@@ -235,6 +239,8 @@ create table closedtrade (
     XRATE1 decimal(10, 4),
     XRATE2 decimal(10, 4),
     XRATE3 decimal(10, 4),
+    SUB_THIRTY boolean,
+    MORE_THAN_THIRTY boolean,
     --
     primary key (TRADE_ID)
 )^
@@ -283,6 +289,8 @@ create table opentrade (
     XRATE1 decimal(10, 4),
     XRATE2 decimal(10, 4),
     XRATE3 decimal(10, 4),
+    SUB_THIRTY boolean,
+    MORE_THAN_THIRTY boolean,
     --
     primary key (TRADE_ID)
 )^

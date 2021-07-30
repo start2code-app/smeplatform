@@ -8,7 +8,8 @@
         <collection id="openedTradesDc"
                     class="com.gcs.gcsplatform.entity.trade.OpenedTrade">
             <view extends="_local">
-                <property name="trade" view="_local"/>
+                <property name="trade"
+                          view="_local"/>
             </view>
             <loader id="openedTradesDl">
                 <query><![CDATA[
