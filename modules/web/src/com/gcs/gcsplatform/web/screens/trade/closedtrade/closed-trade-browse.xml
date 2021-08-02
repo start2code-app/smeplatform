@@ -7,8 +7,10 @@
     <data readOnly="true">
         <collection id="closedTradesDc"
                     class="com.gcs.gcsplatform.entity.trade.ClosedTrade">
-            <view extends="_local">
-                <property name="trade" view="_local"/>
+            <view extends="_local"
+                  systemProperties="true">
+                <property name="trade"
+                          view="_local"/>
             </view>
             <loader id="closedTradesDl">
                 <query>

@@ -7,7 +7,8 @@
     <data readOnly="true">
         <collection id="openedTradesDc"
                     class="com.gcs.gcsplatform.entity.trade.OpenedTrade">
-            <view extends="_local">
+            <view extends="_local"
+                  systemProperties="true">
                 <property name="trade"
                           view="_local"/>
             </view>
@@ -29,7 +30,8 @@
         </filter>
         <groupTable id="openedTradesTable"
                     width="100%"
-                    dataContainer="openedTradesDc">
+                    dataContainer="openedTradesDc"
+                    multiselect="false">
             <actions>
                 <action id="create"
                         type="create"/>
