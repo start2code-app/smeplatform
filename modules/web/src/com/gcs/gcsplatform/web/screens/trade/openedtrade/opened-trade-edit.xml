@@ -16,7 +16,7 @@
     </data>
     <dialogMode forceDialog="true"
                 width="800"
-                height="600"/>
+                height="650"/>
     <layout expand="tradeBox"
             spacing="true">
         <hbox id="tradeBox"

@@ -4,6 +4,7 @@ import java.util.Date;
 import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.trade.OpenedTrade;
+import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.service.CloseTradeService;
 import com.gcs.gcsplatform.web.screens.trade.trade.TradeFragment;
 import com.haulmont.cuba.core.global.DataManager;
@@ -19,7 +20,6 @@ import com.haulmont.cuba.gui.app.core.inputdialog.InputParameter;
 import com.haulmont.cuba.gui.components.Button;
 import com.haulmont.cuba.gui.components.HBoxLayout;
 import com.haulmont.cuba.gui.model.InstanceContainer;
-import com.haulmont.cuba.gui.screen.DialogMode;
 import com.haulmont.cuba.gui.screen.EditedEntityContainer;
 import com.haulmont.cuba.gui.screen.LoadDataBeforeShow;
 import com.haulmont.cuba.gui.screen.MessageBundle;
@@ -34,6 +34,8 @@ import org.apache.commons.lang3.StringUtils;
 @EditedEntityContainer("openedTradeDc")
 @LoadDataBeforeShow
 public class OpenedTradeEdit extends StandardEditor<OpenedTrade> {
+
+    private TradeFragment tradeFragment;
 
     @Inject
     protected HBoxLayout tradeBox;
@@ -60,15 +62,17 @@ public class OpenedTradeEdit extends StandardEditor<OpenedTrade> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        TradeFragment tradeFragment = fragments.create(this, TradeFragment.class);
-        tradeFragment.setTrade(openedTradeDc.getItem().getTrade());
+        Trade trade = openedTradeDc.getItem().getTrade();
+
+        tradeFragment = fragments.create(this, TradeFragment.class);
+        tradeFragment.setTrade(trade);
         tradeBox.add(tradeFragment.getFragment());
 
         if (PersistenceHelper.isNew(getEditedEntity())) {
             closeReopenTradeBtn.setEnabled(false);
             closeTradeBtn.setEnabled(false);
         } else {
-            String traderef = openedTradeDc.getItem().getTrade().getTraderef();
+            String traderef = trade.getTraderef();
             if (!StringUtils.isEmpty(traderef)) {
                 getWindow().setCaption(messageBundle.getMessage("openedTradeEdit.caption") + " - " + traderef);
             }
@@ -93,6 +97,7 @@ public class OpenedTradeEdit extends StandardEditor<OpenedTrade> {
                                 .addView(View.LOCAL)
                                 .build());
                         openedTradeDc.setItem(openedTrade);
+                        tradeFragment.setTrade(openedTrade.getTrade());
                         notifications.create(Notifications.NotificationType.TRAY)
                                 .withDescription(messageBundle.getMessage("tradeClosedAndReopened"))
                                 .show();
