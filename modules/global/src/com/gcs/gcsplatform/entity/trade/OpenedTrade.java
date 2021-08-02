@@ -3,7 +3,7 @@ package com.gcs.gcsplatform.entity.trade;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Table(name = "opentrade") // TODO: Add prefix to table name
+@Table(name = "GCSPLATFORM_OPENED_TRADE")
 @Entity(name = "gcsplatform_OpenedTrade")
 public class OpenedTrade extends TradeContainer {
 

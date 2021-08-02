@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://openedTradeBrowse.caption"
+        focusComponent="openedTradesTable"
+        messagesPack="com.gcs.gcsplatform.web.screens.trade.openedtrade">
+    <data readOnly="true">
+        <collection id="openedTradesDc"
+                    class="com.gcs.gcsplatform.entity.trade.OpenedTrade">
+            <view extends="_local"
+                  systemProperties="true">
+                <property name="trade"
+                          view="_local"/>
+            </view>
+            <loader id="openedTradesDl">
+                <query>
+                    <![CDATA[select e from gcsplatform_OpenedTrade e order by e.updateTs desc]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="openedTradesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="openedTradesTable"
+                dataLoader="openedTradesDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="openedTradesTable"
+                    width="100%"
+                    dataContainer="openedTradesDc"
+                    multiselect="false">
+            <actions>
+                <action id="create"
+                        type="create"/>
+                <action id="edit"
+                        type="edit"/>
+                <action id="remove"
+                        type="remove"/>
+            </actions>
+            <columns>
+                <column id="trade.bondDescription"/>
+                <column id="trade.buybroker"/>
+                <column id="trade.buybrokerage"/>
+                <column id="trade.buyer"/>
+                <column id="trade.buyerAgent"/>
+                <column id="trade.calloption"/>
+                <column id="trade.category"/>
+                <column id="trade.cpair1"/>
+                <column id="trade.cpair2"/>
+                <column id="trade.cpair3"/>
+                <column id="createTs"/>
+                <column id="trade.currency"/>
+                <column id="trade.gbpEquivalent"/>
+                <column id="trade.hairCut"/>
+                <column id="trade.isin"/>
+                <column id="trade.maturityDate"/>
+                <column id="trade.nominal"/>
+                <column id="trade.notes"/>
+                <column id="trade.numdays"/>
+                <column id="trade.origtraderef"/>
+                <column id="trade.repoRate"/>
+                <column id="trade.sellbroker"/>
+                <column id="trade.sellbrokerage"/>
+                <column id="trade.seller"/>
+                <column id="trade.sellerAgent"/>
+                <column id="trade.startPrice"/>
+                <column id="trade.status"/>
+                <column id="trade.tradeCurrency"/>
+                <column id="trade.tradeDate"/>
+                <column id="trade.traderef"/>
+                <column id="updateTs"/>
+                <column id="trade.uti"/>
+                <column id="trade.valueDate"/>
+                <column id="trade.xrate1"/>
+                <column id="trade.xrate2"/>
+                <column id="trade.xrate3"/>
+                <column id="trade.gc"/>
+                <column id="trade.special"/>
+                <column id="trade.subThirty"/>
+                <column id="trade.moreThanThirty"/>
+                <column id="trade.brooveride"/>
+                <column id="trade.subs"/>
+                <column id="trade.gmSla"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="openedTradesTable.create"/>
+                <button id="editBtn"
+                        action="openedTradesTable.edit"/>
+                <button id="removeBtn"
+                        action="openedTradesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions"
+              spacing="true"
+              visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

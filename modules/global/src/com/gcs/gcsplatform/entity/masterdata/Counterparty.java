@@ -5,112 +5,109 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.haulmont.chile.core.annotations.NamePattern;
-import com.haulmont.cuba.core.entity.BaseIntIdentityIdEntity;
+import com.haulmont.cuba.core.entity.StandardEntity;
 
-@NamePattern("%s|name")
-@Table(name = "counterparty") // TODO: Add prefix to table name
+@NamePattern("%s|counterparty")
+@Table(name = "GCSPLATFORM_COUNTERPARTY")
 @Entity(name = "gcsplatform_Counterparty")
-public class Counterparty extends BaseIntIdentityIdEntity {
+public class Counterparty extends StandardEntity {
 
     private static final long serialVersionUID = -1999181841396498391L;
 
-    @Column(name = "name", nullable = false, length = 30)
-    private String name;
+    @Column(name = "COUNTERPARTY", nullable = false, unique = true, length = 30)
+    private String counterparty;
 
-    @Column(name = "active", length = 2)
-    private String active;
-
-    @Column(name = "`Address1`", length = 50)
+    @Column(name = "ADDRESS1", length = 50)
     private String address1;
 
-    @Column(name = "`Address2`", length = 50)
+    @Column(name = "ADDRESS2", length = 50)
     private String address2;
 
-    @Column(name = "`Address3`", length = 50)
+    @Column(name = "ADDRESS3", length = 50)
     private String address3;
 
-    @Column(name = "`Address4`", length = 50)
+    @Column(name = "ADDRESS4", length = 50)
     private String address4;
 
-    @Column(name = "billing_name", length = 50)
+    @Column(name = "BILLING_NAME", length = 50)
     private String billingName;
 
-    @Column(name = "billing_companyname", length = 50)
+    @Column(name = "BILLING_COMPANY_NAME", length = 50)
     private String billingCompanyName;
 
-    @Column(name = "billing_country", length = 5)
+    @Column(name = "BILLING_COUNTRY", length = 5)
     private String billingCountry;
 
-    @Column(name = "billing_info1", length = 50)
+    @Column(name = "BILLING_INFO1", length = 50)
     private String billingInfo1;
 
-    @Column(name = "billing_info2", length = 50)
+    @Column(name = "BILLING_INFO2", length = 50)
     private String billingInfo2;
 
-    @Column(name = "billing_info3", length = 50)
+    @Column(name = "BILLING_INFO3", length = 50)
     private String billingInfo3;
 
-    @Column(name = "contact_name", length = 50)
+    @Column(name = "CONTACT_NAME", length = 50)
     private String contactName;
 
-    @Column(name = "description", length = 50)
+    @Column(name = "DESCRIPTION", length = 50)
     private String description;
 
-    @Column(name = "email", length = 50)
+    @Column(name = "EMAIL", length = 50)
     private String email;
 
-    @Column(name = "email1", length = 50)
+    @Column(name = "EMAIL1", length = 50)
     private String email1;
 
-    @Column(name = "email2", length = 50)
+    @Column(name = "EMAIL2", length = 50)
     private String email2;
 
-    @Column(name = "gc_abs", length = 10)
+    @Column(name = "GC_ABS", length = 10)
     private String gcAbs;
 
-    @Column(name = "gc_corp", length = 10)
+    @Column(name = "GC_CORP", length = 10)
     private String gcCorp;
 
-    @Column(name = "gc_egb", length = 10)
+    @Column(name = "GC_EGB", length = 10)
     private String gcEgb;
 
-    @Column(name = "gc_egbpigs", length = 10)
+    @Column(name = "GC_EGBPIGS", length = 10)
     private String gcEgbpigs;
 
-    @Column(name = "gc_em", length = 10)
+    @Column(name = "GC_EM", length = 10)
     private String gcEm;
 
-    @Column(name = "gc_gilt", length = 10)
+    @Column(name = "GC_GILT", length = 10)
     private String gcGilt;
 
-    @Column(name = "gc_ssa", length = 10)
+    @Column(name = "GC_SSA", length = 10)
     private String gcSsa;
 
-    @Column(name = "gc_ust", length = 10)
+    @Column(name = "GC_UST", length = 10)
     private String gcUst;
 
-    @Column(name = "spec_abs", length = 10)
+    @Column(name = "SPEC_ABS", length = 10)
     private String specAbs;
 
-    @Column(name = "spec_corp", length = 10)
+    @Column(name = "SPEC_CORP", length = 10)
     private String specCorp;
 
-    @Column(name = "spec_egb", length = 10)
+    @Column(name = "SPEC_EGB", length = 10)
     private String specEgb;
 
-    @Column(name = "spec_egbpigs", length = 10)
+    @Column(name = "SPEC_EGBPIGS", length = 10)
     private String specEgbpigs;
 
-    @Column(name = "spec_em", length = 10)
+    @Column(name = "SPEC_EM", length = 10)
     private String specEm;
 
-    @Column(name = "spec_gilt", length = 10)
+    @Column(name = "SPEC_GILT", length = 10)
     private String specGilt;
 
-    @Column(name = "spec_ssa", length = 10)
+    @Column(name = "SPEC_SSA", length = 10)
     private String specSsa;
 
-    @Column(name = "spec_ust", length = 10)
+    @Column(name = "SPEC_UST", length = 10)
     private String specUst;
 
     public String getSpecUst() {
@@ -361,19 +358,11 @@ public class Counterparty extends BaseIntIdentityIdEntity {
         this.address1 = address1;
     }
 
-    public String getActive() {
-        return active;
+    public String getCounterparty() {
+        return counterparty;
     }
 
-    public void setActive(String active) {
-        this.active = active;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setCounterparty(String counterparty) {
+        this.counterparty = counterparty;
     }
 }

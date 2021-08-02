@@ -6,7 +6,10 @@
     <data>
         <instance id="dealerDc"
                   class="com.gcs.gcsplatform.entity.masterdata.Dealer">
-            <view extends="_local"/>
+            <view extends="_local">
+                <property name="user"
+                          view="_minimal"/>
+            </view>
             <loader/>
         </instance>
     </data>
@@ -19,20 +22,15 @@
             <column width="350px">
                 <textField id="dealerField"
                            property="dealer"/>
-                <textField id="activeField"
-                           property="active"/>
-                <textField id="adminField"
-                           property="admin"/>
-                <textField id="applicationField"
-                           property="application"/>
-                <textField id="dealerNameField"
-                           property="dealerName"/>
-                <textField id="passwordField"
-                           property="password"/>
-                <textField id="sheetField"
-                           property="sheet"/>
-                <textField id="sheetNewField"
-                           property="sheetNew"/>
+                <pickerField id="userField"
+                             property="user">
+                    <actions>
+                        <action id="lookup"
+                                type="picker_lookup"/>
+                        <action id="clear"
+                                type="picker_clear"/>
+                    </actions>
+                </pickerField>
             </column>
         </form>
         <hbox id="editActions"

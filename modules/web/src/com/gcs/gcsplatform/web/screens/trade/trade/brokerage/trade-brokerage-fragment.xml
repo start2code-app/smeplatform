@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fragment xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd">
+    <data>
+        <instance id="tradeDc"
+                  class="com.gcs.gcsplatform.entity.trade.Trade"
+                  provided="true"/>
+        <collection id="categoryDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.Category">
+            <view extends="_minimal"/>
+            <loader id="categoryDl">
+                <query>select e from gcsplatform_Category e order by e.category</query>
+            </loader>
+        </collection>
+    </data>
+    <layout spacing="true">
+        <hbox width="100%"
+              spacing="true">
+            <groupBox id="brokerageTypeBox"
+                      caption="msg://brokerageTypeBox.caption"
+                      spacing="true"
+                      css="width:100%">
+                <form id="brokerageTypeForm"
+                      dataContainer="tradeDc">
+                    <column width="190px">
+                        <lookupPickerField id="categoryLookupPickerField"
+                                           caption="msg://com.gcs.gcsplatform.entity.trade/Trade.category"
+                                           optionsContainer="categoryDc">
+                            <actions>
+                                <action id="lookup"
+                                        type="picker_lookup"/>
+                                <action id="clear"
+                                        type="picker_clear"/>
+                            </actions>
+                        </lookupPickerField>
+                        <checkBox id="gcCheckBox"
+                                  property="gc"/>
+                        <checkBox id="specialCheckBox"
+                                  property="special"/>
+                        <checkBox id="subThirtyCheckBox"
+                                  property="subThirty"/>
+                        <checkBox id="moreThanThirtyCheckBox"
+                                  property="moreThanThirty"/>
+                    </column>
+                </form>
+            </groupBox>
+            <groupBox id="broOverideBox"
+                      caption="msg://broOverideBox.caption"
+                      spacing="true"
+                      css="width:100%"
+                      height="100%">
+                <form id="broOverideForm"
+                      dataContainer="tradeDc">
+                    <column width="200px">
+                        <checkBox id="broOverideCheckBox"
+                                  property="brooveride"/>
+                        <checkBox id="subsCheckBox"
+                                  property="subs"/>
+                        <textField id="origtraderefField"
+                                   property="origtraderef"/>
+                    </column>
+                </form>
+            </groupBox>
+        </hbox>
+        <groupBox id="brokerageBox"
+                  caption="msg://brokerageBox.caption"
+                  spacing="true"
+                  css="width:100%">
+            <form id="brokerageForm"
+                  dataContainer="tradeDc">
+                <column width="200px">
+                    <textField id="sellBrokerageField"
+                               property="sellbrokerage"
+                               editable="false"/>
+                    <textField id="buyBrokerageField"
+                               property="buybrokerage"
+                               editable="false"/>
+                </column>
+            </form>
+        </groupBox>
+
+    </layout>
+</fragment>

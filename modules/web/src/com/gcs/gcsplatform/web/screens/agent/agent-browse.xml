@@ -13,7 +13,7 @@
             </view>
             <loader id="agentsDl">
                 <query>
-                    <![CDATA[select e from gcsplatform_Agent e]]>
+                    <![CDATA[select e from gcsplatform_Agent e order by e.agent]]>
                 </query>
             </loader>
         </collection>
@@ -40,7 +40,7 @@
             </actions>
             <columns>
                 <column id="counterparty"/>
-                <column id="agentName"/>
+                <column id="agent"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"

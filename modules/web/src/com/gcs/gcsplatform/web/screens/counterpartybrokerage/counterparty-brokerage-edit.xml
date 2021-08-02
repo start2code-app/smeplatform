@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://counterpartyBrokerageEdit.caption"
+        focusComponent="form"
+        messagesPack="com.gcs.gcsplatform.web.screens.counterpartybrokerage">
+    <data>
+        <instance id="counterpartyBrokerageDc"
+                  class="com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerage">
+            <view extends="_local">
+                <property name="counterparty"
+                          view="_minimal"/>
+                <property name="category"
+                          view="_minimal"/>
+            </view>
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions"
+            spacing="true">
+        <form id="form"
+              dataContainer="counterpartyBrokerageDc">
+            <column width="350px">
+                <pickerField id="counterpartyField"
+                             property="counterparty">
+                    <actions>
+                        <action id="lookup"
+                                type="picker_lookup"/>
+                        <action id="clear"
+                                type="picker_clear"/>
+                    </actions>
+                </pickerField>
+                <pickerField id="categoryField"
+                             property="category">
+                    <actions>
+                        <action id="lookup"
+                                type="picker_lookup"/>
+                        <action id="clear"
+                                type="picker_clear"/>
+                    </actions>
+                </pickerField>
+                <lookupField id="brokerageTypeField"
+                             optionsEnum="com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerageType"
+                             property="brokerageType"/>
+                <textField id="brokerageValueField"
+                           property="brokerageValue"/>
+            </column>
+        </form>
+        <hbox id="editActions"
+              spacing="true">
+            <button id="commitAndCloseBtn"
+                    action="windowCommitAndClose"/>
+            <button id="closeBtn"
+                    action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

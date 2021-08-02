@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://closedTradeEdit.caption"
+        focusComponent="form"
+        messagesPack="com.gcs.gcsplatform.web.screens.trade.closedtrade">
+    <data>
+        <instance id="closedTradeDc"
+                  class="com.gcs.gcsplatform.entity.trade.ClosedTrade">
+            <view extends="_local">
+                <property name="trade" view="_local"/>
+            </view>
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="scrollBox"
+            spacing="true">
+        <scrollBox id="scrollBox"
+                   spacing="true">
+            <form id="form"
+                  dataContainer="closedTradeDc">
+                <column width="350px">
+                    <textField id="bondDescriptionField"
+                               property="trade.bondDescription"/>
+                    <checkBox id="brooverideField"
+                              property="trade.brooveride"/>
+                    <textField id="buybrokerField"
+                               property="trade.buybroker"/>
+                    <textField id="buybrokerageField"
+                               property="trade.buybrokerage"/>
+                    <textField id="buyerField"
+                               property="trade.buyer"/>
+                    <textField id="buyerAgentField"
+                               property="trade.buyerAgent"/>
+                    <textField id="calloptionField"
+                               property="trade.calloption"/>
+                    <textField id="categoryField"
+                               property="trade.category"/>
+                    <textField id="cpair1Field"
+                               property="trade.cpair1"/>
+                    <textField id="cpair2Field"
+                               property="trade.cpair2"/>
+                    <textField id="cpair3Field"
+                               property="trade.cpair3"/>
+                    <dateField id="createTsField"
+                               property="createTs"/>
+                    <textField id="currencyField"
+                               property="trade.currency"/>
+                    <textField id="gbpEquivalentField"
+                               property="trade.gbpEquivalent"/>
+                    <checkBox id="gcField"
+                              property="trade.gc"/>
+                    <textField id="hairCutField"
+                               property="trade.hairCut"/>
+                    <textField id="isinField"
+                               property="trade.isin"/>
+                    <dateField id="maturityDateField"
+                               property="trade.maturityDate"/>
+                    <textField id="nominalField"
+                               property="trade.nominal"/>
+                    <textField id="notesField"
+                               property="trade.notes"/>
+                    <textField id="numdaysField"
+                               property="trade.numdays"/>
+                    <textField id="origtraderefField"
+                               property="trade.origtraderef"/>
+                    <textField id="repoRateField"
+                               property="trade.repoRate"/>
+                    <textField id="sellbrokerField"
+                               property="trade.sellbroker"/>
+                    <textField id="sellbrokerageField"
+                               property="trade.sellbrokerage"/>
+                    <textField id="sellerField"
+                               property="trade.seller"/>
+                    <textField id="sellerAgentField"
+                               property="trade.sellerAgent"/>
+                    <checkBox id="specialField"
+                              property="trade.special"/>
+                    <textField id="startPriceField"
+                               property="trade.startPrice"/>
+                    <textField id="statusField"
+                               property="trade.status"/>
+                    <checkBox id="subsField"
+                              property="trade.subs"/>
+                    <textField id="tradeCurrencyField"
+                               property="trade.tradeCurrency"/>
+                    <dateField id="tradeDateField"
+                               property="trade.tradeDate"/>
+                    <textField id="traderefField"
+                               property="trade.traderef"/>
+                    <dateField id="updateTsField"
+                               property="updateTs"/>
+                    <textField id="utiField"
+                               property="trade.uti"/>
+                    <dateField id="valueDateField"
+                               property="trade.valueDate"/>
+                    <textField id="xrate1Field"
+                               property="trade.xrate1"/>
+                    <textField id="xrate2Field"
+                               property="trade.xrate2"/>
+                    <textField id="xrate3Field"
+                               property="trade.xrate3"/>
+                </column>
+            </form>
+        </scrollBox>
+        <hbox id="editActions"
+              spacing="true">
+            <button id="commitAndCloseBtn"
+                    action="windowCommitAndClose"/>
+            <button id="closeBtn"
+                    action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

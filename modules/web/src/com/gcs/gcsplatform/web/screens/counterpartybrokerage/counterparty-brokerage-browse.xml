@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://counterpartyBrokerageBrowse.caption"
+        focusComponent="counterpartyBrokeragesTable"
+        messagesPack="com.gcs.gcsplatform.web.screens.counterpartybrokerage">
+    <data readOnly="true">
+        <collection id="counterpartyBrokeragesDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerage">
+            <view extends="_local">
+                <property name="counterparty"
+                          view="_minimal"/>
+                <property name="category"
+                          view="_minimal"/>
+            </view>
+            <loader id="counterpartyBrokeragesDl">
+                <query>
+                    <![CDATA[select e from gcsplatform_CounterpartyBrokerage e order by e.counterparty]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="counterpartyBrokeragesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="counterpartyBrokeragesTable"
+                dataLoader="counterpartyBrokeragesDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="counterpartyBrokeragesTable"
+                    width="100%"
+                    dataContainer="counterpartyBrokeragesDc">
+            <actions>
+                <action id="create"
+                        type="create"/>
+                <action id="edit"
+                        type="edit"/>
+                <action id="remove"
+                        type="remove"/>
+            </actions>
+            <columns>
+                <column id="counterparty"/>
+                <column id="category"/>
+                <column id="brokerageType"/>
+                <column id="brokerageValue"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="counterpartyBrokeragesTable.create"/>
+                <button id="editBtn"
+                        action="counterpartyBrokeragesTable.edit"/>
+                <button id="removeBtn"
+                        action="counterpartyBrokeragesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions"
+              spacing="true"
+              visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

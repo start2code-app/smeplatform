@@ -2,11 +2,13 @@ package com.gcs.gcsplatform.entity.trade;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerageType;
 import com.haulmont.chile.core.annotations.MetaClass;
 import com.haulmont.chile.core.annotations.NumberFormat;
 import com.haulmont.cuba.core.entity.EmbeddableEntity;
@@ -50,10 +52,6 @@ public class Trade extends EmbeddableEntity {
 
     @Column(name = "CPAIR3", length = 10)
     private String cpair3;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "CREATED", nullable = false)
-    private Date created;
 
     @Column(name = "CURRENCY", length = 5)
     private String currency;
@@ -124,10 +122,6 @@ public class Trade extends EmbeddableEntity {
     @Column(name = "TRADEREF", length = 20)
     private String traderef;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "UPDATED_ON")
-    private Date updatedOn;
-
     @Column(name = "UTI", length = 50)
     private String uti;
 
@@ -145,6 +139,53 @@ public class Trade extends EmbeddableEntity {
     @Column(name = "XRATE3", precision = 10, scale = 4)
     @NumberFormat(pattern = "#,##0.0000")
     private BigDecimal xrate3;
+
+    @Column(name = "SUB_THIRTY")
+    private Boolean subThirty;
+
+    @Column(name = "MORE_THAN_THIRTY")
+    private Boolean moreThanThirty;
+
+    @Column(name = "GM_SLA")
+    private Boolean gmSla;
+
+    @Nullable
+    public CounterpartyBrokerageType getBrokerageType() {
+        if (Boolean.TRUE.equals(gc)) {
+            return CounterpartyBrokerageType.GC;
+        } else if (Boolean.TRUE.equals(special)) {
+            return CounterpartyBrokerageType.SPECIAL;
+        } else if (Boolean.TRUE.equals(subThirty)) {
+            return CounterpartyBrokerageType.SUB_THIRTY;
+        } else if (Boolean.TRUE.equals(moreThanThirty)) {
+            return CounterpartyBrokerageType.MORE_THAN_THIRTY;
+        }
+        return null;
+    }
+
+    public Boolean getGmSla() {
+        return gmSla;
+    }
+
+    public void setGmSla(Boolean gmSla) {
+        this.gmSla = gmSla;
+    }
+
+    public Boolean getMoreThanThirty() {
+        return moreThanThirty;
+    }
+
+    public void setMoreThanThirty(Boolean moreThanThirty) {
+        this.moreThanThirty = moreThanThirty;
+    }
+
+    public Boolean getSubThirty() {
+        return subThirty;
+    }
+
+    public void setSubThirty(Boolean subThirty) {
+        this.subThirty = subThirty;
+    }
 
     public BigDecimal getXrate3() {
         return xrate3;
@@ -184,14 +225,6 @@ public class Trade extends EmbeddableEntity {
 
     public void setUti(String uti) {
         this.uti = uti;
-    }
-
-    public Date getUpdatedOn() {
-        return updatedOn;
-    }
-
-    public void setUpdatedOn(Date updatedOn) {
-        this.updatedOn = updatedOn;
     }
 
     public String getTraderef() {
@@ -368,14 +401,6 @@ public class Trade extends EmbeddableEntity {
 
     public void setCurrency(String currency) {
         this.currency = currency;
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
     }
 
     public String getCpair3() {
