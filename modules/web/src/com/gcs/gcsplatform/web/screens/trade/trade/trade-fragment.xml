@@ -6,7 +6,8 @@
     </data>
     <layout spacing="true"
             expand="tradeTabSheet">
-        <tabSheet id="tradeTabSheet">
+        <tabSheet id="tradeTabSheet"
+                  stylename="framed">
             <tab id="descriptionTab"
                  caption="msg://descriptionTab.caption"
                  spacing="true"
@@ -73,7 +74,7 @@
                     <textArea id="notesField"
                               caption="Notes"
                               cols="40"
-                              rows="3"/>
+                              rows="6"/>
                 </form>
             </tab>
         </tabSheet>

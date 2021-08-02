@@ -27,12 +27,12 @@ import com.haulmont.cuba.gui.screen.StandardEditor;
 import com.haulmont.cuba.gui.screen.Subscribe;
 import com.haulmont.cuba.gui.screen.UiController;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
+import org.apache.commons.lang3.StringUtils;
 
 @UiController("gcsplatform_OpenedTrade.edit")
 @UiDescriptor("opened-trade-edit.xml")
 @EditedEntityContainer("openedTradeDc")
 @LoadDataBeforeShow
-@DialogMode(forceDialog = true)
 public class OpenedTradeEdit extends StandardEditor<OpenedTrade> {
 
     @Inject
@@ -67,6 +67,11 @@ public class OpenedTradeEdit extends StandardEditor<OpenedTrade> {
         if (PersistenceHelper.isNew(getEditedEntity())) {
             closeReopenTradeBtn.setEnabled(false);
             closeTradeBtn.setEnabled(false);
+        } else {
+            String traderef = openedTradeDc.getItem().getTrade().getTraderef();
+            if (!StringUtils.isEmpty(traderef)) {
+                getWindow().setCaption(messageBundle.getMessage("openedTradeEdit.caption") + " - " + traderef);
+            }
         }
     }
 

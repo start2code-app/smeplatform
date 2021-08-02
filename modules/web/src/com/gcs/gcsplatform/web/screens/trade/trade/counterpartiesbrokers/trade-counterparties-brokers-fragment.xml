@@ -21,18 +21,20 @@
         <collection id="agentsDc"
                     class="com.gcs.gcsplatform.entity.masterdata.Agent">
             <view extends="_minimal">
-                <property name="counterparty" view="_minimal"/>
+                <property name="counterparty"
+                          view="_minimal"/>
             </view>
             <loader id="agentsDl">
                 <query>select e from gcsplatform_Agent e order by e.agent</query>
             </loader>
         </collection>
     </data>
-    <layout>
-        <form id="counterpartiesBrokersForm"
-              dataContainer="tradeDc">
-            <groupBox spacing="true"
-                      caption="msg://buyGroupBox.caption">
+    <layout spacing="true">
+        <groupBox id="buyBox"
+                  spacing="true"
+                  caption="msg://buyGroupBox.caption"
+                  css="width:100%">
+            <form>
                 <lookupPickerField id="buyBrokerLookupPickerField"
                                    caption="msg://com.gcs.gcsplatform.entity.trade/Trade.buybroker"
                                    optionsContainer="dealersDc">
@@ -63,9 +65,13 @@
                                 type="picker_clear"/>
                     </actions>
                 </lookupPickerField>
-            </groupBox>
-            <groupBox spacing="true"
-                      caption="msg://sellGroupBox.caption">
+            </form>
+        </groupBox>
+        <groupBox id="sellBox"
+                  spacing="true"
+                  caption="msg://sellGroupBox.caption"
+                  css="width:100%">
+            <form>
                 <lookupPickerField id="sellBrokerLookupPickerField"
                                    caption="msg://com.gcs.gcsplatform.entity.trade/Trade.sellbroker"
                                    optionsContainer="dealersDc">
@@ -96,7 +102,7 @@
                                 type="picker_clear"/>
                     </actions>
                 </lookupPickerField>
-            </groupBox>
-        </form>
+            </form>
+        </groupBox>
     </layout>
 </fragment>

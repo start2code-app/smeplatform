@@ -14,9 +14,13 @@
             <loader/>
         </instance>
     </data>
+    <dialogMode forceDialog="true"
+                width="800"
+                height="600"/>
     <layout expand="tradeBox"
             spacing="true">
-        <hbox id="tradeBox"/>
+        <hbox id="tradeBox"
+              width="100%"/>
         <hbox id="editActions"
               spacing="true">
             <button id="commitAndCloseBtn"
