@@ -43,8 +43,8 @@
                                property="trade.cpair2"/>
                     <textField id="cpair3Field"
                                property="trade.cpair3"/>
-                    <dateField id="createdField"
-                               property="trade.created"/>
+                    <dateField id="createTsField"
+                               property="createTs"/>
                     <textField id="currencyField"
                                property="trade.currency"/>
                     <textField id="gbpEquivalentField"
@@ -89,8 +89,8 @@
                                property="trade.tradeDate"/>
                     <textField id="traderefField"
                                property="trade.traderef"/>
-                    <dateField id="updatedOnField"
-                               property="trade.updatedOn"/>
+                    <dateField id="updateTsField"
+                               property="updateTs"/>
                     <textField id="utiField"
                                property="trade.uti"/>
                     <dateField id="valueDateField"

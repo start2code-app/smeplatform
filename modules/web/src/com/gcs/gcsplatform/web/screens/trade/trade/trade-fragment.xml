@@ -62,10 +62,6 @@
                                enable="false"/>
                     <dateField id="tradeDateField"
                                property="tradeDate"/>
-                    <dateField id="updatedOnField"
-                               property="updatedOn"/>
-                    <dateField id="createdField"
-                               property="created"/>
                 </form>
             </tab>
             <tab id="notesTab"

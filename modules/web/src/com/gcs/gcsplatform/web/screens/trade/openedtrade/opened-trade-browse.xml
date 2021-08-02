@@ -12,9 +12,8 @@
                           view="_local"/>
             </view>
             <loader id="openedTradesDl">
-                <query><![CDATA[
-                    select e from gcsplatform_OpenedTrade e
-                    order by e.trade.updatedOn desc]]>
+                <query>
+                    <![CDATA[select e from gcsplatform_OpenedTrade e order by e.updateTs desc]]>
                 </query>
             </loader>
         </collection>
@@ -50,7 +49,7 @@
                 <column id="trade.cpair1"/>
                 <column id="trade.cpair2"/>
                 <column id="trade.cpair3"/>
-                <column id="trade.created"/>
+                <column id="createTs"/>
                 <column id="trade.currency"/>
                 <column id="trade.gbpEquivalent"/>
                 <column id="trade.hairCut"/>
@@ -70,7 +69,7 @@
                 <column id="trade.tradeCurrency"/>
                 <column id="trade.tradeDate"/>
                 <column id="trade.traderef"/>
-                <column id="trade.updatedOn"/>
+                <column id="updateTs"/>
                 <column id="trade.uti"/>
                 <column id="trade.valueDate"/>
                 <column id="trade.xrate1"/>
