@@ -93,19 +93,17 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
         if (event.isUserOriginated()) {
             initAgents(buyerLookupPickerField, buyerAgentLookupPickerField);
             buyerAgentLookupPickerField.clear();
-            updateBuyerBrokerage();
-        }
-    }
 
-    protected void updateBuyerBrokerage() {
-        Trade trade = tradeDc.getItem();
-        if (Boolean.TRUE.equals(trade.getBrooveride()) || Boolean.TRUE.equals(trade.getSubs())) {
-            return;
-        }
+            Trade trade = tradeDc.getItem();
+            if (Boolean.TRUE.equals(trade.getBrooveride()) || Boolean.TRUE.equals(trade.getSubs())) {
+                return;
+            }
 
-        BigDecimal buyBrokerage = brokerageService.findBrokerageValue(trade.getBuyer(), trade.getCategory(),
-                trade.getBrokerageType());
-        trade.setBuybrokerage(buyBrokerage);
+            String buyerCounterparty = event.getValue() != null ? event.getValue().getCounterparty() : null;
+            BigDecimal buyBrokerage = brokerageService.findBrokerageValue(buyerCounterparty, trade.getCategory(),
+                    trade.getBrokerageType());
+            trade.setBuybrokerage(buyBrokerage);
+        }
     }
 
     @Subscribe("sellerAgentLookupPickerField")
@@ -124,19 +122,17 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
         if (event.isUserOriginated()) {
             initAgents(sellerLookupPickerField, sellerAgentLookupPickerField);
             sellerAgentLookupPickerField.clear();
-            updateSellerBrokerage();
-        }
-    }
 
-    protected void updateSellerBrokerage() {
-        Trade trade = tradeDc.getItem();
-        if (Boolean.TRUE.equals(trade.getBrooveride()) || Boolean.TRUE.equals(trade.getSubs())) {
-            return;
-        }
+            Trade trade = tradeDc.getItem();
+            if (Boolean.TRUE.equals(trade.getBrooveride()) || Boolean.TRUE.equals(trade.getSubs())) {
+                return;
+            }
 
-        BigDecimal sellBrokerage = brokerageService.findBrokerageValue(trade.getSeller(), trade.getCategory(),
-                trade.getBrokerageType());
-        trade.setSellbrokerage(sellBrokerage);
+            String sellerCounterparty = event.getValue() != null ? event.getValue().getCounterparty() : null;
+            BigDecimal sellBrokerage = brokerageService.findBrokerageValue(sellerCounterparty, trade.getCategory(),
+                    trade.getBrokerageType());
+            trade.setSellbrokerage(sellBrokerage);
+        }
     }
 
     protected void initAgents(LookupPickerField<Counterparty> counterpartyField, LookupPickerField<Agent> agentField) {
