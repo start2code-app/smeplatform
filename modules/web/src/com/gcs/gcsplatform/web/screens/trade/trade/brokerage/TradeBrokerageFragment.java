@@ -98,8 +98,8 @@ public class TradeBrokerageFragment extends ScreenFragment {
         } else {
             sellBrokerageField.setEditable(false);
             buyBrokerageField.setEditable(false);
+            updateTradeBrokerage();
         }
-        updateTradeBrokerage();
     }
 
     @Subscribe("gcCheckBox")

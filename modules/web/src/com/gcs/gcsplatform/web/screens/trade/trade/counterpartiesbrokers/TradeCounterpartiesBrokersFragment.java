@@ -1,5 +1,6 @@
 package com.gcs.gcsplatform.web.screens.trade.trade.counterpartiesbrokers;
 
+import java.math.BigDecimal;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -8,6 +9,7 @@ import com.gcs.gcsplatform.entity.masterdata.Counterparty;
 import com.gcs.gcsplatform.entity.masterdata.Dealer;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.service.AgentService;
+import com.gcs.gcsplatform.service.BrokerageService;
 import com.gcs.gcsplatform.web.screens.agent.AgentBrowse;
 import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;
@@ -30,6 +32,8 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
 
     @Inject
     protected AgentService agentService;
+    @Inject
+    protected BrokerageService brokerageService;
 
     @Inject
     protected LookupPickerField<Dealer> buyBrokerLookupPickerField;
@@ -89,7 +93,19 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
         if (event.isUserOriginated()) {
             initAgents(buyerLookupPickerField, buyerAgentLookupPickerField);
             buyerAgentLookupPickerField.clear();
+            updateBuyerBrokerage();
         }
+    }
+
+    protected void updateBuyerBrokerage() {
+        Trade trade = tradeDc.getItem();
+        if (Boolean.TRUE.equals(trade.getBrooveride()) || Boolean.TRUE.equals(trade.getSubs())) {
+            return;
+        }
+
+        BigDecimal buyBrokerage = brokerageService.findBrokerageValue(trade.getBuyer(), trade.getCategory(),
+                trade.getBrokerageType());
+        trade.setBuybrokerage(buyBrokerage);
     }
 
     @Subscribe("sellerAgentLookupPickerField")
@@ -108,7 +124,19 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
         if (event.isUserOriginated()) {
             initAgents(sellerLookupPickerField, sellerAgentLookupPickerField);
             sellerAgentLookupPickerField.clear();
+            updateSellerBrokerage();
         }
+    }
+
+    protected void updateSellerBrokerage() {
+        Trade trade = tradeDc.getItem();
+        if (Boolean.TRUE.equals(trade.getBrooveride()) || Boolean.TRUE.equals(trade.getSubs())) {
+            return;
+        }
+
+        BigDecimal sellBrokerage = brokerageService.findBrokerageValue(trade.getSeller(), trade.getCategory(),
+                trade.getBrokerageType());
+        trade.setSellbrokerage(sellBrokerage);
     }
 
     protected void initAgents(LookupPickerField<Counterparty> counterpartyField, LookupPickerField<Agent> agentField) {

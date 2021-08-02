@@ -2,7 +2,6 @@ package com.gcs.gcsplatform.web.screens.trade.trade;
 
 import javax.inject.Inject;
 
-import com.gcs.gcsplatform.entity.masterdata.Counterparty;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.ScreenFragment;

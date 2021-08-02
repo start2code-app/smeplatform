@@ -7,6 +7,7 @@ import com.gcs.gcsplatform.entity.trade.OpenedTrade;
 import com.gcs.gcsplatform.service.CloseTradeService;
 import com.gcs.gcsplatform.web.screens.trade.trade.TradeFragment;
 import com.haulmont.cuba.core.global.DataManager;
+import com.haulmont.cuba.core.global.PersistenceHelper;
 import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;
 import com.haulmont.cuba.gui.Dialogs;
@@ -37,6 +38,10 @@ public class OpenedTradeEdit extends StandardEditor<OpenedTrade> {
 
     @Inject
     protected HBoxLayout tradeBox;
+    @Inject
+    protected Button closeReopenTradeBtn;
+    @Inject
+    protected Button closeTradeBtn;
 
     @Inject
     protected DataManager dataManager;
@@ -59,6 +64,11 @@ public class OpenedTradeEdit extends StandardEditor<OpenedTrade> {
         TradeFragment tradeFragment = fragments.create(this, TradeFragment.class);
         tradeFragment.setTrade(openedTradeDc.getItem().getTrade());
         tradeBox.add(tradeFragment.getFragment());
+
+        if (PersistenceHelper.isNew(getEditedEntity())) {
+            closeReopenTradeBtn.setEnabled(false);
+            closeTradeBtn.setEnabled(false);
+        }
     }
 
     @Subscribe("closeReopenTradeBtn")
