@@ -24,7 +24,6 @@ import com.haulmont.cuba.gui.screen.EditedEntityContainer;
 import com.haulmont.cuba.gui.screen.LoadDataBeforeShow;
 import com.haulmont.cuba.gui.screen.MessageBundle;
 import com.haulmont.cuba.gui.screen.StandardEditor;
-import com.haulmont.cuba.gui.screen.StandardOutcome;
 import com.haulmont.cuba.gui.screen.Subscribe;
 import com.haulmont.cuba.gui.screen.UiController;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
@@ -72,7 +71,7 @@ public class OpenedTradeEdit extends StandardEditor<OpenedTrade> {
     }
 
     @Subscribe("closeReopenTradeBtn")
-    public void onCloseReopenTradeBtnClick(Button.ClickEvent event) {
+    protected void onCloseReopenTradeBtnClick(Button.ClickEvent event) {
         dialogs.createInputDialog(this)
                 .withCaption(messageBundle.getMessage("closeReopenTradeDialog.caption"))
                 .withParameter(InputParameter.dateTimeParameter("maturityDate")
@@ -98,7 +97,7 @@ public class OpenedTradeEdit extends StandardEditor<OpenedTrade> {
     }
 
     @Subscribe("closeTradeBtn")
-    public void onCloseTradeBtnClick(Button.ClickEvent event) {
+    protected void onCloseTradeBtnClick(Button.ClickEvent event) {
         dialogs.createInputDialog(this)
                 .withCaption(messageBundle.getMessage("closeTradeDialog.caption"))
                 .withParameter(InputParameter.dateTimeParameter("maturityDate")
@@ -109,7 +108,7 @@ public class OpenedTradeEdit extends StandardEditor<OpenedTrade> {
                     if (inputDialogCloseEvent.closedWith(DialogOutcome.OK)) {
                         Date maturityDate = inputDialogCloseEvent.getValue("maturityDate");
                         closeTradeService.close(getEditedEntity(), maturityDate);
-                        close(StandardOutcome.COMMIT);
+                        closeWithDiscard();
                         notifications.create(Notifications.NotificationType.TRAY)
                                 .withDescription(messageBundle.getMessage("tradeClosed"))
                                 .show();

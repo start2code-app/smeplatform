@@ -2,11 +2,15 @@ package com.gcs.gcsplatform.web.screens.trade.openedtrade;
 
 import javax.inject.Inject;
 
-import com.gcs.gcsplatform.entity.trade.Trade;
-import com.haulmont.chile.core.model.MetaPropertyPath;
-import com.haulmont.cuba.gui.model.CollectionLoader;
-import com.haulmont.cuba.gui.screen.*;
 import com.gcs.gcsplatform.entity.trade.OpenedTrade;
+import com.gcs.gcsplatform.entity.trade.Trade;
+import com.haulmont.cuba.gui.model.CollectionLoader;
+import com.haulmont.cuba.gui.screen.Install;
+import com.haulmont.cuba.gui.screen.LoadDataBeforeShow;
+import com.haulmont.cuba.gui.screen.LookupComponent;
+import com.haulmont.cuba.gui.screen.StandardLookup;
+import com.haulmont.cuba.gui.screen.UiController;
+import com.haulmont.cuba.gui.screen.UiDescriptor;
 import org.apache.commons.lang3.StringUtils;
 
 @UiController("gcsplatform_OpenedTrade.browse")
@@ -20,9 +24,7 @@ public class OpenedTradeBrowse extends StandardLookup<OpenedTrade> {
 
     @Install(to = "openedTradesTable.edit", subject = "afterCloseHandler")
     protected void openedTradesTableEditAfterCloseHandler(AfterCloseEvent afterCloseEvent) {
-        if (afterCloseEvent.closedWith(StandardOutcome.COMMIT)) {
-            openedTradesDl.load();
-        }
+        openedTradesDl.load();
     }
 
     @Install(to = "openedTradesTable", subject = "styleProvider")
@@ -30,7 +32,7 @@ public class OpenedTradeBrowse extends StandardLookup<OpenedTrade> {
         Trade trade = entity.getTrade();
         if (property == null && (StringUtils.isEmpty(trade.getBuybroker()) || StringUtils.isEmpty(
                 trade.getSellbroker()))) {
-            return "highlight-row";
+            return "v-table-row highlight-row";
         }
         return null;
     }
