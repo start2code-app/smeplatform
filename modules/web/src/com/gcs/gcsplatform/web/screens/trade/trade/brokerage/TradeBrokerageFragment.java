@@ -66,6 +66,8 @@ public class TradeBrokerageFragment extends ScreenFragment {
             buyBrokerageField.setEditable(true);
             sellBrokerageField.setEditable(true);
         }
+
+        origtraderefField.setVisible(Boolean.TRUE.equals(trade.getSubs()));
     }
 
     @Subscribe("subsCheckBox")
@@ -111,8 +113,8 @@ public class TradeBrokerageFragment extends ScreenFragment {
             specialCheckBox.setValue(false);
             subThirtyCheckBox.setValue(false);
             moreThanThirtyCheckBox.setValue(false);
-            updateTradeBrokerage();
         }
+        updateTradeBrokerage();
     }
 
     @Subscribe("specialCheckBox")
@@ -124,8 +126,8 @@ public class TradeBrokerageFragment extends ScreenFragment {
             gcCheckBox.setValue(false);
             subThirtyCheckBox.setValue(false);
             moreThanThirtyCheckBox.setValue(false);
-            updateTradeBrokerage();
         }
+        updateTradeBrokerage();
     }
 
     @Subscribe("subThirtyCheckBox")
@@ -137,8 +139,8 @@ public class TradeBrokerageFragment extends ScreenFragment {
             specialCheckBox.setValue(false);
             gcCheckBox.setValue(false);
             moreThanThirtyCheckBox.setValue(false);
-            updateTradeBrokerage();
         }
+        updateTradeBrokerage();
     }
 
     @Subscribe("moreThanThirtyCheckBox")
@@ -150,8 +152,8 @@ public class TradeBrokerageFragment extends ScreenFragment {
             specialCheckBox.setValue(false);
             subThirtyCheckBox.setValue(false);
             gcCheckBox.setValue(false);
-            updateTradeBrokerage();
         }
+        updateTradeBrokerage();
     }
 
     @Subscribe("categoryLookupPickerField")
