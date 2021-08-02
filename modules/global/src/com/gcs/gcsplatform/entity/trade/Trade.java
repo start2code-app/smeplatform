@@ -53,10 +53,6 @@ public class Trade extends EmbeddableEntity {
     @Column(name = "CPAIR3", length = 10)
     private String cpair3;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "CREATED", nullable = false)
-    private Date created;
-
     @Column(name = "CURRENCY", length = 5)
     private String currency;
 
@@ -125,10 +121,6 @@ public class Trade extends EmbeddableEntity {
 
     @Column(name = "TRADEREF", length = 20)
     private String traderef;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "UPDATED_ON")
-    private Date updatedOn;
 
     @Column(name = "UTI", length = 50)
     private String uti;
@@ -233,14 +225,6 @@ public class Trade extends EmbeddableEntity {
 
     public void setUti(String uti) {
         this.uti = uti;
-    }
-
-    public Date getUpdatedOn() {
-        return updatedOn;
-    }
-
-    public void setUpdatedOn(Date updatedOn) {
-        this.updatedOn = updatedOn;
     }
 
     public String getTraderef() {
@@ -417,14 +401,6 @@ public class Trade extends EmbeddableEntity {
 
     public void setCurrency(String currency) {
         this.currency = currency;
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
     }
 
     public String getCpair3() {
