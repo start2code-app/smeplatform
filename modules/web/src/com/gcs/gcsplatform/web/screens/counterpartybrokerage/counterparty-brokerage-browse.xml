@@ -55,7 +55,6 @@
                         action="counterpartyBrokeragesTable.edit"/>
                 <button id="removeBtn"
                         action="counterpartyBrokeragesTable.remove"/>
-                <button id="test"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions"
