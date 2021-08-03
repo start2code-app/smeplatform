@@ -36,11 +36,15 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
     protected BrokerageService brokerageService;
 
     @Inject
+    protected LookupPickerField<Dealer> buySplitBrokerLookupPickerField;
+    @Inject
     protected LookupPickerField<Dealer> buyBrokerLookupPickerField;
     @Inject
     protected LookupPickerField<Counterparty> buyerLookupPickerField;
     @Inject
     protected LookupPickerField<Agent> buyerAgentLookupPickerField;
+    @Inject
+    protected LookupPickerField<Dealer> sellSplitBrokerLookupPickerField;
     @Inject
     protected LookupPickerField<Dealer> sellBrokerLookupPickerField;
     @Inject
@@ -67,14 +71,35 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
     @Subscribe
     protected void onAfterInit(AfterInitEvent event) {
         Trade trade = tradeDc.getItem();
+
+        initFieldValueToStringPropertyMapping(buySplitBrokerLookupPickerField, trade,"dealer", "buySplitBroker");
         initFieldValueToStringPropertyMapping(buyBrokerLookupPickerField, trade,"dealer", "buybroker");
         initFieldValueToStringPropertyMapping(buyerLookupPickerField, trade,"counterparty", "buyer");
         initFieldValueToStringPropertyMapping(buyerAgentLookupPickerField, trade, "agent", "buyerAgent");
+        initFieldValueToStringPropertyMapping(sellSplitBrokerLookupPickerField, trade,"dealer", "sellSplitBroker");
         initFieldValueToStringPropertyMapping(sellBrokerLookupPickerField, trade, "dealer", "sellbroker");
         initFieldValueToStringPropertyMapping(sellerLookupPickerField, trade, "counterparty", "seller");
         initFieldValueToStringPropertyMapping(sellerAgentLookupPickerField, trade, "agent", "sellerAgent");
+
         initAgents(buyerLookupPickerField, buyerAgentLookupPickerField);
         initAgents(sellerLookupPickerField, sellerAgentLookupPickerField);
+
+        buySplitBrokerLookupPickerField.setVisible(Boolean.TRUE.equals(trade.getBuySplit()));
+        sellSplitBrokerLookupPickerField.setVisible(Boolean.TRUE.equals(trade.getSellSplit()));
+    }
+
+    @Subscribe("buySplitCheckBox")
+    protected void onBuySplitCheckBoxValueChange(HasValue.ValueChangeEvent<Boolean> event) {
+        if (event.isUserOriginated()) {
+            buySplitBrokerLookupPickerField.setVisible(Boolean.TRUE.equals(event.getValue()));
+        }
+    }
+
+    @Subscribe("sellSplitCheckBox")
+    protected void onSellSplitCheckBoxValueChange(HasValue.ValueChangeEvent<Boolean> event) {
+        if (event.isUserOriginated()) {
+            sellSplitBrokerLookupPickerField.setVisible(Boolean.TRUE.equals(event.getValue()));
+        }
     }
 
     @Subscribe("buyerAgentLookupPickerField")
@@ -95,11 +120,16 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
             buyerAgentLookupPickerField.clear();
 
             Trade trade = tradeDc.getItem();
+            Counterparty counterparty = event.getValue();
+
+            String buyerLocation = counterparty != null ? counterparty.getBillingCountry() : null;
+            trade.setBuyerLocation(buyerLocation);
+
             if (Boolean.TRUE.equals(trade.getBrooveride()) || Boolean.TRUE.equals(trade.getSubs())) {
                 return;
             }
 
-            String buyerCounterparty = event.getValue() != null ? event.getValue().getCounterparty() : null;
+            String buyerCounterparty = counterparty != null ? counterparty.getCounterparty() : null;
             BigDecimal buyBrokerage = brokerageService.findBrokerageValue(buyerCounterparty, trade.getCategory(),
                     trade.getBrokerageType());
             trade.setBuybrokerage(buyBrokerage);
@@ -124,11 +154,16 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
             sellerAgentLookupPickerField.clear();
 
             Trade trade = tradeDc.getItem();
+            Counterparty counterparty = event.getValue();
+
+            String sellerLocation = counterparty != null ? counterparty.getBillingCountry() : null;
+            trade.setSellerLocation(sellerLocation);
+
             if (Boolean.TRUE.equals(trade.getBrooveride()) || Boolean.TRUE.equals(trade.getSubs())) {
                 return;
             }
 
-            String sellerCounterparty = event.getValue() != null ? event.getValue().getCounterparty() : null;
+            String sellerCounterparty = counterparty != null ? counterparty.getCounterparty() : null;
             BigDecimal sellBrokerage = brokerageService.findBrokerageValue(sellerCounterparty, trade.getCategory(),
                     trade.getBrokerageType());
             trade.setSellbrokerage(sellBrokerage);

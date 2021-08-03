@@ -5,7 +5,8 @@
                   class="com.gcs.gcsplatform.entity.trade.Trade"/>
     </data>
     <layout spacing="true"
-            expand="tradeTabSheet">
+            expand="tradeTabSheet"
+            height="100%">
         <tabSheet id="tradeTabSheet"
                   stylename="framed">
             <tab id="descriptionTab"

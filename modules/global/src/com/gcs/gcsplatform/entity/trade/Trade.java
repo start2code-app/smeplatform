@@ -149,6 +149,72 @@ public class Trade extends EmbeddableEntity {
     @Column(name = "GM_SLA")
     private Boolean gmSla;
 
+    @Column(name = "BUYER_LOCATION", length = 5)
+    private String buyerLocation;
+
+    @Column(name = "SELLER_LOCATION", length = 5)
+    private String sellerLocation;
+
+    @Column(name = "BUY_SPLIT")
+    private Boolean buySplit;
+
+    @Column(name = "BUY_SPLIT_BROKER", length = 10)
+    private String buySplitBroker;
+
+    @Column(name = "SELL_SPLIT")
+    private Boolean sellSplit;
+
+    @Column(name = "SELL_SPLIT_BROKER", length = 10)
+    private String sellSplitBroker;
+
+    public String getSellSplitBroker() {
+        return sellSplitBroker;
+    }
+
+    public void setSellSplitBroker(String sellSplitBroker) {
+        this.sellSplitBroker = sellSplitBroker;
+    }
+
+    public String getBuySplitBroker() {
+        return buySplitBroker;
+    }
+
+    public void setBuySplitBroker(String buySplitBroker) {
+        this.buySplitBroker = buySplitBroker;
+    }
+
+    public Boolean getSellSplit() {
+        return sellSplit;
+    }
+
+    public void setSellSplit(Boolean sellSplit) {
+        this.sellSplit = sellSplit;
+    }
+
+    public Boolean getBuySplit() {
+        return buySplit;
+    }
+
+    public void setBuySplit(Boolean buySplit) {
+        this.buySplit = buySplit;
+    }
+
+    public String getSellerLocation() {
+        return sellerLocation;
+    }
+
+    public void setSellerLocation(String sellerLocation) {
+        this.sellerLocation = sellerLocation;
+    }
+
+    public String getBuyerLocation() {
+        return buyerLocation;
+    }
+
+    public void setBuyerLocation(String buyerLocation) {
+        this.buyerLocation = buyerLocation;
+    }
+
     @Nullable
     public CounterpartyBrokerageType getBrokerageType() {
         if (Boolean.TRUE.equals(gc)) {

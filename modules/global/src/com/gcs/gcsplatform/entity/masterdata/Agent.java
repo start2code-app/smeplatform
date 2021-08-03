@@ -23,7 +23,7 @@ public class Agent extends StandardEntity {
     @NotNull
     private Counterparty counterparty;
 
-    @Column(name = "AGENT", nullable = false, unique = true, length = 50)
+    @Column(name = "AGENT", nullable = false, unique = true, length = 30)
     @NotNull
     private String agent;
 
