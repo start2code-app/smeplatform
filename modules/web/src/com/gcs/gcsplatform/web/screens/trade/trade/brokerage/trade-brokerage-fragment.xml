@@ -12,13 +12,13 @@
             </loader>
         </collection>
     </data>
-    <layout spacing="true">
+    <layout spacing="true"
+            height="100%">
         <hbox width="100%"
               spacing="true">
             <groupBox id="brokerageTypeBox"
                       caption="msg://brokerageTypeBox.caption"
-                      spacing="true"
-                      css="width:100%">
+                      spacing="true">
                 <form id="brokerageTypeForm"
                       dataContainer="tradeDc">
                     <column width="190px">
@@ -46,7 +46,6 @@
             <groupBox id="broOverideBox"
                       caption="msg://broOverideBox.caption"
                       spacing="true"
-                      css="width:100%"
                       height="100%">
                 <form id="broOverideForm"
                       dataContainer="tradeDc">
@@ -63,8 +62,7 @@
         </hbox>
         <groupBox id="brokerageBox"
                   caption="msg://brokerageBox.caption"
-                  spacing="true"
-                  css="width:100%">
+                  spacing="true">
             <form id="brokerageForm"
                   dataContainer="tradeDc">
                 <column width="200px">

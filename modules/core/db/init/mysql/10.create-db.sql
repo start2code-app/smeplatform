@@ -57,7 +57,7 @@ create table GCSPLATFORM_AGENT (
     DELETED_BY varchar(50),
     --
     COUNTERPARTY_ID varchar(32) not null,
-    AGENT varchar(50) not null,
+    AGENT varchar(30) not null,
     --
     primary key (ID)
 )^
@@ -166,6 +166,12 @@ create table GCSPLATFORM_LIVE_TRADE (
     SUB_THIRTY boolean,
     MORE_THAN_THIRTY boolean,
     GM_SLA boolean,
+    BUYER_LOCATION varchar(5),
+    SELLER_LOCATION varchar(5),
+    BUY_SPLIT boolean,
+    BUY_SPLIT_BROKER varchar(10),
+    SELL_SPLIT boolean,
+    SELL_SPLIT_BROKER varchar(10),
     --
     primary key (ID)
 )^
@@ -222,6 +228,12 @@ create table GCSPLATFORM_CALL_OPTION_TRADE (
     SUB_THIRTY boolean,
     MORE_THAN_THIRTY boolean,
     GM_SLA boolean,
+    BUYER_LOCATION varchar(5),
+    SELLER_LOCATION varchar(5),
+    BUY_SPLIT boolean,
+    BUY_SPLIT_BROKER varchar(10),
+    SELL_SPLIT boolean,
+    SELL_SPLIT_BROKER varchar(10),
     --
     primary key (ID)
 )^
@@ -278,6 +290,12 @@ create table GCSPLATFORM_CLOSED_TRADE (
     SUB_THIRTY boolean,
     MORE_THAN_THIRTY boolean,
     GM_SLA boolean,
+    BUYER_LOCATION varchar(5),
+    SELLER_LOCATION varchar(5),
+    BUY_SPLIT boolean,
+    BUY_SPLIT_BROKER varchar(10),
+    SELL_SPLIT boolean,
+    SELL_SPLIT_BROKER varchar(10),
     --
     primary key (ID)
 )^
@@ -334,6 +352,12 @@ create table GCSPLATFORM_OPENED_TRADE (
     SUB_THIRTY boolean,
     MORE_THAN_THIRTY boolean,
     GM_SLA boolean,
+    BUYER_LOCATION varchar(5),
+    SELLER_LOCATION varchar(5),
+    BUY_SPLIT boolean,
+    BUY_SPLIT_BROKER varchar(10),
+    SELL_SPLIT boolean,
+    SELL_SPLIT_BROKER varchar(10),
     --
     primary key (ID)
 )^

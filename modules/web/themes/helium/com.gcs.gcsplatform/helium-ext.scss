@@ -5,4 +5,35 @@
       background-color: pink;
       color: black;
   }
+
+  // begin - warning button
+  .v-button-warning {
+      border-color: #ffca3e;
+      background: #ffca3e;
+      color: #fff;
+  }
+
+  .v-button-warning:hover:not(.v-disabled) {
+      border-color: #ffb900;
+      background: #ffb900;
+      color: #fff;
+  }
+
+  .v-button-warning:focus:not(.v-disabled) {
+      border-color: #ffe296;
+      color: #fff;
+  }
+
+  .v-button-warning:active:not(.v-disabled) {
+      border-color: #ffe296;
+      background: #ff9b00;
+      color: #fff;
+  }
+
+  .v-button-warning.v-disabled {
+      border-color: #ffe296;
+      background: #ffe296;
+      color: #fff;
+  }
+  //end - warning button
 }
