@@ -74,7 +74,7 @@ public class OpenedTradeEdit extends StandardEditor<OpenedTrade> {
         } else {
             String traderef = trade.getTraderef();
             if (!StringUtils.isEmpty(traderef)) {
-                getWindow().setCaption(messageBundle.getMessage("openedTradeEdit.caption") + " - " + traderef);
+                updateWindowCaption(traderef);
             }
         }
     }
@@ -91,19 +91,28 @@ public class OpenedTradeEdit extends StandardEditor<OpenedTrade> {
                     if (inputDialogCloseEvent.closedWith(DialogOutcome.OK)) {
                         Date maturityDate = inputDialogCloseEvent.getValue("maturityDate");
                         closeTradeService.closeReopen(getEditedEntity(), maturityDate);
-                        OpenedTrade openedTrade = dataManager.reload(getEditedEntity(), ViewBuilder.of(
-                                OpenedTrade.class)
-                                .add("trade", View.LOCAL)
-                                .addView(View.LOCAL)
-                                .build());
-                        openedTradeDc.setItem(openedTrade);
-                        tradeFragment.setTrade(openedTrade.getTrade());
+                        setReopenedEntityToEdit();
                         notifications.create(Notifications.NotificationType.TRAY)
                                 .withDescription(messageBundle.getMessage("tradeClosedAndReopened"))
                                 .show();
                     }
                 })
                 .show();
+    }
+
+    protected void setReopenedEntityToEdit() {
+        OpenedTrade openedTrade = dataManager.reload(getEditedEntity(), ViewBuilder.of(
+                OpenedTrade.class)
+                .add("trade", View.LOCAL)
+                .addView(View.LOCAL)
+                .build());
+        openedTradeDc.setItem(openedTrade);
+        tradeFragment.setTrade(openedTrade.getTrade());
+        updateWindowCaption(openedTrade.getTrade().getTraderef());
+    }
+
+    protected void updateWindowCaption(String tradeRef) {
+        getWindow().setCaption(messageBundle.getMessage("openedTradeEdit.caption") + " - " + tradeRef);
     }
 
     @Subscribe("closeTradeBtn")
