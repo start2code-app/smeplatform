@@ -52,22 +52,6 @@
                 <column id="email"/>
                 <column id="email1"/>
                 <column id="email2"/>
-                <column id="gcAbs"/>
-                <column id="gcCorp"/>
-                <column id="gcEgb"/>
-                <column id="gcEgbpigs"/>
-                <column id="gcEm"/>
-                <column id="gcGilt"/>
-                <column id="gcSsa"/>
-                <column id="gcUst"/>
-                <column id="specAbs"/>
-                <column id="specCorp"/>
-                <column id="specEgb"/>
-                <column id="specEgbpigs"/>
-                <column id="specEm"/>
-                <column id="specGilt"/>
-                <column id="specSsa"/>
-                <column id="specUst"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
