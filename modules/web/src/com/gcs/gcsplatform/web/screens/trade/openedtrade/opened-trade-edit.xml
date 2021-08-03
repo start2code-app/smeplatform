@@ -24,12 +24,13 @@
         <hbox id="editActions"
               spacing="true">
             <button id="commitAndCloseBtn"
-                    action="windowCommitAndClose"/>
+                    action="windowCommitAndClose"
+                    caption="msg://save.caption"/>
             <button id="closeBtn"
                     action="windowClose"/>
             <button id="closeReopenTradeBtn"
                     icon="font-icon:CLOSE"
-                    stylename="danger"
+                    stylename="warning"
                     caption="msg://closeReopenTradeBtn.caption"/>
             <button id="closeTradeBtn"
                     icon="font-icon:CLOSE"
