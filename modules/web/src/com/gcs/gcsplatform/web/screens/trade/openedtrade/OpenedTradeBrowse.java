@@ -22,6 +22,9 @@ public class OpenedTradeBrowse extends StandardLookup<OpenedTrade> {
     @Inject
     protected CollectionLoader<OpenedTrade> openedTradesDl;
 
+    /**
+     * Updates list of trades on each close because the edit screen might be closed with discard in case of trade close.
+     */
     @Install(to = "openedTradesTable.edit", subject = "afterCloseHandler")
     protected void openedTradesTableEditAfterCloseHandler(AfterCloseEvent afterCloseEvent) {
         openedTradesDl.load();
