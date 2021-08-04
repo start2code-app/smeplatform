@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<fragment xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd">
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        messagesPack="com.gcs.gcsplatform.web.screens.trade.tradecontainer">
     <data>
-        <instance id="tradeDc"
-                  class="com.gcs.gcsplatform.entity.trade.Trade"/>
+        <instance id="tradeContainerDc"
+                  class="com.gcs.gcsplatform.entity.trade.TradeContainer">
+            <instance id="tradeDc"
+                      property="trade"/>
+            <view extends="_local">
+                <property name="trade"
+                          view="_local"/>
+            </view>
+            <loader/>
+        </instance>
     </data>
-    <layout spacing="true"
-            expand="tradeTabSheet"
-            height="100%">
+    <dialogMode forceDialog="true"
+                width="900"
+                height="650"/>
+    <layout expand="tradeTabSheet"
+            spacing="true">
         <tabSheet id="tradeTabSheet"
                   stylename="framed">
             <tab id="descriptionTab"
@@ -81,5 +92,13 @@
                 </form>
             </tab>
         </tabSheet>
+        <hbox id="editActions"
+              spacing="true">
+            <button id="commitAndCloseBtn"
+                    action="windowCommitAndClose"
+                    caption="msg://save.caption"/>
+            <button id="closeBtn"
+                    action="windowClose"/>
+        </hbox>
     </layout>
-</fragment>
+</window>

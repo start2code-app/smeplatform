@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
-        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
-        caption="msg://openedTradeBrowse.caption"
-        messagesPack="com.gcs.gcsplatform.web.screens.trade.openedtrade"
+        caption="msg://callOptionTradeBrowse.caption"
+        messagesPack="com.gcs.gcsplatform.web.screens.trade.calloptiontrade"
         extends="com/gcs/gcsplatform/web/screens/trade/tradecontainer/trade-container-browse.xml">
     <data>
         <collection id="tradeContainersDc"
-                    class="com.gcs.gcsplatform.entity.trade.OpenedTrade">
+                    class="com.gcs.gcsplatform.entity.trade.CallOptionTrade">
             <loader id="tradeContainersDl">
                 <query>
-                    <![CDATA[select e from gcsplatform_OpenedTrade e order by e.updateTs desc]]>
+                    <![CDATA[select e from gcsplatform_CallOptionTrade e order by e.updateTs desc]]>
                 </query>
             </loader>
         </collection>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        focusComponent="tradeContainersTable">
+    <data readOnly="true">
+        <collection id="tradeContainersDc"
+                    class="com.gcs.gcsplatform.entity.trade.TradeContainer">
+            <view extends="_local">
+                <property name="trade"
+                          view="_local"/>
+            </view>
+            <loader id="tradeContainersDl"/>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="tradeContainersTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="tradeContainersTable"
+                dataLoader="tradeContainersDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="tradeContainersTable"
+                    width="100%"
+                    dataContainer="tradeContainersDc"
+                    multiselect="false">
+            <actions>
+                <action id="create"
+                        type="create"/>
+                <action id="edit"
+                        type="edit"/>
+                <action id="remove"
+                        type="remove"/>
+            </actions>
+            <columns>
+                <column id="trade.traderef"/>
+                <column id="trade.tradeDate"/>
+                <column id="trade.bondDescription"/>
+                <column id="trade.isin"/>
+                <column id="trade.buyer"/>
+                <column id="trade.buybrokerage"/>
+                <column id="trade.seller"/>
+                <column id="trade.sellbrokerage"/>
+                <column id="trade.nominal"/>
+                <column id="trade.valueDate"/>
+                <column id="trade.maturityDate"/>
+                <column id="trade.hairCut"/>
+                <column id="trade.currency"/>
+                <column id="trade.buybroker"/>
+                <column id="trade.sellbroker"/>
+                <column id="trade.notes"/>
+                <column id="trade.buyerAgent"
+                        collapsed="true"/>
+                <column id="trade.calloption"
+                        collapsed="true"/>
+                <column id="trade.category"
+                        collapsed="true"/>
+                <column id="trade.cpair1"
+                        collapsed="true"/>
+                <column id="trade.cpair2"
+                        collapsed="true"/>
+                <column id="trade.cpair3"
+                        collapsed="true"/>
+                <column id="trade.gbpEquivalent"
+                        collapsed="true"/>
+                <column id="trade.numdays"
+                        collapsed="true"/>
+                <column id="trade.origtraderef"
+                        collapsed="true"/>
+                <column id="trade.repoRate"
+                        collapsed="true"/>
+                <column id="trade.sellerAgent"
+                        collapsed="true"/>
+                <column id="trade.startPrice"
+                        collapsed="true"/>
+                <column id="trade.status"
+                        collapsed="true"/>
+                <column id="trade.tradeCurrency"
+                        collapsed="true"/>
+                <column id="trade.uti"
+                        collapsed="true"/>
+                <column id="trade.xrate1"
+                        collapsed="true"/>
+                <column id="trade.xrate2"
+                        collapsed="true"/>
+                <column id="trade.xrate3"
+                        collapsed="true"/>
+                <column id="trade.gc"
+                        collapsed="true"/>
+                <column id="trade.special"
+                        collapsed="true"/>
+                <column id="trade.subThirty"
+                        collapsed="true"/>
+                <column id="trade.moreThanThirty"
+                        collapsed="true"/>
+                <column id="trade.brooveride"
+                        collapsed="true"/>
+                <column id="trade.subs"
+                        collapsed="true"/>
+                <column id="trade.gmSla"
+                        collapsed="true"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="tradeContainersTable.create"/>
+                <button id="editBtn"
+                        action="tradeContainersTable.edit"/>
+                <button id="removeBtn"
+                        action="tradeContainersTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions"
+              spacing="true"
+              visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

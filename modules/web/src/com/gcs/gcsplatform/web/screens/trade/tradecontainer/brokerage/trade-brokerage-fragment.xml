@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <fragment xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd">
     <data>
-        <instance id="tradeDc"
-                  class="com.gcs.gcsplatform.entity.trade.Trade"
-                  provided="true"/>
+        <instance id="tradeContainerDc"
+                  class="com.gcs.gcsplatform.entity.trade.TradeContainer"
+                  provided="true">
+            <instance id="tradeDc"
+                      property="trade"/>
+        </instance>
         <collection id="categoryDc"
                     class="com.gcs.gcsplatform.entity.masterdata.Category">
             <view extends="_minimal"/>
@@ -13,15 +16,18 @@
         </collection>
     </data>
     <layout spacing="true"
+            expand="brokerageTypeOverrideBox"
             height="100%">
-        <hbox width="100%"
+        <hbox id="brokerageTypeOverrideBox"
+              width="100%"
               spacing="true">
             <groupBox id="brokerageTypeBox"
                       caption="msg://brokerageTypeBox.caption"
-                      spacing="true">
+                      spacing="true"
+                      height="100%">
                 <form id="brokerageTypeForm"
                       dataContainer="tradeDc">
-                    <column width="190px">
+                    <column width="200px">
                         <lookupPickerField id="categoryLookupPickerField"
                                            caption="msg://com.gcs.gcsplatform.entity.trade/Trade.category"
                                            optionsContainer="categoryDc">

@@ -1,11 +1,11 @@
 package com.gcs.gcsplatform.web.screens.trade.closedtrade;
 
-import com.haulmont.cuba.gui.screen.*;
-import com.gcs.gcsplatform.entity.trade.ClosedTrade;
+import com.gcs.gcsplatform.entity.trade.OpenedTrade;
+import com.gcs.gcsplatform.web.screens.trade.tradecontainer.TradeContainerEdit;
+import com.haulmont.cuba.gui.screen.UiController;
+import com.haulmont.cuba.gui.screen.UiDescriptor;
 
 @UiController("gcsplatform_ClosedTrade.edit")
 @UiDescriptor("closed-trade-edit.xml")
-@EditedEntityContainer("closedTradeDc")
-@LoadDataBeforeShow
-public class ClosedTradeEdit extends StandardEditor<ClosedTrade> {
+public class ClosedTradeEdit extends TradeContainerEdit<OpenedTrade> {
 }

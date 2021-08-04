@@ -1,4 +1,4 @@
-package com.gcs.gcsplatform.web.screens.trade.trade.brokerage;
+package com.gcs.gcsplatform.web.screens.trade.tradecontainer.brokerage;
 
 import java.math.BigDecimal;
 import javax.inject.Inject;
@@ -12,8 +12,10 @@ import com.haulmont.cuba.gui.components.LookupPickerField;
 import com.haulmont.cuba.gui.components.TextField;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.model.InstanceContainer;
+import com.haulmont.cuba.gui.screen.Screen;
 import com.haulmont.cuba.gui.screen.ScreenFragment;
 import com.haulmont.cuba.gui.screen.Subscribe;
+import com.haulmont.cuba.gui.screen.Target;
 import com.haulmont.cuba.gui.screen.UiController;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
 
@@ -57,10 +59,15 @@ public class TradeBrokerageFragment extends ScreenFragment {
         categoryDl.load();
     }
 
-    @Subscribe
-    protected void onAfterInit(AfterInitEvent event) {
+    @Subscribe(target = Target.PARENT_CONTROLLER)
+    protected void onAfterShowHost(Screen.AfterShowEvent event) {
         Trade trade = tradeDc.getItem();
         initFieldValueToStringPropertyMapping(categoryLookupPickerField, trade, "category", "category");
+
+        /*
+         * Subscribe manually to preserve listeners execution order. First listener maps field value to entity.
+         */
+        categoryLookupPickerField.addValueChangeListener(this::onCategoryLookupPickerFieldValueChange);
 
         if (Boolean.TRUE.equals(trade.getBrooveride())) {
             buyBrokerageField.setEditable(true);
@@ -97,6 +104,7 @@ public class TradeBrokerageFragment extends ScreenFragment {
             sellBrokerageField.setEditable(true);
             buyBrokerageField.setEditable(true);
             subsCheckBox.setValue(false);
+            origtraderefField.setVisible(false);
         } else {
             sellBrokerageField.setEditable(false);
             buyBrokerageField.setEditable(false);
@@ -156,7 +164,6 @@ public class TradeBrokerageFragment extends ScreenFragment {
         updateTradeBrokerage();
     }
 
-    @Subscribe("categoryLookupPickerField")
     protected void onCategoryLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Category> event) {
         if (event.isUserOriginated()) {
             updateTradeBrokerage();

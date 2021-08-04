@@ -5,6 +5,10 @@
           icon="font-icon:LINE_CHART">
         <item screen="gcsplatform_OpenedTrade.browse"
               caption="mainMsg://menu_config.gcsplatform_OpenedTrade.browse"/>
+        <item screen="gcsplatform_CallOptionTrade.browse"
+              caption="mainMsg://menu_config.gcsplatform_CallOptionTrade.browse"/>
+        <item screen="gcsplatform_LiveTrade.browse"
+              caption="mainMsg://menu_config.gcsplatform_LiveTrade.browse"/>
         <item screen="gcsplatform_ClosedTrade.browse"
               caption="mainMsg://menu_config.gcsplatform_ClosedTrade.browse"/>
     </menu>
