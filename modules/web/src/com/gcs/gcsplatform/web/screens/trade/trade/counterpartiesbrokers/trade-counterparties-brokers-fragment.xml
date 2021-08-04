@@ -24,7 +24,9 @@
                     class="com.gcs.gcsplatform.entity.masterdata.Agent">
             <view extends="_minimal">
                 <property name="counterparty"
-                          view="_minimal"/>
+                          view="_minimal">
+                    <property name="billingCountry"/>
+                </property>
             </view>
             <loader id="agentsDl">
                 <query>select e from gcsplatform_Agent e order by e.agent</query>
@@ -41,53 +43,57 @@
                       caption="msg://buyGroupBox.caption"
                       width="98%">
                 <form>
-                    <checkBox id="buySplitCheckBox"
-                              property="buySplit"
-                              dataContainer="tradeDc"/>
-                    <lookupPickerField id="buySplitBrokerLookupPickerField"
-                                       caption="msg://com.gcs.gcsplatform.entity.trade/Trade.buySplitBroker"
-                                       optionsContainer="dealersDc">
-                        <actions>
-                            <action id="lookup"
-                                    type="picker_lookup"/>
-                            <action id="clear"
-                                    type="picker_clear"/>
-                        </actions>
-                    </lookupPickerField>
-                    <lookupPickerField id="buyBrokerLookupPickerField"
-                                       caption="msg://com.gcs.gcsplatform.entity.trade/Trade.buybroker"
-                                       optionsContainer="dealersDc">
-                        <actions>
-                            <action id="lookup"
-                                    type="picker_lookup"/>
-                            <action id="clear"
-                                    type="picker_clear"/>
-                        </actions>
-                    </lookupPickerField>
-                    <lookupPickerField id="buyerLookupPickerField"
-                                       caption="msg://com.gcs.gcsplatform.entity.trade/Trade.buyer"
-                                       optionsContainer="counterpartiesDc">
-                        <actions>
-                            <action id="lookup"
-                                    type="picker_lookup"/>
-                            <action id="clear"
-                                    type="picker_clear"/>
-                        </actions>
-                    </lookupPickerField>
-                    <textField id="buyerLocationTextField"
-                               dataContainer="tradeDc"
-                               property="buyerLocation"
-                               editable="false"/>
-                    <lookupPickerField id="buyerAgentLookupPickerField"
-                                       caption="msg://com.gcs.gcsplatform.entity.trade/Trade.buyerAgent"
-                                       optionsContainer="agentsDc">
-                        <actions>
-                            <action id="lookup"
-                                    type="picker_lookup"/>
-                            <action id="clear"
-                                    type="picker_clear"/>
-                        </actions>
-                    </lookupPickerField>
+                    <column width="250px">
+                        <lookupPickerField id="buyerLookupPickerField"
+                                           caption="msg://com.gcs.gcsplatform.entity.trade/Trade.buyer"
+                                           optionsContainer="counterpartiesDc">
+                            <actions>
+                                <action id="lookup"
+                                        type="picker_lookup"/>
+                                <action id="clear"
+                                        type="picker_clear"/>
+                            </actions>
+                        </lookupPickerField>
+                        <lookupPickerField id="buyBrokerLookupPickerField"
+                                           caption="msg://com.gcs.gcsplatform.entity.trade/Trade.buybroker"
+                                           optionsContainer="dealersDc">
+                            <actions>
+                                <action id="lookup"
+                                        type="picker_lookup"/>
+                                <action id="clear"
+                                        type="picker_clear"/>
+                            </actions>
+                        </lookupPickerField>
+                        <textField id="buyerLocationTextField"
+                                   dataContainer="tradeDc"
+                                   property="buyerLocation"
+                                   editable="false"/>
+                        <lookupPickerField id="buyerAgentLookupPickerField"
+                                           caption="msg://com.gcs.gcsplatform.entity.trade/Trade.buyerAgent"
+                                           optionsContainer="agentsDc">
+                            <actions>
+                                <action id="lookup"
+                                        type="picker_lookup"/>
+                                <action id="clear"
+                                        type="picker_clear"/>
+                            </actions>
+                        </lookupPickerField>
+                    </column>
+                    <column width="250px">
+                        <checkBox id="buySplitCheckBox"
+                                  property="buySplit"
+                                  dataContainer="tradeDc"/>
+                        <lookupPickerField id="buySplitBrokerLookupPickerField"
+                                           caption="msg://com.gcs.gcsplatform.entity.trade/Trade.buySplitBroker"
+                                           optionsContainer="dealersDc">
+                            <actions>
+                                <action id="lookup"
+                                        type="picker_lookup"/>
+                                <action id="clear"
+                                        type="picker_clear"/>
+                            </actions>
+                        </lookupPickerField>
+                    </column>
                 </form>
             </groupBox>
             <groupBox id="sellBox"
@@ -95,53 +101,57 @@
                       caption="msg://sellGroupBox.caption"
                       width="98%">
                 <form>
-                    <checkBox id="sellSplitCheckBox"
-                              property="sellSplit"
-                              dataContainer="tradeDc"/>
-                    <lookupPickerField id="sellSplitBrokerLookupPickerField"
-                                       caption="msg://com.gcs.gcsplatform.entity.trade/Trade.sellSplitBroker"
-                                       optionsContainer="dealersDc">
-                        <actions>
-                            <action id="lookup"
-                                    type="picker_lookup"/>
-                            <action id="clear"
-                                    type="picker_clear"/>
-                        </actions>
-                    </lookupPickerField>
-                    <lookupPickerField id="sellBrokerLookupPickerField"
-                                       caption="msg://com.gcs.gcsplatform.entity.trade/Trade.sellbroker"
-                                       optionsContainer="dealersDc">
-                        <actions>
-                            <action id="lookup"
-                                    type="picker_lookup"/>
-                            <action id="clear"
-                                    type="picker_clear"/>
-                        </actions>
-                    </lookupPickerField>
-                    <lookupPickerField id="sellerLookupPickerField"
-                                       caption="msg://com.gcs.gcsplatform.entity.trade/Trade.seller"
-                                       optionsContainer="counterpartiesDc">
-                        <actions>
-                            <action id="lookup"
-                                    type="picker_lookup"/>
-                            <action id="clear"
-                                    type="picker_clear"/>
-                        </actions>
-                    </lookupPickerField>
-                    <textField id="sellerLocationTextField"
-                               dataContainer="tradeDc"
-                               property="sellerLocation"
-                               editable="false"/>
-                    <lookupPickerField id="sellerAgentLookupPickerField"
-                                       caption="msg://com.gcs.gcsplatform.entity.trade/Trade.sellerAgent"
-                                       optionsContainer="agentsDc">
-                        <actions>
-                            <action id="lookup"
-                                    type="picker_lookup"/>
-                            <action id="clear"
-                                    type="picker_clear"/>
-                        </actions>
-                    </lookupPickerField>
+                    <column width="250px">
+                        <lookupPickerField id="sellerLookupPickerField"
+                                           caption="msg://com.gcs.gcsplatform.entity.trade/Trade.seller"
+                                           optionsContainer="counterpartiesDc">
+                            <actions>
+                                <action id="lookup"
+                                        type="picker_lookup"/>
+                                <action id="clear"
+                                        type="picker_clear"/>
+                            </actions>
+                        </lookupPickerField>
+                        <lookupPickerField id="sellBrokerLookupPickerField"
+                                           caption="msg://com.gcs.gcsplatform.entity.trade/Trade.sellbroker"
+                                           optionsContainer="dealersDc">
+                            <actions>
+                                <action id="lookup"
+                                        type="picker_lookup"/>
+                                <action id="clear"
+                                        type="picker_clear"/>
+                            </actions>
+                        </lookupPickerField>
+                        <textField id="sellerLocationTextField"
+                                   dataContainer="tradeDc"
+                                   property="sellerLocation"
+                                   editable="false"/>
+                        <lookupPickerField id="sellerAgentLookupPickerField"
+                                           caption="msg://com.gcs.gcsplatform.entity.trade/Trade.sellerAgent"
+                                           optionsContainer="agentsDc">
+                            <actions>
+                                <action id="lookup"
+                                        type="picker_lookup"/>
+                                <action id="clear"
+                                        type="picker_clear"/>
+                            </actions>
+                        </lookupPickerField>
+                    </column>
+                    <column width="250px">
+                        <checkBox id="sellSplitCheckBox"
+                                  property="sellSplit"
+                                  dataContainer="tradeDc"/>
+                        <lookupPickerField id="sellSplitBrokerLookupPickerField"
+                                           caption="msg://com.gcs.gcsplatform.entity.trade/Trade.sellSplitBroker"
+                                           optionsContainer="dealersDc">
+                            <actions>
+                                <action id="lookup"
+                                        type="picker_lookup"/>
+                                <action id="clear"
+                                        type="picker_clear"/>
+                            </actions>
+                        </lookupPickerField>
+                    </column>
                 </form>
             </groupBox>
         </scrollBox>

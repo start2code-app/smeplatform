@@ -62,6 +62,11 @@ public class TradeBrokerageFragment extends ScreenFragment {
         Trade trade = tradeDc.getItem();
         initFieldValueToStringPropertyMapping(categoryLookupPickerField, trade, "category", "category");
 
+        /*
+         * Subscribe manually to preserve listeners execution order. First listener maps field value to entity.
+         */
+        categoryLookupPickerField.addValueChangeListener(this::onCategoryLookupPickerFieldValueChange);
+
         if (Boolean.TRUE.equals(trade.getBrooveride())) {
             buyBrokerageField.setEditable(true);
             sellBrokerageField.setEditable(true);
@@ -97,6 +102,7 @@ public class TradeBrokerageFragment extends ScreenFragment {
             sellBrokerageField.setEditable(true);
             buyBrokerageField.setEditable(true);
             subsCheckBox.setValue(false);
+            origtraderefField.setVisible(false);
         } else {
             sellBrokerageField.setEditable(false);
             buyBrokerageField.setEditable(false);
@@ -156,7 +162,6 @@ public class TradeBrokerageFragment extends ScreenFragment {
         updateTradeBrokerage();
     }
 
-    @Subscribe("categoryLookupPickerField")
     protected void onCategoryLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Category> event) {
         if (event.isUserOriginated()) {
             updateTradeBrokerage();

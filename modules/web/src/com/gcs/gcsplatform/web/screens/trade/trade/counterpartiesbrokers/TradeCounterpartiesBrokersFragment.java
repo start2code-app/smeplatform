@@ -72,11 +72,11 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
     protected void onAfterInit(AfterInitEvent event) {
         Trade trade = tradeDc.getItem();
 
-        initFieldValueToStringPropertyMapping(buySplitBrokerLookupPickerField, trade,"dealer", "buySplitBroker");
-        initFieldValueToStringPropertyMapping(buyBrokerLookupPickerField, trade,"dealer", "buybroker");
-        initFieldValueToStringPropertyMapping(buyerLookupPickerField, trade,"counterparty", "buyer");
+        initFieldValueToStringPropertyMapping(buySplitBrokerLookupPickerField, trade, "dealer", "buySplitBroker");
+        initFieldValueToStringPropertyMapping(buyBrokerLookupPickerField, trade, "dealer", "buybroker");
+        initFieldValueToStringPropertyMapping(buyerLookupPickerField, trade, "counterparty", "buyer");
         initFieldValueToStringPropertyMapping(buyerAgentLookupPickerField, trade, "agent", "buyerAgent");
-        initFieldValueToStringPropertyMapping(sellSplitBrokerLookupPickerField, trade,"dealer", "sellSplitBroker");
+        initFieldValueToStringPropertyMapping(sellSplitBrokerLookupPickerField, trade, "dealer", "sellSplitBroker");
         initFieldValueToStringPropertyMapping(sellBrokerLookupPickerField, trade, "dealer", "sellbroker");
         initFieldValueToStringPropertyMapping(sellerLookupPickerField, trade, "counterparty", "seller");
         initFieldValueToStringPropertyMapping(sellerAgentLookupPickerField, trade, "agent", "sellerAgent");
@@ -107,7 +107,9 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
         if (event.isUserOriginated()) {
             Agent agent = event.getValue();
             if (agent != null) {
-                buyerLookupPickerField.setValue(agent.getCounterparty());
+                Counterparty counterparty = agent.getCounterparty();
+                buyerLookupPickerField.setValue(counterparty);
+                updateBuyerFields(counterparty);
             }
             initAgents(buyerLookupPickerField, buyerAgentLookupPickerField);
         }
@@ -118,22 +120,24 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
         if (event.isUserOriginated()) {
             initAgents(buyerLookupPickerField, buyerAgentLookupPickerField);
             buyerAgentLookupPickerField.clear();
-
-            Trade trade = tradeDc.getItem();
-            Counterparty counterparty = event.getValue();
-
-            String buyerLocation = counterparty != null ? counterparty.getBillingCountry() : null;
-            trade.setBuyerLocation(buyerLocation);
-
-            if (Boolean.TRUE.equals(trade.getBrooveride()) || Boolean.TRUE.equals(trade.getSubs())) {
-                return;
-            }
-
-            String buyerCounterparty = counterparty != null ? counterparty.getCounterparty() : null;
-            BigDecimal buyBrokerage = brokerageService.findBrokerageValue(buyerCounterparty, trade.getCategory(),
-                    trade.getBrokerageType());
-            trade.setBuybrokerage(buyBrokerage);
+            updateBuyerFields(event.getValue());
         }
+    }
+
+    protected void updateBuyerFields(Counterparty counterparty) {
+        Trade trade = tradeDc.getItem();
+
+        String buyerLocation = counterparty != null ? counterparty.getBillingCountry() : null;
+        trade.setBuyerLocation(buyerLocation);
+
+        if (Boolean.TRUE.equals(trade.getBrooveride()) || Boolean.TRUE.equals(trade.getSubs())) {
+            return;
+        }
+
+        String buyerCounterparty = counterparty != null ? counterparty.getCounterparty() : null;
+        BigDecimal buyBrokerage = brokerageService.findBrokerageValue(buyerCounterparty, trade.getCategory(),
+                trade.getBrokerageType());
+        trade.setBuybrokerage(buyBrokerage);
     }
 
     @Subscribe("sellerAgentLookupPickerField")
@@ -141,7 +145,9 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
         if (event.isUserOriginated()) {
             Agent agent = event.getValue();
             if (agent != null) {
-                sellerLookupPickerField.setValue(agent.getCounterparty());
+                Counterparty counterparty = agent.getCounterparty();
+                sellerLookupPickerField.setValue(counterparty);
+                updateSellerFields(counterparty);
             }
             initAgents(sellerLookupPickerField, sellerAgentLookupPickerField);
         }
@@ -152,28 +158,32 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
         if (event.isUserOriginated()) {
             initAgents(sellerLookupPickerField, sellerAgentLookupPickerField);
             sellerAgentLookupPickerField.clear();
-
-            Trade trade = tradeDc.getItem();
-            Counterparty counterparty = event.getValue();
-
-            String sellerLocation = counterparty != null ? counterparty.getBillingCountry() : null;
-            trade.setSellerLocation(sellerLocation);
-
-            if (Boolean.TRUE.equals(trade.getBrooveride()) || Boolean.TRUE.equals(trade.getSubs())) {
-                return;
-            }
-
-            String sellerCounterparty = counterparty != null ? counterparty.getCounterparty() : null;
-            BigDecimal sellBrokerage = brokerageService.findBrokerageValue(sellerCounterparty, trade.getCategory(),
-                    trade.getBrokerageType());
-            trade.setSellbrokerage(sellBrokerage);
+            updateSellerFields(event.getValue());
         }
+    }
+
+    protected void updateSellerFields(Counterparty counterparty) {
+        Trade trade = tradeDc.getItem();
+
+        String sellerLocation = counterparty != null ? counterparty.getBillingCountry() : null;
+        trade.setSellerLocation(sellerLocation);
+
+        if (Boolean.TRUE.equals(trade.getBrooveride()) || Boolean.TRUE.equals(trade.getSubs())) {
+            return;
+        }
+
+        String sellerCounterparty = counterparty != null ? counterparty.getCounterparty() : null;
+        BigDecimal sellBrokerage = brokerageService.findBrokerageValue(sellerCounterparty, trade.getCategory(),
+                trade.getBrokerageType());
+        trade.setSellbrokerage(sellBrokerage);
     }
 
     protected void initAgents(LookupPickerField<Counterparty> counterpartyField, LookupPickerField<Agent> agentField) {
         Counterparty counterparty = counterpartyField.getValue();
         List<Agent> agents = agentService.getAgents(counterparty, ViewBuilder.of(Agent.class)
-                .add("counterparty", View.MINIMAL)
+                .add("counterparty", viewBuilder -> viewBuilder
+                        .add("billingCountry")
+                        .addView(View.MINIMAL))
                 .addView(View.MINIMAL)
                 .build());
         agentField.setOptionsList(agents);

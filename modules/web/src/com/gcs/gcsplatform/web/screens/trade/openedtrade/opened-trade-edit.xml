@@ -15,7 +15,7 @@
         </instance>
     </data>
     <dialogMode forceDialog="true"
-                width="800"
+                width="900"
                 height="650"/>
     <layout expand="tradeBox"
             spacing="true">
