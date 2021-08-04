@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <fragment xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd">
     <data>
-        <instance id="tradeDc"
-                  class="com.gcs.gcsplatform.entity.trade.Trade"
-                  provided="true"/>
+        <instance id="tradeContainerDc"
+                  class="com.gcs.gcsplatform.entity.trade.TradeContainer"
+                  provided="true">
+            <instance id="tradeDc"
+                      property="trade"/>
+        </instance>
         <collection id="categoryDc"
                     class="com.gcs.gcsplatform.entity.masterdata.Category">
             <view extends="_minimal"/>

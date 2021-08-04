@@ -1,4 +1,4 @@
-package com.gcs.gcsplatform.web.screens.trade.trade.counterpartiesbrokers;
+package com.gcs.gcsplatform.web.screens.trade.tradecontainer.counterpartiesbrokers;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -16,11 +16,12 @@ import com.haulmont.cuba.core.global.ViewBuilder;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.LookupPickerField;
 import com.haulmont.cuba.gui.model.CollectionLoader;
-import com.haulmont.cuba.gui.model.InstanceContainer;
+import com.haulmont.cuba.gui.model.InstancePropertyContainer;
 import com.haulmont.cuba.gui.screen.Install;
 import com.haulmont.cuba.gui.screen.Screen;
 import com.haulmont.cuba.gui.screen.ScreenFragment;
 import com.haulmont.cuba.gui.screen.Subscribe;
+import com.haulmont.cuba.gui.screen.Target;
 import com.haulmont.cuba.gui.screen.UiController;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
 
@@ -53,7 +54,7 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
     protected LookupPickerField<Agent> sellerAgentLookupPickerField;
 
     @Inject
-    protected InstanceContainer<Trade> tradeDc;
+    protected InstancePropertyContainer<Trade> tradeDc;
     @Inject
     protected CollectionLoader<Dealer> dealersDl;
     @Inject
@@ -68,8 +69,8 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
         agentsDl.load();
     }
 
-    @Subscribe
-    protected void onAfterInit(AfterInitEvent event) {
+    @Subscribe(target = Target.PARENT_CONTROLLER)
+    protected void onAfterShowHost(Screen.AfterShowEvent event) {
         Trade trade = tradeDc.getItem();
 
         initFieldValueToStringPropertyMapping(buySplitBrokerLookupPickerField, trade, "dealer", "buySplitBroker");
