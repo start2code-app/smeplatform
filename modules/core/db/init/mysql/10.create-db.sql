@@ -25,22 +25,6 @@ create table GCSPLATFORM_COUNTERPARTY (
     EMAIL varchar(50),
     EMAIL1 varchar(50),
     EMAIL2 varchar(50),
-    GC_ABS varchar(10),
-    GC_CORP varchar(10),
-    GC_EGB varchar(10),
-    GC_EGBPIGS varchar(10),
-    GC_EM varchar(10),
-    GC_GILT varchar(10),
-    GC_SSA varchar(10),
-    GC_UST varchar(10),
-    SPEC_ABS varchar(10),
-    SPEC_CORP varchar(10),
-    SPEC_EGB varchar(10),
-    SPEC_EGBPIGS varchar(10),
-    SPEC_EM varchar(10),
-    SPEC_GILT varchar(10),
-    SPEC_SSA varchar(10),
-    SPEC_UST varchar(10),
     --
     primary key (ID)
 )^

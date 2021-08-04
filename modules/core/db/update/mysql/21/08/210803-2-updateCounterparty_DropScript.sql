@@ -1,0 +1,16 @@
+alter table GCSPLATFORM_COUNTERPARTY drop column GC_ABS__U96253 cascade ;
+alter table GCSPLATFORM_COUNTERPARTY drop column GC_CORP__U35596 cascade ;
+alter table GCSPLATFORM_COUNTERPARTY drop column GC_EGB__U49925 cascade ;
+alter table GCSPLATFORM_COUNTERPARTY drop column GC_EGBPIGS__U75419 cascade ;
+alter table GCSPLATFORM_COUNTERPARTY drop column GC_EM__U34753 cascade ;
+alter table GCSPLATFORM_COUNTERPARTY drop column GC_GILT__U22404 cascade ;
+alter table GCSPLATFORM_COUNTERPARTY drop column GC_SSA__U01605 cascade ;
+alter table GCSPLATFORM_COUNTERPARTY drop column GC_UST__U47991 cascade ;
+alter table GCSPLATFORM_COUNTERPARTY drop column SPEC_ABS__U34431 cascade ;
+alter table GCSPLATFORM_COUNTERPARTY drop column SPEC_CORP__U04204 cascade ;
+alter table GCSPLATFORM_COUNTERPARTY drop column SPEC_EGB__U74772 cascade ;
+alter table GCSPLATFORM_COUNTERPARTY drop column SPEC_EGBPIGS__U14911 cascade ;
+alter table GCSPLATFORM_COUNTERPARTY drop column SPEC_EM__U84638 cascade ;
+alter table GCSPLATFORM_COUNTERPARTY drop column SPEC_GILT__U40962 cascade ;
+alter table GCSPLATFORM_COUNTERPARTY drop column SPEC_SSA__U81868 cascade ;
+alter table GCSPLATFORM_COUNTERPARTY drop column SPEC_UST__U42536 cascade ;

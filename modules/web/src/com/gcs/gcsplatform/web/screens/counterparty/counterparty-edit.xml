@@ -51,38 +51,6 @@
                                property="email1"/>
                     <textField id="email2Field"
                                property="email2"/>
-                    <textField id="gcAbsField"
-                               property="gcAbs"/>
-                    <textField id="gcCorpField"
-                               property="gcCorp"/>
-                    <textField id="gcEgbField"
-                               property="gcEgb"/>
-                    <textField id="gcEgbpigsField"
-                               property="gcEgbpigs"/>
-                    <textField id="gcEmField"
-                               property="gcEm"/>
-                    <textField id="gcGiltField"
-                               property="gcGilt"/>
-                    <textField id="gcSsaField"
-                               property="gcSsa"/>
-                    <textField id="gcUstField"
-                               property="gcUst"/>
-                    <textField id="specAbsField"
-                               property="specAbs"/>
-                    <textField id="specCorpField"
-                               property="specCorp"/>
-                    <textField id="specEgbField"
-                               property="specEgb"/>
-                    <textField id="specEgbpigsField"
-                               property="specEgbpigs"/>
-                    <textField id="specEmField"
-                               property="specEm"/>
-                    <textField id="specGiltField"
-                               property="specGilt"/>
-                    <textField id="specSsaField"
-                               property="specSsa"/>
-                    <textField id="specUstField"
-                               property="specUst"/>
                 </column>
             </form>
         </scrollBox>
