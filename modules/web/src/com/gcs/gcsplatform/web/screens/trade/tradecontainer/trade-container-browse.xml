@@ -46,8 +46,7 @@
                 <column id="trade.maturityDate"/>
                 <column id="trade.hairCut"/>
                 <column id="trade.currency"/>
-                <column id="trade.buybroker"/>
-                <column id="trade.sellbroker"/>
+                <column id="trade.brokerInitials"/>
                 <column id="trade.notes"/>
                 <column id="trade.buyerAgent"
                         collapsed="true"/>
