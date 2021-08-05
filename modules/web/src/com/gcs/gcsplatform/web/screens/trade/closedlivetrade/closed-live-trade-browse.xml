@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://closedLiveTradeBrowse.caption"
+        messagesPack="com.gcs.gcsplatform.web.screens.trade.closedlivetrade"
+        extends="com/gcs/gcsplatform/web/screens/trade/tradecontainer/trade-container-browse.xml">
+    <data>
+        <collection id="tradeContainersDc"
+                    class="com.gcs.gcsplatform.entity.trade.ClosedLiveTrade">
+            <loader id="tradeContainersDl">
+                <query>
+                    <![CDATA[select e from gcsplatform_ClosedLiveTrade e order by e.updateTs desc]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <layout/>
+</window>

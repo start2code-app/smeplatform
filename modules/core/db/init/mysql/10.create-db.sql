@@ -232,6 +232,7 @@ create table GCSPLATFORM_CLOSED_TRADE (
     UPDATED_BY varchar(50),
     DELETE_TS datetime(3),
     DELETED_BY varchar(50),
+    DTYPE varchar(31),
     --
     BOND_DESCRIPTION varchar(50),
     BROOVERIDE boolean,
@@ -346,3 +347,5 @@ create table GCSPLATFORM_OPENED_TRADE (
     primary key (ID)
 )^
 -- end GCSPLATFORM_OPENED_TRADE
+-- begin GCSPLATFORM_CLOSED_LIVE_TRADE
+-- end GCSPLATFORM_CLOSED_LIVE_TRADE

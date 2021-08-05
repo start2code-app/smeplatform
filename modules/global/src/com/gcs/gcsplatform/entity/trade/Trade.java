@@ -7,11 +7,14 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerageType;
 import com.haulmont.chile.core.annotations.MetaClass;
+import com.haulmont.chile.core.annotations.MetaProperty;
 import com.haulmont.chile.core.annotations.NumberFormat;
 import com.haulmont.cuba.core.entity.EmbeddableEntity;
+import org.apache.commons.lang3.StringUtils;
 
 @MetaClass(name = "gcsplatform_Trade")
 @Embeddable
@@ -167,6 +170,32 @@ public class Trade extends EmbeddableEntity {
     @Column(name = "SELL_SPLIT_BROKER", length = 10)
     private String sellSplitBroker;
 
+    @Nullable
+    @Transient
+    @MetaProperty(related = {"buybroker", "sellbroker"})
+    public String getBrokerInitials() {
+        if (StringUtils.isNotBlank(buybroker) && StringUtils.isNotBlank(sellbroker)) {
+            return String.format("%s/%s", buybroker, sellbroker);
+        }
+        return null;
+    }
+
+    @Nullable
+    @Transient
+    @MetaProperty(related = {"gc", "special", "subThirty", "moreThanThirty"})
+    public CounterpartyBrokerageType getBrokerageType() {
+        if (Boolean.TRUE.equals(gc)) {
+            return CounterpartyBrokerageType.GC;
+        } else if (Boolean.TRUE.equals(special)) {
+            return CounterpartyBrokerageType.SPECIAL;
+        } else if (Boolean.TRUE.equals(subThirty)) {
+            return CounterpartyBrokerageType.SUB_THIRTY;
+        } else if (Boolean.TRUE.equals(moreThanThirty)) {
+            return CounterpartyBrokerageType.MORE_THAN_THIRTY;
+        }
+        return null;
+    }
+
     public String getSellSplitBroker() {
         return sellSplitBroker;
     }
@@ -213,20 +242,6 @@ public class Trade extends EmbeddableEntity {
 
     public void setBuyerLocation(String buyerLocation) {
         this.buyerLocation = buyerLocation;
-    }
-
-    @Nullable
-    public CounterpartyBrokerageType getBrokerageType() {
-        if (Boolean.TRUE.equals(gc)) {
-            return CounterpartyBrokerageType.GC;
-        } else if (Boolean.TRUE.equals(special)) {
-            return CounterpartyBrokerageType.SPECIAL;
-        } else if (Boolean.TRUE.equals(subThirty)) {
-            return CounterpartyBrokerageType.SUB_THIRTY;
-        } else if (Boolean.TRUE.equals(moreThanThirty)) {
-            return CounterpartyBrokerageType.MORE_THAN_THIRTY;
-        }
-        return null;
     }
 
     public Boolean getGmSla() {

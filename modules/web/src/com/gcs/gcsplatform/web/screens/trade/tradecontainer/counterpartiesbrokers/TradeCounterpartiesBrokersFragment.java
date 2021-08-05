@@ -82,8 +82,8 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
         initFieldValueToStringPropertyMapping(sellerLookupPickerField, trade, "counterparty", "seller");
         initFieldValueToStringPropertyMapping(sellerAgentLookupPickerField, trade, "agent", "sellerAgent");
 
-        initAgents(buyerLookupPickerField, buyerAgentLookupPickerField);
-        initAgents(sellerLookupPickerField, sellerAgentLookupPickerField);
+        updateBuyerCounterparty();
+        updateSellerCounterparty();
 
         buySplitBrokerLookupPickerField.setVisible(Boolean.TRUE.equals(trade.getBuySplit()));
         sellSplitBrokerLookupPickerField.setVisible(Boolean.TRUE.equals(trade.getSellSplit()));
@@ -106,14 +106,18 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
     @Subscribe("buyerAgentLookupPickerField")
     protected void onBuyerAgentLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Agent> event) {
         if (event.isUserOriginated()) {
-            Agent agent = event.getValue();
-            if (agent != null) {
-                Counterparty counterparty = agent.getCounterparty();
-                buyerLookupPickerField.setValue(counterparty);
-                updateBuyerFields(counterparty);
-            }
-            initAgents(buyerLookupPickerField, buyerAgentLookupPickerField);
+            updateBuyerCounterparty();
         }
+    }
+
+    protected void updateBuyerCounterparty() {
+        Agent agent = buyerAgentLookupPickerField.getValue();
+        if (agent != null) {
+            Counterparty counterparty = agent.getCounterparty();
+            buyerLookupPickerField.setValue(counterparty);
+            updateBuyerFields(counterparty);
+        }
+        initAgents(buyerLookupPickerField, buyerAgentLookupPickerField);
     }
 
     @Subscribe("buyerLookupPickerField")
@@ -144,14 +148,18 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
     @Subscribe("sellerAgentLookupPickerField")
     protected void onSellerAgentLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Agent> event) {
         if (event.isUserOriginated()) {
-            Agent agent = event.getValue();
-            if (agent != null) {
-                Counterparty counterparty = agent.getCounterparty();
-                sellerLookupPickerField.setValue(counterparty);
-                updateSellerFields(counterparty);
-            }
-            initAgents(sellerLookupPickerField, sellerAgentLookupPickerField);
+            updateSellerCounterparty();
         }
+    }
+
+    protected void updateSellerCounterparty() {
+        Agent agent = sellerAgentLookupPickerField.getValue();
+        if (agent != null) {
+            Counterparty counterparty = agent.getCounterparty();
+            sellerLookupPickerField.setValue(counterparty);
+            updateSellerFields(counterparty);
+        }
+        initAgents(sellerLookupPickerField, sellerAgentLookupPickerField);
     }
 
     @Subscribe("sellerLookupPickerField")

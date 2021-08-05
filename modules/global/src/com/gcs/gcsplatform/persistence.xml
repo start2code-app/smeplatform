@@ -12,5 +12,6 @@
         <class>com.gcs.gcsplatform.entity.masterdata.Counterparty</class>
         <class>com.gcs.gcsplatform.entity.masterdata.Dealer</class>
         <class>com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerage</class>
+        <class>com.gcs.gcsplatform.entity.trade.ClosedLiveTrade</class>
     </persistence-unit>
 </persistence>
