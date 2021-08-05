@@ -7,5 +7,12 @@
         <instance id="tradeContainerDc"
                   class="com.gcs.gcsplatform.entity.trade.LiveTrade"/>
     </data>
-    <layout/>
+    <layout>
+        <hbox id="editActions">
+            <fragment id="btnCloseReopenTradeFragment"
+                      screen="gcsplatform_BtnCloseReopenTradeFragment"/>
+            <fragment id="btnCloseTradeFragment"
+                      screen="gcsplatform_BtnCloseTradeFragment"/>
+        </hbox>
+    </layout>
 </window>

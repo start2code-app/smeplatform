@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://dailyBlotterBrowse.caption"
+        messagesPack="com.gcs.gcsplatform.web.screens.trade.dailyblotter"
+        extends="com/gcs/gcsplatform/web/screens/trade/tradecontainer/trade-container-browse.xml">
+    <data>
+        <collection id="tradeContainersDc"
+                    class="com.gcs.gcsplatform.entity.trade.ClosedTrade">
+            <loader id="tradeContainersDl">
+                <query>
+                    <![CDATA[select e from gcsplatform_ClosedTrade e
+                    where @today(e.updateTs)
+                    order by e.updateTs desc]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <layout/>
+</window>

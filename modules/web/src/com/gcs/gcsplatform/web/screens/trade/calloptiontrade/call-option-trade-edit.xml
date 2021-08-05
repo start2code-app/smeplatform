@@ -7,5 +7,10 @@
         <instance id="tradeContainerDc"
                   class="com.gcs.gcsplatform.entity.trade.CallOptionTrade"/>
     </data>
-    <layout/>
+    <layout>
+        <hbox id="editActions">
+            <fragment id="btnCloseTradeFragment"
+                      screen="gcsplatform_BtnCloseTradeFragment"/>
+        </hbox>
+    </layout>
 </window>

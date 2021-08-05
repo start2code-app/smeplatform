@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://closedLiveTradeEdit.caption"
+        messagesPack="com.gcs.gcsplatform.web.screens.trade.closedlivetrade"
+        extends="com/gcs/gcsplatform/web/screens/trade/tradecontainer/trade-container-edit.xml">
+    <data>
+        <instance id="tradeContainerDc"
+                  class="com.gcs.gcsplatform.entity.trade.ClosedLiveTrade"/>
+    </data>
+    <layout/>
+</window>

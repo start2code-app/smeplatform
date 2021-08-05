@@ -9,14 +9,10 @@
     </data>
     <layout>
         <hbox id="editActions">
-            <button id="closeReopenTradeBtn"
-                    icon="font-icon:CLOSE"
-                    stylename="warning"
-                    caption="msg://closeReopenTradeBtn.caption"/>
-            <button id="closeTradeBtn"
-                    icon="font-icon:CLOSE"
-                    stylename="danger"
-                    caption="msg://closeTradeBtn.caption"/>
+            <fragment id="btnCloseReopenTradeFragment"
+                      screen="gcsplatform_BtnCloseReopenTradeFragment"/>
+            <fragment id="btnCloseTradeFragment"
+                      screen="gcsplatform_BtnCloseTradeFragment"/>
         </hbox>
     </layout>
 </window>

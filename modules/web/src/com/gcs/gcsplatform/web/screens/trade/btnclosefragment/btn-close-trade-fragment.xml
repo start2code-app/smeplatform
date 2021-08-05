@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fragment xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd">
+    <layout>
+        <hbox id="editActions"
+              spacing="true">
+            <button id="closeTradeBtn"
+                    icon="font-icon:CLOSE"
+                    stylename="danger"
+                    caption="msg://closeTradeBtn.caption"/>
+        </hbox>
+    </layout>
+</fragment>
+
