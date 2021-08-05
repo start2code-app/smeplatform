@@ -31,31 +31,32 @@ public class CloseTradeServiceBean implements CloseTradeService {
 
     @Override
     public void close(TradeContainer tradeContainer, Date maturityDate) {
-        ClosedTrade closedTrade = createClosedTrade(tradeContainer, maturityDate);
         CommitContext commitContext = new CommitContext();
+        addClosedTradeToCommitContext(commitContext, tradeContainer, maturityDate);
         commitContext.addInstanceToRemove(tradeContainer);
-        commitContext.addInstanceToCommit(closedTrade);
         dataManager.commit(commitContext);
     }
 
     @Override
     public void closeReopen(TradeContainer tradeContainer, Date maturityDate) {
-        ClosedTrade closedTrade = createClosedTrade(tradeContainer, maturityDate);
+        CommitContext commitContext = new CommitContext();
+        addClosedTradeToCommitContext(commitContext, tradeContainer, maturityDate);
         Trade originalTrade = tradeContainer.getTrade();
         originalTrade.setValueDate(maturityDate);
         originalTrade.setTraderef(String.format(tradeConfig.getRefGenerationFormat(), getNextTradeRef()));
-        CommitContext commitContext = new CommitContext();
         commitContext.addInstanceToCommit(tradeContainer);
-        commitContext.addInstanceToCommit(closedTrade);
         dataManager.commit(commitContext);
     }
 
-    private ClosedTrade createClosedTrade(TradeContainer tradeContainer, Date maturityDate) {
+    private void addClosedTradeToCommitContext(CommitContext commitContext,
+            TradeContainer tradeContainer, Date maturityDate) {
         Trade trade = tradeContainer.getTrade();
         if (tradeContainer instanceof LiveTrade) {
-            return createClosedTrade(trade, maturityDate, ClosedLiveTrade.class);
+            ClosedLiveTrade closedLiveTrade = createClosedTrade(trade, maturityDate, ClosedLiveTrade.class);
+            commitContext.addInstanceToCommit(closedLiveTrade);
         } else {
-            return createClosedTrade(trade, maturityDate, ClosedTrade.class);
+            ClosedTrade closedTrade = createClosedTrade(trade, maturityDate, ClosedTrade.class);
+            commitContext.addInstanceToCommit(closedTrade);
         }
     }
 
