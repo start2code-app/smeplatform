@@ -1,6 +1,5 @@
 package com.gcs.gcsplatform.web.screens.trade.tradecontainer.counterpartiesbrokers;
 
-import java.math.BigDecimal;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -9,7 +8,7 @@ import com.gcs.gcsplatform.entity.masterdata.Counterparty;
 import com.gcs.gcsplatform.entity.masterdata.Dealer;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.service.AgentService;
-import com.gcs.gcsplatform.service.BrokerageService;
+import com.gcs.gcsplatform.web.components.BrokerageBean;
 import com.gcs.gcsplatform.web.screens.agent.AgentBrowse;
 import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;
@@ -24,6 +23,7 @@ import com.haulmont.cuba.gui.screen.Subscribe;
 import com.haulmont.cuba.gui.screen.Target;
 import com.haulmont.cuba.gui.screen.UiController;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
+import org.apache.commons.lang3.StringUtils;
 
 import static com.gcs.gcsplatform.web.util.ScreenUtil.initFieldValueToStringPropertyMapping;
 
@@ -34,7 +34,7 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
     @Inject
     protected AgentService agentService;
     @Inject
-    protected BrokerageService brokerageService;
+    protected BrokerageBean brokerageBean;
 
     @Inject
     protected LookupPickerField<Dealer> buySplitBrokerLookupPickerField;
@@ -71,22 +71,42 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
 
     @Subscribe(target = Target.PARENT_CONTROLLER)
     protected void onAfterShowHost(Screen.AfterShowEvent event) {
+        initFieldValueToStringPropertyMapping(buySplitBrokerLookupPickerField, tradeDc, "dealer", "buySplitBroker");
+        initFieldValueToStringPropertyMapping(buyBrokerLookupPickerField, tradeDc, "dealer", "buybroker");
+        initFieldValueToStringPropertyMapping(buyerLookupPickerField, tradeDc, "counterparty", "buyer");
+        initFieldValueToStringPropertyMapping(buyerAgentLookupPickerField, tradeDc, "agent", "buyerAgent");
+        initFieldValueToStringPropertyMapping(sellSplitBrokerLookupPickerField, tradeDc, "dealer", "sellSplitBroker");
+        initFieldValueToStringPropertyMapping(sellBrokerLookupPickerField, tradeDc, "dealer", "sellbroker");
+        initFieldValueToStringPropertyMapping(sellerLookupPickerField, tradeDc, "counterparty", "seller");
+        initFieldValueToStringPropertyMapping(sellerAgentLookupPickerField, tradeDc, "agent", "sellerAgent");
+
+        /*
+         * Subscribe manually to preserve listeners execution order. First listener maps field value to entity.
+         */
+        buyerLookupPickerField.addValueChangeListener(this::onBuyerLookupPickerFieldValueChange);
+        buyerAgentLookupPickerField.addValueChangeListener(this::onBuyerAgentLookupPickerFieldValueChange);
+        sellerLookupPickerField.addValueChangeListener(this::onSellerLookupPickerFieldValueChange);
+        sellerAgentLookupPickerField.addValueChangeListener(this::onSellerAgentLookupPickerFieldValueChange);
+
+        initCounterparty();
+
         Trade trade = tradeDc.getItem();
-
-        initFieldValueToStringPropertyMapping(buySplitBrokerLookupPickerField, trade, "dealer", "buySplitBroker");
-        initFieldValueToStringPropertyMapping(buyBrokerLookupPickerField, trade, "dealer", "buybroker");
-        initFieldValueToStringPropertyMapping(buyerLookupPickerField, trade, "counterparty", "buyer");
-        initFieldValueToStringPropertyMapping(buyerAgentLookupPickerField, trade, "agent", "buyerAgent");
-        initFieldValueToStringPropertyMapping(sellSplitBrokerLookupPickerField, trade, "dealer", "sellSplitBroker");
-        initFieldValueToStringPropertyMapping(sellBrokerLookupPickerField, trade, "dealer", "sellbroker");
-        initFieldValueToStringPropertyMapping(sellerLookupPickerField, trade, "counterparty", "seller");
-        initFieldValueToStringPropertyMapping(sellerAgentLookupPickerField, trade, "agent", "sellerAgent");
-
-        updateBuyerCounterparty();
-        updateSellerCounterparty();
-
         buySplitBrokerLookupPickerField.setVisible(Boolean.TRUE.equals(trade.getBuySplit()));
         sellSplitBrokerLookupPickerField.setVisible(Boolean.TRUE.equals(trade.getSellSplit()));
+    }
+
+    /*
+     * Initialize counterparty value based on agent, only in case if agent is filled but counterparty is not.
+     */
+    protected void initCounterparty() {
+        Trade trade = tradeDc.getItem();
+
+        if (StringUtils.isNotBlank(trade.getBuyerAgent()) && StringUtils.isBlank(trade.getBuyer())) {
+            updateBuyerCounterparty();
+        }
+        if (StringUtils.isNotBlank(trade.getSellerAgent()) && StringUtils.isBlank(trade.getSeller())) {
+            updateSellerCounterparty();
+        }
     }
 
     @Subscribe("buySplitCheckBox")
@@ -103,7 +123,6 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
         }
     }
 
-    @Subscribe("buyerAgentLookupPickerField")
     protected void onBuyerAgentLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Agent> event) {
         if (event.isUserOriginated()) {
             updateBuyerCounterparty();
@@ -120,7 +139,6 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
         initAgents(buyerLookupPickerField, buyerAgentLookupPickerField);
     }
 
-    @Subscribe("buyerLookupPickerField")
     protected void onBuyerLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Counterparty> event) {
         if (event.isUserOriginated()) {
             initAgents(buyerLookupPickerField, buyerAgentLookupPickerField);
@@ -132,20 +150,15 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
     protected void updateBuyerFields(Counterparty counterparty) {
         Trade trade = tradeDc.getItem();
 
+        Boolean buyerCash = counterparty != null ? counterparty.getCash() : null;
+        trade.setBuyerCash(buyerCash);
+
         String buyerLocation = counterparty != null ? counterparty.getBillingCountry() : null;
         trade.setBuyerLocation(buyerLocation);
 
-        if (Boolean.TRUE.equals(trade.getBrooveride()) || Boolean.TRUE.equals(trade.getSubs())) {
-            return;
-        }
-
-        String buyerCounterparty = counterparty != null ? counterparty.getCounterparty() : null;
-        BigDecimal buyBrokerage = brokerageService.findBrokerageValue(buyerCounterparty, trade.getCategory(),
-                trade.getBrokerageType());
-        trade.setBuybrokerage(buyBrokerage);
+        brokerageBean.updateBrokerage(trade);
     }
 
-    @Subscribe("sellerAgentLookupPickerField")
     protected void onSellerAgentLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Agent> event) {
         if (event.isUserOriginated()) {
             updateSellerCounterparty();
@@ -162,7 +175,6 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
         initAgents(sellerLookupPickerField, sellerAgentLookupPickerField);
     }
 
-    @Subscribe("sellerLookupPickerField")
     protected void onSellerLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Counterparty> event) {
         if (event.isUserOriginated()) {
             initAgents(sellerLookupPickerField, sellerAgentLookupPickerField);
@@ -174,17 +186,13 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
     protected void updateSellerFields(Counterparty counterparty) {
         Trade trade = tradeDc.getItem();
 
+        Boolean sellerCash = counterparty != null ? counterparty.getCash() : null;
+        trade.setSellerCash(sellerCash);
+
         String sellerLocation = counterparty != null ? counterparty.getBillingCountry() : null;
         trade.setSellerLocation(sellerLocation);
 
-        if (Boolean.TRUE.equals(trade.getBrooveride()) || Boolean.TRUE.equals(trade.getSubs())) {
-            return;
-        }
-
-        String sellerCounterparty = counterparty != null ? counterparty.getCounterparty() : null;
-        BigDecimal sellBrokerage = brokerageService.findBrokerageValue(sellerCounterparty, trade.getCategory(),
-                trade.getBrokerageType());
-        trade.setSellbrokerage(sellBrokerage);
+        brokerageBean.updateBrokerage(trade);
     }
 
     protected void initAgents(LookupPickerField<Counterparty> counterpartyField, LookupPickerField<Agent> agentField) {
@@ -192,6 +200,7 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
         List<Agent> agents = agentService.getAgents(counterparty, ViewBuilder.of(Agent.class)
                 .add("counterparty", viewBuilder -> viewBuilder
                         .add("billingCountry")
+                        .add("cash")
                         .addView(View.MINIMAL))
                 .addView(View.MINIMAL)
                 .build());

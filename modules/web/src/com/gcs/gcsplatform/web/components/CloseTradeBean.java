@@ -1,4 +1,4 @@
-package com.gcs.gcsplatform.service;
+package com.gcs.gcsplatform.web.components;
 
 import java.util.Date;
 import javax.inject.Inject;
@@ -9,14 +9,16 @@ import com.gcs.gcsplatform.entity.trade.ClosedTrade;
 import com.gcs.gcsplatform.entity.trade.LiveTrade;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.entity.trade.TradeContainer;
-import com.haulmont.cuba.core.app.UniqueNumbersAPI;
+import com.haulmont.cuba.core.app.UniqueNumbersService;
 import com.haulmont.cuba.core.global.CommitContext;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.MetadataTools;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service(CloseTradeService.NAME)
-public class CloseTradeServiceBean implements CloseTradeService {
+@Component(CloseTradeBean.NAME)
+public class CloseTradeBean {
+
+    public static final String NAME = "gcsplatform_CloseTradeBean";
 
     private static final String TRADE_REF_SEQUENCE = "tradeRefSequence";
 
@@ -25,11 +27,18 @@ public class CloseTradeServiceBean implements CloseTradeService {
     @Inject
     private MetadataTools metadataTools;
     @Inject
-    private UniqueNumbersAPI uniqueNumbers;
+    private UniqueNumbersService uniqueNumbersService;
     @Inject
     private TradeConfig tradeConfig;
+    @Inject
+    private PnlCalculationBean pnlCalculationBean;
 
-    @Override
+    /**
+     * Creates ClosedTrade/ClosedLiveTrade instance based on provided trade and then removes original trade.
+     *
+     * @param tradeContainer - Original trade
+     * @param maturityDate   - Maturity date that sets to newly created ClosedTrade instance
+     */
     public void close(TradeContainer tradeContainer, Date maturityDate) {
         CommitContext commitContext = new CommitContext();
         createClosedTrade(tradeContainer, maturityDate, commitContext);
@@ -37,7 +46,16 @@ public class CloseTradeServiceBean implements CloseTradeService {
         dataManager.commit(commitContext);
     }
 
-    @Override
+    /**
+     * Creates ClosedTrade/ClosedLiveTrade instance based on provided trade and then generates new contract number for
+     * original trade.
+     *
+     * Calculates PNL for newly created ClosedTrade/ClosedLiveTrade.
+     *
+     * @param tradeContainer - Original trade
+     * @param maturityDate   - Maturity date that sets to newly created ClosedTrade instance. Also sets to Value date of
+     *                       original trade
+     */
     public void closeReopen(TradeContainer tradeContainer, Date maturityDate) {
         CommitContext commitContext = new CommitContext();
         createClosedTrade(tradeContainer, maturityDate, commitContext);
@@ -58,11 +76,12 @@ public class CloseTradeServiceBean implements CloseTradeService {
         TradeContainer closedTrade = dataManager.create(closedTradeClass);
         Trade tradeCopy = metadataTools.copy(tradeContainer.getTrade());
         tradeCopy.setMaturityDate(maturityDate);
+        pnlCalculationBean.updatePnl(tradeCopy);
         closedTrade.setTrade(tradeCopy);
         commitContext.addInstanceToCommit(closedTrade);
     }
 
     private long getNextTradeRef() {
-        return uniqueNumbers.getNextNumber(TRADE_REF_SEQUENCE);
+        return uniqueNumbersService.getNextNumber(TRADE_REF_SEQUENCE);
     }
 }

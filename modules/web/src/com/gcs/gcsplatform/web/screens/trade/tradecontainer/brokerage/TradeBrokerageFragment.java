@@ -5,7 +5,7 @@ import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.masterdata.Category;
 import com.gcs.gcsplatform.entity.trade.Trade;
-import com.gcs.gcsplatform.service.BrokerageService;
+import com.gcs.gcsplatform.web.components.BrokerageBean;
 import com.haulmont.cuba.gui.components.CheckBox;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.LookupPickerField;
@@ -26,8 +26,8 @@ import static com.gcs.gcsplatform.web.util.ScreenUtil.initFieldValueToStringProp
 public class TradeBrokerageFragment extends ScreenFragment {
 
     @Inject
-    protected BrokerageService brokerageService;
-
+    protected BrokerageBean brokerageBean;
+    
     @Inject
     protected TextField<BigDecimal> buyBrokerageField;
     @Inject
@@ -61,14 +61,14 @@ public class TradeBrokerageFragment extends ScreenFragment {
 
     @Subscribe(target = Target.PARENT_CONTROLLER)
     protected void onAfterShowHost(Screen.AfterShowEvent event) {
-        Trade trade = tradeDc.getItem();
-        initFieldValueToStringPropertyMapping(categoryLookupPickerField, trade, "category", "category");
+        initFieldValueToStringPropertyMapping(categoryLookupPickerField, tradeDc, "category", "category");
 
         /*
          * Subscribe manually to preserve listeners execution order. First listener maps field value to entity.
          */
         categoryLookupPickerField.addValueChangeListener(this::onCategoryLookupPickerFieldValueChange);
 
+        Trade trade = tradeDc.getItem();
         if (Boolean.TRUE.equals(trade.getBrooveride())) {
             buyBrokerageField.setEditable(true);
             sellBrokerageField.setEditable(true);
@@ -91,7 +91,7 @@ public class TradeBrokerageFragment extends ScreenFragment {
             broOverideCheckBox.setValue(false);
         } else {
             origtraderefField.setVisible(false);
-            updateTradeBrokerage();
+            brokerageBean.updateBrokerage(tradeDc.getItem());
         }
     }
 
@@ -108,7 +108,7 @@ public class TradeBrokerageFragment extends ScreenFragment {
         } else {
             sellBrokerageField.setEditable(false);
             buyBrokerageField.setEditable(false);
-            updateTradeBrokerage();
+            brokerageBean.updateBrokerage(tradeDc.getItem());
         }
     }
 
@@ -122,7 +122,7 @@ public class TradeBrokerageFragment extends ScreenFragment {
             subThirtyCheckBox.setValue(false);
             moreThanThirtyCheckBox.setValue(false);
         }
-        updateTradeBrokerage();
+        brokerageBean.updateBrokerage(tradeDc.getItem());
     }
 
     @Subscribe("specialCheckBox")
@@ -135,7 +135,7 @@ public class TradeBrokerageFragment extends ScreenFragment {
             subThirtyCheckBox.setValue(false);
             moreThanThirtyCheckBox.setValue(false);
         }
-        updateTradeBrokerage();
+        brokerageBean.updateBrokerage(tradeDc.getItem());
     }
 
     @Subscribe("subThirtyCheckBox")
@@ -148,7 +148,7 @@ public class TradeBrokerageFragment extends ScreenFragment {
             gcCheckBox.setValue(false);
             moreThanThirtyCheckBox.setValue(false);
         }
-        updateTradeBrokerage();
+        brokerageBean.updateBrokerage(tradeDc.getItem());
     }
 
     @Subscribe("moreThanThirtyCheckBox")
@@ -161,30 +161,12 @@ public class TradeBrokerageFragment extends ScreenFragment {
             subThirtyCheckBox.setValue(false);
             gcCheckBox.setValue(false);
         }
-        updateTradeBrokerage();
+        brokerageBean.updateBrokerage(tradeDc.getItem());
     }
 
     protected void onCategoryLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Category> event) {
         if (event.isUserOriginated()) {
-            updateTradeBrokerage();
+            brokerageBean.updateBrokerage(tradeDc.getItem());
         }
-    }
-
-    /**
-     * Updates buybrokerage and sellbrokerage values based on trade counterparty and category.
-     */
-    protected void updateTradeBrokerage() {
-        Trade trade = tradeDc.getItem();
-        if (Boolean.TRUE.equals(trade.getBrooveride()) || Boolean.TRUE.equals(trade.getSubs())) {
-            return;
-        }
-
-        BigDecimal buyBrokerage = brokerageService.findBrokerageValue(trade.getBuyer(), trade.getCategory(),
-                trade.getBrokerageType());
-        trade.setBuybrokerage(buyBrokerage);
-
-        BigDecimal sellBrokerage = brokerageService.findBrokerageValue(trade.getSeller(), trade.getCategory(),
-                trade.getBrokerageType());
-        trade.setSellbrokerage(sellBrokerage);
     }
 }

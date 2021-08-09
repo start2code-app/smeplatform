@@ -10,17 +10,39 @@
             <loader/>
         </instance>
     </data>
-    <dialogMode height="600"
-                width="800"/>
+    <dialogMode height="AUTO"
+                width="AUTO"
+                modal="true"
+                forceDialog="true"/>
     <layout expand="scrollBox"
             spacing="true">
         <scrollBox id="scrollBox"
                    spacing="true">
             <form id="form"
                   dataContainer="counterpartyDc">
-                <column width="350px">
+                <column width="250px">
                     <textField id="nameField"
                                property="counterparty"/>
+                    <textField id="contactNameField"
+                               property="contactName"/>
+                    <textField id="descriptionField"
+                               property="description"/>
+                    <textField id="billingNameField"
+                               property="billingName"/>
+                    <textField id="billingCompanyNameField"
+                               property="billingCompanyName"/>
+                    <textField id="billingCountryField"
+                               property="billingCountry"/>
+                    <checkBox id="cashField"
+                              property="cash"/>
+                </column>
+                <column width="250px">
+                    <textField id="emailField"
+                               property="email"/>
+                    <textField id="email1Field"
+                               property="email1"/>
+                    <textField id="email2Field"
+                               property="email2"/>
                     <textField id="address1Field"
                                property="address1"/>
                     <textField id="address2Field"
@@ -29,28 +51,12 @@
                                property="address3"/>
                     <textField id="address4Field"
                                property="address4"/>
-                    <textField id="billingNameField"
-                               property="billingName"/>
-                    <textField id="billingCompanynameField"
-                               property="billingCompanyName"/>
-                    <textField id="billingCountryField"
-                               property="billingCountry"/>
                     <textField id="billingInfo1Field"
                                property="billingInfo1"/>
                     <textField id="billingInfo2Field"
                                property="billingInfo2"/>
                     <textField id="billingInfo3Field"
                                property="billingInfo3"/>
-                    <textField id="contactNameField"
-                               property="contactName"/>
-                    <textField id="descriptionField"
-                               property="description"/>
-                    <textField id="emailField"
-                               property="email"/>
-                    <textField id="email1Field"
-                               property="email1"/>
-                    <textField id="email2Field"
-                               property="email2"/>
                 </column>
             </form>
         </scrollBox>

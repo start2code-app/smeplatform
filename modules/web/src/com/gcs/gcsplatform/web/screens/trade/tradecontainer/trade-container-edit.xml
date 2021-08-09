@@ -12,6 +12,13 @@
             </view>
             <loader/>
         </instance>
+        <collection id="currencyDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.Currency">
+            <view extends="_minimal"/>
+            <loader id="currencyDl">
+                <query>select e from gcsplatform_Currency e order by e.currency</query>
+            </loader>
+        </collection>
     </data>
     <dialogMode forceDialog="true"
                 width="900"
@@ -34,10 +41,26 @@
                                property="bondDescription"/>
                     <textField id="isinField"
                                property="isin"/>
-                    <textField id="currencyField"
-                               property="currency"/>
-                    <textField id="tradeCurrencyField"
-                               property="tradeCurrency"/>
+                    <lookupPickerField id="currencyLookupPickerField"
+                                       caption="msg://com.gcs.gcsplatform.entity.trade/Trade.currency"
+                                       optionsContainer="currencyDc">
+                        <actions>
+                            <action id="lookup"
+                                    type="picker_lookup"/>
+                            <action id="clear"
+                                    type="picker_clear"/>
+                        </actions>
+                    </lookupPickerField>
+                    <lookupPickerField id="tradeCurrencyLookupPickerField"
+                                       caption="msg://com.gcs.gcsplatform.entity.trade/Trade.tradeCurrency"
+                                       optionsContainer="currencyDc">
+                        <actions>
+                            <action id="lookup"
+                                    type="picker_lookup"/>
+                            <action id="clear"
+                                    type="picker_clear"/>
+                        </actions>
+                    </lookupPickerField>
                     <textField id="nominalField"
                                property="nominal"/>
                     <textField id="repoRateField"
@@ -70,13 +93,21 @@
                  margin="true">
                 <form id="datesForm"
                       dataContainer="tradeDc">
-                    <dateField id="valueDateField"
-                               property="valueDate"/>
-                    <dateField id="maturityDateField"
-                               property="maturityDate"
-                               enable="false"/>
-                    <dateField id="tradeDateField"
-                               property="tradeDate"/>
+                    <column width="250px">
+                        <dateField id="valueDateField"
+                                   property="valueDate"
+                                   resolution="DAY"/>
+                        <dateField id="maturityDateField"
+                                   property="maturityDate"
+                                   resolution="DAY"
+                                   editable="false"/>
+                        <dateField id="tradeDateField"
+                                   resolution="DAY"
+                                   property="tradeDate"/>
+                        <textField id="numdaysField"
+                                   property="numdays"
+                                   editable="false"/>
+                    </column>
                 </form>
             </tab>
             <tab id="notesTab"
@@ -89,6 +120,35 @@
                               caption="Notes"
                               cols="40"
                               rows="6"/>
+                </form>
+            </tab>
+            <tab id="pnlTab"
+                 caption="msg://pnlTab.caption"
+                 spacing="true"
+                 margin="true">
+                <form id="pnlForm"
+                      dataContainer="tradeDc">
+                    <column width="250px">
+                        <currencyField id="buyPnlField"
+                                       property="buyPnl"
+                                       editable="false"/>
+                        <currencyField id="buyGbpEquivalentField"
+                                       currency="GBP"
+                                       property="buyGbpEquivalent"
+                                       editable="false"/>
+                        <textField id="fxRateField"
+                                   property="xrate1"
+                                   editable="false"/>
+                    </column>
+                    <column width="250px">
+                        <currencyField id="sellPnlField"
+                                       property="sellPnl"
+                                       editable="false"/>
+                        <currencyField id="sellGbpEquivalentField"
+                                       currency="GBP"
+                                       property="sellGbpEquivalent"
+                                       editable="false"/>
+                    </column>
                 </form>
             </tab>
         </tabSheet>

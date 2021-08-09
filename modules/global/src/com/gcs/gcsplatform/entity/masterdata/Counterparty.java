@@ -62,6 +62,17 @@ public class Counterparty extends StandardEntity {
     @Column(name = "EMAIL2", length = 50)
     private String email2;
 
+    @Column(name = "CASH")
+    private Boolean cash;
+
+    public Boolean getCash() {
+        return cash;
+    }
+
+    public void setCash(Boolean cash) {
+        this.cash = cash;
+    }
+
     public String getEmail2() {
         return email2;
     }

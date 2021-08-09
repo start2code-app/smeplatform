@@ -4,7 +4,7 @@ import java.util.Date;
 import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.trade.TradeContainer;
-import com.gcs.gcsplatform.service.CloseTradeService;
+import com.gcs.gcsplatform.web.components.CloseTradeBean;
 import com.gcs.gcsplatform.web.screens.trade.tradecontainer.TradeContainerEdit;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.View;
@@ -15,6 +15,7 @@ import com.haulmont.cuba.gui.app.core.inputdialog.DialogActions;
 import com.haulmont.cuba.gui.app.core.inputdialog.DialogOutcome;
 import com.haulmont.cuba.gui.app.core.inputdialog.InputParameter;
 import com.haulmont.cuba.gui.components.Button;
+import com.haulmont.cuba.gui.components.ValidationErrors;
 import com.haulmont.cuba.gui.screen.MessageBundle;
 import com.haulmont.cuba.gui.screen.Screen;
 import com.haulmont.cuba.gui.screen.ScreenFragment;
@@ -39,7 +40,7 @@ public class BtnCloseReopenTradeFragment extends ScreenFragment {
     @Inject
     protected MessageBundle messageBundle;
     @Inject
-    protected CloseTradeService closeTradeService;
+    protected CloseTradeBean closeTradeBean;
 
     @Subscribe(target = Target.PARENT_CONTROLLER)
     protected void onAfterShowHost(Screen.AfterShowEvent event) {
@@ -52,14 +53,23 @@ public class BtnCloseReopenTradeFragment extends ScreenFragment {
     protected void onCloseReopenTradeBtnClick(Button.ClickEvent event) {
         dialogs.createInputDialog(this)
                 .withCaption(messageBundle.getMessage("closeReopenTradeDialog.caption"))
-                .withParameter(InputParameter.dateTimeParameter("maturityDate")
+                .withParameter(InputParameter.dateParameter("maturityDate")
                         .withCaption(messageBundle.getMessage("maturityDate"))
                         .withRequired(true))
+                .withValidator(validationContext -> {
+                    Date maturityDate = validationContext.getValue("maturityDate");
+                    Date valueDate = getEditedEntity().getTrade().getValueDate();
+                    ValidationErrors validationErrors = new ValidationErrors();
+                    if (valueDate != null && maturityDate != null && maturityDate.before(valueDate)) {
+                        validationErrors.add(messageBundle.getMessage("maturityDate.validationMsg"));
+                    }
+                    return validationErrors;
+                })
                 .withActions(DialogActions.OK_CANCEL)
                 .withCloseListener(inputDialogCloseEvent -> {
                     if (inputDialogCloseEvent.closedWith(DialogOutcome.OK)) {
                         Date maturityDate = inputDialogCloseEvent.getValue("maturityDate");
-                        closeTradeService.closeReopen(getEditedEntity(), maturityDate);
+                        closeTradeBean.closeReopen(getEditedEntity(), maturityDate);
                         setReopenedEntityToEdit();
                         notifications.create(Notifications.NotificationType.TRAY)
                                 .withDescription(messageBundle.getMessage("tradeClosedAndReopened"))

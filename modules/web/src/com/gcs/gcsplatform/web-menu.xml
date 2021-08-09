@@ -33,6 +33,10 @@
               caption="mainMsg://menu_config.gcsplatform_Category.browse"/>
         <item screen="gcsplatform_CounterpartyBrokerage.browse"
               caption="mainMsg://menu_config.gcsplatform_CounterpartyBrokerage.browse"/>
+        <item screen="gcsplatform_Currency.browse"
+              caption="mainMsg://menu_config.gcsplatform_Currency.browse"/>
+        <item screen="gcsplatform_Fx.browse"
+              caption="mainMsg://menu_config.gcsplatform_Fx.browse"/>
     </menu>
     <menu id="administration"
           icon="COG">

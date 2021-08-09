@@ -25,6 +25,7 @@ create table GCSPLATFORM_COUNTERPARTY (
     EMAIL varchar(50),
     EMAIL1 varchar(50),
     EMAIL2 varchar(50),
+    CASH boolean,
     --
     primary key (ID)
 )^
@@ -121,14 +122,15 @@ create table GCSPLATFORM_LIVE_TRADE (
     CPAIR2 varchar(10),
     CPAIR3 varchar(10),
     CURRENCY varchar(5),
-    GBP_EQUIVALENT decimal(10, 4),
+    BUY_GBP_EQUIVALENT decimal(10, 4),
+    SELL_GBP_EQUIVALENT decimal(10, 4),
     GC boolean,
     HAIR_CUT decimal(10, 4),
     ISIN varchar(20),
     MATURITY_DATE datetime(3),
     NOMINAL decimal(10, 2),
     NOTES varchar(100),
-    NUMDAYS integer,
+    NUMDAYS bigint,
     ORIGTRADEREF varchar(20),
     REPO_RATE decimal(10, 4),
     SELLBROKER varchar(10),
@@ -156,6 +158,10 @@ create table GCSPLATFORM_LIVE_TRADE (
     BUY_SPLIT_BROKER varchar(10),
     SELL_SPLIT boolean,
     SELL_SPLIT_BROKER varchar(10),
+    BUY_PNL decimal(10, 4),
+    SELL_PNL decimal(10, 4),
+    BUYER_CASH boolean,
+    SELLER_CASH boolean,
     --
     primary key (ID)
 )^
@@ -183,14 +189,15 @@ create table GCSPLATFORM_CALL_OPTION_TRADE (
     CPAIR2 varchar(10),
     CPAIR3 varchar(10),
     CURRENCY varchar(5),
-    GBP_EQUIVALENT decimal(10, 4),
+    BUY_GBP_EQUIVALENT decimal(10, 4),
+    SELL_GBP_EQUIVALENT decimal(10, 4),
     GC boolean,
     HAIR_CUT decimal(10, 4),
     ISIN varchar(20),
     MATURITY_DATE datetime(3),
     NOMINAL decimal(10, 2),
     NOTES varchar(100),
-    NUMDAYS integer,
+    NUMDAYS bigint,
     ORIGTRADEREF varchar(20),
     REPO_RATE decimal(10, 4),
     SELLBROKER varchar(10),
@@ -218,6 +225,10 @@ create table GCSPLATFORM_CALL_OPTION_TRADE (
     BUY_SPLIT_BROKER varchar(10),
     SELL_SPLIT boolean,
     SELL_SPLIT_BROKER varchar(10),
+    BUY_PNL decimal(10, 4),
+    SELL_PNL decimal(10, 4),
+    BUYER_CASH boolean,
+    SELLER_CASH boolean,
     --
     primary key (ID)
 )^
@@ -245,14 +256,15 @@ create table GCSPLATFORM_CLOSED_TRADE (
     CPAIR2 varchar(10),
     CPAIR3 varchar(10),
     CURRENCY varchar(5),
-    GBP_EQUIVALENT decimal(10, 4),
+    BUY_GBP_EQUIVALENT decimal(10, 4),
+    SELL_GBP_EQUIVALENT decimal(10, 4),
     GC boolean,
     HAIR_CUT decimal(10, 4),
     ISIN varchar(20),
     MATURITY_DATE datetime(3),
     NOMINAL decimal(10, 2),
     NOTES varchar(100),
-    NUMDAYS integer,
+    NUMDAYS bigint,
     ORIGTRADEREF varchar(20),
     REPO_RATE decimal(10, 4),
     SELLBROKER varchar(10),
@@ -280,6 +292,10 @@ create table GCSPLATFORM_CLOSED_TRADE (
     BUY_SPLIT_BROKER varchar(10),
     SELL_SPLIT boolean,
     SELL_SPLIT_BROKER varchar(10),
+    BUY_PNL decimal(10, 4),
+    SELL_PNL decimal(10, 4),
+    BUYER_CASH boolean,
+    SELLER_CASH boolean,
     --
     primary key (ID)
 )^
@@ -307,14 +323,15 @@ create table GCSPLATFORM_OPENED_TRADE (
     CPAIR2 varchar(10),
     CPAIR3 varchar(10),
     CURRENCY varchar(5),
-    GBP_EQUIVALENT decimal(10, 4),
+    BUY_GBP_EQUIVALENT decimal(10, 4),
+    SELL_GBP_EQUIVALENT decimal(10, 4),
     GC boolean,
     HAIR_CUT decimal(10, 4),
     ISIN varchar(20),
     MATURITY_DATE datetime(3),
     NOMINAL decimal(10, 2),
     NOTES varchar(100),
-    NUMDAYS integer,
+    NUMDAYS bigint,
     ORIGTRADEREF varchar(20),
     REPO_RATE decimal(10, 4),
     SELLBROKER varchar(10),
@@ -342,6 +359,10 @@ create table GCSPLATFORM_OPENED_TRADE (
     BUY_SPLIT_BROKER varchar(10),
     SELL_SPLIT boolean,
     SELL_SPLIT_BROKER varchar(10),
+    BUY_PNL decimal(10, 4),
+    SELL_PNL decimal(10, 4),
+    BUYER_CASH boolean,
+    SELLER_CASH boolean,
     --
     primary key (ID)
 )^
@@ -356,6 +377,7 @@ create table GCSPLATFORM_CLOSED_LIVE_TRADE (
     UPDATED_BY varchar(50),
     DELETE_TS datetime(3),
     DELETED_BY varchar(50),
+    --
     BOND_DESCRIPTION varchar(50),
     BROOVERIDE boolean,
     BUYBROKER varchar(10),
@@ -368,14 +390,15 @@ create table GCSPLATFORM_CLOSED_LIVE_TRADE (
     CPAIR2 varchar(10),
     CPAIR3 varchar(10),
     CURRENCY varchar(5),
-    GBP_EQUIVALENT decimal(10, 4),
+    BUY_GBP_EQUIVALENT decimal(10, 4),
+    SELL_GBP_EQUIVALENT decimal(10, 4),
     GC boolean,
     HAIR_CUT decimal(10, 4),
     ISIN varchar(20),
     MATURITY_DATE datetime(3),
     NOMINAL decimal(10, 2),
     NOTES varchar(100),
-    NUMDAYS integer,
+    NUMDAYS bigint,
     ORIGTRADEREF varchar(20),
     REPO_RATE decimal(10, 4),
     SELLBROKER varchar(10),
@@ -403,7 +426,45 @@ create table GCSPLATFORM_CLOSED_LIVE_TRADE (
     BUY_SPLIT_BROKER varchar(10),
     SELL_SPLIT boolean,
     SELL_SPLIT_BROKER varchar(10),
+    BUY_PNL decimal(10, 4),
+    SELL_PNL decimal(10, 4),
+    BUYER_CASH boolean,
+    SELLER_CASH boolean,
     --
     primary key (ID)
 )^
 -- end GCSPLATFORM_CLOSED_LIVE_TRADE
+-- begin GCSPLATFORM_CURRENCY
+create table GCSPLATFORM_CURRENCY (
+    ID varchar(32),
+    VERSION integer not null,
+    CREATE_TS datetime(3),
+    CREATED_BY varchar(50),
+    UPDATE_TS datetime(3),
+    UPDATED_BY varchar(50),
+    DELETE_TS datetime(3),
+    DELETED_BY varchar(50),
+    --
+    CURRENCY varchar(5) not null,
+    --
+    primary key (ID)
+)^
+-- end GCSPLATFORM_CURRENCY
+-- begin GCSPLATFORM_FX
+create table GCSPLATFORM_FX (
+    ID varchar(32),
+    VERSION integer not null,
+    CREATE_TS datetime(3),
+    CREATED_BY varchar(50),
+    UPDATE_TS datetime(3),
+    UPDATED_BY varchar(50),
+    DELETE_TS datetime(3),
+    DELETED_BY varchar(50),
+    --
+    CURRENCY_ID varchar(32) not null,
+    FX_VALUE decimal(10, 4) not null,
+    BILLING_DATE datetime(3) not null,
+    --
+    primary key (ID)
+)^
+-- end GCSPLATFORM_FX

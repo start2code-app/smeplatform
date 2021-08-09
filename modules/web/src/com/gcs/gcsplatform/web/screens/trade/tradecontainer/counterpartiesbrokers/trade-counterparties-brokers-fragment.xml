@@ -11,6 +11,7 @@
                     class="com.gcs.gcsplatform.entity.masterdata.Counterparty">
             <view extends="_minimal">
                 <property name="billingCountry"/>
+                <property name="cash"/>
             </view>
             <loader id="counterpartiesDl">
                 <query>select e from gcsplatform_Counterparty e order by e.counterparty</query>
@@ -29,6 +30,7 @@
                 <property name="counterparty"
                           view="_minimal">
                     <property name="billingCountry"/>
+                    <property name="cash"/>
                 </property>
             </view>
             <loader id="agentsDl">

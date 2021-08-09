@@ -52,6 +52,7 @@
                 <column id="email"/>
                 <column id="email1"/>
                 <column id="email2"/>
+                <column id="cash"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"

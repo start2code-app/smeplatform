@@ -59,8 +59,11 @@ public class Trade extends EmbeddableEntity {
     @Column(name = "CURRENCY", length = 5)
     private String currency;
 
-    @Column(name = "GBP_EQUIVALENT", precision = 10, scale = 4)
-    private BigDecimal gbpEquivalent;
+    @Column(name = "BUY_GBP_EQUIVALENT", precision = 10, scale = 4)
+    private BigDecimal buyGbpEquivalent;
+
+    @Column(name = "SELL_GBP_EQUIVALENT", precision = 10, scale = 4)
+    private BigDecimal sellGbpEquivalent;
 
     @Column(name = "GC")
     private Boolean gc;
@@ -82,7 +85,7 @@ public class Trade extends EmbeddableEntity {
     private String notes;
 
     @Column(name = "NUMDAYS")
-    private Integer numdays;
+    private Long numdays;
 
     @Column(name = "ORIGTRADEREF", length = 20)
     private String origtraderef;
@@ -136,11 +139,9 @@ public class Trade extends EmbeddableEntity {
     private BigDecimal xrate1;
 
     @Column(name = "XRATE2", precision = 10, scale = 4)
-    @NumberFormat(pattern = "#,##0.0000")
     private BigDecimal xrate2;
 
     @Column(name = "XRATE3", precision = 10, scale = 4)
-    @NumberFormat(pattern = "#,##0.0000")
     private BigDecimal xrate3;
 
     @Column(name = "SUB_THIRTY")
@@ -170,6 +171,18 @@ public class Trade extends EmbeddableEntity {
     @Column(name = "SELL_SPLIT_BROKER", length = 10)
     private String sellSplitBroker;
 
+    @Column(name = "BUY_PNL", precision = 10, scale = 4)
+    private BigDecimal buyPnl;
+
+    @Column(name = "SELL_PNL", precision = 10, scale = 4)
+    private BigDecimal sellPnl;
+
+    @Column(name = "BUYER_CASH")
+    private Boolean buyerCash;
+
+    @Column(name = "SELLER_CASH")
+    private Boolean sellerCash;
+
     @Nullable
     @Transient
     @MetaProperty(related = {"buybroker", "sellbroker"})
@@ -194,6 +207,78 @@ public class Trade extends EmbeddableEntity {
             return CounterpartyBrokerageType.MORE_THAN_THIRTY;
         }
         return null;
+    }
+
+    public void setMaturityDate(Date maturityDate) {
+        this.maturityDate = maturityDate;
+    }
+
+    public Date getMaturityDate() {
+        return maturityDate;
+    }
+
+    public void setTradeDate(Date tradeDate) {
+        this.tradeDate = tradeDate;
+    }
+
+    public Date getTradeDate() {
+        return tradeDate;
+    }
+
+    public void setValueDate(Date valueDate) {
+        this.valueDate = valueDate;
+    }
+
+    public Date getValueDate() {
+        return valueDate;
+    }
+
+    public Boolean getSellerCash() {
+        return sellerCash;
+    }
+
+    public void setSellerCash(Boolean sellerCash) {
+        this.sellerCash = sellerCash;
+    }
+
+    public Boolean getBuyerCash() {
+        return buyerCash;
+    }
+
+    public void setBuyerCash(Boolean buyerCash) {
+        this.buyerCash = buyerCash;
+    }
+
+    public void setNumdays(Long numdays) {
+        this.numdays = numdays;
+    }
+
+    public Long getNumdays() {
+        return numdays;
+    }
+
+    public BigDecimal getSellGbpEquivalent() {
+        return sellGbpEquivalent;
+    }
+
+    public void setSellGbpEquivalent(BigDecimal sellGbpEquivalent) {
+        this.sellGbpEquivalent = sellGbpEquivalent;
+    }
+
+    public BigDecimal getSellPnl() {
+        return sellPnl;
+    }
+
+    public void setSellPnl(BigDecimal sellPnl) {
+        this.sellPnl = sellPnl;
+    }
+
+    public BigDecimal getBuyPnl() {
+        return buyPnl;
+    }
+
+    public void setBuyPnl(BigDecimal buyPnl) {
+        this.buyPnl = buyPnl;
     }
 
     public String getSellSplitBroker() {
@@ -292,14 +377,6 @@ public class Trade extends EmbeddableEntity {
         this.xrate1 = xrate1;
     }
 
-    public Date getValueDate() {
-        return valueDate;
-    }
-
-    public void setValueDate(Date valueDate) {
-        this.valueDate = valueDate;
-    }
-
     public String getUti() {
         return uti;
     }
@@ -314,14 +391,6 @@ public class Trade extends EmbeddableEntity {
 
     public void setTraderef(String traderef) {
         this.traderef = traderef;
-    }
-
-    public Date getTradeDate() {
-        return tradeDate;
-    }
-
-    public void setTradeDate(Date tradeDate) {
-        this.tradeDate = tradeDate;
     }
 
     public String getTradeCurrency() {
@@ -412,14 +481,6 @@ public class Trade extends EmbeddableEntity {
         this.origtraderef = origtraderef;
     }
 
-    public Integer getNumdays() {
-        return numdays;
-    }
-
-    public void setNumdays(Integer numdays) {
-        this.numdays = numdays;
-    }
-
     public String getNotes() {
         return notes;
     }
@@ -434,14 +495,6 @@ public class Trade extends EmbeddableEntity {
 
     public void setNominal(BigDecimal nominal) {
         this.nominal = nominal;
-    }
-
-    public Date getMaturityDate() {
-        return maturityDate;
-    }
-
-    public void setMaturityDate(Date maturityDate) {
-        this.maturityDate = maturityDate;
     }
 
     public String getIsin() {
@@ -468,12 +521,12 @@ public class Trade extends EmbeddableEntity {
         this.gc = gc;
     }
 
-    public BigDecimal getGbpEquivalent() {
-        return gbpEquivalent;
+    public BigDecimal getBuyGbpEquivalent() {
+        return buyGbpEquivalent;
     }
 
-    public void setGbpEquivalent(BigDecimal gbpEquivalent) {
-        this.gbpEquivalent = gbpEquivalent;
+    public void setBuyGbpEquivalent(BigDecimal buyGbpEquivalent) {
+        this.buyGbpEquivalent = buyGbpEquivalent;
     }
 
     public String getCurrency() {

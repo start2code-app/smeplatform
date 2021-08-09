@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://pnlChartScreen.caption"
+        messagesPack="com.gcs.gcsplatform.web.screens.pnl">
+    <data>
+        <collection id="pnlByBrokerDc"
+                    class="com.gcs.gcsplatform.entity.pnl.Pnl"/>
+        <collection id="pnlByCounterpartyDc"
+                    class="com.gcs.gcsplatform.entity.pnl.Pnl"/>
+    </data>
+    <layout expand="pnlBox">
+        <hbox id="pnlBox"
+              spacing="true"
+              width="100%">
+            <vbox spacing="true"
+                  height="100%"
+                  expand="pnlByBrokerTable">
+                <label stylename="h2 bold"
+                       value="msg://pnlByBroker.caption"/>
+                <groupTable id="pnlByBrokerTable"
+                            dataContainer="pnlByBrokerDc"
+                            stylename="compact"
+                            width="100%">
+                    <columns>
+                        <group>
+                            <column id="broker"/>
+                        </group>
+                        <column id="counterparty"/>
+                        <column id="tradeCurrency"/>
+                        <column id="pnl"/>
+                    </columns>
+                    <rows/>
+                </groupTable>
+            </vbox>
+            <vbox spacing="true"
+                  height="100%"
+                  expand="pnlByCounterpartyTable">
+                <label stylename="h2 bold"
+                       value="msg://pnlByCounterparty.caption"/>
+                <groupTable id="pnlByCounterpartyTable"
+                            dataContainer="pnlByCounterpartyDc"
+                            stylename="compact"
+                            width="100%">
+                    <columns>
+                        <column id="counterparty"/>
+                        <column id="tradeCurrency"/>
+                        <column id="pnl"/>
+                    </columns>
+                    <rows/>
+                </groupTable>
+            </vbox>
+        </hbox>
+    </layout>
+</window>
