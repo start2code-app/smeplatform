@@ -20,9 +20,11 @@
                 <entry key="gcsplatform_FxService"
                        value="com.gcs.gcsplatform.service.FxService"/>
                 <entry key="gcsplatform_PnlService"
-                       value="com.gcs.gcsplatform.service.PnlService"/>
+                       value="com.gcs.gcsplatform.service.pnl.PnlService"/>
                 <entry key="gcsplatform_TradeService"
                        value="com.gcs.gcsplatform.service.TradeService"/>
+                <entry key="gcsplatform_PnlChartService"
+                       value="com.gcs.gcsplatform.service.pnl.PnlChartService"/>
             </map>
         </property>
     </bean>

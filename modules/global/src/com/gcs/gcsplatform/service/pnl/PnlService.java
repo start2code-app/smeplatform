@@ -1,4 +1,4 @@
-package com.gcs.gcsplatform.service;
+package com.gcs.gcsplatform.service.pnl;
 
 import java.util.Collection;
 
@@ -16,7 +16,6 @@ public interface PnlService {
      * @return List of grouped PNL
      */
     Collection<Pnl> getPnlByCounterparty(Collection<Trade> trades);
-
 
     /**
      * Groups and sums PNL by broker, counterparty, currency.

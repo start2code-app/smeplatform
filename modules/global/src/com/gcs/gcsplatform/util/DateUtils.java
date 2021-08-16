@@ -1,5 +1,6 @@
 package com.gcs.gcsplatform.util;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -29,5 +30,9 @@ public class DateUtils {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));
         return cal.getTime();
+    }
+
+    public static String getYearMonth(Date date) {
+        return new SimpleDateFormat("yyyyMM").format(date);
     }
 }

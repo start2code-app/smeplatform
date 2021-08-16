@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.Date;
 import javax.annotation.Nullable;
 
-import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.entity.trade.TradeContainer;
 
 public interface TradeService {
@@ -21,7 +20,7 @@ public interface TradeService {
      * @param endDate    - Trade update date to
      * @return List of trades
      */
-    Collection<Trade> getEnrichedTradesForPnlChart(Class<? extends TradeContainer> tradeClass, @Nullable Date startDate,
+    <T extends TradeContainer> Collection<T> getEnrichedTradesForPnlChart(Class<T> tradeClass, @Nullable Date startDate,
             @Nullable Date endDate);
 
     /**
@@ -32,5 +31,5 @@ public interface TradeService {
      * @param tradeClass - Trade class
      * @return List of trades
      */
-    Collection<Trade> getEnrichedTradesForPnlChart(Class<? extends TradeContainer> tradeClass);
+    <T extends TradeContainer> Collection<T> getEnrichedTradesForPnlChart(Class<T> tradeClass);
 }

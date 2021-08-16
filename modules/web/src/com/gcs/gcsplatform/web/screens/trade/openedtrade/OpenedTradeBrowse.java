@@ -21,18 +21,19 @@ public class OpenedTradeBrowse extends TradeContainerBrowse<OpenedTrade> {
 
     @Override
     protected void onPnlChartBtnClick(Button.ClickEvent event) {
-        Collection<Trade> trades = tradeService.getEnrichedTradesForPnlChart(getTradeClass());
+        Collection<OpenedTrade> trades = tradeService.getEnrichedTradesForPnlChart(getTradeClass());
         recalculatePnl(trades);
-        pnlChartBean.showPnlChartScreen(trades, this);
+        showPnlChartScreen(trades);
     }
 
     /**
      * Recalculates PNL assuming maturity date is today.
      * <p>
-     * Note: recalculated PNL value is not being persisted, it is only used for chart.
+     * Note: recalculated PNL value is not being persisted, it is only used in chart.
      */
-    protected void recalculatePnl(Collection<Trade> trades) {
-        for (Trade trade : trades) {
+    protected void recalculatePnl(Collection<OpenedTrade> openedTrades) {
+        for (OpenedTrade openedTrade : openedTrades) {
+            Trade trade = openedTrade.getTrade();
             trade.setMaturityDate(new Date());
             pnlCalculationBean.updatePnl(trade);
         }

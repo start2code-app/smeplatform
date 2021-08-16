@@ -7,8 +7,9 @@ import javax.inject.Inject;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.entity.trade.TradeContainer;
 import com.gcs.gcsplatform.service.TradeService;
-import com.gcs.gcsplatform.web.components.PnlChartBean;
+import com.gcs.gcsplatform.web.screens.pnl.PnlChartScreen;
 import com.haulmont.cuba.gui.Dialogs;
+import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.app.core.inputdialog.DialogActions;
 import com.haulmont.cuba.gui.app.core.inputdialog.DialogOutcome;
 import com.haulmont.cuba.gui.app.core.inputdialog.InputParameter;
@@ -19,6 +20,7 @@ import com.haulmont.cuba.gui.screen.Install;
 import com.haulmont.cuba.gui.screen.LoadDataBeforeShow;
 import com.haulmont.cuba.gui.screen.LookupComponent;
 import com.haulmont.cuba.gui.screen.MessageBundle;
+import com.haulmont.cuba.gui.screen.OpenMode;
 import com.haulmont.cuba.gui.screen.StandardLookup;
 import com.haulmont.cuba.gui.screen.Subscribe;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
@@ -35,11 +37,11 @@ public abstract class TradeContainerBrowse<T extends TradeContainer> extends Sta
     @Inject
     protected TradeService tradeService;
     @Inject
-    protected PnlChartBean pnlChartBean;
-    @Inject
     protected Dialogs dialogs;
     @Inject
     protected MessageBundle messageBundle;
+    @Inject
+    protected ScreenBuilders screenBuilders;
 
     @Inject
     protected CollectionLoader<T> tradeContainersDl;
@@ -88,12 +90,21 @@ public abstract class TradeContainerBrowse<T extends TradeContainer> extends Sta
                     if (inputDialogCloseEvent.closedWith(DialogOutcome.OK)) {
                         Date startDate = inputDialogCloseEvent.getValue("startDate");
                         Date endDate = inputDialogCloseEvent.getValue("endDate");
-                        Collection<Trade> trades = tradeService.getEnrichedTradesForPnlChart(getTradeClass(), startDate,
+                        Collection<T> trades = tradeService.getEnrichedTradesForPnlChart(getTradeClass(), startDate,
                                 endDate);
-                        pnlChartBean.showPnlChartScreen(trades, this);
+                        showPnlChartScreen(trades);
                     }
                 })
                 .show();
+    }
+
+    protected void showPnlChartScreen(Collection<? extends TradeContainer> tradeContainers) {
+        PnlChartScreen pnlChartScreen = screenBuilders.screen(this)
+                .withScreenClass(PnlChartScreen.class)
+                .withOpenMode(OpenMode.NEW_TAB)
+                .build();
+        pnlChartScreen.setTradeContainers(tradeContainers);
+        pnlChartScreen.show();
     }
 
     public abstract Class<T> getTradeClass();
