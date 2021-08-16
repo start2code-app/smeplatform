@@ -8,4 +8,9 @@ import com.haulmont.cuba.gui.screen.UiDescriptor;
 @UiController("gcsplatform_ClosedTrade.browse")
 @UiDescriptor("closed-trade-browse.xml")
 public class ClosedTradeBrowse extends TradeContainerBrowse<ClosedTrade> {
+
+    @Override
+    public Class<ClosedTrade> getTradeClass() {
+        return ClosedTrade.class;
+    }
 }

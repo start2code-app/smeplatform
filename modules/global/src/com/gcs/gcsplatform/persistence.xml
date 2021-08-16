@@ -13,5 +13,8 @@
         <class>com.gcs.gcsplatform.entity.masterdata.Dealer</class>
         <class>com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerage</class>
         <class>com.gcs.gcsplatform.entity.trade.ClosedLiveTrade</class>
+        <class>com.gcs.gcsplatform.entity.masterdata.Currency</class>
+        <class>com.gcs.gcsplatform.entity.masterdata.Fx</class>
+        <class>com.gcs.gcsplatform.entity.pnl.Pnl</class>
     </persistence-unit>
 </persistence>

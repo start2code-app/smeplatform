@@ -60,7 +60,13 @@
                         collapsed="true"/>
                 <column id="trade.cpair3"
                         collapsed="true"/>
-                <column id="trade.gbpEquivalent"
+                <column id="trade.buyPnl"
+                        collapsed="true"/>
+                <column id="trade.buyGbpEquivalent"
+                        collapsed="true"/>
+                <column id="trade.sellPnl"
+                        collapsed="true"/>
+                <column id="trade.sellGbpEquivalent"
                         collapsed="true"/>
                 <column id="trade.numdays"
                         collapsed="true"/>
@@ -108,6 +114,9 @@
                         action="tradeContainersTable.edit"/>
                 <button id="removeBtn"
                         action="tradeContainersTable.remove"/>
+                <button id="pnlChartBtn"
+                        stylename="friendly"
+                        caption="msg://pnl"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions"

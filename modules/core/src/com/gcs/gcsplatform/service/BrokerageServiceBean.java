@@ -18,6 +18,9 @@ public class BrokerageServiceBean implements BrokerageService {
     @Override
     public BigDecimal findBrokerageValue(String counterparty, String category,
             CounterpartyBrokerageType brokerageType) {
+        if (counterparty == null || category == null || brokerageType == null) {
+            return null;
+        }
         return dataManager.loadValue("select e.brokerageValue from gcsplatform_CounterpartyBrokerage e "
                 + "where e.counterparty.counterparty = :counterparty "
                 + "and e.category.category = :category "

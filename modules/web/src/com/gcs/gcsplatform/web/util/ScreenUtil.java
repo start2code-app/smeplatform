@@ -6,6 +6,7 @@ import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.OptionsField;
 import com.haulmont.cuba.gui.components.data.Options;
+import com.haulmont.cuba.gui.model.InstanceContainer;
 
 public class ScreenUtil {
 
@@ -19,15 +20,16 @@ public class ScreenUtil {
      * category/counterparty entities and uses string properties instead.
      *
      * @param field              - Source field
-     * @param entity             - Target entity
+     * @param container          - Target entity container
      * @param fieldPropertyName  - Property name in field entity (only string type property)
      * @param targetPropertyName - Property name in target entity (only string type property)
      * @param <V>                - Field type
      * @param <T>                - Entity type contained in field
      */
     public static <V extends HasValue<T> & OptionsField<T, T>, T extends Entity> void initFieldValueToStringPropertyMapping(
-            V field, Entity entity, String fieldPropertyName, String targetPropertyName) {
+            V field, InstanceContainer container, String fieldPropertyName, String targetPropertyName) {
         field.addValueChangeListener(entityValueChangeEvent -> {
+            Entity entity = container.getItem();
             Entity fieldEntityValue = entityValueChangeEvent.getValue();
             String fieldStringValue = null;
             if (fieldEntityValue != null) {
@@ -41,6 +43,7 @@ public class ScreenUtil {
             return;
         }
 
+        Entity entity = container.getItem();
         String entityStringValue = entity.getValue(targetPropertyName);
         T defaultFieldValue = options.getOptions()
                 .filter(optionEntity -> Objects.equals(entityStringValue, optionEntity.getValue(fieldPropertyName)))

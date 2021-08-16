@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://fxBrowse.caption"
+        focusComponent="fxesTable"
+        messagesPack="com.gcs.gcsplatform.web.screens.fx">
+    <data readOnly="true">
+        <collection id="fxesDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.Fx">
+            <view extends="_local">
+                <property name="currency"
+                          view="_minimal"/>
+            </view>
+            <loader id="fxesDl">
+                <query>
+                    <![CDATA[select e from gcsplatform_Fx e order by e.billingDate, e.currency]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="fxesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="fxesTable"
+                dataLoader="fxesDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="fxesTable"
+                    width="100%"
+                    dataContainer="fxesDc">
+            <actions>
+                <action id="create"
+                        type="create"/>
+                <action id="edit"
+                        type="edit"/>
+                <action id="remove"
+                        type="remove"/>
+            </actions>
+            <columns>
+                <column id="currency"/>
+                <column id="fxValue"/>
+                <column id="billingDate"
+                        dateFormat="MM/yyyy"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="fxesTable.create"/>
+                <button id="editBtn"
+                        action="fxesTable.edit"/>
+                <button id="removeBtn"
+                        action="fxesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions"
+              spacing="true"
+              visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

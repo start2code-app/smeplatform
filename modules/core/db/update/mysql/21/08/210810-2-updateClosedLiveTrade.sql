@@ -1,0 +1,2 @@
+alter table GCSPLATFORM_CLOSED_LIVE_TRADE change column NUMDAYS NUMDAYS__U44764 int^
+alter table GCSPLATFORM_CLOSED_LIVE_TRADE add column NUMDAYS bigint ;
