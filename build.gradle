@@ -16,6 +16,11 @@ buildscript {
     }
 }
 
+plugins {
+    id 'org.ajoberstar.grgit' version '4.1.0'
+}
+ext.git = grgit.open(dir: file('.'))
+
 def modulePrefix = 'gcsplatform'
 
 def globalModule = project(":${modulePrefix}-global")
@@ -25,6 +30,12 @@ def webModule = project(":${modulePrefix}-web")
 def servletApi = 'javax.servlet:javax.servlet-api:3.1.0'
 
 apply(plugin: 'cuba')
+
+ext {
+    gitRevision = git.head().id
+    gitRevisionDate = git.head().getDate()
+    gitBranchName = git.branch.current().getName()
+}
 
 cuba {
     artifact {
@@ -79,6 +90,11 @@ configure(globalModule) {
         main {
             enabled = true
         }
+    }
+
+    buildInfo {
+        version = "${cuba.artifact.version}"
+        properties = ['GitBranch': "${gitBranchName}", 'GitRevision': "${gitRevision}", 'GitRevisionDate': "${gitRevisionDate}"]
     }
 }
 
@@ -196,4 +212,8 @@ task buildUberJar(type: CubaUberJarBuilding) {
                      'cuba.dataSource.port'            : '',
                      'cuba.dataSource.connectionParams': '?useSSL=false&allowMultiQueries=true&serverTimezone=UTC',
                      'cuba.dataSourceProvider'         : 'application']
+}
+
+task printVersion() {
+    print("$cuba.artifact.version")
 }
