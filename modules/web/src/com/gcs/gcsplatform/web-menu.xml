@@ -2,7 +2,8 @@
 <menu-config xmlns="http://schemas.haulmont.com/cuba/menu.xsd">
     <menu id="application-trades"
           caption="mainMsg://menu_config.application-trades"
-          icon="font-icon:LINE_CHART">
+          icon="font-icon:LINE_CHART"
+          expanded="true">
         <item screen="gcsplatform_DailyBlotter.browse"
               caption="mainMsg://menu_config.gcsplatform_DailyBlotter.browse"/>
         <item screen="gcsplatform_OpenedTrade.browse"
@@ -18,11 +19,13 @@
     </menu>
     <menu id="application-invoicing"
           caption="mainMsg://menu_config.application-invoicing"
-          icon="FILES_O">
+          icon="FILES_O"
+          expanded="true">
     </menu>
     <menu id="application-masterdata"
           caption="mainMsg://menu_config.application-masterdata"
-          icon="DATABASE">
+          icon="DATABASE"
+          expanded="true">
         <item screen="gcsplatform_Counterparty.browse"
               caption="mainMsg://menu_config.gcsplatform_Counterparty.browse"/>
         <item screen="gcsplatform_Agent.browse"
