@@ -2,10 +2,9 @@
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://dailyBlotterBrowse.caption"
         messagesPack="com.gcs.gcsplatform.web.screens.trade.dailyblotter"
-        extends="com/gcs/gcsplatform/web/screens/trade/tradecontainer/trade-container-browse.xml">
+        extends="com/gcs/gcsplatform/web/screens/trade/closedtrade/closed-trade-browse.xml">
     <data>
-        <collection id="tradeContainersDc"
-                    class="com.gcs.gcsplatform.entity.trade.ClosedTrade">
+        <collection id="tradeContainersDc">
             <loader id="tradeContainersDl">
                 <query>
                     <![CDATA[select e from gcsplatform_ClosedTrade e

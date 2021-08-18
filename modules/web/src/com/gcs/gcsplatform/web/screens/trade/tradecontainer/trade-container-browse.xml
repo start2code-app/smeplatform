@@ -34,7 +34,10 @@
             </actions>
             <columns>
                 <column id="trade.traderef"/>
-                <column id="trade.tradeDate"/>
+                <column id="trade.tradeDate">
+                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
+                               format="dd/MM/yyyy"/>
+                </column>
                 <column id="trade.bondDescription"/>
                 <column id="trade.isin"/>
                 <column id="trade.buyer"/>
@@ -42,8 +45,14 @@
                 <column id="trade.seller"/>
                 <column id="trade.sellbrokerage"/>
                 <column id="trade.nominal"/>
-                <column id="trade.valueDate"/>
-                <column id="trade.maturityDate"/>
+                <column id="trade.valueDate">
+                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
+                               format="dd/MM/yyyy"/>
+                </column>
+                <column id="trade.maturityDate">
+                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
+                               format="dd/MM/yyyy"/>
+                </column>
                 <column id="trade.hairCut"/>
                 <column id="trade.currency"/>
                 <column id="trade.brokerInitials"/>

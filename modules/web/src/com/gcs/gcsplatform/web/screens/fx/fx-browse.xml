@@ -41,8 +41,10 @@
             <columns>
                 <column id="currency"/>
                 <column id="fxValue"/>
-                <column id="billingDate"
-                        dateFormat="MM/yyyy"/>
+                <column id="billingDate">
+                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
+                               format="MM/yyyy"/>
+                </column>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"

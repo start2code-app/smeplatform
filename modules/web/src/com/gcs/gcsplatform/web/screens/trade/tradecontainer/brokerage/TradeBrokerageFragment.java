@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import com.gcs.gcsplatform.entity.masterdata.Category;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.web.components.BrokerageBean;
+import com.gcs.gcsplatform.web.components.PnlCalculationBean;
 import com.haulmont.cuba.gui.components.CheckBox;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.LookupPickerField;
@@ -27,7 +28,9 @@ public class TradeBrokerageFragment extends ScreenFragment {
 
     @Inject
     protected BrokerageBean brokerageBean;
-    
+    @Inject
+    protected PnlCalculationBean pnlCalculationBean;
+
     @Inject
     protected TextField<BigDecimal> buyBrokerageField;
     @Inject
@@ -168,5 +171,15 @@ public class TradeBrokerageFragment extends ScreenFragment {
         if (event.isUserOriginated()) {
             brokerageBean.updateBrokerage(tradeDc.getItem());
         }
+    }
+
+    @Subscribe("sellBrokerageField")
+    protected void onSellBrokerageFieldValueChange(HasValue.ValueChangeEvent<BigDecimal> event) {
+        pnlCalculationBean.updatePnl(tradeDc.getItem());
+    }
+
+    @Subscribe("buyBrokerageField")
+    protected void onBuyBrokerageFieldValueChange(HasValue.ValueChangeEvent<BigDecimal> event) {
+        pnlCalculationBean.updatePnl(tradeDc.getItem());
     }
 }
