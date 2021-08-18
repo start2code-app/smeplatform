@@ -98,7 +98,7 @@ public abstract class TradeContainerBrowse<T extends TradeContainer> extends Sta
                 .show();
     }
 
-    protected void showPnlChartScreen(Collection<? extends TradeContainer> tradeContainers) {
+    protected void showPnlChartScreen(Collection<T> tradeContainers) {
         PnlChartScreen pnlChartScreen = screenBuilders.screen(this)
                 .withScreenClass(PnlChartScreen.class)
                 .withOpenMode(OpenMode.NEW_TAB)
