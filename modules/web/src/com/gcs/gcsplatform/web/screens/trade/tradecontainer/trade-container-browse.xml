@@ -17,7 +17,9 @@
             spacing="true">
         <filter id="filter"
                 applyTo="tradeContainersTable"
-                dataLoader="tradeContainersDl">
+                dataLoader="tradeContainersDl"
+                collapsed="true"
+                settingsEnabled="false">
             <properties include=".*"/>
         </filter>
         <groupTable id="tradeContainersTable"
