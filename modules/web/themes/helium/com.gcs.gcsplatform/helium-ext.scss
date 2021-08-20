@@ -1,9 +1,12 @@
 /* Define your theme modifications inside next mixin */
 @mixin com_gcs_gcsplatform-helium-ext {
 
-  .v-table-row.highlight-row {
+  .v-table-row.pink-row {
       background-color: pink;
-      color: black;
+  }
+
+  .v-table-row.red-row {
+      background-color: #fc5b5b;
   }
 
   // begin - warning button
