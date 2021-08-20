@@ -60,6 +60,10 @@ public class CloseTradeBean {
         CommitContext commitContext = new CommitContext();
         createClosedTrade(tradeContainer, maturityDate, commitContext);
         Trade originalTrade = tradeContainer.getTrade();
+        if (tradeContainer instanceof LiveTrade) {
+            originalTrade.setSubs(true);
+            originalTrade.setOrigtraderef(originalTrade.getTraderef());
+        }
         originalTrade.setValueDate(maturityDate);
         originalTrade.setTraderef(String.format(tradeConfig.getRefGenerationFormat(), getNextTradeRef()));
         commitContext.addInstanceToCommit(tradeContainer);
