@@ -4,9 +4,9 @@ import java.util.Collection;
 import java.util.Date;
 import javax.inject.Inject;
 
-import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.entity.trade.TradeContainer;
 import com.gcs.gcsplatform.service.TradeService;
+import com.gcs.gcsplatform.web.components.TradeValidationBean;
 import com.gcs.gcsplatform.web.screens.pnl.PnlChartScreen;
 import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.ScreenBuilders;
@@ -24,7 +24,6 @@ import com.haulmont.cuba.gui.screen.OpenMode;
 import com.haulmont.cuba.gui.screen.StandardLookup;
 import com.haulmont.cuba.gui.screen.Subscribe;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
-import org.apache.commons.lang3.StringUtils;
 
 import static com.gcs.gcsplatform.util.DateUtils.getFirstDayOfMonth;
 import static com.gcs.gcsplatform.util.DateUtils.getLastDayOfMonth;
@@ -42,6 +41,8 @@ public abstract class TradeContainerBrowse<T extends TradeContainer> extends Sta
     protected MessageBundle messageBundle;
     @Inject
     protected ScreenBuilders screenBuilders;
+    @Inject
+    protected TradeValidationBean tradeValidationBean;
 
     @Inject
     protected CollectionLoader<T> tradeContainersDl;
@@ -57,10 +58,14 @@ public abstract class TradeContainerBrowse<T extends TradeContainer> extends Sta
 
     @Install(to = "tradeContainersTable", subject = "styleProvider")
     protected String tradeContainersTableStyleProvider(T entity, String property) {
-        Trade trade = entity.getTrade();
-        if (property == null && (StringUtils.isEmpty(trade.getBuybroker()) || StringUtils.isEmpty(
-                trade.getSellbroker()))) {
-            return "v-table-row highlight-row";
+        if (property == null) {
+            if (tradeValidationBean.hasBlankRequiredFields(entity)) {
+                return "v-table-row pink-row";
+            }
+
+            if (tradeValidationBean.hasZeroPnl(entity)) {
+                return "v-table-row red-row";
+            }
         }
         return null;
     }
