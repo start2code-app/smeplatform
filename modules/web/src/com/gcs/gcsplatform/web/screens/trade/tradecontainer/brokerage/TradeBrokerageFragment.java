@@ -82,10 +82,7 @@ public class TradeBrokerageFragment extends ScreenFragment {
 
     @Subscribe("subsCheckBox")
     protected void onSubsCheckBoxValueChange(HasValue.ValueChangeEvent<Boolean> event) {
-        if (!event.isUserOriginated()) {
-            return;
-        }
-        if (subsCheckBox.isChecked()) {
+        if (Boolean.TRUE.equals(event.getValue())) {
             origtraderefField.setVisible(true);
             sellBrokerageField.setEditable(false);
             sellBrokerageField.setValue(BigDecimal.ZERO);
