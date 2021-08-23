@@ -39,4 +39,20 @@
       color: #fff;
   }
   //end - warning button
+
+  .v-tabsheet-tabs-tab-colored .v-tabsheet-tabitem {
+      border-radius: 6px;
+  }
+
+  .v-tabsheet-tabs-tab-colored .v-tabsheet-tabitem-selected {
+  	  background-color: var(--primary-dim-color);
+  }
+
+  .v-tabsheet-tabs-tab-colored .v-tabsheet-tabitem .v-caption {
+      line-height: 38px;
+  }
+
+  .v-tabsheet-tabcontainer-tab-colored {
+      margin-left: 12px;
+  }
 }
