@@ -9,57 +9,95 @@
             <view extends="_local"/>
             <loader/>
         </instance>
+        <collection id="brokeragesDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerage">
+            <view extends="_local">
+                <property name="category"
+                          view="_minimal"/>
+            </view>
+            <loader id="brokeragesDl">
+                <query>
+                    <![CDATA[select e from gcsplatform_CounterpartyBrokerage e
+                             where e.counterparty = :counterparty]]>
+                </query>
+            </loader>
+        </collection>
     </data>
-    <dialogMode height="AUTO"
-                width="AUTO"
+    <dialogMode height="600"
+                width="850"
                 modal="true"
                 forceDialog="true"/>
-    <layout expand="scrollBox"
+    <layout expand="counterpartyTabsheet"
             spacing="true">
-        <scrollBox id="scrollBox"
-                   spacing="true">
-            <form id="form"
-                  dataContainer="counterpartyDc">
-                <column width="250px">
-                    <textField id="nameField"
-                               property="counterparty"/>
-                    <textField id="contactNameField"
-                               property="contactName"/>
-                    <textField id="descriptionField"
-                               property="description"/>
-                    <textField id="billingNameField"
-                               property="billingName"/>
-                    <textField id="billingCompanyNameField"
-                               property="billingCompanyName"/>
-                    <textField id="billingCountryField"
-                               property="billingCountry"/>
-                    <checkBox id="cashField"
-                              property="cash"/>
-                </column>
-                <column width="250px">
-                    <textField id="emailField"
-                               property="email"/>
-                    <textField id="email1Field"
-                               property="email1"/>
-                    <textField id="email2Field"
-                               property="email2"/>
-                    <textField id="address1Field"
-                               property="address1"/>
-                    <textField id="address2Field"
-                               property="address2"/>
-                    <textField id="address3Field"
-                               property="address3"/>
-                    <textField id="address4Field"
-                               property="address4"/>
-                    <textField id="billingInfo1Field"
-                               property="billingInfo1"/>
-                    <textField id="billingInfo2Field"
-                               property="billingInfo2"/>
-                    <textField id="billingInfo3Field"
-                               property="billingInfo3"/>
-                </column>
-            </form>
-        </scrollBox>
+        <tabSheet id="counterpartyTabsheet"
+                  stylename="framed">
+            <tab id="general"
+                 caption="msg://generalTab.caption"
+                 spacing="true"
+                 margin="true">
+                <form id="form"
+                      dataContainer="counterpartyDc">
+                    <column width="250px">
+                        <textField id="nameField"
+                                   property="counterparty"/>
+                        <textField id="contactNameField"
+                                   property="contactName"/>
+                        <textField id="descriptionField"
+                                   property="description"/>
+                        <textField id="billingNameField"
+                                   property="billingName"/>
+                        <textField id="billingCompanyNameField"
+                                   property="billingCompanyName"/>
+                        <textField id="billingCountryField"
+                                   property="billingCountry"/>
+                        <checkBox id="cashField"
+                                  property="cash"/>
+                    </column>
+                    <column width="250px">
+                        <textField id="emailField"
+                                   property="email"/>
+                        <textField id="email1Field"
+                                   property="email1"/>
+                        <textField id="email2Field"
+                                   property="email2"/>
+                        <textField id="address1Field"
+                                   property="address1"/>
+                        <textField id="address2Field"
+                                   property="address2"/>
+                        <textField id="address3Field"
+                                   property="address3"/>
+                        <textField id="address4Field"
+                                   property="address4"/>
+                        <textField id="billingInfo1Field"
+                                   property="billingInfo1"/>
+                        <textField id="billingInfo2Field"
+                                   property="billingInfo2"/>
+                        <textField id="billingInfo3Field"
+                                   property="billingInfo3"/>
+                    </column>
+                </form>
+            </tab>
+            <tab id="brokerageTab"
+                 caption="msg://brokerageTab.caption"
+                 spacing="true"
+                 margin="true">
+                <groupTable id="brokeragesTable"
+                            dataContainer="brokeragesDc"
+                            editable="true"
+                            height="100%"
+                            width="100%">
+                    <columns>
+                        <group>
+                            <column id="category"/>
+                        </group>
+                        <column id="brokerageType"/>
+                        <column id="brokerageValue"
+                                editable="true"/>
+                    </columns>
+                    <rows/>
+                </groupTable>
+            </tab>
+        </tabSheet>
         <hbox id="editActions"
               spacing="true">
             <button id="commitAndCloseBtn"
