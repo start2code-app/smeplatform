@@ -2,66 +2,78 @@
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
         caption="msg://counterpartyBrokerageBrowse.caption"
-        focusComponent="counterpartyBrokeragesTable"
+        focusComponent="counterpartiesTable"
         messagesPack="com.gcs.gcsplatform.web.screens.counterpartybrokerage">
     <data readOnly="true">
-        <collection id="counterpartyBrokeragesDc"
-                    class="com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerage">
-            <view extends="_local">
-                <property name="counterparty"
-                          view="_minimal"/>
-                <property name="category"
-                          view="_minimal"/>
+        <collection id="counterpartiesDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.Counterparty">
+            <view extends="_minimal">
+                <property name="brokerages"
+                          view="_local">
+                    <property name="category"
+                              view="_minimal"/>
+                </property>
             </view>
-            <loader id="counterpartyBrokeragesDl">
+            <collection id="brokeragesDc"
+                        property="brokerages"/>
+            <loader id="counterpartiesDl">
                 <query>
-                    <![CDATA[select e from gcsplatform_CounterpartyBrokerage e order by e.counterparty]]>
+                    <![CDATA[select e from gcsplatform_Counterparty e order by e.counterparty]]>
                 </query>
             </loader>
         </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="counterpartyBrokeragesTable"
+    <layout expand="counterpartyBrokerageBox"
             spacing="true">
         <filter id="filter"
-                applyTo="counterpartyBrokeragesTable"
-                dataLoader="counterpartyBrokeragesDl">
+                applyTo="counterpartiesTable"
+                dataLoader="counterpartiesDl">
             <properties include=".*"/>
         </filter>
-        <groupTable id="counterpartyBrokeragesTable"
-                    width="100%"
-                    dataContainer="counterpartyBrokeragesDc">
-            <actions>
-                <action id="create"
-                        type="create"/>
-                <action id="edit"
-                        type="edit"/>
-                <action id="remove"
-                        type="remove"/>
-            </actions>
-            <columns>
-                <column id="counterparty"/>
-                <column id="category"/>
-                <column id="brokerageType"/>
-                <column id="brokerageValue"/>
-            </columns>
-            <rowsCount/>
-            <buttonsPanel id="buttonsPanel"
-                          alwaysVisible="true">
-                <button id="createBtn"
-                        action="counterpartyBrokeragesTable.create"/>
-                <button id="editBtn"
-                        action="counterpartyBrokeragesTable.edit"/>
-                <button id="removeBtn"
-                        action="counterpartyBrokeragesTable.remove"/>
-            </buttonsPanel>
-        </groupTable>
-        <hbox id="lookupActions"
+        <hbox id="counterpartyBrokerageBox"
               spacing="true"
-              visible="false">
-            <button action="lookupSelectAction"/>
-            <button action="lookupCancelAction"/>
+              width="100%">
+            <groupTable id="counterpartiesTable"
+                        width="100%"
+                        height="100%"
+                        multiselect="false"
+                        dataContainer="counterpartiesDc">
+                <actions>
+                    <action id="edit"
+                            type="edit"/>
+                </actions>
+                <columns>
+                    <column id="counterparty"/>
+                </columns>
+                <rowsCount/>
+                <buttonsPanel>
+                    <label stylename="h2 bold"
+                           value="msg://com.gcs.gcsplatform.entity.masterdata/Counterparty"/>
+                    <vbox/>
+                </buttonsPanel>
+            </groupTable>
+            <groupTable id="brokeragesTable"
+                        width="100%"
+                        height="100%"
+                        dataContainer="brokeragesDc"
+                        editable="true">
+                <columns>
+                    <group>
+                        <column id="category"/>
+                    </group>
+                    <column id="brokerageType"/>
+                    <column id="brokerageValue"
+                            editable="true"/>
+                </columns>
+                <rowsCount/>
+                <buttonsPanel>
+                    <label stylename="h2 bold"
+                           value="msg://com.gcs.gcsplatform.entity.masterdata/CounterpartyBrokerage"/>
+                    <vbox/>
+                </buttonsPanel>
+            </groupTable>
         </hbox>
     </layout>
 </window>
