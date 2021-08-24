@@ -7,18 +7,23 @@
     <data readOnly="true">
         <collection id="counterpartiesDc"
                     class="com.gcs.gcsplatform.entity.masterdata.Counterparty">
-            <view extends="_minimal">
-                <property name="brokerages"
-                          view="_local">
-                    <property name="category"
-                              view="_minimal"/>
-                </property>
-            </view>
-            <collection id="brokeragesDc"
-                        property="brokerages"/>
+            <view extends="_minimal"/>
             <loader id="counterpartiesDl">
                 <query>
                     <![CDATA[select e from gcsplatform_Counterparty e order by e.counterparty]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="brokeragesDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerage">
+            <view extends="_local">
+                <property name="category"
+                          view="_minimal"/>
+            </view>
+            <loader id="brokeragesDl">
+                <query>
+                    <![CDATA[select e from gcsplatform_CounterpartyBrokerage e
+                             where e.counterparty = :counterparty]]>
                 </query>
             </loader>
         </collection>

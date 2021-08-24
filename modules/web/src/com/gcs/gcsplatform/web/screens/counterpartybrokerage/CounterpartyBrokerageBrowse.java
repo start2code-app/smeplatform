@@ -13,9 +13,9 @@ import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;
 import com.haulmont.cuba.gui.components.GroupTable;
 import com.haulmont.cuba.gui.components.Table;
-import com.haulmont.cuba.gui.model.CollectionPropertyContainer;
+import com.haulmont.cuba.gui.model.CollectionContainer;
+import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.model.InstanceContainer;
-import com.haulmont.cuba.gui.screen.LoadDataBeforeShow;
 import com.haulmont.cuba.gui.screen.Screen;
 import com.haulmont.cuba.gui.screen.Subscribe;
 import com.haulmont.cuba.gui.screen.Target;
@@ -24,7 +24,6 @@ import com.haulmont.cuba.gui.screen.UiDescriptor;
 
 @UiController("gcsplatform_CounterpartyBrokerage.browse")
 @UiDescriptor("counterparty-brokerage-browse.xml")
-@LoadDataBeforeShow
 public class CounterpartyBrokerageBrowse extends Screen {
 
     protected List<Category> categories;
@@ -37,7 +36,11 @@ public class CounterpartyBrokerageBrowse extends Screen {
     protected InitialBrokerageBean initialBrokerageBean;
 
     @Inject
-    protected CollectionPropertyContainer<CounterpartyBrokerage> brokeragesDc;
+    protected CollectionContainer<CounterpartyBrokerage> brokeragesDc;
+    @Inject
+    protected CollectionLoader<CounterpartyBrokerage> brokeragesDl;
+    @Inject
+    protected CollectionLoader<Counterparty> counterpartiesDl;
 
     @Inject
     protected GroupTable<Counterparty> counterpartiesTable;
@@ -45,7 +48,8 @@ public class CounterpartyBrokerageBrowse extends Screen {
     protected GroupTable<CounterpartyBrokerage> brokeragesTable;
 
     @Subscribe
-    protected void onAfterShow(AfterShowEvent event) {
+    protected void onBeforeShow(BeforeShowEvent event) {
+        counterpartiesDl.load();
         categories = categoryService.getCategories(ViewBuilder.of(Category.class)
                 .addView(View.MINIMAL)
                 .build());
@@ -53,13 +57,21 @@ public class CounterpartyBrokerageBrowse extends Screen {
 
     @Subscribe(id = "counterpartiesDc", target = Target.DATA_CONTAINER)
     protected void onCounterpartiesDcItemChange(InstanceContainer.ItemChangeEvent<Counterparty> event) {
-        if (event.getItem() != null) {
-            initialBrokerageBean.enrichBrokerageWithInitialData(brokeragesDc.getMutableItems(), categories,
-                    counterpartiesTable.getSingleSelected());
-            brokeragesTable.expandAll();
-            brokeragesTable.sort("brokerageType", Table.SortDirection.ASCENDING);
-            brokeragesTable.sort("category", Table.SortDirection.ASCENDING);
+        List<CounterpartyBrokerage> brokerageList = brokeragesDc.getMutableItems();
+
+        if (event.getItem() == null) {
+            brokerageList.clear();
+            return;
         }
+
+        Counterparty counterparty = counterpartiesTable.getSingleSelected();
+        brokeragesDl.setParameter("counterparty", counterparty);
+        brokeragesDl.load();
+
+        initialBrokerageBean.enrichBrokerageWithInitialData(brokerageList, categories, counterparty);
+        brokeragesTable.expandAll();
+        brokeragesTable.sort("brokerageType", Table.SortDirection.ASCENDING);
+        brokeragesTable.sort("category", Table.SortDirection.ASCENDING);
     }
 
     @Subscribe(id = "brokeragesDc", target = Target.DATA_CONTAINER)
