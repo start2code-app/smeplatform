@@ -55,4 +55,8 @@
   .v-tabsheet-tabcontainer-tab-colored {
       margin-left: 12px;
   }
+
+  .v-tabsheet-tabcontainer-tab-colored .v-tabsheet-caption-close {
+      top: 11px !important;
+  }
 }
