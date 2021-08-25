@@ -169,14 +169,4 @@ public class TradeBrokerageFragment extends ScreenFragment {
             brokerageBean.updateBrokerage(tradeDc.getItem());
         }
     }
-
-    @Subscribe("sellBrokerageField")
-    protected void onSellBrokerageFieldValueChange(HasValue.ValueChangeEvent<BigDecimal> event) {
-        pnlCalculationBean.updatePnl(tradeDc.getItem());
-    }
-
-    @Subscribe("buyBrokerageField")
-    protected void onBuyBrokerageFieldValueChange(HasValue.ValueChangeEvent<BigDecimal> event) {
-        pnlCalculationBean.updatePnl(tradeDc.getItem());
-    }
 }

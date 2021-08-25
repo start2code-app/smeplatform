@@ -21,12 +21,20 @@ public class PnlCalculationBean {
 
     /**
      * Updates number of days between trade's maturity date and value date.
+     *
+     * @param trade - Trade
+     */
+    public void updateNumdays(Trade trade) {
+        trade.setNumdays(getDaysBetweenDates(trade.getMaturityDate(), trade.getValueDate()));
+    }
+
+    /**
      * Updates PNL values and theirs GBP equivalent.
      *
      * @param trade - Trade
      */
     public void updatePnl(Trade trade) {
-        trade.setNumdays(getDaysBetweenDates(trade.getMaturityDate(), trade.getValueDate()));
+        updateNumdays(trade);
 
         BigDecimal fxValue = fxService.getFxValue(trade.getTradeCurrency());
         trade.setXrate1(fxValue);

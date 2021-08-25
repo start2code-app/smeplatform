@@ -14,19 +14,5 @@
             </loader>
         </collection>
     </data>
-    <layout>
-        <groupTable id="tradeContainersTable"
-                    aggregatable="true">
-            <columns>
-                <column id="trade.buyGbpEquivalent"
-                        collapsed="false">
-                    <aggregation type="SUM"/>
-                </column>
-                <column id="trade.sellGbpEquivalent"
-                        collapsed="false">
-                    <aggregation type="SUM"/>
-                </column>
-            </columns>
-        </groupTable>
-    </layout>
+    <layout/>
 </window>
