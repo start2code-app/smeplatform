@@ -5,16 +5,15 @@ import java.util.Date;
 import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.trade.OpenedTrade;
-import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.web.components.PnlCalculationBean;
-import com.gcs.gcsplatform.web.screens.trade.tradecontainer.TradeContainerBrowse;
+import com.gcs.gcsplatform.web.screens.trade.TradeBrowse;
 import com.haulmont.cuba.gui.components.Button;
 import com.haulmont.cuba.gui.screen.UiController;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
 
 @UiController("gcsplatform_OpenedTrade.browse")
 @UiDescriptor("opened-trade-browse.xml")
-public class OpenedTradeBrowse extends TradeContainerBrowse<OpenedTrade> {
+public class OpenedTradeBrowse extends TradeBrowse<OpenedTrade> {
 
     @Inject
     protected PnlCalculationBean pnlCalculationBean;
@@ -33,9 +32,8 @@ public class OpenedTradeBrowse extends TradeContainerBrowse<OpenedTrade> {
      */
     protected void recalculatePnl(Collection<OpenedTrade> openedTrades) {
         for (OpenedTrade openedTrade : openedTrades) {
-            Trade trade = openedTrade.getTrade();
-            trade.setMaturityDate(new Date());
-            pnlCalculationBean.updatePnl(trade);
+            openedTrade.setMaturityDate(new Date());
+            pnlCalculationBean.updatePnl(openedTrade);
         }
     }
 

@@ -1,4 +1,4 @@
-package com.gcs.gcsplatform.web.screens.trade.tradecontainer.counterpartiesbrokers;
+package com.gcs.gcsplatform.web.screens.trade.counterpartiesbrokersfragment;
 
 import java.util.List;
 import javax.inject.Inject;

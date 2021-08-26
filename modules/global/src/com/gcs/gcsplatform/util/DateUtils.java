@@ -20,15 +20,17 @@ public class DateUtils {
         return TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
     }
 
-    public static Date getFirstDayOfMonth() {
+    public static Date getFirstDayOfMonth(Date date) {
         Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
         cal.set(Calendar.DATE, cal.getActualMinimum(Calendar.DATE));
         return cal.getTime();
     }
 
-    public static Date getLastDayOfMonth() {
+    public static Date getLastDayOfMonth(Date date) {
         Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));
+        cal.setTime(date);
+        cal.set(Calendar.DATE, cal.getActualMinimum(Calendar.DATE));
         return cal.getTime();
     }
 

@@ -12,7 +12,7 @@ public interface CategoryService {
     /**
      * Gets all the categories.
      *
-     * @param view - View
+     * @param view View
      * @return List of categories
      */
     List<Category> getCategories(View view);

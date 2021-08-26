@@ -19,12 +19,12 @@ public class ScreenUtil {
      * The reason of this mapping is that trade entity does not have actual foreign keys to dealer/brokerage
      * category/counterparty entities and uses string properties instead.
      *
-     * @param field              - Source field
-     * @param container          - Target entity container
-     * @param fieldPropertyName  - Property name in field entity (only string type property)
-     * @param targetPropertyName - Property name in target entity (only string type property)
-     * @param <V>                - Field type
-     * @param <T>                - Entity type contained in field
+     * @param field              Source field
+     * @param container          Target entity container
+     * @param fieldPropertyName  Property name in field entity (only string type property)
+     * @param targetPropertyName Property name in target entity (only string type property)
+     * @param <V>                Field type
+     * @param <T>                Entity type contained in field
      */
     public static <V extends HasValue<T> & OptionsField<T, T>, T extends Entity> void initFieldValueToStringPropertyMapping(
             V field, InstanceContainer container, String fieldPropertyName, String targetPropertyName) {

@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
-        messagesPack="com.gcs.gcsplatform.web.screens.trade.tradecontainer">
+        messagesPack="com.gcs.gcsplatform.web.screens.trade.trade">
     <data>
-        <instance id="tradeContainerDc"
-                  class="com.gcs.gcsplatform.entity.trade.TradeContainer">
-            <instance id="tradeDc"
-                      property="trade"/>
-            <view extends="_local">
-                <property name="trade"
-                          view="_local"/>
-            </view>
+        <instance id="tradeDc"
+                  class="com.gcs.gcsplatform.entity.trade.Trade">
+            <view extends="_local"/>
             <loader/>
         </instance>
         <collection id="currencyDc"

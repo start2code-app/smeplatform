@@ -3,11 +3,11 @@
         xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
         caption="msg://closedTradeBrowse.caption"
         messagesPack="com.gcs.gcsplatform.web.screens.trade.closedtrade"
-        extends="com/gcs/gcsplatform/web/screens/trade/tradecontainer/trade-container-browse.xml">
+        extends="com/gcs/gcsplatform/web/screens/trade/trade-browse.xml">
     <data>
-        <collection id="tradeContainersDc"
+        <collection id="tradesDc"
                     class="com.gcs.gcsplatform.entity.trade.ClosedTrade">
-            <loader id="tradeContainersDl">
+            <loader id="tradesDl">
                 <query>
                     <![CDATA[select e from gcsplatform_ClosedTrade e order by e.updateTs desc]]>
                 </query>

@@ -5,7 +5,7 @@ import javax.persistence.Table;
 
 @Table(name = "GCSPLATFORM_CALL_OPTION_TRADE")
 @Entity(name = "gcsplatform_CallOptionTrade")
-public class CallOptionTrade extends TradeContainer {
+public class CallOptionTrade extends Trade {
 
     private static final long serialVersionUID = 5690336409028269163L;
 }

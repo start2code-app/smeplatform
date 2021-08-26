@@ -1,18 +1,17 @@
-package com.gcs.gcsplatform.web.screens.trade.tradecontainer;
+package com.gcs.gcsplatform.web.screens.trade;
 
 import java.util.Date;
 import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.masterdata.Currency;
 import com.gcs.gcsplatform.entity.trade.Trade;
-import com.gcs.gcsplatform.entity.trade.TradeContainer;
 import com.gcs.gcsplatform.web.components.PnlCalculationBean;
 import com.haulmont.cuba.core.global.PersistenceHelper;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.LookupPickerField;
+import com.haulmont.cuba.gui.model.DataContext;
 import com.haulmont.cuba.gui.model.InstanceContainer;
-import com.haulmont.cuba.gui.model.InstancePropertyContainer;
 import com.haulmont.cuba.gui.screen.EditedEntityContainer;
 import com.haulmont.cuba.gui.screen.LoadDataBeforeShow;
 import com.haulmont.cuba.gui.screen.MessageBundle;
@@ -23,10 +22,10 @@ import org.apache.commons.lang3.StringUtils;
 
 import static com.gcs.gcsplatform.web.util.ScreenUtil.initFieldValueToStringPropertyMapping;
 
-@UiDescriptor("trade-container-edit.xml")
-@EditedEntityContainer("tradeContainerDc")
+@UiDescriptor("trade-edit.xml")
+@EditedEntityContainer("tradeDc")
 @LoadDataBeforeShow
-public abstract class TradeContainerEdit<T extends TradeContainer> extends StandardEditor<T> {
+public abstract class TradeEdit<T extends Trade> extends StandardEditor<T> {
 
     protected String initialWindowCaption;
     protected boolean isNew;
@@ -37,6 +36,8 @@ public abstract class TradeContainerEdit<T extends TradeContainer> extends Stand
     protected MessageBundle messageBundle;
     @Inject
     protected Notifications notifications;
+    @Inject
+    protected DataContext dataContext;
 
     @Inject
     protected LookupPickerField<Currency> currencyLookupPickerField;
@@ -44,9 +45,7 @@ public abstract class TradeContainerEdit<T extends TradeContainer> extends Stand
     protected LookupPickerField<Currency> tradeCurrencyLookupPickerField;
 
     @Inject
-    protected InstancePropertyContainer<Trade> tradeDc;
-    @Inject
-    protected InstanceContainer<T> tradeContainerDc;
+    protected InstanceContainer<T> tradeDc;
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
@@ -106,9 +105,9 @@ public abstract class TradeContainerEdit<T extends TradeContainer> extends Stand
         pnlCalculationBean.updateNumdays(trade);
     }
 
-    public void setTrade(T tradeContainer) {
-        T merged = getScreenData().getDataContext().merge(tradeContainer);
-        tradeContainerDc.setItem(merged);
+    public void setTrade(T trade) {
+        T merged = dataContext.merge(trade);
+        tradeDc.setItem(merged);
     }
 
     public void updateWindowCaption(String tradeRef) {

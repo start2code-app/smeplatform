@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.persistence.TemporalType;
 
-import com.gcs.gcsplatform.entity.trade.TradeContainer;
+import com.gcs.gcsplatform.entity.trade.Trade;
 import com.haulmont.bali.util.Preconditions;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.FluentLoader;
@@ -26,7 +26,7 @@ public class TradeServiceBean implements TradeService {
     private MetadataTools metadataTools;
 
     @Override
-    public <T extends TradeContainer> Collection<T> getEnrichedTradesForPnlChart(Class<T> tradeClass,
+    public <T extends Trade> Collection<T> getEnrichedTradesForPnlChart(Class<T> tradeClass,
             @Nullable Date startDate, @Nullable Date endDate) {
         Preconditions.checkNotNullArgument(tradeClass, "Trade class can't be null");
         String tradeEntity = metadataTools.getEntityName(tradeClass);
@@ -59,7 +59,7 @@ public class TradeServiceBean implements TradeService {
     }
 
     @Override
-    public <T extends TradeContainer> Collection<T> getEnrichedTradesForPnlChart(Class<T> tradeClass) {
+    public <T extends Trade> Collection<T> getEnrichedTradesForPnlChart(Class<T> tradeClass) {
         return getEnrichedTradesForPnlChart(tradeClass, null, null);
     }
 }

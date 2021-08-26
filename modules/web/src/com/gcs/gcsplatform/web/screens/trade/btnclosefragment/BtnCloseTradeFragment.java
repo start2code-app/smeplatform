@@ -3,9 +3,9 @@ package com.gcs.gcsplatform.web.screens.trade.btnclosefragment;
 import java.util.Date;
 import javax.inject.Inject;
 
-import com.gcs.gcsplatform.entity.trade.TradeContainer;
+import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.web.components.CloseTradeBean;
-import com.gcs.gcsplatform.web.screens.trade.tradecontainer.TradeContainerEdit;
+import com.gcs.gcsplatform.web.screens.trade.TradeEdit;
 import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.app.core.inputdialog.DialogActions;
@@ -54,7 +54,7 @@ public class BtnCloseTradeFragment extends ScreenFragment {
                         .withRequired(true))
                 .withValidator(validationContext -> {
                     Date maturityDate = validationContext.getValue("maturityDate");
-                    Date valueDate = getEditedEntity().getTrade().getValueDate();
+                    Date valueDate = getEditedEntity().getValueDate();
                     ValidationErrors validationErrors = new ValidationErrors();
                     if (valueDate != null && maturityDate != null && maturityDate.before(valueDate)) {
                         validationErrors.add(messageBundle.getMessage("maturityDate.validationMsg"));
@@ -75,11 +75,11 @@ public class BtnCloseTradeFragment extends ScreenFragment {
                 .show();
     }
 
-    protected TradeContainer getEditedEntity() {
-        return (TradeContainer) getHostTradeScreen().getEditedEntity();
+    protected Trade getEditedEntity() {
+        return (Trade) getHostTradeScreen().getEditedEntity();
     }
 
-    protected TradeContainerEdit getHostTradeScreen() {
-        return (TradeContainerEdit) getHostScreen();
+    protected TradeEdit getHostTradeScreen() {
+        return (TradeEdit) getHostScreen();
     }
 }

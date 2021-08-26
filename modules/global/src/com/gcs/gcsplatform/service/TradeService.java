@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Date;
 import javax.annotation.Nullable;
 
-import com.gcs.gcsplatform.entity.trade.TradeContainer;
+import com.gcs.gcsplatform.entity.trade.Trade;
 
 public interface TradeService {
 
@@ -12,15 +12,16 @@ public interface TradeService {
 
     /**
      * Gets list of trades enriched with fields required to build PNL chart.
+     * Selects trades in date interval by updateTs field.
      * <p>
      * Required fields: buyer, buybroker, seller, sellbroker, tradeCurrency.
      *
-     * @param tradeClass - Trade class
-     * @param startDate  - Trade update date from
-     * @param endDate    - Trade update date to
+     * @param tradeClass Trade class
+     * @param startDate  Trade update date from
+     * @param endDate    Trade update date to
      * @return List of trades
      */
-    <T extends TradeContainer> Collection<T> getEnrichedTradesForPnlChart(Class<T> tradeClass, @Nullable Date startDate,
+    <T extends Trade> Collection<T> getEnrichedTradesForPnlChart(Class<T> tradeClass, @Nullable Date startDate,
             @Nullable Date endDate);
 
     /**
@@ -28,8 +29,8 @@ public interface TradeService {
      * <p>
      * Required fields: buyer, buybroker, seller, sellbroker, tradeCurrency.
      *
-     * @param tradeClass - Trade class
+     * @param tradeClass Trade class
      * @return List of trades
      */
-    <T extends TradeContainer> Collection<T> getEnrichedTradesForPnlChart(Class<T> tradeClass);
+    <T extends Trade> Collection<T> getEnrichedTradesForPnlChart(Class<T> tradeClass);
 }

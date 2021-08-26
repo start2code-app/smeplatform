@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <fragment xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd">
     <data>
-        <instance id="tradeContainerDc"
-                  class="com.gcs.gcsplatform.entity.trade.TradeContainer"
+        <instance id="tradeDc"
+                  class="com.gcs.gcsplatform.entity.trade.Trade"
                   provided="true">
             <instance id="tradeDc"
                       property="trade"/>

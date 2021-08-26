@@ -13,7 +13,6 @@ import com.gcs.gcsplatform.entity.pnl.chart.BrokerageTypeCount;
 import com.gcs.gcsplatform.entity.pnl.chart.CategoryCount;
 import com.gcs.gcsplatform.entity.pnl.chart.TotalPnl;
 import com.gcs.gcsplatform.entity.trade.Trade;
-import com.gcs.gcsplatform.entity.trade.TradeContainer;
 import com.haulmont.cuba.core.global.Metadata;
 import org.springframework.stereotype.Service;
 
@@ -33,16 +32,15 @@ public class PnlChartServiceBean implements PnlChartService {
     private Metadata metadata;
 
     @Override
-    public Collection<TotalPnl> getTotalPnlByMonth(Collection<? extends TradeContainer> tradeContainers) {
-        return tradeContainers.stream()
-                .collect(groupingBy(tradeContainer -> getYearMonth(tradeContainer.getUpdateTs()), toList()))
+    public Collection<TotalPnl> getTotalPnlByMonth(Collection<? extends Trade> trades) {
+        return trades.stream()
+                .collect(groupingBy(trade -> getYearMonth(trade.getUpdateTs()), toList()))
                 .entrySet().stream()
                 .sorted(comparingByKey())
                 .map(entry -> {
                     TotalPnl totalPnl = metadata.create(TotalPnl.class);
                     totalPnl.setDescription(entry.getKey());
                     BigDecimal sumPnl = entry.getValue().stream()
-                            .map(TradeContainer::getTrade)
                             .filter(trade -> Objects.nonNull(trade.getBuyGbpEquivalent()))
                             .filter(trade -> Objects.nonNull(trade.getSellGbpEquivalent()))
                             .map(trade -> trade.getBuyGbpEquivalent().add(trade.getSellGbpEquivalent()))
@@ -72,7 +70,7 @@ public class PnlChartServiceBean implements PnlChartService {
     }
 
     @Override
-    public Collection<CategoryCount> getCategoryCount(Collection<Trade> trades) {
+    public Collection<CategoryCount> getCategoryCount(Collection<? extends Trade> trades) {
         Map<String, Long> categoryCountMap = trades.stream()
                 .collect(groupingBy(Trade::getCategory, counting()));
         return categoryCountMap.entrySet().stream()
@@ -86,7 +84,7 @@ public class PnlChartServiceBean implements PnlChartService {
     }
 
     @Override
-    public Collection<BrokerageTypeCount> getBrokerageTypeCount(Collection<Trade> trades) {
+    public Collection<BrokerageTypeCount> getBrokerageTypeCount(Collection<? extends Trade> trades) {
         Map<CounterpartyBrokerageType, Long> brokerageTypeCountMap = trades.stream()
                 .filter(trade -> trade.getBrokerageType() == GC || trade.getBrokerageType() == SPECIAL)
                 .collect(groupingBy(Trade::getBrokerageType, counting()));

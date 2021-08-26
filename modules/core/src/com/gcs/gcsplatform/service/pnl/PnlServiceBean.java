@@ -24,7 +24,7 @@ public class PnlServiceBean implements PnlService {
     private Metadata metadata;
 
     @Override
-    public Collection<Pnl> getPnlByCounterparty(Collection<Trade> trades) {
+    public Collection<Pnl> getPnlByCounterparty(Collection<? extends Trade> trades) {
         Map<PnlGroup, Pnl> pnlMap = new HashMap<>();
         for (Trade trade : trades) {
             sumPnl(pnlMap, trade.getTradeCurrency(), trade.getBuyer(), trade.getBuyPnl(), trade.getBuyGbpEquivalent());
@@ -35,7 +35,7 @@ public class PnlServiceBean implements PnlService {
     }
 
     @Override
-    public Collection<Pnl> getPnlByBroker(Collection<Trade> trades) {
+    public Collection<Pnl> getPnlByBroker(Collection<? extends Trade> trades) {
         Map<PnlGroup, Pnl> pnlMap = new HashMap<>();
         for (Trade trade : trades) {
             boolean isBuySplit = Boolean.TRUE.equals(trade.getBuySplit()) && StringUtils.isNotBlank(

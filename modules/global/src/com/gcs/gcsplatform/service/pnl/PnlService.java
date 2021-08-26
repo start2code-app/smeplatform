@@ -15,7 +15,7 @@ public interface PnlService {
      * @param trades Trades
      * @return List of grouped PNL
      */
-    Collection<Pnl> getPnlByCounterparty(Collection<Trade> trades);
+    Collection<Pnl> getPnlByCounterparty(Collection<? extends Trade> trades);
 
     /**
      * Groups and sums PNL by broker, counterparty, currency.
@@ -23,5 +23,5 @@ public interface PnlService {
      * @param trades Trades
      * @return List of grouped PNL
      */
-    Collection<Pnl> getPnlByBroker(Collection<Trade> trades);
+    Collection<Pnl> getPnlByBroker(Collection<? extends Trade> trades);
 }

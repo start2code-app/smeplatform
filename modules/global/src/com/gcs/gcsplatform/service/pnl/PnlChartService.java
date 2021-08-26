@@ -7,7 +7,6 @@ import com.gcs.gcsplatform.entity.pnl.chart.CategoryCount;
 import com.gcs.gcsplatform.entity.pnl.Pnl;
 import com.gcs.gcsplatform.entity.pnl.chart.TotalPnl;
 import com.gcs.gcsplatform.entity.trade.Trade;
-import com.gcs.gcsplatform.entity.trade.TradeContainer;
 
 public interface PnlChartService {
 
@@ -16,10 +15,10 @@ public interface PnlChartService {
     /**
      * Calculates total PNL by month in GBP equivalent.
      *
-     * @param tradeContainers Collection of trade containers
+     * @param trades Trades
      * @return Total PNL
      */
-    Collection<TotalPnl> getTotalPnlByMonth(Collection<? extends TradeContainer> tradeContainers);
+    Collection<TotalPnl> getTotalPnlByMonth(Collection<? extends Trade> trades);
 
     /**
      * Calculates total PNL by broker in GBP equivalent.
@@ -32,16 +31,16 @@ public interface PnlChartService {
     /**
      * Calculates trade count of each category.
      *
-     * @param trades Trade
+     * @param trades Trades
      * @return Category count
      */
-    Collection<CategoryCount> getCategoryCount(Collection<Trade> trades);
+    Collection<CategoryCount> getCategoryCount(Collection<? extends Trade> trades);
 
     /**
      * Calculates trade count of GC and Special brokerage types.
      *
-     * @param trades Trade
+     * @param trades Trades
      * @return Brokerage type count
      */
-    Collection<BrokerageTypeCount> getBrokerageTypeCount(Collection<Trade> trades);
+    Collection<BrokerageTypeCount> getBrokerageTypeCount(Collection<? extends Trade> trades);
 }

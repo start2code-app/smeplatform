@@ -1,7 +1,6 @@
 package com.gcs.gcsplatform.web.screens.pnl;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.pnl.Pnl;
@@ -9,7 +8,6 @@ import com.gcs.gcsplatform.entity.pnl.chart.BrokerageTypeCount;
 import com.gcs.gcsplatform.entity.pnl.chart.CategoryCount;
 import com.gcs.gcsplatform.entity.pnl.chart.TotalPnl;
 import com.gcs.gcsplatform.entity.trade.Trade;
-import com.gcs.gcsplatform.entity.trade.TradeContainer;
 import com.gcs.gcsplatform.service.pnl.PnlChartService;
 import com.gcs.gcsplatform.service.pnl.PnlService;
 import com.haulmont.cuba.gui.components.GroupTable;
@@ -25,7 +23,7 @@ import com.haulmont.cuba.gui.screen.UiDescriptor;
 @UiDescriptor("pnl-chart-screen.xml")
 public class PnlChartScreen extends Screen {
 
-    protected Collection<? extends TradeContainer> tradeContainers;
+    protected Collection<? extends Trade> trades;
 
     @Inject
     protected PnlService pnlService;
@@ -54,47 +52,46 @@ public class PnlChartScreen extends Screen {
     @Inject
     protected CollectionContainer<BrokerageTypeCount> brokerageTypeCountDc;
 
-    public void setTradeContainers(Collection<? extends TradeContainer> tradeContainers) {
-        this.tradeContainers = tradeContainers;
+    public void setTrades(Collection<? extends Trade> trades) {
+        this.trades = trades;
     }
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
-        Collection<Trade> trades = tradeContainers.stream()
-                .map(TradeContainer::getTrade)
-                .collect(Collectors.toList());
-
-        if (trades.isEmpty()) {
-            noDataBox.setVisible(true);
-            pnlScrollBox.setVisible(false);
-        }
-
+        initNoDataBox();
         initPnlByBrokerTable(trades);
         initPnlByCounterpartyTable(trades);
         initCategoryChart(trades);
         initBrokerageTypeChart(trades);
         initTotalPnlByBrokerChart(pnlByBrokerDc.getItems());
-        initTotalPnlByMonthChart(tradeContainers);
+        initTotalPnlByMonthChart(trades);
     }
 
-    protected void initPnlByBrokerTable(Collection<Trade> trades) {
+    protected void initNoDataBox() {
+        if (trades.isEmpty()) {
+            noDataBox.setVisible(true);
+            pnlScrollBox.setVisible(false);
+        }
+    }
+
+    protected void initPnlByBrokerTable(Collection<? extends Trade> trades) {
         Collection<Pnl> pnlByBroker = pnlService.getPnlByBroker(trades);
         pnlByBrokerDc.setItems(pnlByBroker);
         pnlByBrokerTable.expandAll();
     }
 
-    protected void initPnlByCounterpartyTable(Collection<Trade> trades) {
+    protected void initPnlByCounterpartyTable(Collection<? extends Trade> trades) {
         Collection<Pnl> pnlByCounterparty = pnlService.getPnlByCounterparty(trades);
         pnlByCounterpartyDc.setItems(pnlByCounterparty);
         pnlByCounterpartyTable.expandAll();
     }
 
-    protected void initCategoryChart(Collection<Trade> trades) {
+    protected void initCategoryChart(Collection<? extends Trade> trades) {
         Collection<CategoryCount> categoryCount = pnlChartService.getCategoryCount(trades);
         categoryCountDc.setItems(categoryCount);
     }
 
-    protected void initBrokerageTypeChart(Collection<Trade> trades) {
+    protected void initBrokerageTypeChart(Collection<? extends Trade> trades) {
         Collection<BrokerageTypeCount> brokerageTypeCount = pnlChartService.getBrokerageTypeCount(trades);
         brokerageTypeCountDc.setItems(brokerageTypeCount);
     }
@@ -104,8 +101,8 @@ public class PnlChartScreen extends Screen {
         totalPnlByBrokerDc.setItems(totalPnlByBroker);
     }
 
-    protected void initTotalPnlByMonthChart(Collection<? extends TradeContainer> tradeContainers) {
-        Collection<TotalPnl> totalPnlByMonth = pnlChartService.getTotalPnlByMonth(tradeContainers);
+    protected void initTotalPnlByMonthChart(Collection<? extends Trade> trades) {
+        Collection<TotalPnl> totalPnlByMonth = pnlChartService.getTotalPnlByMonth(trades);
         totalPnlByMonthDc.setItems(totalPnlByMonth);
     }
 }

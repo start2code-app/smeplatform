@@ -2,9 +2,9 @@
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://callOptionTradeEdit.caption"
         messagesPack="com.gcs.gcsplatform.web.screens.trade.calloptiontrade"
-        extends="com/gcs/gcsplatform/web/screens/trade/tradecontainer/trade-container-edit.xml">
+        extends="com/gcs/gcsplatform/web/screens/trade/trade-edit.xml">
     <data>
-        <instance id="tradeContainerDc"
+        <instance id="tradeDc"
                   class="com.gcs.gcsplatform.entity.trade.CallOptionTrade"/>
     </data>
     <layout>
