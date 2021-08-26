@@ -1,6 +1,7 @@
 package com.gcs.gcsplatform.web.components;
 
 import java.util.Date;
+import java.util.UUID;
 import javax.inject.Inject;
 
 import com.gcs.gcsplatform.config.TradeConfig;
@@ -29,8 +30,6 @@ public class CloseTradeBean {
     private UniqueNumbersService uniqueNumbersService;
     @Inject
     private TradeConfig tradeConfig;
-    @Inject
-    private PnlCalculationBean pnlCalculationBean;
 
     /**
      * Creates ClosedTrade/ClosedLiveTrade instance based on provided trade and then removes original trade.
@@ -48,8 +47,6 @@ public class CloseTradeBean {
     /**
      * Creates ClosedTrade/ClosedLiveTrade instance based on provided trade and then generates new contract number for
      * original trade.
-     * <p>
-     * Calculates PNL for newly created ClosedTrade/ClosedLiveTrade.
      *
      * @param trade        Original trade
      * @param maturityDate Maturity date that sets to newly created ClosedTrade instance. Also sets to Value date of
@@ -63,6 +60,7 @@ public class CloseTradeBean {
             trade.setOrigtraderef(trade.getTraderef());
         }
         trade.setValueDate(maturityDate);
+        trade.setTradeDate(new Date());
         trade.setTraderef(String.format(tradeConfig.getRefGenerationFormat(), getNextTradeRef()));
         commitContext.addInstanceToCommit(trade);
         dataManager.commit(commitContext);
@@ -75,9 +73,10 @@ public class CloseTradeBean {
         } else {
             closedTrade = dataManager.create(ClosedTrade.class);
         }
+        UUID uuid = closedTrade.getId();
         metadataTools.copy(trade, closedTrade);
+        closedTrade.setId(uuid);
         closedTrade.setMaturityDate(maturityDate);
-        pnlCalculationBean.updatePnl(closedTrade);
         commitContext.addInstanceToCommit(closedTrade);
     }
 

@@ -3,10 +3,7 @@
     <data>
         <instance id="tradeDc"
                   class="com.gcs.gcsplatform.entity.trade.Trade"
-                  provided="true">
-            <instance id="tradeDc"
-                      property="trade"/>
-        </instance>
+                  provided="true"/>
         <collection id="counterpartiesDc"
                     class="com.gcs.gcsplatform.entity.masterdata.Counterparty">
             <view extends="_minimal">

@@ -1,11 +1,10 @@
 package com.gcs.gcsplatform.web.screens.trade.closedtrade;
 
-import java.util.Date;
 import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.trade.OpenedTrade;
 import com.gcs.gcsplatform.web.screens.trade.TradeEdit;
-import com.haulmont.cuba.gui.components.DateField;
+import com.gcs.gcsplatform.web.screens.trade.datesfragment.DatesFragment;
 import com.haulmont.cuba.gui.screen.Subscribe;
 import com.haulmont.cuba.gui.screen.UiController;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
@@ -15,10 +14,10 @@ import com.haulmont.cuba.gui.screen.UiDescriptor;
 public class ClosedTradeEdit extends TradeEdit<OpenedTrade> {
 
     @Inject
-    protected DateField<Date> maturityDateField;
+    protected DatesFragment datesFragment;
 
     @Subscribe
     public void onBeforeShow(BeforeShowEvent event) {
-        maturityDateField.setEditable(true);
+        datesFragment.getMaturityDateField().setEditable(true);
     }
 }

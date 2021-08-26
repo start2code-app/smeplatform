@@ -29,9 +29,11 @@ public class OpenedTradeBrowse extends TradeBrowse<OpenedTrade> {
      * Recalculates PNL assuming maturity date is today.
      * <p>
      * Note: recalculated PNL value is not being persisted, it is only used in chart.
+     * @param trades Trades
      */
-    protected void recalculatePnl(Collection<OpenedTrade> openedTrades) {
-        for (OpenedTrade openedTrade : openedTrades) {
+    @Override
+    protected void recalculatePnl(Collection<OpenedTrade> trades) {
+        for (OpenedTrade openedTrade : trades) {
             openedTrade.setMaturityDate(new Date());
             pnlCalculationBean.updatePnl(openedTrade);
         }

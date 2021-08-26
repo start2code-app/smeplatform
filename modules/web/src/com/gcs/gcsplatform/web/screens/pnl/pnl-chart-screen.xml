@@ -20,14 +20,14 @@
     <layout expand="pnlScrollBox">
         <hbox id="noDataBox"
               width="100%"
-              height="100%"
-              visible="false">
+              height="100%">
             <label stylename="h2 bold"
                    align="MIDDLE_CENTER"
                    value="msg://noData.caption"/>
         </hbox>
         <scrollBox id="pnlScrollBox"
-                   spacing="true">
+                   spacing="true"
+                   visible="false">
             <hbox id="totalPnlChartBox"
                   margin="true"
                   spacing="true"

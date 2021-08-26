@@ -32,13 +32,13 @@ public class TradeServiceBean implements TradeService {
         String tradeEntity = metadataTools.getEntityName(tradeClass);
         FluentLoader.ByQuery<T, UUID> query = dataManager.load(tradeClass)
                 .query("select e from " + tradeEntity + " e "
-                        + "where e.trade.buyer is not null "
-                        + "and e.trade.buybroker is not null "
-                        + "and e.trade.tradeCurrency is not null "
-                        + "and e.trade.seller is not null "
-                        + "and e.trade.sellbroker is not null")
+                        + "where e.buyer is not null "
+                        + "and e.buybroker is not null "
+                        + "and e.tradeCurrency is not null "
+                        + "and e.seller is not null "
+                        + "and e.sellbroker is not null")
                 .view(viewBuilder -> viewBuilder
-                        .add("trade", View.LOCAL)
+                        .addView(View.LOCAL)
                         .addSystem());
 
         LogicalCondition logicalCondition = LogicalCondition.and();

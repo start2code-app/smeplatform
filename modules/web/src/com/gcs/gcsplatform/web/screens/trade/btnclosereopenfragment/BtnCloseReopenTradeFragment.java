@@ -24,6 +24,8 @@ import com.haulmont.cuba.gui.screen.Target;
 import com.haulmont.cuba.gui.screen.UiController;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
 
+import static com.gcs.gcsplatform.util.DateUtils.getNextWorkingDay;
+
 @UiController("gcsplatform_BtnCloseReopenTradeFragment")
 @UiDescriptor("btn-close-reopen-trade-fragment.xml")
 public class BtnCloseReopenTradeFragment extends ScreenFragment {
@@ -55,7 +57,8 @@ public class BtnCloseReopenTradeFragment extends ScreenFragment {
                 .withCaption(messageBundle.getMessage("closeReopenTradeDialog.caption"))
                 .withParameter(InputParameter.dateParameter("maturityDate")
                         .withCaption(messageBundle.getMessage("maturityDate"))
-                        .withRequired(true))
+                        .withRequired(true)
+                        .withDefaultValue(getNextWorkingDay()))
                 .withValidator(validationContext -> {
                     Date maturityDate = validationContext.getValue("maturityDate");
                     Date valueDate = getEditedEntity().getValueDate();
@@ -82,8 +85,8 @@ public class BtnCloseReopenTradeFragment extends ScreenFragment {
     protected void setReopenedEntityToEdit() {
         Trade reopenedTrade = dataManager.reload(getEditedEntity(), ViewBuilder.of(
                 Trade.class)
-                .add("trade", View.LOCAL)
                 .addView(View.LOCAL)
+                .addSystem()
                 .build());
         getHostTradeScreen().setTrade(reopenedTrade);
         getHostTradeScreen().updateWindowCaption(reopenedTrade.getTraderef());

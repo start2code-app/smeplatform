@@ -4,7 +4,8 @@
     <data readOnly="true">
         <collection id="tradesDc"
                     class="com.gcs.gcsplatform.entity.trade.Trade">
-            <view extends="_local"/>
+            <view extends="_local"
+                  systemProperties="true"/>
             <loader id="tradesDl"/>
         </collection>
     </data>
@@ -44,6 +45,10 @@
                 <column id="seller"/>
                 <column id="sellbrokerage"/>
                 <column id="nominal"/>
+                <column id="updateTs">
+                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
+                               format="dd/MM/yyyy"/>
+                </column>
                 <column id="valueDate">
                     <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
                                format="dd/MM/yyyy"/>

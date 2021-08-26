@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
-        messagesPack="com.gcs.gcsplatform.web.screens.trade.trade">
+        messagesPack="com.gcs.gcsplatform.web.screens.trade">
     <data>
         <instance id="tradeDc"
                   class="com.gcs.gcsplatform.entity.trade.Trade">
-            <view extends="_local"/>
+            <view extends="_local"
+                  systemProperties="true"/>
             <loader/>
         </instance>
         <collection id="currencyDc"
@@ -86,24 +87,8 @@
                  caption="msg://datesTab.caption"
                  spacing="true"
                  margin="true">
-                <form id="datesForm"
-                      dataContainer="tradeDc">
-                    <column width="250px">
-                        <dateField id="valueDateField"
-                                   property="valueDate"
-                                   resolution="DAY"/>
-                        <dateField id="maturityDateField"
-                                   property="maturityDate"
-                                   resolution="DAY"
-                                   editable="false"/>
-                        <dateField id="tradeDateField"
-                                   resolution="DAY"
-                                   property="tradeDate"/>
-                        <textField id="numdaysField"
-                                   property="numdays"
-                                   editable="false"/>
-                    </column>
-                </form>
+                <fragment id="datesFragment"
+                          screen="gcsplatform_DatesFragment"/>
             </tab>
             <tab id="notesTab"
                  caption="msg://notesTab.caption"

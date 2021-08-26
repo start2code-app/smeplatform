@@ -22,6 +22,8 @@ import com.haulmont.cuba.gui.screen.Target;
 import com.haulmont.cuba.gui.screen.UiController;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
 
+import static com.gcs.gcsplatform.util.DateUtils.getNextWorkingDay;
+
 @UiController("gcsplatform_BtnCloseTradeFragment")
 @UiDescriptor("btn-close-trade-fragment.xml")
 public class BtnCloseTradeFragment extends ScreenFragment {
@@ -51,7 +53,8 @@ public class BtnCloseTradeFragment extends ScreenFragment {
                 .withCaption(messageBundle.getMessage("closeTradeDialog.caption"))
                 .withParameter(InputParameter.dateParameter("maturityDate")
                         .withCaption(messageBundle.getMessage("maturityDate"))
-                        .withRequired(true))
+                        .withRequired(true)
+                        .withDefaultValue(getNextWorkingDay()))
                 .withValidator(validationContext -> {
                     Date maturityDate = validationContext.getValue("maturityDate");
                     Date valueDate = getEditedEntity().getValueDate();

@@ -64,19 +64,13 @@ public class TradeValidationBean {
     }
 
     /**
-     * Validates trade for PNL.
-     * PNL is always zero in Open trades, therefore no need to validate them.
+     * Validates trade for brokerage.
      *
      * @param trade Trade
-     * @return True if sub is unchecked and PNL or GBP equivalent are not calculated (both for buy/sell sides)
+     * @return True if sub is unchecked and buy brokerage or sell brokerage is zero or null.
      */
     public boolean hasZeroPnl(Trade trade) {
-        if (!(trade instanceof OpenedTrade)) {
-            return !Boolean.TRUE.equals(trade.getSubs()) && BigDecimalUtils.isAnyNullOrZero(trade.getBuyPnl(),
-                    trade.getSellPnl(),
-                    trade.getBuyGbpEquivalent(),
-                    trade.getSellGbpEquivalent());
-        }
-        return false;
+        return !Boolean.TRUE.equals(trade.getSubs()) && BigDecimalUtils.isAnyNullOrZero(trade.getBuybrokerage(),
+                trade.getSellbrokerage());
     }
 }

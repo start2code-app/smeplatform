@@ -1,6 +1,7 @@
 package com.gcs.gcsplatform.web.screens.pnl;
 
 import java.util.Collection;
+import java.util.List;
 import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.pnl.Pnl;
@@ -18,6 +19,7 @@ import com.haulmont.cuba.gui.screen.Screen;
 import com.haulmont.cuba.gui.screen.Subscribe;
 import com.haulmont.cuba.gui.screen.UiController;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
+import org.apache.commons.collections4.CollectionUtils;
 
 @UiController("gcsplatform_PnlChartScreen")
 @UiDescriptor("pnl-chart-screen.xml")
@@ -58,20 +60,26 @@ public class PnlChartScreen extends Screen {
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
-        initNoDataBox();
+        if (CollectionUtils.isEmpty(trades)) {
+            return;
+        }
+
         initPnlByBrokerTable(trades);
         initPnlByCounterpartyTable(trades);
         initCategoryChart(trades);
         initBrokerageTypeChart(trades);
-        initTotalPnlByBrokerChart(pnlByBrokerDc.getItems());
         initTotalPnlByMonthChart(trades);
+
+        List<Pnl> pnlByBroker = pnlByBrokerDc.getItems();
+        if (CollectionUtils.isNotEmpty(pnlByBroker)) {
+            initTotalPnlByBrokerChart(pnlByBroker);
+            initLayout();
+        }
     }
 
-    protected void initNoDataBox() {
-        if (trades.isEmpty()) {
-            noDataBox.setVisible(true);
-            pnlScrollBox.setVisible(false);
-        }
+    protected void initLayout() {
+        noDataBox.setVisible(false);
+        pnlScrollBox.setVisible(true);
     }
 
     protected void initPnlByBrokerTable(Collection<? extends Trade> trades) {

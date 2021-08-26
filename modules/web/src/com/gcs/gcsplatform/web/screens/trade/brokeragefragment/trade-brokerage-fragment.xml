@@ -3,10 +3,7 @@
     <data>
         <instance id="tradeDc"
                   class="com.gcs.gcsplatform.entity.trade.Trade"
-                  provided="true">
-            <instance id="tradeDc"
-                      property="trade"/>
-        </instance>
+                  provided="true"/>
         <collection id="categoryDc"
                     class="com.gcs.gcsplatform.entity.masterdata.Category">
             <view extends="_minimal"/>
