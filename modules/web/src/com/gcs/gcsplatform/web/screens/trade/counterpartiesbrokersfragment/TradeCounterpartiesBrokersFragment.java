@@ -23,7 +23,6 @@ import com.haulmont.cuba.gui.screen.Subscribe;
 import com.haulmont.cuba.gui.screen.Target;
 import com.haulmont.cuba.gui.screen.UiController;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
-import org.apache.commons.lang3.StringUtils;
 
 import static com.gcs.gcsplatform.web.util.ScreenUtil.initFieldValueToStringPropertyMapping;
 
@@ -88,25 +87,12 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
         sellerLookupPickerField.addValueChangeListener(this::onSellerLookupPickerFieldValueChange);
         sellerAgentLookupPickerField.addValueChangeListener(this::onSellerAgentLookupPickerFieldValueChange);
 
-        initCounterparty();
+        updateBuyerCounterparty();
+        updateSellerCounterparty();
 
         Trade trade = tradeDc.getItem();
         buySplitBrokerLookupPickerField.setVisible(Boolean.TRUE.equals(trade.getBuySplit()));
         sellSplitBrokerLookupPickerField.setVisible(Boolean.TRUE.equals(trade.getSellSplit()));
-    }
-
-    /*
-     * Initialize counterparty value based on agent, only in case if agent is filled but counterparty is not.
-     */
-    protected void initCounterparty() {
-        Trade trade = tradeDc.getItem();
-
-        if (StringUtils.isNotBlank(trade.getBuyerAgent()) && StringUtils.isBlank(trade.getBuyer())) {
-            updateBuyerCounterparty();
-        }
-        if (StringUtils.isNotBlank(trade.getSellerAgent()) && StringUtils.isBlank(trade.getSeller())) {
-            updateSellerCounterparty();
-        }
     }
 
     @Subscribe("buySplitCheckBox")
