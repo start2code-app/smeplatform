@@ -2,11 +2,11 @@
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://callOptionTradeBrowse.caption"
         messagesPack="com.gcs.gcsplatform.web.screens.trade.calloptiontrade"
-        extends="com/gcs/gcsplatform/web/screens/trade/tradecontainer/trade-container-browse.xml">
+        extends="com/gcs/gcsplatform/web/screens/trade/trade-browse.xml">
     <data>
-        <collection id="tradeContainersDc"
+        <collection id="tradesDc"
                     class="com.gcs.gcsplatform.entity.trade.CallOptionTrade">
-            <loader id="tradeContainersDl">
+            <loader id="tradesDl">
                 <query>
                     <![CDATA[select e from gcsplatform_CallOptionTrade e order by e.updateTs desc]]>
                 </query>

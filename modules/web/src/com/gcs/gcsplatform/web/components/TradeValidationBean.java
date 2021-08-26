@@ -2,7 +2,6 @@ package com.gcs.gcsplatform.web.components;
 
 import com.gcs.gcsplatform.entity.trade.OpenedTrade;
 import com.gcs.gcsplatform.entity.trade.Trade;
-import com.gcs.gcsplatform.entity.trade.TradeContainer;
 import com.gcs.gcsplatform.util.BigDecimalUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
@@ -16,12 +15,10 @@ public class TradeValidationBean {
      * Validates trade required fields.
      * Maturity date is assumed to be non-required for Open trades.
      *
-     * @param tradeContainer - Trade container
+     * @param trade Trade
      * @return true if any of required field is null or empty.
      */
-    public boolean hasBlankRequiredFields(TradeContainer tradeContainer) {
-        Trade trade = tradeContainer.getTrade();
-
+    public boolean hasBlankRequiredFields(Trade trade) {
         boolean isSplitBrokerBlank = (Boolean.TRUE.equals(trade.getBuySplit()) && StringUtils.isBlank(
                 trade.getBuySplitBroker()))
                 || (Boolean.TRUE.equals(trade.getSellSplit()) && StringUtils.isBlank(trade.getSellSplitBroker()));
@@ -55,7 +52,7 @@ public class TradeValidationBean {
 
         boolean isDatesBlank = trade.getValueDate() == null
                 || trade.getTradeDate() == null
-                || !(tradeContainer instanceof OpenedTrade) && trade.getMaturityDate() == null;
+                || !(trade instanceof OpenedTrade) && trade.getMaturityDate() == null;
 
         return isSplitBrokerBlank
                 || isBrokerageTypeBlank
@@ -67,20 +64,13 @@ public class TradeValidationBean {
     }
 
     /**
-     * Validates trade for PNL.
-     * PNL is always zero in Open trades, therefore no need to validate them.
+     * Validates trade for brokerage.
      *
-     * @param tradeContainer - Trade container
-     * @return True if sub is unchecked and PNL or GBP equivalent are not calculated (both for buy/sell sides)
+     * @param trade Trade
+     * @return True if sub is unchecked and buy brokerage or sell brokerage is zero or null.
      */
-    public boolean hasZeroPnl(TradeContainer tradeContainer) {
-        if (!(tradeContainer instanceof OpenedTrade)) {
-            Trade trade = tradeContainer.getTrade();
-            return !Boolean.TRUE.equals(trade.getSubs()) && BigDecimalUtils.isAnyNullOrZero(trade.getBuyPnl(),
-                    trade.getSellPnl(),
-                    trade.getBuyGbpEquivalent(),
-                    trade.getSellGbpEquivalent());
-        }
-        return false;
+    public boolean hasZeroPnl(Trade trade) {
+        return !Boolean.TRUE.equals(trade.getSubs()) && BigDecimalUtils.isAnyNullOrZero(trade.getBuybrokerage(),
+                trade.getSellbrokerage());
     }
 }

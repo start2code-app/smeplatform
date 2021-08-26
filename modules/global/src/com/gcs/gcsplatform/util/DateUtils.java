@@ -20,16 +20,33 @@ public class DateUtils {
         return TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
     }
 
-    public static Date getFirstDayOfMonth() {
+    public static Date getFirstDayOfMonth(Date date) {
         Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
         cal.set(Calendar.DATE, cal.getActualMinimum(Calendar.DATE));
         return cal.getTime();
     }
 
-    public static Date getLastDayOfMonth() {
+    public static Date getLastDayOfMonth(Date date) {
         Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
         cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));
         return cal.getTime();
+    }
+
+    public static Date getNextWorkingDay() {
+        Date nextDay = org.apache.commons.lang3.time.DateUtils.addDays(new Date(), 1);
+        while (isWeekend(nextDay)) {
+            nextDay = org.apache.commons.lang3.time.DateUtils.addDays(new Date(), 1);
+        }
+        return nextDay;
+    }
+
+    public static boolean isWeekend(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+        return (Calendar.SATURDAY == dayOfWeek) || (Calendar.SUNDAY == dayOfWeek);
     }
 
     public static String getYearMonth(Date date) {

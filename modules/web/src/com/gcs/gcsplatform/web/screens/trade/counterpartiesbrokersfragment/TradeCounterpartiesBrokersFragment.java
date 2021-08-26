@@ -1,4 +1,4 @@
-package com.gcs.gcsplatform.web.screens.trade.tradecontainer.counterpartiesbrokers;
+package com.gcs.gcsplatform.web.screens.trade.counterpartiesbrokersfragment;
 
 import java.util.List;
 import javax.inject.Inject;
@@ -15,7 +15,7 @@ import com.haulmont.cuba.core.global.ViewBuilder;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.LookupPickerField;
 import com.haulmont.cuba.gui.model.CollectionLoader;
-import com.haulmont.cuba.gui.model.InstancePropertyContainer;
+import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.Install;
 import com.haulmont.cuba.gui.screen.Screen;
 import com.haulmont.cuba.gui.screen.ScreenFragment;
@@ -54,7 +54,7 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
     protected LookupPickerField<Agent> sellerAgentLookupPickerField;
 
     @Inject
-    protected InstancePropertyContainer<Trade> tradeDc;
+    protected InstanceContainer<Trade> tradeDc;
     @Inject
     protected CollectionLoader<Dealer> dealersDl;
     @Inject

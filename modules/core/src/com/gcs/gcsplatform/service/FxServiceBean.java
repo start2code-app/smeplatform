@@ -1,6 +1,8 @@
 package com.gcs.gcsplatform.service;
 
 import java.math.BigDecimal;
+import java.util.Date;
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.persistence.TemporalType;
 
@@ -15,18 +17,18 @@ public class FxServiceBean implements FxService {
     @Inject
     private DataManager dataManager;
 
+    @Nullable
     @Override
-    public BigDecimal getFxValue(String currency) {
+    public BigDecimal getFxValue(String currency, Date fxDate) {
         if (currency == null) {
-            return BigDecimal.ZERO;
+            return null;
         }
-
         return dataManager.loadValue("select e.fxValue from gcsplatform_Fx e "
                 + "where e.currency.currency = :currency "
-                + "and :firstDayOfMonth <= e.billingDate", BigDecimal.class)
+                + "and :fxDate = e.billingDate", BigDecimal.class)
                 .parameter("currency", currency)
-                .parameter("firstDayOfMonth", getFirstDayOfMonth(), TemporalType.DATE)
+                .parameter("fxDate", getFirstDayOfMonth(fxDate), TemporalType.DATE)
                 .optional()
-                .orElse(BigDecimal.ZERO);
+                .orElse(null);
     }
 }

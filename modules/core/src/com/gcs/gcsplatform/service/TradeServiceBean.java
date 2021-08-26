@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.persistence.TemporalType;
 
-import com.gcs.gcsplatform.entity.trade.TradeContainer;
+import com.gcs.gcsplatform.entity.trade.Trade;
 import com.haulmont.bali.util.Preconditions;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.FluentLoader;
@@ -26,19 +26,19 @@ public class TradeServiceBean implements TradeService {
     private MetadataTools metadataTools;
 
     @Override
-    public <T extends TradeContainer> Collection<T> getEnrichedTradesForPnlChart(Class<T> tradeClass,
+    public <T extends Trade> Collection<T> getEnrichedTradesForPnlChart(Class<T> tradeClass,
             @Nullable Date startDate, @Nullable Date endDate) {
         Preconditions.checkNotNullArgument(tradeClass, "Trade class can't be null");
         String tradeEntity = metadataTools.getEntityName(tradeClass);
         FluentLoader.ByQuery<T, UUID> query = dataManager.load(tradeClass)
                 .query("select e from " + tradeEntity + " e "
-                        + "where e.trade.buyer is not null "
-                        + "and e.trade.buybroker is not null "
-                        + "and e.trade.tradeCurrency is not null "
-                        + "and e.trade.seller is not null "
-                        + "and e.trade.sellbroker is not null")
+                        + "where e.buyer is not null "
+                        + "and e.buybroker is not null "
+                        + "and e.tradeCurrency is not null "
+                        + "and e.seller is not null "
+                        + "and e.sellbroker is not null")
                 .view(viewBuilder -> viewBuilder
-                        .add("trade", View.LOCAL)
+                        .addView(View.LOCAL)
                         .addSystem());
 
         LogicalCondition logicalCondition = LogicalCondition.and();
@@ -59,7 +59,7 @@ public class TradeServiceBean implements TradeService {
     }
 
     @Override
-    public <T extends TradeContainer> Collection<T> getEnrichedTradesForPnlChart(Class<T> tradeClass) {
+    public <T extends Trade> Collection<T> getEnrichedTradesForPnlChart(Class<T> tradeClass) {
         return getEnrichedTradesForPnlChart(tradeClass, null, null);
     }
 }

@@ -1,11 +1,13 @@
-package com.gcs.gcsplatform.web.screens.trade.tradecontainer;
+package com.gcs.gcsplatform.web.screens.trade;
 
 import java.util.Collection;
 import java.util.Date;
 import javax.inject.Inject;
 
-import com.gcs.gcsplatform.entity.trade.TradeContainer;
+import com.gcs.gcsplatform.entity.trade.OpenedTrade;
+import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.service.TradeService;
+import com.gcs.gcsplatform.web.components.PnlCalculationBean;
 import com.gcs.gcsplatform.web.components.TradeValidationBean;
 import com.gcs.gcsplatform.web.screens.pnl.PnlChartScreen;
 import com.haulmont.cuba.gui.Dialogs;
@@ -28,10 +30,10 @@ import com.haulmont.cuba.gui.screen.UiDescriptor;
 import static com.gcs.gcsplatform.util.DateUtils.getFirstDayOfMonth;
 import static com.gcs.gcsplatform.util.DateUtils.getLastDayOfMonth;
 
-@UiDescriptor("trade-container-browse.xml")
-@LookupComponent("tradeContainersTable")
+@UiDescriptor("trade-browse.xml")
+@LookupComponent("tradesTable")
 @LoadDataBeforeShow
-public abstract class TradeContainerBrowse<T extends TradeContainer> extends StandardLookup<T> {
+public abstract class TradeBrowse<T extends Trade> extends StandardLookup<T> {
 
     @Inject
     protected TradeService tradeService;
@@ -43,21 +45,23 @@ public abstract class TradeContainerBrowse<T extends TradeContainer> extends Sta
     protected ScreenBuilders screenBuilders;
     @Inject
     protected TradeValidationBean tradeValidationBean;
+    @Inject
+    protected PnlCalculationBean pnlCalculationBean;
 
     @Inject
-    protected CollectionLoader<T> tradeContainersDl;
+    protected CollectionLoader<T> tradesDl;
 
     /**
      * Updates list of trades on each close because the edit screen might be closed with discard in case of trade close.
      */
-    @Install(to = "tradeContainersTable.edit", subject = "afterCloseHandler")
-    protected void tradeContainersTableEditAfterCloseHandler(
+    @Install(to = "tradesTable.edit", subject = "afterCloseHandler")
+    protected void tradesTableEditAfterCloseHandler(
             @SuppressWarnings("unused") AfterCloseEvent afterCloseEvent) {
-        tradeContainersDl.load();
+        tradesDl.load();
     }
 
-    @Install(to = "tradeContainersTable", subject = "styleProvider")
-    protected String tradeContainersTableStyleProvider(T entity, String property) {
+    @Install(to = "tradesTable", subject = "styleProvider")
+    protected String tradesTableStyleProvider(T entity, String property) {
         if (property == null) {
             if (tradeValidationBean.hasBlankRequiredFields(entity)) {
                 return "v-table-row pink-row";
@@ -72,14 +76,15 @@ public abstract class TradeContainerBrowse<T extends TradeContainer> extends Sta
 
     @Subscribe("pnlChartBtn")
     protected void onPnlChartBtnClick(Button.ClickEvent event) {
+        Date today = new Date();
         dialogs.createInputDialog(this)
                 .withCaption(messageBundle.getMessage("buildPnlChartDialog.caption"))
                 .withParameter(InputParameter.dateParameter("startDate")
                         .withCaption(messageBundle.getMessage("startDate"))
-                        .withDefaultValue(getFirstDayOfMonth()))
+                        .withDefaultValue(getFirstDayOfMonth(today)))
                 .withParameter(InputParameter.dateParameter("endDate")
                         .withCaption(messageBundle.getMessage("endDate"))
-                        .withDefaultValue(getLastDayOfMonth()))
+                        .withDefaultValue(getLastDayOfMonth(today)))
                 .withValidator(validationContext -> {
                     Date startDate = validationContext.getValue("startDate");
                     Date endDate = validationContext.getValue("endDate");
@@ -97,18 +102,31 @@ public abstract class TradeContainerBrowse<T extends TradeContainer> extends Sta
                         Date endDate = inputDialogCloseEvent.getValue("endDate");
                         Collection<T> trades = tradeService.getEnrichedTradesForPnlChart(getTradeClass(), startDate,
                                 endDate);
+                        recalculatePnl(trades);
                         showPnlChartScreen(trades);
                     }
                 })
                 .show();
     }
 
-    protected void showPnlChartScreen(Collection<T> tradeContainers) {
+    /**
+     * Recalculates PNL.
+     * <p>
+     * Note: recalculated PNL value is not being persisted, it is only used in chart.
+     * @param trades Trades
+     */
+    protected void recalculatePnl(Collection<T> trades) {
+        for (T trade : trades) {
+            pnlCalculationBean.updatePnl(trade);
+        }
+    }
+
+    protected void showPnlChartScreen(Collection<T> trades) {
         PnlChartScreen pnlChartScreen = screenBuilders.screen(this)
                 .withScreenClass(PnlChartScreen.class)
                 .withOpenMode(OpenMode.NEW_TAB)
                 .build();
-        pnlChartScreen.setTradeContainers(tradeContainers);
+        pnlChartScreen.setTrades(trades);
         pnlChartScreen.show();
     }
 

@@ -15,8 +15,8 @@ public interface AgentService {
     /**
      * Gets agents associated with specified counterparty. If counterparty is null, returns all the agents.
      *
-     * @param counterparty - Counterparty
-     * @param view         - View
+     * @param counterparty Counterparty
+     * @param view         View
      * @return List of agents
      */
     List<Agent> getAgents(@Nullable Counterparty counterparty, View view);

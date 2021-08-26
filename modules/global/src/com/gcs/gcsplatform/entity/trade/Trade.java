@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -14,11 +15,12 @@ import com.haulmont.chile.core.annotations.MetaClass;
 import com.haulmont.chile.core.annotations.MetaProperty;
 import com.haulmont.chile.core.annotations.NumberFormat;
 import com.haulmont.cuba.core.entity.EmbeddableEntity;
+import com.haulmont.cuba.core.entity.StandardEntity;
 import org.apache.commons.lang3.StringUtils;
 
 @MetaClass(name = "gcsplatform_Trade")
-@Embeddable
-public class Trade extends EmbeddableEntity {
+@MappedSuperclass
+public abstract class Trade extends StandardEntity {
 
     private static final long serialVersionUID = -5968057577009538611L;
 

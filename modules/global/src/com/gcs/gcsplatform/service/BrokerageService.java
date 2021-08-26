@@ -13,9 +13,9 @@ public interface BrokerageService {
      * Searches for counterparty brokerage value by counterparty, category, brokerage type.
      * Returns null if no such present or any of arguments is null.
      *
-     * @param counterparty  - Counterparty name
-     * @param category      - Category name
-     * @param brokerageType - Brokerage type
+     * @param counterparty  Counterparty name
+     * @param category      Category name
+     * @param brokerageType Brokerage type
      * @return Counterparty brokerage or null
      */
     @Nullable

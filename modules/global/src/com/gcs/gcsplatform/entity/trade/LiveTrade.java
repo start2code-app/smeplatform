@@ -5,7 +5,7 @@ import javax.persistence.Table;
 
 @Table(name = "GCSPLATFORM_LIVE_TRADE")
 @Entity(name = "gcsplatform_LiveTrade")
-public class LiveTrade extends TradeContainer {
+public class LiveTrade extends Trade {
 
     private static final long serialVersionUID = 1353322256901457178L;
 }

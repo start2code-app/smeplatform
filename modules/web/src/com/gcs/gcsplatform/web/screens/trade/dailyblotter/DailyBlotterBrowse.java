@@ -19,6 +19,7 @@ public class DailyBlotterBrowse extends ClosedTradeBrowse {
         Date today = new Date();
         Date tomorrow = DateUtils.addDays(today, 1);
         Collection<ClosedTrade> trades = tradeService.getEnrichedTradesForPnlChart(getTradeClass(), today, tomorrow);
+        recalculatePnl(trades);
         showPnlChartScreen(trades);
     }
 }

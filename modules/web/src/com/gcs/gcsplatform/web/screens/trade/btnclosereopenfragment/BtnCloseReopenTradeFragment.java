@@ -3,9 +3,9 @@ package com.gcs.gcsplatform.web.screens.trade.btnclosereopenfragment;
 import java.util.Date;
 import javax.inject.Inject;
 
-import com.gcs.gcsplatform.entity.trade.TradeContainer;
+import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.web.components.CloseTradeBean;
-import com.gcs.gcsplatform.web.screens.trade.tradecontainer.TradeContainerEdit;
+import com.gcs.gcsplatform.web.screens.trade.TradeEdit;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;
@@ -23,6 +23,8 @@ import com.haulmont.cuba.gui.screen.Subscribe;
 import com.haulmont.cuba.gui.screen.Target;
 import com.haulmont.cuba.gui.screen.UiController;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
+
+import static com.gcs.gcsplatform.util.DateUtils.getNextWorkingDay;
 
 @UiController("gcsplatform_BtnCloseReopenTradeFragment")
 @UiDescriptor("btn-close-reopen-trade-fragment.xml")
@@ -55,10 +57,11 @@ public class BtnCloseReopenTradeFragment extends ScreenFragment {
                 .withCaption(messageBundle.getMessage("closeReopenTradeDialog.caption"))
                 .withParameter(InputParameter.dateParameter("maturityDate")
                         .withCaption(messageBundle.getMessage("maturityDate"))
-                        .withRequired(true))
+                        .withRequired(true)
+                        .withDefaultValue(getNextWorkingDay()))
                 .withValidator(validationContext -> {
                     Date maturityDate = validationContext.getValue("maturityDate");
-                    Date valueDate = getEditedEntity().getTrade().getValueDate();
+                    Date valueDate = getEditedEntity().getValueDate();
                     ValidationErrors validationErrors = new ValidationErrors();
                     if (valueDate != null && maturityDate != null && maturityDate.before(valueDate)) {
                         validationErrors.add(messageBundle.getMessage("maturityDate.validationMsg"));
@@ -80,20 +83,20 @@ public class BtnCloseReopenTradeFragment extends ScreenFragment {
     }
 
     protected void setReopenedEntityToEdit() {
-        TradeContainer reopenedTrade = dataManager.reload(getEditedEntity(), ViewBuilder.of(
-                TradeContainer.class)
-                .add("trade", View.LOCAL)
+        Trade reopenedTrade = dataManager.reload(getEditedEntity(), ViewBuilder.of(
+                Trade.class)
                 .addView(View.LOCAL)
+                .addSystem()
                 .build());
         getHostTradeScreen().setTrade(reopenedTrade);
-        getHostTradeScreen().updateWindowCaption(reopenedTrade.getTrade().getTraderef());
+        getHostTradeScreen().updateWindowCaption(reopenedTrade.getTraderef());
     }
 
-    protected TradeContainer getEditedEntity() {
-        return (TradeContainer) getHostTradeScreen().getEditedEntity();
+    protected Trade getEditedEntity() {
+        return (Trade) getHostTradeScreen().getEditedEntity();
     }
 
-    protected TradeContainerEdit getHostTradeScreen() {
-        return (TradeContainerEdit) getHostScreen();
+    protected TradeEdit getHostTradeScreen() {
+        return (TradeEdit) getHostScreen();
     }
 }

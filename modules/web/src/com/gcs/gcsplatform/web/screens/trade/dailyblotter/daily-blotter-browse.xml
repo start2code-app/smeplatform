@@ -4,8 +4,8 @@
         messagesPack="com.gcs.gcsplatform.web.screens.trade.dailyblotter"
         extends="com/gcs/gcsplatform/web/screens/trade/closedtrade/closed-trade-browse.xml">
     <data>
-        <collection id="tradeContainersDc">
-            <loader id="tradeContainersDl">
+        <collection id="tradesDc">
+            <loader id="tradesDl">
                 <query>
                     <![CDATA[select e from gcsplatform_ClosedTrade e
                     where @today(e.updateTs)
