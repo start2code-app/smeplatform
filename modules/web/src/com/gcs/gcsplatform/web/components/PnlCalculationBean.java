@@ -67,24 +67,25 @@ public class PnlCalculationBean {
             return BigDecimal.ZERO;
         }
 
-        BigDecimal pnl;
+        BigDecimal xrate2 = isNullOrZero(trade.getXrate2()) ? BigDecimal.valueOf(1) : trade.getXrate2();
         if (cash) {
             if (isNullOrZero(startPrice)) {
                 return BigDecimal.ZERO;
             }
-            pnl = nominal
+            return nominal
+                    .multiply(xrate2)
                     .multiply(brokerage)
                     .multiply(numdays)
                     .multiply(startPrice)
                     .multiply(BigDecimal.TEN)
                     .divide(BigDecimal.valueOf(36), RoundingMode.HALF_EVEN);
         } else {
-            pnl = nominal
+            return nominal
+                    .multiply(xrate2)
                     .multiply(brokerage)
                     .multiply(numdays)
                     .multiply(BigDecimal.valueOf(1000))
                     .divide(BigDecimal.valueOf(36), RoundingMode.HALF_EVEN);
         }
-        return pnl;
     }
 }
