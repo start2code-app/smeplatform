@@ -57,6 +57,7 @@ public class PnlChartServiceBean implements PnlChartService {
     @Override
     public Collection<TotalPnl> getTotalPnlByBroker(Collection<Pnl> pnls) {
         Map<String, BigDecimal> totalPnlByBrokerMap = pnls.stream()
+                .filter(pnl -> Objects.nonNull(pnl.getBroker()))
                 .collect(groupingBy(Pnl::getBroker, reducing(BigDecimal.ZERO,
                         Pnl::getGbpEquivalent,
                         BigDecimal::add)));
@@ -73,6 +74,7 @@ public class PnlChartServiceBean implements PnlChartService {
     @Override
     public Collection<CategoryCount> getCategoryCount(Collection<? extends Trade> trades) {
         Map<String, Long> categoryCountMap = trades.stream()
+                .filter(trade -> Objects.nonNull(trade.getCategory()))
                 .collect(groupingBy(Trade::getCategory, counting()));
         return categoryCountMap.entrySet().stream()
                 .map(entry -> {

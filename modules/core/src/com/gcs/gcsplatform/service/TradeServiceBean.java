@@ -39,7 +39,8 @@ public class TradeServiceBean implements TradeService {
                         + "and e.buybroker is not null "
                         + "and e.tradeCurrency is not null "
                         + "and e.seller is not null "
-                        + "and e.sellbroker is not null")
+                        + "and e.sellbroker is not null "
+                        + "and e.category is not null")
                 .view(view);
 
         LogicalCondition logicalCondition = LogicalCondition.and();
