@@ -8,6 +8,7 @@ import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.service.TradeService;
 import com.gcs.gcsplatform.web.components.PnlCalculationBean;
 import com.gcs.gcsplatform.web.components.TradeValidationBean;
+import com.gcs.gcsplatform.web.events.TradeClosedEvent;
 import com.gcs.gcsplatform.web.screens.pnl.PnlChartScreen;
 import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;
@@ -27,6 +28,7 @@ import com.haulmont.cuba.gui.screen.OpenMode;
 import com.haulmont.cuba.gui.screen.StandardLookup;
 import com.haulmont.cuba.gui.screen.Subscribe;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
+import org.springframework.context.event.EventListener;
 
 import static com.gcs.gcsplatform.util.DateUtils.getFirstDayOfMonth;
 import static com.gcs.gcsplatform.util.DateUtils.getLastDayOfMonth;
@@ -134,6 +136,11 @@ public abstract class TradeBrowse<T extends Trade> extends StandardLookup<T> {
                 .build();
         pnlChartScreen.setTrades(trades);
         pnlChartScreen.show();
+    }
+
+    @EventListener
+    protected void onTradeClose(TradeClosedEvent event) {
+        tradesDl.load();
     }
 
     public abstract Class<T> getTradeClass();

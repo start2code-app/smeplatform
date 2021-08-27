@@ -9,9 +9,11 @@ import com.gcs.gcsplatform.entity.trade.ClosedLiveTrade;
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;
 import com.gcs.gcsplatform.entity.trade.LiveTrade;
 import com.gcs.gcsplatform.entity.trade.Trade;
+import com.gcs.gcsplatform.web.events.TradeClosedEvent;
 import com.haulmont.cuba.core.app.UniqueNumbersService;
 import com.haulmont.cuba.core.global.CommitContext;
 import com.haulmont.cuba.core.global.DataManager;
+import com.haulmont.cuba.core.global.Events;
 import com.haulmont.cuba.core.global.MetadataTools;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +31,8 @@ public class CloseTradeBean {
     @Inject
     private UniqueNumbersService uniqueNumbersService;
     @Inject
+    private Events events;
+    @Inject
     private TradeConfig tradeConfig;
 
     /**
@@ -42,6 +46,7 @@ public class CloseTradeBean {
         createClosedTrade(trade, maturityDate, commitContext);
         commitContext.addInstanceToRemove(trade);
         dataManager.commit(commitContext);
+        events.publish(new TradeClosedEvent(this));
     }
 
     /**
@@ -64,6 +69,7 @@ public class CloseTradeBean {
         trade.setTraderef(String.format(tradeConfig.getRefGenerationFormat(), getNextTradeRef()));
         commitContext.addInstanceToCommit(trade);
         dataManager.commit(commitContext);
+        events.publish(new TradeClosedEvent(this));
     }
 
     private void createClosedTrade(Trade trade, Date maturityDate, CommitContext commitContext) {
