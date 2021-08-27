@@ -34,7 +34,8 @@ public class PnlChartServiceBean implements PnlChartService {
     @Override
     public Collection<TotalPnl> getTotalPnlByMonth(Collection<? extends Trade> trades) {
         return trades.stream()
-                .collect(groupingBy(trade -> getYearMonth(trade.getUpdateTs()), toList()))
+                .filter(trade -> Objects.nonNull(trade.getTradeDate()))
+                .collect(groupingBy(trade -> getYearMonth(trade.getTradeDate()), toList()))
                 .entrySet().stream()
                 .sorted(comparingByKey())
                 .map(entry -> {

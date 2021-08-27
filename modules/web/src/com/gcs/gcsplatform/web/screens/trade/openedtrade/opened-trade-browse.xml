@@ -9,7 +9,7 @@
                     class="com.gcs.gcsplatform.entity.trade.OpenedTrade">
             <loader id="tradesDl">
                 <query>
-                    <![CDATA[select e from gcsplatform_OpenedTrade e order by e.updateTs desc]]>
+                    <![CDATA[select e from gcsplatform_OpenedTrade e order by e.tradeDate desc]]>
                 </query>
             </loader>
         </collection>

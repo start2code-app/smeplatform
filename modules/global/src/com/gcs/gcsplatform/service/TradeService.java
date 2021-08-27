@@ -12,13 +12,13 @@ public interface TradeService {
 
     /**
      * Gets list of trades enriched with fields required to build PNL chart.
-     * Selects trades in date interval by updateTs field.
+     * Selects trades in date interval.
      * <p>
      * Required fields: buyer, buybroker, seller, sellbroker, tradeCurrency.
      *
      * @param tradeClass Trade class
-     * @param startDate  Trade update date from
-     * @param endDate    Trade update date to
+     * @param startDate  Trade date from
+     * @param endDate    Trade date to
      * @return List of trades
      */
     <T extends Trade> Collection<T> getEnrichedTradesForPnlChart(Class<T> tradeClass, @Nullable Date startDate,

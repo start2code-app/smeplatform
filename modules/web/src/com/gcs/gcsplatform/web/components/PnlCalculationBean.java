@@ -36,7 +36,7 @@ public class PnlCalculationBean {
     public void updatePnl(Trade trade) {
         updateNumdays(trade);
 
-        BigDecimal fxValue = fxService.getFxValue(trade.getTradeCurrency(), trade.getUpdateTs());
+        BigDecimal fxValue = fxService.getFxValue(trade.getTradeCurrency(), trade.getTradeDate());
 
         BigDecimal buyPnl = calculatePnl(trade, trade.getBuybrokerage(), Boolean.TRUE.equals(trade.getBuyerCash()));
         trade.setBuyPnl(buyPnl);
