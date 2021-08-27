@@ -54,15 +54,6 @@ public abstract class TradeBrowse<T extends Trade> extends StandardLookup<T> {
     @Inject
     protected CollectionLoader<T> tradesDl;
 
-    /**
-     * Updates list of trades on each close because the edit screen might be closed with discard in case of trade close.
-     */
-    @Install(to = "tradesTable.edit", subject = "afterCloseHandler")
-    protected void tradesTableEditAfterCloseHandler(
-            @SuppressWarnings("unused") AfterCloseEvent afterCloseEvent) {
-        tradesDl.load();
-    }
-
     @Install(to = "tradesTable", subject = "styleProvider")
     protected String tradesTableStyleProvider(T entity, String property) {
         if (property == null) {

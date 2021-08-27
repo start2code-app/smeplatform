@@ -10,14 +10,13 @@ import com.haulmont.cuba.web.app.login.LoginScreen;
 import com.haulmont.cuba.web.gui.screen.ScreenDependencyUtils;
 import com.vaadin.ui.Dependency;
 
-
 @Route(path = "login", root = true)
-@UiController("gcsplatform_LoginScreen")
-@UiDescriptor("gcsplatform-login-screen.xml")
-public class GcsPlatformLoginScreen extends LoginScreen {
+@UiController("extLoginScreen")
+@UiDescriptor("ext-login-screen.xml")
+public class ExtLoginScreen extends LoginScreen {
 
     @Override
-    public void onInit(InitEvent event) {
+    protected void onInit(InitEvent event) {
         super.onInit(event);
         loadStyles();
     }
@@ -28,7 +27,7 @@ public class GcsPlatformLoginScreen extends LoginScreen {
     }
 
     @Subscribe("submit")
-    public void onSubmit(Action.ActionPerformedEvent event) {
+    protected void onSubmit(Action.ActionPerformedEvent event) {
         login();
     }
 

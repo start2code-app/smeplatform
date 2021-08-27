@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
-        messagesPack="com.gcs.gcsplatform.web.screens"
+        messagesPack="com.gcs.gcsplatform.web.screens.loginscreen"
         caption="mainMsg://loginWindow.caption">
     <actions>
         <action id="submit"

@@ -123,14 +123,14 @@
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="refreshBtn"
-                        action="tradesTable.refresh"/>
                 <button id="createBtn"
                         action="tradesTable.create"/>
                 <button id="editBtn"
                         action="tradesTable.edit"/>
                 <button id="removeBtn"
                         action="tradesTable.remove"/>
+                <button id="refreshBtn"
+                        action="tradesTable.refresh"/>
                 <button id="pnlChartBtn"
                         stylename="friendly"
                         caption="msg://pnl"/>
