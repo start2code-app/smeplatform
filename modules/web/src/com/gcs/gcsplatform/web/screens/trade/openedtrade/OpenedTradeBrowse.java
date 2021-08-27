@@ -7,6 +7,8 @@ import javax.inject.Inject;
 import com.gcs.gcsplatform.entity.trade.OpenedTrade;
 import com.gcs.gcsplatform.web.components.PnlCalculationBean;
 import com.gcs.gcsplatform.web.screens.trade.TradeBrowse;
+import com.haulmont.cuba.core.global.View;
+import com.haulmont.cuba.core.global.ViewBuilder;
 import com.haulmont.cuba.gui.components.Button;
 import com.haulmont.cuba.gui.screen.UiController;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
@@ -20,7 +22,10 @@ public class OpenedTradeBrowse extends TradeBrowse<OpenedTrade> {
 
     @Override
     protected void onPnlChartBtnClick(Button.ClickEvent event) {
-        Collection<OpenedTrade> trades = tradeService.getEnrichedTradesForPnlChart(getTradeClass());
+        Collection<OpenedTrade> trades = tradeService.getEnrichedTradesForPnlChart(getTradeClass(),
+                ViewBuilder.of(getTradeClass())
+                        .addView(View.LOCAL)
+                        .build());
         recalculatePnl(trades);
         showPnlChartScreen(trades);
     }
@@ -29,6 +34,7 @@ public class OpenedTradeBrowse extends TradeBrowse<OpenedTrade> {
      * Recalculates PNL assuming maturity date is today.
      * <p>
      * Note: recalculated PNL value is not being persisted, it is only used in chart.
+     *
      * @param trades Trades
      */
     @Override
