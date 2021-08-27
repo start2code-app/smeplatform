@@ -109,7 +109,6 @@ create table GCSPLATFORM_LIVE_TRADE (
     UPDATED_BY varchar(50),
     DELETE_TS datetime(3),
     DELETED_BY varchar(50),
-    --
     BOND_DESCRIPTION varchar(50),
     BROOVERIDE boolean,
     BUYBROKER varchar(10),
@@ -162,6 +161,10 @@ create table GCSPLATFORM_LIVE_TRADE (
     SELL_PNL decimal(10, 4),
     BUYER_CASH boolean,
     SELLER_CASH boolean,
+    BUYER_CODE varchar(50),
+    SELLER_CODE varchar(50),
+    BUYER_INVOICE_CODE varchar(50),
+    SELLER_INVOICE_CODE varchar(50),
     --
     primary key (ID)
 )^
@@ -176,7 +179,6 @@ create table GCSPLATFORM_CALL_OPTION_TRADE (
     UPDATED_BY varchar(50),
     DELETE_TS datetime(3),
     DELETED_BY varchar(50),
-    --
     BOND_DESCRIPTION varchar(50),
     BROOVERIDE boolean,
     BUYBROKER varchar(10),
@@ -229,6 +231,10 @@ create table GCSPLATFORM_CALL_OPTION_TRADE (
     SELL_PNL decimal(10, 4),
     BUYER_CASH boolean,
     SELLER_CASH boolean,
+    BUYER_CODE varchar(50),
+    SELLER_CODE varchar(50),
+    BUYER_INVOICE_CODE varchar(50),
+    SELLER_INVOICE_CODE varchar(50),
     --
     primary key (ID)
 )^
@@ -243,7 +249,6 @@ create table GCSPLATFORM_CLOSED_TRADE (
     UPDATED_BY varchar(50),
     DELETE_TS datetime(3),
     DELETED_BY varchar(50),
-    --
     BOND_DESCRIPTION varchar(50),
     BROOVERIDE boolean,
     BUYBROKER varchar(10),
@@ -296,6 +301,10 @@ create table GCSPLATFORM_CLOSED_TRADE (
     SELL_PNL decimal(10, 4),
     BUYER_CASH boolean,
     SELLER_CASH boolean,
+    BUYER_CODE varchar(50),
+    SELLER_CODE varchar(50),
+    BUYER_INVOICE_CODE varchar(50),
+    SELLER_INVOICE_CODE varchar(50),
     --
     primary key (ID)
 )^
@@ -310,7 +319,6 @@ create table GCSPLATFORM_OPENED_TRADE (
     UPDATED_BY varchar(50),
     DELETE_TS datetime(3),
     DELETED_BY varchar(50),
-    --
     BOND_DESCRIPTION varchar(50),
     BROOVERIDE boolean,
     BUYBROKER varchar(10),
@@ -363,6 +371,10 @@ create table GCSPLATFORM_OPENED_TRADE (
     SELL_PNL decimal(10, 4),
     BUYER_CASH boolean,
     SELLER_CASH boolean,
+    BUYER_CODE varchar(50),
+    SELLER_CODE varchar(50),
+    BUYER_INVOICE_CODE varchar(50),
+    SELLER_INVOICE_CODE varchar(50),
     --
     primary key (ID)
 )^
@@ -377,7 +389,6 @@ create table GCSPLATFORM_CLOSED_LIVE_TRADE (
     UPDATED_BY varchar(50),
     DELETE_TS datetime(3),
     DELETED_BY varchar(50),
-    --
     BOND_DESCRIPTION varchar(50),
     BROOVERIDE boolean,
     BUYBROKER varchar(10),
@@ -430,6 +441,10 @@ create table GCSPLATFORM_CLOSED_LIVE_TRADE (
     SELL_PNL decimal(10, 4),
     BUYER_CASH boolean,
     SELLER_CASH boolean,
+    BUYER_CODE varchar(50),
+    SELLER_CODE varchar(50),
+    BUYER_INVOICE_CODE varchar(50),
+    SELLER_INVOICE_CODE varchar(50),
     --
     primary key (ID)
 )^

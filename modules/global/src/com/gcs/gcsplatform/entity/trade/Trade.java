@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 import javax.annotation.Nullable;
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -14,7 +13,6 @@ import com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerageType;
 import com.haulmont.chile.core.annotations.MetaClass;
 import com.haulmont.chile.core.annotations.MetaProperty;
 import com.haulmont.chile.core.annotations.NumberFormat;
-import com.haulmont.cuba.core.entity.EmbeddableEntity;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import org.apache.commons.lang3.StringUtils;
 
@@ -185,6 +183,18 @@ public abstract class Trade extends StandardEntity {
     @Column(name = "SELLER_CASH")
     private Boolean sellerCash;
 
+    @Column(name = "BUYER_CODE", length = 50)
+    private String buyerCode;
+
+    @Column(name = "SELLER_CODE", length = 50)
+    private String sellerCode;
+
+    @Column(name = "BUYER_INVOICE_CODE", length = 50)
+    private String buyerInvoiceCode;
+
+    @Column(name = "SELLER_INVOICE_CODE", length = 50)
+    private String sellerInvoiceCode;
+
     @Nullable
     @Transient
     @MetaProperty(related = {"buybroker", "sellbroker"})
@@ -209,6 +219,38 @@ public abstract class Trade extends StandardEntity {
             return CounterpartyBrokerageType.MORE_THAN_THIRTY;
         }
         return null;
+    }
+
+    public String getSellerInvoiceCode() {
+        return sellerInvoiceCode;
+    }
+
+    public void setSellerInvoiceCode(String sellerInvoiceCode) {
+        this.sellerInvoiceCode = sellerInvoiceCode;
+    }
+
+    public String getBuyerInvoiceCode() {
+        return buyerInvoiceCode;
+    }
+
+    public void setBuyerInvoiceCode(String buyerInvoiceCode) {
+        this.buyerInvoiceCode = buyerInvoiceCode;
+    }
+
+    public String getSellerCode() {
+        return sellerCode;
+    }
+
+    public void setSellerCode(String sellerCode) {
+        this.sellerCode = sellerCode;
+    }
+
+    public String getBuyerCode() {
+        return buyerCode;
+    }
+
+    public void setBuyerCode(String buyerCode) {
+        this.buyerCode = buyerCode;
     }
 
     public void setMaturityDate(Date maturityDate) {
