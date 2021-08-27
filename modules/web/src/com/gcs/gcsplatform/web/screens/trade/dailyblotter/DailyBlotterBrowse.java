@@ -5,6 +5,8 @@ import java.util.Date;
 
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;
 import com.gcs.gcsplatform.web.screens.trade.closedtrade.ClosedTradeBrowse;
+import com.haulmont.cuba.core.global.View;
+import com.haulmont.cuba.core.global.ViewBuilder;
 import com.haulmont.cuba.gui.components.Button;
 import com.haulmont.cuba.gui.screen.UiController;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
@@ -18,7 +20,12 @@ public class DailyBlotterBrowse extends ClosedTradeBrowse {
     protected void onPnlChartBtnClick(Button.ClickEvent event) {
         Date today = new Date();
         Date tomorrow = DateUtils.addDays(today, 1);
-        Collection<ClosedTrade> trades = tradeService.getEnrichedTradesForPnlChart(getTradeClass(), today, tomorrow);
+        Collection<ClosedTrade> trades = tradeService.getEnrichedTradesForPnlChart(getTradeClass(),
+                ViewBuilder.of(getTradeClass())
+                        .addView(View.LOCAL)
+                        .build(),
+                today,
+                tomorrow);
         recalculatePnl(trades);
         showPnlChartScreen(trades);
     }

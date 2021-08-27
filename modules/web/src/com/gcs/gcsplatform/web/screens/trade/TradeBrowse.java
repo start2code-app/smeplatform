@@ -4,12 +4,13 @@ import java.util.Collection;
 import java.util.Date;
 import javax.inject.Inject;
 
-import com.gcs.gcsplatform.entity.trade.OpenedTrade;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.service.TradeService;
 import com.gcs.gcsplatform.web.components.PnlCalculationBean;
 import com.gcs.gcsplatform.web.components.TradeValidationBean;
 import com.gcs.gcsplatform.web.screens.pnl.PnlChartScreen;
+import com.haulmont.cuba.core.global.View;
+import com.haulmont.cuba.core.global.ViewBuilder;
 import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.app.core.inputdialog.DialogActions;
@@ -100,7 +101,11 @@ public abstract class TradeBrowse<T extends Trade> extends StandardLookup<T> {
                     if (inputDialogCloseEvent.closedWith(DialogOutcome.OK)) {
                         Date startDate = inputDialogCloseEvent.getValue("startDate");
                         Date endDate = inputDialogCloseEvent.getValue("endDate");
-                        Collection<T> trades = tradeService.getEnrichedTradesForPnlChart(getTradeClass(), startDate,
+                        Collection<T> trades = tradeService.getEnrichedTradesForPnlChart(getTradeClass(),
+                                ViewBuilder.of(getTradeClass())
+                                        .addView(View.LOCAL)
+                                        .build(),
+                                startDate,
                                 endDate);
                         recalculatePnl(trades);
                         showPnlChartScreen(trades);
@@ -113,6 +118,7 @@ public abstract class TradeBrowse<T extends Trade> extends StandardLookup<T> {
      * Recalculates PNL.
      * <p>
      * Note: recalculated PNL value is not being persisted, it is only used in chart.
+     *
      * @param trades Trades
      */
     protected void recalculatePnl(Collection<T> trades) {

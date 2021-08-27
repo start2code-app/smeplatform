@@ -2,11 +2,14 @@ package com.gcs.gcsplatform.service;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.persistence.TemporalType;
 
+import com.gcs.gcsplatform.entity.trade.ClosedTrade;
+import com.gcs.gcsplatform.entity.trade.LiveTrade;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.haulmont.bali.util.Preconditions;
 import com.haulmont.cuba.core.global.DataManager;
@@ -26,7 +29,7 @@ public class TradeServiceBean implements TradeService {
     private MetadataTools metadataTools;
 
     @Override
-    public <T extends Trade> Collection<T> getEnrichedTradesForPnlChart(Class<T> tradeClass,
+    public <T extends Trade> Collection<T> getEnrichedTradesForPnlChart(Class<T> tradeClass, View view,
             @Nullable Date startDate, @Nullable Date endDate) {
         Preconditions.checkNotNullArgument(tradeClass, "Trade class can't be null");
         String tradeEntity = metadataTools.getEntityName(tradeClass);
@@ -37,9 +40,7 @@ public class TradeServiceBean implements TradeService {
                         + "and e.tradeCurrency is not null "
                         + "and e.seller is not null "
                         + "and e.sellbroker is not null")
-                .view(viewBuilder -> viewBuilder
-                        .addView(View.LOCAL)
-                        .addSystem());
+                .view(view);
 
         LogicalCondition logicalCondition = LogicalCondition.and();
 
@@ -59,7 +60,19 @@ public class TradeServiceBean implements TradeService {
     }
 
     @Override
-    public <T extends Trade> Collection<T> getEnrichedTradesForPnlChart(Class<T> tradeClass) {
-        return getEnrichedTradesForPnlChart(tradeClass, null, null);
+    public <T extends Trade> Collection<T> getEnrichedTradesForPnlChart(Class<T> tradeClass, View view) {
+        return getEnrichedTradesForPnlChart(tradeClass, view, null, null);
+    }
+
+    @Nullable
+    @Override
+    public LiveTrade getCorrespondingLiveTrade(ClosedTrade closedTrade, View view) {
+        return dataManager.load(LiveTrade.class)
+                .query("select e from gcsplatform_LiveTrade e "
+                        + "where e.traderef = :traderef")
+                .parameter("traderef", closedTrade.getTraderef())
+                .view(view)
+                .optional()
+                .orElse(null);
     }
 }
