@@ -6,10 +6,7 @@
                   provided="true"/>
         <collection id="counterpartiesDc"
                     class="com.gcs.gcsplatform.entity.masterdata.Counterparty">
-            <view extends="_minimal">
-                <property name="billingCountry"/>
-                <property name="cash"/>
-            </view>
+            <view extends="_local"/>
             <loader id="counterpartiesDl">
                 <query>select e from gcsplatform_Counterparty e order by e.counterparty</query>
             </loader>
@@ -25,10 +22,7 @@
                     class="com.gcs.gcsplatform.entity.masterdata.Agent">
             <view extends="_minimal">
                 <property name="counterparty"
-                          view="_minimal">
-                    <property name="billingCountry"/>
-                    <property name="cash"/>
-                </property>
+                          view="_local"/>
             </view>
             <loader id="agentsDl">
                 <query>select e from gcsplatform_Agent e order by e.agent</query>
@@ -69,6 +63,14 @@
                         <textField id="buyerLocationTextField"
                                    dataContainer="tradeDc"
                                    property="buyerLocation"
+                                   editable="false"/>
+                        <textField id="buyerCode"
+                                   dataContainer="tradeDc"
+                                   property="buyerCode"
+                                   editable="false"/>
+                        <textField id="buyerInvoiceCode"
+                                   dataContainer="tradeDc"
+                                   property="buyerInvoiceCode"
                                    editable="false"/>
                         <lookupPickerField id="buyerAgentLookupPickerField"
                                            caption="msg://com.gcs.gcsplatform.entity.trade/Trade.buyerAgent"
@@ -127,6 +129,14 @@
                         <textField id="sellerLocationTextField"
                                    dataContainer="tradeDc"
                                    property="sellerLocation"
+                                   editable="false"/>
+                        <textField id="sellerCodeTextField"
+                                   dataContainer="tradeDc"
+                                   property="sellerCode"
+                                   editable="false"/>
+                        <textField id="sellerInvoiceCodeTextField"
+                                   dataContainer="tradeDc"
+                                   property="sellerInvoiceCode"
                                    editable="false"/>
                         <lookupPickerField id="sellerAgentLookupPickerField"
                                            caption="msg://com.gcs.gcsplatform.entity.trade/Trade.sellerAgent"

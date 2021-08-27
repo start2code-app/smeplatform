@@ -142,6 +142,12 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
         String buyerLocation = counterparty != null ? counterparty.getBillingCountry() : null;
         trade.setBuyerLocation(buyerLocation);
 
+        String buyerCode = counterparty != null ? counterparty.getBillingInfo1() : null;
+        trade.setBuyerCode(buyerCode);
+
+        String buyerInvoiceCode = counterparty != null ? counterparty.getBillingInfo3() : null;
+        trade.setBuyerInvoiceCode(buyerInvoiceCode);
+
         brokerageBean.updateBrokerage(trade);
     }
 
@@ -178,16 +184,19 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
         String sellerLocation = counterparty != null ? counterparty.getBillingCountry() : null;
         trade.setSellerLocation(sellerLocation);
 
+        String sellerCode = counterparty != null ? counterparty.getBillingInfo1() : null;
+        trade.setSellerCode(sellerCode);
+
+        String sellerInvoiceCode = counterparty != null ? counterparty.getBillingInfo3() : null;
+        trade.setSellerInvoiceCode(sellerInvoiceCode);
+
         brokerageBean.updateBrokerage(trade);
     }
 
     protected void initAgents(LookupPickerField<Counterparty> counterpartyField, LookupPickerField<Agent> agentField) {
         Counterparty counterparty = counterpartyField.getValue();
         List<Agent> agents = agentService.getAgents(counterparty, ViewBuilder.of(Agent.class)
-                .add("counterparty", viewBuilder -> viewBuilder
-                        .add("billingCountry")
-                        .add("cash")
-                        .addView(View.MINIMAL))
+                .add("counterparty", View.LOCAL)
                 .addView(View.MINIMAL)
                 .build());
         agentField.setOptionsList(agents);
