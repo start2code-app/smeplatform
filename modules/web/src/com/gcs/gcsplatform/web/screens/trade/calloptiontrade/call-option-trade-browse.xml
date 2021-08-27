@@ -8,7 +8,7 @@
                     class="com.gcs.gcsplatform.entity.trade.CallOptionTrade">
             <loader id="tradesDl">
                 <query>
-                    <![CDATA[select e from gcsplatform_CallOptionTrade e order by e.updateTs desc]]>
+                    <![CDATA[select e from gcsplatform_CallOptionTrade e order by e.tradeDate desc]]>
                 </query>
             </loader>
         </collection>

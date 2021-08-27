@@ -8,8 +8,8 @@
             <loader id="tradesDl">
                 <query>
                     <![CDATA[select e from gcsplatform_ClosedTrade e
-                    where @today(e.updateTs)
-                    order by e.updateTs desc]]>
+                    where @today(e.tradeDate)
+                    order by e.tradeDate desc]]>
                 </query>
             </loader>
         </collection>

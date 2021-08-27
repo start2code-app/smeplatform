@@ -44,12 +44,12 @@ public class TradeServiceBean implements TradeService {
         LogicalCondition logicalCondition = LogicalCondition.and();
 
         if (startDate != null) {
-            logicalCondition.add(new JpqlCondition("e.updateTs >= :startDate"));
+            logicalCondition.add(new JpqlCondition("e.tradeDate >= :startDate"));
             query.parameter("startDate", startDate, TemporalType.DATE);
         }
 
         if (endDate != null) {
-            logicalCondition.add(new JpqlCondition("e.updateTs <= :endDate"));
+            logicalCondition.add(new JpqlCondition("e.tradeDate <= :endDate"));
             query.parameter("endDate", endDate, TemporalType.DATE);
         }
 
