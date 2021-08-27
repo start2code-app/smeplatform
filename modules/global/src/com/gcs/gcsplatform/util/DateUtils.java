@@ -37,7 +37,7 @@ public class DateUtils {
     public static Date getNextWorkingDay() {
         Date nextDay = org.apache.commons.lang3.time.DateUtils.addDays(new Date(), 1);
         while (isWeekend(nextDay)) {
-            nextDay = org.apache.commons.lang3.time.DateUtils.addDays(new Date(), 1);
+            nextDay = org.apache.commons.lang3.time.DateUtils.addDays(nextDay, 1);
         }
         return nextDay;
     }
