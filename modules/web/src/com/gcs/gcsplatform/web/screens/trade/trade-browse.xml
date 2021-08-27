@@ -31,6 +31,8 @@
                         type="edit"/>
                 <action id="remove"
                         type="remove"/>
+                <action id="refresh"
+                        type="refresh"/>
             </actions>
             <columns>
                 <column id="traderef"/>
@@ -121,6 +123,8 @@
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
+                <button id="refreshBtn"
+                        action="tradesTable.refresh"/>
                 <button id="createBtn"
                         action="tradesTable.create"/>
                 <button id="editBtn"
