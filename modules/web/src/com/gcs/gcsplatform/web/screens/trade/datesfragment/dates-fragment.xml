@@ -20,10 +20,9 @@
                 <dateField id="tradeDateField"
                            resolution="DAY"
                            property="tradeDate"/>
-                <dateField id="updateTsField"
+                <dateField id="invoiceDateField"
                            resolution="DAY"
-                           property="updateTs"
-                           editable="false"/>
+                           property="invoiceDate"/>
                 <textField id="numdaysField"
                            property="numdays"
                            editable="false"/>

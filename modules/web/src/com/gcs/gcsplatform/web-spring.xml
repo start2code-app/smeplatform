@@ -5,7 +5,9 @@
 
     <!-- Annotation-based beans -->
     <context:component-scan base-package="com.gcs.gcsplatform"/>
-    
+
+    <bean id="cuba_MetadataTools" class="com.gcs.gcsplatform.global.ExtMetadataTools"/>
+
     <gui:screens base-packages="com.gcs.gcsplatform.web"/>
     <bean id="gcsplatform_proxyCreator"
           class="com.haulmont.cuba.web.sys.remoting.WebRemoteProxyBeanCreator">

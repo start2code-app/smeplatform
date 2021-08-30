@@ -60,18 +60,6 @@
                                         type="picker_clear"/>
                             </actions>
                         </lookupPickerField>
-                        <textField id="buyerLocationTextField"
-                                   dataContainer="tradeDc"
-                                   property="buyerLocation"
-                                   editable="false"/>
-                        <textField id="buyerCode"
-                                   dataContainer="tradeDc"
-                                   property="buyerCode"
-                                   editable="false"/>
-                        <textField id="buyerInvoiceCode"
-                                   dataContainer="tradeDc"
-                                   property="buyerInvoiceCode"
-                                   editable="false"/>
                         <lookupPickerField id="buyerAgentLookupPickerField"
                                            caption="msg://com.gcs.gcsplatform.entity.trade/Trade.buyerAgent"
                                            optionsContainer="agentsDc">
@@ -126,18 +114,6 @@
                                         type="picker_clear"/>
                             </actions>
                         </lookupPickerField>
-                        <textField id="sellerLocationTextField"
-                                   dataContainer="tradeDc"
-                                   property="sellerLocation"
-                                   editable="false"/>
-                        <textField id="sellerCodeTextField"
-                                   dataContainer="tradeDc"
-                                   property="sellerCode"
-                                   editable="false"/>
-                        <textField id="sellerInvoiceCodeTextField"
-                                   dataContainer="tradeDc"
-                                   property="sellerInvoiceCode"
-                                   editable="false"/>
                         <lookupPickerField id="sellerAgentLookupPickerField"
                                            caption="msg://com.gcs.gcsplatform.entity.trade/Trade.sellerAgent"
                                            optionsContainer="agentsDc">

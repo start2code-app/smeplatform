@@ -25,9 +25,9 @@ public class InitialBrokerageBean {
     /**
      * Enriches brokerage list with specified categories and all of the brokerage types.
      *
-     * @param brokerageList - Brokerage list which will be enriched
-     * @param categories    - List of categories
-     * @param counterparty  - Counterparty that will be assigned to new brokerage
+     * @param brokerageList Brokerage list which will be enriched
+     * @param categories    List of categories
+     * @param counterparty  Counterparty that will be assigned to new brokerage
      */
     public void enrichBrokerageWithInitialData(List<CounterpartyBrokerage> brokerageList, List<Category> categories,
             Counterparty counterparty) {

@@ -52,6 +52,7 @@ public class TradeValidationBean {
 
         boolean isDatesBlank = trade.getValueDate() == null
                 || trade.getTradeDate() == null
+                || trade.getInvoiceDate() == null
                 || !(trade instanceof OpenedTrade) && trade.getMaturityDate() == null;
 
         return isSplitBrokerBlank
@@ -69,7 +70,7 @@ public class TradeValidationBean {
      * @param trade Trade
      * @return True if sub is unchecked and buy brokerage or sell brokerage is zero or null.
      */
-    public boolean hasZeroPnl(Trade trade) {
+    public boolean hasZeroBrokerage(Trade trade) {
         return !Boolean.TRUE.equals(trade.getSubs()) && BigDecimalUtils.isAnyNullOrZero(trade.getBuybrokerage(),
                 trade.getSellbrokerage());
     }

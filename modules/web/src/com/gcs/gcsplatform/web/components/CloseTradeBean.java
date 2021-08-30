@@ -11,10 +11,9 @@ import com.gcs.gcsplatform.entity.trade.LiveTrade;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.web.events.TradeClosedEvent;
 import com.haulmont.cuba.core.app.UniqueNumbersService;
-import com.haulmont.cuba.core.global.CommitContext;
-import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.Events;
 import com.haulmont.cuba.core.global.MetadataTools;
+import com.haulmont.cuba.gui.model.DataContext;
 import org.springframework.stereotype.Component;
 
 @Component(CloseTradeBean.NAME)
@@ -24,8 +23,6 @@ public class CloseTradeBean {
 
     private static final String TRADE_REF_SEQUENCE = "tradeRefSequence";
 
-    @Inject
-    private DataManager dataManager;
     @Inject
     private MetadataTools metadataTools;
     @Inject
@@ -40,13 +37,13 @@ public class CloseTradeBean {
      *
      * @param trade        Original trade
      * @param maturityDate Maturity date that sets to newly created ClosedTrade instance
+     * @param dataContext  Screen data context
      */
-    public void close(Trade trade, Date maturityDate) {
-        CommitContext commitContext = new CommitContext();
-        createClosedTrade(trade, maturityDate, commitContext);
-        commitContext.addInstanceToRemove(trade);
-        dataManager.commit(commitContext);
-        events.publish(new TradeClosedEvent(this));
+    public void close(Trade trade, Date maturityDate, DataContext dataContext) {
+        createClosedTrade(trade, maturityDate, dataContext);
+        addPostCommitListener(dataContext);
+        dataContext.remove(trade);
+        dataContext.commit();
     }
 
     /**
@@ -56,10 +53,10 @@ public class CloseTradeBean {
      * @param trade        Original trade
      * @param maturityDate Maturity date that sets to newly created ClosedTrade instance. Also sets to Value date of
      *                     original trade
+     * @param dataContext  Screen data context
      */
-    public void closeReopen(Trade trade, Date maturityDate) {
-        CommitContext commitContext = new CommitContext();
-        createClosedTrade(trade, maturityDate, commitContext);
+    public void closeReopen(Trade trade, Date maturityDate, DataContext dataContext) {
+        createClosedTrade(trade, maturityDate, dataContext);
         if (trade instanceof LiveTrade) {
             trade.setSubs(true);
             trade.setOrigtraderef(trade.getTraderef());
@@ -67,23 +64,26 @@ public class CloseTradeBean {
         trade.setValueDate(maturityDate);
         trade.setTradeDate(new Date());
         trade.setTraderef(String.format(tradeConfig.getRefGenerationFormat(), getNextTradeRef()));
-        commitContext.addInstanceToCommit(trade);
-        dataManager.commit(commitContext);
-        events.publish(new TradeClosedEvent(this));
+        addPostCommitListener(dataContext);
+        dataContext.commit();
     }
 
-    private void createClosedTrade(Trade trade, Date maturityDate, CommitContext commitContext) {
+    private void createClosedTrade(Trade trade, Date maturityDate, DataContext dataContext) {
         Trade closedTrade;
         if (trade instanceof LiveTrade) {
-            closedTrade = dataManager.create(ClosedLiveTrade.class);
+            closedTrade = dataContext.create(ClosedLiveTrade.class);
         } else {
-            closedTrade = dataManager.create(ClosedTrade.class);
+            closedTrade = dataContext.create(ClosedTrade.class);
         }
-        UUID uuid = closedTrade.getId();
         metadataTools.copy(trade, closedTrade);
-        closedTrade.setId(uuid);
         closedTrade.setMaturityDate(maturityDate);
-        commitContext.addInstanceToCommit(closedTrade);
+        closedTrade.setInvoiceDate(new Date());
+    }
+
+    private void addPostCommitListener(DataContext dataContext) {
+        dataContext.addPostCommitListener(postCommitEvent -> {
+            events.publish(new TradeClosedEvent(this));
+        });
     }
 
     private long getNextTradeRef() {

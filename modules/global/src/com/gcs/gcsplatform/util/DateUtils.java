@@ -52,4 +52,12 @@ public class DateUtils {
     public static String getYearMonth(Date date) {
         return new SimpleDateFormat("yyyyMM").format(date);
     }
+
+    public static boolean isDateInCurrentMonth(Date date) {
+        Date today = new Date();
+        if (date == null) {
+            return false;
+        }
+        return org.apache.commons.lang3.time.DateUtils.truncatedEquals(today, date, Calendar.MONTH);
+    }
 }
