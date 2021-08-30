@@ -10,6 +10,7 @@ import com.gcs.gcsplatform.web.components.PnlCalculationBean;
 import com.gcs.gcsplatform.web.components.TradeValidationBean;
 import com.gcs.gcsplatform.web.events.TradeClosedEvent;
 import com.gcs.gcsplatform.web.screens.pnl.PnlChartScreen;
+import com.gcs.gcsplatform.web.screens.uti.UtiScreen;
 import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;
 import com.haulmont.cuba.gui.Dialogs;
@@ -129,8 +130,16 @@ public abstract class TradeBrowse<T extends Trade> extends StandardLookup<T> {
         pnlChartScreen.show();
     }
 
+    @Subscribe("utiBtn")
+    protected void onUtiBtnClick(Button.ClickEvent event) {
+        screenBuilders.screen(this)
+                .withScreenClass(UtiScreen.class)
+                .withOpenMode(OpenMode.DIALOG)
+                .show();
+    }
+
     @EventListener
-    protected void onTradeClose(TradeClosedEvent event) {
+    protected void onTradeClosed(TradeClosedEvent event) {
         tradesDl.load();
     }
 

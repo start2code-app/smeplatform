@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://utiScreen.caption"
+        messagesPack="com.gcs.gcsplatform.web.screens.uti">
+    <dialogMode forceDialog="true"
+                modal="true"
+                width="AUTO"
+                height="AUTO"/>
+    <facets>
+        <clipboardTrigger id="clipper"
+                          button="clipBtn"
+                          input="utiField"/>
+    </facets>
+    <layout expand="utiBox"
+            spacing="true">
+        <hbox id="utiBox"
+              spacing="true"
+              width="100%">
+            <textField id="utiField"
+                      editable="false"
+                      width="330px"/>
+            <button id="clipBtn"
+                    icon="font-icon:COPY"/>
+        </hbox>
+        <button id="okButton"
+                stylename="primary"
+                caption="mainMsg://actions.Ok"/>
+    </layout>
+</window>

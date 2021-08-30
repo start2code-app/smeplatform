@@ -29,6 +29,8 @@
                        value="com.gcs.gcsplatform.service.pnl.PnlChartService"/>
                 <entry key="gcsplatform_CategoryService"
                        value="com.gcs.gcsplatform.service.CategoryService"/>
+                <entry key="gcsplatform_UtiService"
+                       value="com.gcs.gcsplatform.service.UtiService"/>
             </map>
         </property>
     </bean>
