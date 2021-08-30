@@ -1,17 +1,11 @@
 package com.gcs.gcsplatform.entity.masterdata;
 
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
-import com.haulmont.chile.core.annotations.Composition;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
-import com.haulmont.cuba.core.entity.annotation.OnDelete;
-import com.haulmont.cuba.core.global.DeletePolicy;
 
 @NamePattern("%s|counterparty")
 @Table(name = "GCSPLATFORM_COUNTERPARTY")
@@ -70,20 +64,6 @@ public class Counterparty extends StandardEntity {
 
     @Column(name = "CASH")
     private Boolean cash;
-
-    @OrderBy("category")
-    @Composition
-    @OnDelete(DeletePolicy.CASCADE)
-    @OneToMany(mappedBy = "counterparty")
-    private List<CounterpartyBrokerage> brokerages;
-
-    public List<CounterpartyBrokerage> getBrokerages() {
-        return brokerages;
-    }
-
-    public void setBrokerages(List<CounterpartyBrokerage> brokerages) {
-        this.brokerages = brokerages;
-    }
 
     public Boolean getCash() {
         return cash;
