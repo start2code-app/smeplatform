@@ -22,6 +22,16 @@
                 </query>
             </loader>
         </collection>
+        <collection id="agentsDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.Agent">
+            <view extends="_local"/>
+            <loader id="agentsDl">
+                <query>
+                    <![CDATA[select e from gcsplatform_Agent e
+                             where e.counterparty = :counterparty]]>
+                </query>
+            </loader>
+        </collection>
     </data>
     <dialogMode height="600"
                 width="850"
@@ -95,6 +105,33 @@
                                 editable="true"/>
                     </columns>
                     <rows/>
+                </groupTable>
+            </tab>
+            <tab id="agentsTab"
+                 caption="msg://agentsTab.caption"
+                 spacing="true"
+                 margin="true">
+                <groupTable id="agentsTable"
+                            dataContainer="agentsDc"
+                            height="100%"
+                            width="100%"
+                            editable="true">
+                    <actions>
+                        <action id="add"
+                                type="add"/>
+                        <action id="remove"
+                                type="remove"/>
+                    </actions>
+                    <columns>
+                        <column id="agent"
+                                editable="true"/>
+                    </columns>
+                    <buttonsPanel>
+                        <button id="addBtn"
+                                action="agentsTable.add"/>
+                        <button id="removeBtn"
+                                action="agentsTable.remove"/>
+                    </buttonsPanel>
                 </groupTable>
             </tab>
         </tabSheet>
