@@ -23,12 +23,14 @@ import com.haulmont.cuba.gui.screen.UiDescriptor;
 public class ClosedTradeEdit extends TradeEdit<ClosedTrade> {
 
     @Inject
-    protected MetadataTools metadataTools;
-    @Inject
-    protected TradeService tradeService;
+    protected DatesFragment datesFragment;
 
     @Inject
-    protected DatesFragment datesFragment;
+    protected MetadataTools metadataTools;
+    @Inject
+    protected DataContext dataContext;
+    @Inject
+    protected TradeService tradeService;
 
     @Subscribe
     public void onBeforeShow(BeforeShowEvent event) {

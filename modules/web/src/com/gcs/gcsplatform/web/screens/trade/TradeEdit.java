@@ -27,9 +27,6 @@ public abstract class TradeEdit<T extends Trade> extends StandardEditor<T> {
     protected boolean isNew;
 
     @Inject
-    protected DataContext dataContext;
-
-    @Inject
     protected LookupPickerField<Currency> currencyLookupPickerField;
     @Inject
     protected LookupPickerField<Currency> tradeCurrencyLookupPickerField;
@@ -44,12 +41,8 @@ public abstract class TradeEdit<T extends Trade> extends StandardEditor<T> {
 
         initialWindowCaption = getWindow().getCaption();
         isNew = PersistenceHelper.isNew(getEditedEntity());
-        Trade trade = tradeDc.getItem();
         if (!isNew) {
-            String traderef = trade.getTraderef();
-            if (StringUtils.isNotBlank(traderef)) {
-                getWindow().setCaption(initialWindowCaption + " - " + traderef);
-            }
+            updateWindowCaption();
         }
     }
 
@@ -60,16 +53,18 @@ public abstract class TradeEdit<T extends Trade> extends StandardEditor<T> {
         }
     }
 
-    public void setTrade(T trade) {
-        T merged = dataContext.merge(trade);
-        tradeDc.setItem(merged);
-    }
-
-    public void updateWindowCaption(String tradeRef) {
-        getWindow().setCaption(initialWindowCaption + " - " + tradeRef);
+    public void updateWindowCaption() {
+        String traderef = getEditedEntity().getTraderef();
+        if (StringUtils.isNotBlank(traderef)) {
+            getWindow().setCaption(initialWindowCaption + " - " + traderef);
+        }
     }
 
     public boolean isNew() {
         return isNew;
+    }
+
+    public DataContext getDataContext() {
+        return getScreenData().getDataContext();
     }
 }

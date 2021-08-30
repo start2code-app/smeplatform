@@ -68,7 +68,7 @@ public class BtnCloseTradeFragment extends ScreenFragment {
                 .withCloseListener(inputDialogCloseEvent -> {
                     if (inputDialogCloseEvent.closedWith(DialogOutcome.OK)) {
                         Date maturityDate = inputDialogCloseEvent.getValue("maturityDate");
-                        closeTradeBean.close(getEditedEntity(), maturityDate);
+                        closeTradeBean.close(getEditedEntity(), maturityDate, getHostTradeScreen().getDataContext());
                         getHostScreen().close(StandardOutcome.DISCARD);
                         notifications.create(Notifications.NotificationType.TRAY)
                                 .withDescription(messageBundle.getMessage("tradeClosed"))

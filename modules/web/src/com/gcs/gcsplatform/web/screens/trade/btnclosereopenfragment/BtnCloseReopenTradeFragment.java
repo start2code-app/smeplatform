@@ -6,9 +6,6 @@ import javax.inject.Inject;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.web.components.CloseTradeBean;
 import com.gcs.gcsplatform.web.screens.trade.TradeEdit;
-import com.haulmont.cuba.core.global.DataManager;
-import com.haulmont.cuba.core.global.View;
-import com.haulmont.cuba.core.global.ViewBuilder;
 import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.app.core.inputdialog.DialogActions;
@@ -33,8 +30,6 @@ public class BtnCloseReopenTradeFragment extends ScreenFragment {
     @Inject
     protected Button closeReopenTradeBtn;
 
-    @Inject
-    protected DataManager dataManager;
     @Inject
     protected Dialogs dialogs;
     @Inject
@@ -72,24 +67,14 @@ public class BtnCloseReopenTradeFragment extends ScreenFragment {
                 .withCloseListener(inputDialogCloseEvent -> {
                     if (inputDialogCloseEvent.closedWith(DialogOutcome.OK)) {
                         Date maturityDate = inputDialogCloseEvent.getValue("maturityDate");
-                        closeTradeBean.closeReopen(getEditedEntity(), maturityDate);
-                        setReopenedEntityToEdit();
+                        closeTradeBean.closeReopen(getEditedEntity(), maturityDate, getHostTradeScreen().getDataContext());
+                        getHostTradeScreen().updateWindowCaption();
                         notifications.create(Notifications.NotificationType.TRAY)
                                 .withDescription(messageBundle.getMessage("tradeClosedAndReopened"))
                                 .show();
                     }
                 })
                 .show();
-    }
-
-    protected void setReopenedEntityToEdit() {
-        Trade reopenedTrade = dataManager.reload(getEditedEntity(), ViewBuilder.of(
-                Trade.class)
-                .addView(View.LOCAL)
-                .addSystem()
-                .build());
-        getHostTradeScreen().setTrade(reopenedTrade);
-        getHostTradeScreen().updateWindowCaption(reopenedTrade.getTraderef());
     }
 
     protected Trade getEditedEntity() {
