@@ -125,6 +125,10 @@ public abstract class Trade extends StandardEntity {
     @Column(name = "TRADE_DATE")
     private Date tradeDate;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "INVOICE_DATE")
+    private Date invoiceDate;
+
     @Column(name = "TRADEREF", length = 20)
     private String traderef;
 
@@ -219,6 +223,14 @@ public abstract class Trade extends StandardEntity {
             return CounterpartyBrokerageType.MORE_THAN_THIRTY;
         }
         return null;
+    }
+
+    public Date getInvoiceDate() {
+        return invoiceDate;
+    }
+
+    public void setInvoiceDate(Date invoiceDate) {
+        this.invoiceDate = invoiceDate;
     }
 
     public String getSellerInvoiceCode() {

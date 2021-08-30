@@ -4,8 +4,7 @@
     <data>
         <instance id="tradeDc"
                   class="com.gcs.gcsplatform.entity.trade.Trade">
-            <view extends="_local"
-                  systemProperties="true"/>
+            <view extends="_local"/>
             <loader/>
         </instance>
         <collection id="currencyDc"
