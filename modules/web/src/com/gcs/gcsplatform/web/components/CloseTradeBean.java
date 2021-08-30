@@ -63,7 +63,7 @@ public class CloseTradeBean {
         }
         trade.setValueDate(maturityDate);
         trade.setTradeDate(new Date());
-        trade.setTraderef(String.format(tradeConfig.getRefGenerationFormat(), getNextTradeRef()));
+        trade.setTraderef(getNextTradeRef());
         addPostCommitListener(dataContext);
         dataContext.commit();
     }
@@ -86,7 +86,8 @@ public class CloseTradeBean {
         });
     }
 
-    private long getNextTradeRef() {
-        return uniqueNumbersService.getNextNumber(TRADE_REF_SEQUENCE);
+    private String getNextTradeRef() {
+        long nextRefNumber = uniqueNumbersService.getNextNumber(TRADE_REF_SEQUENCE);
+        return String.format(tradeConfig.getRefGenerationFormat(), nextRefNumber);
     }
 }

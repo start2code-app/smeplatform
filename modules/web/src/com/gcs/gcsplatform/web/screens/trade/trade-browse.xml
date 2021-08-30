@@ -133,6 +133,9 @@
                 <button id="pnlChartBtn"
                         stylename="friendly"
                         caption="msg://pnl"/>
+                <button id="utiBtn"
+                        stylename="warning"
+                        caption="msg://uti"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions"
