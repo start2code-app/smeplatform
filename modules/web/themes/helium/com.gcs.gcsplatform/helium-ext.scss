@@ -45,7 +45,12 @@
   }
 
   .v-tabsheet-tabs-tab-colored .v-tabsheet-tabitem-selected {
-  	  background-color: var(--primary-dim-color);
+  	  background-color: var(--button-primary-color);
+  }
+
+  .v-tabsheet-tabs-tab-colored .v-tabsheet-tabitem-selected .v-caption {
+      color:var(--button-primary-text-color)!important;
+      border-bottom-color:transparent!important;
   }
 
   .v-tabsheet-tabs-tab-colored .v-tabsheet-tabitem .v-caption {
