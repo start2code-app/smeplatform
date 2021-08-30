@@ -75,9 +75,7 @@ public class CloseTradeBean {
         } else {
             closedTrade = dataContext.create(ClosedTrade.class);
         }
-        UUID uuid = closedTrade.getId();
         metadataTools.copy(trade, closedTrade);
-        closedTrade.setId(uuid);
         closedTrade.setMaturityDate(maturityDate);
         closedTrade.setInvoiceDate(new Date());
     }
