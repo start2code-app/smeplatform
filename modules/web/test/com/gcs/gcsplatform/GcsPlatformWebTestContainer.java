@@ -8,10 +8,11 @@ import java.util.Arrays;
 public class GcsPlatformWebTestContainer extends TestContainer {
 
     public GcsPlatformWebTestContainer() {
-        appComponents = new ArrayList<>(Arrays.asList(
-                "com.haulmont.cuba"
-                // add CUBA add-ons and custom app components here
-        ));
+        appComponents = Arrays.asList(
+                "com.haulmont.cuba",
+                "com.haulmont.addon.helium",
+                "com.haulmont.charts",
+                "com.haulmont.reports");
         appPropertiesFiles = Arrays.asList(
                 // List the files defined in your web.xml
                 // in appPropertiesConfig context parameter of the web module
