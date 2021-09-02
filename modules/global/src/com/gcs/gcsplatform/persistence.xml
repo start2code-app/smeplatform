@@ -15,5 +15,7 @@
         <class>com.gcs.gcsplatform.entity.masterdata.Currency</class>
         <class>com.gcs.gcsplatform.entity.masterdata.Fx</class>
         <class>com.gcs.gcsplatform.entity.pnl.Pnl</class>
+        <class>com.gcs.gcsplatform.entity.invoice.InvoiceLine</class>
+        <class>com.gcs.gcsplatform.entity.invoice.Invoice</class>
     </persistence-unit>
 </persistence>
