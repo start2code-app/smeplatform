@@ -22,7 +22,7 @@ public class Invoice extends StandardEntity {
     private static final long serialVersionUID = -38073166780749348L;
 
     @Column(name = "ISSUE")
-    private Integer issue;
+    private Integer issue = 1;
 
     @Column(name = "CURRENCY", length = 10)
     private String currency;
@@ -47,7 +47,7 @@ public class Invoice extends StandardEntity {
     @Column(name = "FX_USD", precision = 10, scale = 4)
     private BigDecimal fxUsd;
 
-    @Column(name = "GBP_AMOUNT", precision = 10, scale = 2)
+    @Column(name = "GBP_AMOUNT", precision = 10, scale = 4)
     private BigDecimal gbpAmount;
 
     @Column(name = "POSTED")

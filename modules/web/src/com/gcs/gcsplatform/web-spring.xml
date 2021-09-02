@@ -31,6 +31,8 @@
                        value="com.gcs.gcsplatform.service.CategoryService"/>
                 <entry key="gcsplatform_UtiService"
                        value="com.gcs.gcsplatform.service.UtiService"/>
+                <entry key="gcsplatform_InvoiceService"
+                       value="com.gcs.gcsplatform.service.InvoiceService"/>
             </map>
         </property>
     </bean>
