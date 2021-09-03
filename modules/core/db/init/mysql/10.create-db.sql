@@ -488,3 +488,76 @@ create table GCSPLATFORM_FX (
     primary key (ID)
 )^
 -- end GCSPLATFORM_FX
+-- begin GCSPLATFORM_INVOICE
+create table GCSPLATFORM_INVOICE (
+    ID varchar(32),
+    VERSION integer not null,
+    CREATE_TS datetime(3),
+    CREATED_BY varchar(50),
+    UPDATE_TS datetime(3),
+    UPDATED_BY varchar(50),
+    DELETE_TS datetime(3),
+    DELETED_BY varchar(50),
+    --
+    ISSUE integer,
+    CURRENCY varchar(10),
+    COUNTERPARTY_CODE varchar(10),
+    LOCATION varchar(50),
+    START_DATE datetime(3),
+    END_DATE datetime(3),
+    AMOUNT decimal(10, 4),
+    FX decimal(10, 4),
+    FX_USD decimal(10, 4),
+    GBP_AMOUNT decimal(10, 4),
+    POSTED boolean,
+    PRINTED boolean,
+    --
+    primary key (ID)
+)^
+-- end GCSPLATFORM_INVOICE
+-- begin GCSPLATFORM_INVOICE_LINE
+create table GCSPLATFORM_INVOICE_LINE (
+    ID varchar(32),
+    VERSION integer not null,
+    CREATE_TS datetime(3),
+    CREATED_BY varchar(50),
+    UPDATE_TS datetime(3),
+    UPDATED_BY varchar(50),
+    DELETE_TS datetime(3),
+    DELETED_BY varchar(50),
+    --
+    CONTRACT_NUMBER varchar(20),
+    START_DATE datetime(3),
+    END_DATE datetime(3),
+    TRADE_DATE datetime(3),
+    BOND_DESCRIPTION varchar(50),
+    BUYER varchar(30),
+    SELLER varchar(30),
+    COUNTERPARTY varchar(30),
+    COUNTERPARTY_CODE varchar(10),
+    BROKER varchar(10),
+    NOTES varchar(200),
+    ISIN varchar(20),
+    INVOICE_CODE varchar(5),
+    CURRENCY varchar(10),
+    BASE_CURRENCY varchar(10),
+    CROSS_RATE varchar(50),
+    VALUE_DATE datetime(3),
+    MATURITY_DATE datetime(3),
+    NUMDAYS bigint,
+    NOMINAL decimal(10, 4),
+    HAIR_CUT decimal(10, 4),
+    REPO_RATE decimal(10, 4),
+    XRATE decimal(10, 4),
+    BROKERAGE decimal(10, 4),
+    START_PRICE decimal(10, 4),
+    PNL decimal(10, 4),
+    FX decimal(10, 4),
+    GBP_EQUIVALENT decimal(10, 4),
+    INVOICE_GENERATED boolean,
+    CASH boolean,
+    TRADE_ID varchar(32),
+    --
+    primary key (ID)
+)^
+-- end GCSPLATFORM_INVOICE_LINE

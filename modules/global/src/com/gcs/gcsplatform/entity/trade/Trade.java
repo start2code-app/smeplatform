@@ -225,8 +225,6 @@ public abstract class Trade extends StandardEntity {
         return null;
     }
 
-    @Transient
-    @MetaProperty(related = {"buybroker", "sellbroker"})
     public String getBroker(TradeSide side) {
         if (side == TradeSide.BUY) {
             return buybroker;
@@ -235,8 +233,6 @@ public abstract class Trade extends StandardEntity {
         }
     }
 
-    @Transient
-    @MetaProperty(related = {"buyer", "seller"})
     public String getCounterparty(TradeSide side) {
         if (side == TradeSide.BUY) {
             return buyer;
@@ -245,8 +241,6 @@ public abstract class Trade extends StandardEntity {
         }
     }
 
-    @Transient
-    @MetaProperty(related = {"buyerInvoiceCode", "sellerInvoiceCode"})
     public String getInvoiceCode(TradeSide side) {
         if (side == TradeSide.BUY) {
             return buyerInvoiceCode;
@@ -255,8 +249,6 @@ public abstract class Trade extends StandardEntity {
         }
     }
 
-    @Transient
-    @MetaProperty(related = {"buyerCode", "sellerCode"})
     public String getCounterpartyCode(TradeSide side) {
         if (side == TradeSide.BUY) {
             return buyerCode;
@@ -265,8 +257,6 @@ public abstract class Trade extends StandardEntity {
         }
     }
 
-    @Transient
-    @MetaProperty(related = {"buyerCash", "sellerCash"})
     public Boolean getCash(TradeSide side) {
         if (side == TradeSide.BUY) {
             return buyerCash;
@@ -275,8 +265,6 @@ public abstract class Trade extends StandardEntity {
         }
     }
 
-    @Transient
-    @MetaProperty(related = {"buySplit", "sellSplit"})
     public Boolean getSplit(TradeSide side) {
         if (side == TradeSide.BUY) {
             return buySplit;
@@ -285,8 +273,6 @@ public abstract class Trade extends StandardEntity {
         }
     }
 
-    @Transient
-    @MetaProperty(related = {"buySplitBroker", "sellSplitBroker"})
     public String getSplitBroker(TradeSide side) {
         if (side == TradeSide.BUY) {
             return buySplitBroker;
@@ -295,8 +281,6 @@ public abstract class Trade extends StandardEntity {
         }
     }
 
-    @Transient
-    @MetaProperty(related = {"buybrokerage", "sellbrokerage"})
     public BigDecimal getBrokerage(TradeSide side) {
         if (side == TradeSide.BUY) {
             return buybrokerage;
@@ -313,8 +297,6 @@ public abstract class Trade extends StandardEntity {
         }
     }
 
-    @Transient
-    @MetaProperty(related = {"buyPnl", "sellPnl"})
     public BigDecimal getPnl(TradeSide side) {
         if (side == TradeSide.BUY) {
             return buyPnl;
@@ -331,8 +313,6 @@ public abstract class Trade extends StandardEntity {
         }
     }
 
-    @Transient
-    @MetaProperty(related = {"buyGbpEquivalent", "sellGbpEquivalent"})
     public BigDecimal getGbpEquivalent(TradeSide side) {
         if (side == TradeSide.BUY) {
             return buyGbpEquivalent;
