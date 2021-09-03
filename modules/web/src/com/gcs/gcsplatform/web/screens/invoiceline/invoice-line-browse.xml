@@ -26,7 +26,8 @@
         </filter>
         <groupTable id="invoiceLinesTable"
                     width="100%"
-                    dataContainer="invoiceLinesDc">
+                    dataContainer="invoiceLinesDc"
+                    multiselect="true">
             <actions>
                 <action id="create"
                         type="create"/>
@@ -72,8 +73,6 @@
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="snapshotBtn"
-                        caption="msg://snapshotBtn.caption"/>
                 <button id="createBtn"
                         action="invoiceLinesTable.create"/>
                 <button id="editBtn"
@@ -82,6 +81,9 @@
                         action="invoiceLinesTable.remove"/>
                 <button id="refreshBtn"
                         action="invoiceLinesTable.refresh"/>
+                <button id="snapshotBtn"
+                        caption="msg://snapshotBtn.caption"
+                        stylename="friendly"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions"

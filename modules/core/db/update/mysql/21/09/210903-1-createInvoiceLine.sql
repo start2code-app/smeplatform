@@ -8,7 +8,7 @@ create table GCSPLATFORM_INVOICE_LINE (
     DELETE_TS datetime(3),
     DELETED_BY varchar(50),
     --
-    CONTRACT_NUMBER varchar(20),
+    CONTRACT_NUMBER varchar(100),
     START_DATE datetime(3),
     END_DATE datetime(3),
     TRADE_DATE datetime(3),

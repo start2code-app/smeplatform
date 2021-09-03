@@ -21,7 +21,7 @@ public class InvoiceLine extends StandardEntity {
 
     private static final long serialVersionUID = 4221618502379911685L;
 
-    @Column(name = "CONTRACT_NUMBER", length = 20)
+    @Column(name = "CONTRACT_NUMBER", length = 100)
     private String contractNumber;
 
     @Temporal(TemporalType.TIMESTAMP)

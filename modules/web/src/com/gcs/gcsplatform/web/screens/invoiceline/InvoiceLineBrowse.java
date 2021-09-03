@@ -54,7 +54,7 @@ public class InvoiceLineBrowse extends StandardLookup<InvoiceLine> {
         calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) - 1);
         Date previousMonth = calendar.getTime();
         Collection<ClosedTrade> trades = tradeService.getTrades(ClosedTrade.class, ViewBuilder.of(ClosedTrade.class)
-                        .addView(View.MINIMAL)
+                        .addView(View.LOCAL)
                         .build(),
                 getFirstDayOfMonth(previousMonth),
                 getLastDayOfMonth(previousMonth));

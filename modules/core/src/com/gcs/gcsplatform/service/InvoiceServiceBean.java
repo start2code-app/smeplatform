@@ -114,6 +114,7 @@ public class InvoiceServiceBean implements InvoiceService {
         invoiceLine.setBondDescription(trade.getBondDescription());
         invoiceLine.setBrokerage(trade.getBrokerage(side));
         invoiceLine.setContractNumber(generateContractNumber(trade, side));
+        invoiceLine.setStartPrice(trade.getStartPrice());
         BigDecimal pnl = pnlCalculationService.calculatePnl(invoiceLine);
         invoiceLine.setPnl(pnl);
         invoiceLine.setFx(fxValue);
@@ -126,6 +127,6 @@ public class InvoiceServiceBean implements InvoiceService {
         String brokerageType = brokerageTypeForInvoiceMap.getOrDefault(trade.getBrokerageType(), "X");
         String traderef = defaultString(trade.getTraderef(), "X");
         String broker = defaultString(trade.getBroker(side), "X");
-        return String.format("%s:%s:%s:%s:%s", category, brokerageType, traderef, side, broker);
+        return String.format("%s:%s:%s:%s:%s", category, brokerageType, traderef, side.getId(), broker);
     }
 }
