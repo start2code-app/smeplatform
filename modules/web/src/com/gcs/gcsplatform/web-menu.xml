@@ -21,6 +21,8 @@
           caption="mainMsg://menu_config.application-invoicing"
           icon="FILES_O"
           expanded="true">
+        <item screen="gcsplatform_InvoiceLine.browse"
+              caption="mainMsg://menu_config.gcsplatform_InvoiceLine.browse"/>
     </menu>
     <menu id="application-masterdata"
           caption="mainMsg://menu_config.application-masterdata"

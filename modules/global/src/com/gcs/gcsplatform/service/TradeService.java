@@ -14,6 +14,18 @@ public interface TradeService {
     String NAME = "gcsplatform_TradeService";
 
     /**
+     * Gets list of trades in specified date interval.
+     *
+     * @param tradeClass Trade class
+     * @param view       View
+     * @param startDate  Trade date from
+     * @param endDate    Trade date to
+     * @return List of trades
+     */
+    <T extends Trade> Collection<T> getTrades(Class<T> tradeClass, View view, @Nullable Date startDate,
+            @Nullable Date endDate);
+
+    /**
      * Gets list of trades enriched with fields required to build PNL chart.
      * Selects trades in date interval.
      * <p>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://invoiceLineEdit.caption"
+        focusComponent="form"
+        messagesPack="com.gcs.gcsplatform.web.screens.invoiceline">
+    <data>
+        <instance id="invoiceLineDc"
+                  class="com.gcs.gcsplatform.entity.invoice.InvoiceLine">
+            <view extends="_local"/>
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="AUTO"
+                width="AUTO"
+                modal="true"
+                forceDialog="true"/>
+    <layout expand="scrollBox"
+            spacing="true">
+        <scrollBox id="scrollBox"
+                   spacing="true">
+            <form id="form"
+                  dataContainer="invoiceLineDc">
+                <column width="250px">
+                    <textField id="contractNumberField"
+                               property="contractNumber"/>
+                    <dateField id="startDateField"
+                               property="startDate"/>
+                    <dateField id="endDateField"
+                               property="endDate"/>
+                    <dateField id="tradeDateField"
+                               property="tradeDate"/>
+                    <textField id="bondDescriptionField"
+                               property="bondDescription"/>
+                    <textField id="buyerField"
+                               property="buyer"/>
+                    <textField id="sellerField"
+                               property="seller"/>
+                    <textField id="counterpartyField"
+                               property="counterparty"/>
+                    <textField id="counterpartyCodeField"
+                               property="counterpartyCode"/>
+                    <textField id="brokerField"
+                               property="broker"/>
+                    <textField id="notesField"
+                               property="notes"/>
+                    <textField id="isinField"
+                               property="isin"/>
+                    <textField id="locationField"
+                               property="location"/>
+                    <textField id="currencyField"
+                               property="currency"/>
+                    <textField id="baseCurrencyField"
+                               property="baseCurrency"/>
+                    <textField id="crossRateField"
+                               property="crossRate"/>
+                    <dateField id="valueDateField"
+                               property="valueDate"/>
+                    <dateField id="maturityDateField"
+                               property="maturityDate"/>
+                    <textField id="numdaysField"
+                               property="numdays"/>
+                    <textField id="nominalField"
+                               property="nominal"/>
+                    <textField id="hairCutField"
+                               property="hairCut"/>
+                    <textField id="repoRateField"
+                               property="repoRate"/>
+                    <textField id="xrateField"
+                               property="xrate"/>
+                    <textField id="brokerageField"
+                               property="brokerage"/>
+                    <textField id="startPriceField"
+                               property="startPrice"/>
+                    <textField id="pnlField"
+                               property="pnl"/>
+                    <textField id="fxField"
+                               property="fx"/>
+                    <textField id="gbpEquivalentField"
+                               property="gbpEquivalent"/>
+                    <checkBox id="invoiceGeneratedField"
+                              property="invoiceGenerated"/>
+                    <checkBox id="cashField"
+                              property="cash"/>
+                </column>
+            </form>
+        </scrollBox>
+        <hbox id="editActions"
+              spacing="true">
+            <button id="commitAndCloseBtn"
+                    action="windowCommitAndClose"/>
+            <button id="closeBtn"
+                    action="windowClose"/>
+        </hbox>
+    </layout>
+</window>
