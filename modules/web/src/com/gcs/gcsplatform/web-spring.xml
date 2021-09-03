@@ -33,6 +33,8 @@
                        value="com.gcs.gcsplatform.service.UtiService"/>
                 <entry key="gcsplatform_InvoiceService"
                        value="com.gcs.gcsplatform.service.InvoiceService"/>
+                <entry key="gcsplatform_PnlCalculationService"
+                       value="com.gcs.gcsplatform.service.pnl.PnlCalculationService"/>
             </map>
         </property>
     </bean>
