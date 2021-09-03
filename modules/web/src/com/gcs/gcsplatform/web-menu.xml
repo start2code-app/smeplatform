@@ -23,6 +23,8 @@
           expanded="true">
         <item screen="gcsplatform_InvoiceLine.browse"
               caption="mainMsg://menu_config.gcsplatform_InvoiceLine.browse"/>
+        <item screen="gcsplatform_Invoice.browse"
+              caption="mainMsg://menu_config.gcsplatform_Invoice.browse"/>
     </menu>
     <menu id="application-masterdata"
           caption="mainMsg://menu_config.application-masterdata"

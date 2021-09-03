@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
+import com.gcs.gcsplatform.entity.invoice.Invoice;
 import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;
 import com.gcs.gcsplatform.service.InvoiceService;
@@ -14,8 +15,10 @@ import com.haulmont.cuba.core.global.CommitContext;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;
+import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.backgroundwork.BackgroundWorkProgressWindow;
-import com.haulmont.cuba.gui.components.Button;
+import com.haulmont.cuba.gui.components.Action;
+import com.haulmont.cuba.gui.components.GroupTable;
 import com.haulmont.cuba.gui.executors.BackgroundTask;
 import com.haulmont.cuba.gui.executors.TaskLifeCycle;
 import com.haulmont.cuba.gui.model.CollectionLoader;
@@ -37,6 +40,9 @@ import static com.gcs.gcsplatform.util.DateUtils.getLastDayOfMonth;
 public class InvoiceLineBrowse extends StandardLookup<InvoiceLine> {
 
     @Inject
+    protected GroupTable<InvoiceLine> invoiceLinesTable;
+
+    @Inject
     protected TradeService tradeService;
     @Inject
     protected InvoiceService invoiceService;
@@ -44,12 +50,24 @@ public class InvoiceLineBrowse extends StandardLookup<InvoiceLine> {
     protected DataManager dataManager;
     @Inject
     protected MessageBundle messageBundle;
+    @Inject
+    protected Notifications notifications;
 
     @Inject
     protected CollectionLoader<InvoiceLine> invoiceLinesDl;
 
-    @Subscribe("snapshotBtn")
-    protected void onSnapshotBtnClick(Button.ClickEvent event) {
+    @Subscribe("invoiceLinesTable.createInvoice")
+    protected void onInvoiceLinesTableCreateInvoice(Action.ActionPerformedEvent event) {
+        InvoiceLine invoiceLine = invoiceLinesTable.getSingleSelected();
+        Invoice invoice = invoiceService.createInvoice(invoiceLine);
+        dataManager.commit(invoice);
+        notifications.create(Notifications.NotificationType.TRAY)
+                .withDescription(messageBundle.getMessage("invoiceCreated.description"))
+                .show();
+    }
+
+    @Subscribe("invoiceLinesTable.snapshot")
+    protected void onInvoiceLinesTableSnapshot(Action.ActionPerformedEvent event) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) - 1);
         Date previousMonth = calendar.getTime();

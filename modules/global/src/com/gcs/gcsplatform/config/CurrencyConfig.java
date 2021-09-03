@@ -16,6 +16,6 @@ public interface CurrencyConfig extends Config {
      * @return USD currency entity
      */
     @Property("currency.usd")
-    @Default("gcsplatform_Currency-0fded12e-3c90-4fa4-99ae-6e203c2fa899-minimal")
+    @Default("gcsplatform_Currency-0fded12e-3c90-4fa4-99ae-6e203c2fa899")
     Currency getUsdCurrency();
 }

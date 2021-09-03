@@ -37,12 +37,24 @@
                         type="remove"/>
                 <action id="refresh"
                         type="refresh"/>
+                <action id="snapshot"/>
+                <action id="createInvoice"
+                        trackSelection="true"/>
             </actions>
             <columns>
                 <column id="contractNumber"/>
-                <column id="startDate"/>
-                <column id="endDate"/>
-                <column id="tradeDate"/>
+                <column id="startDate">
+                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
+                               format="dd/MM/yyyy"/>
+                </column>
+                <column id="endDate">
+                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
+                               format="dd/MM/yyyy"/>
+                </column>
+                <column id="tradeDate">
+                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
+                               format="dd/MM/yyyy"/>
+                </column>
                 <column id="bondDescription"/>
                 <column id="buyer"/>
                 <column id="seller"/>
@@ -55,8 +67,14 @@
                 <column id="currency"/>
                 <column id="baseCurrency"/>
                 <column id="crossRate"/>
-                <column id="valueDate"/>
-                <column id="maturityDate"/>
+                <column id="valueDate">
+                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
+                               format="dd/MM/yyyy"/>
+                </column>
+                <column id="maturityDate">
+                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
+                               format="dd/MM/yyyy"/>
+                </column>
                 <column id="numdays"/>
                 <column id="nominal"/>
                 <column id="hairCut"/>
@@ -83,7 +101,12 @@
                         action="invoiceLinesTable.refresh"/>
                 <button id="snapshotBtn"
                         caption="msg://snapshotBtn.caption"
+                        action="invoiceLinesTable.snapshot"
                         stylename="friendly"/>
+                <button id="createInvoiceBtn"
+                        caption="msg://createInvoiceBtn.caption"
+                        action="invoiceLinesTable.createInvoice"
+                        stylename="warning"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions"

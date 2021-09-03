@@ -53,6 +53,7 @@ public class InvoiceServiceBean implements InvoiceService {
         invoice.setCounterpartyCode(invoiceLine.getCounterpartyCode());
         Date startDate = invoiceLine.getStartDate();
         invoice.setStartDate(startDate);
+        invoice.setEndDate(invoiceLine.getEndDate());
         invoice.setFxUsd(fxService.getUsdFxValue(startDate));
         invoice.setFx(invoiceLine.getFx());
         calculateAmount(invoice);
