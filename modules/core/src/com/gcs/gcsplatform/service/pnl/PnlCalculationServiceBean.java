@@ -3,6 +3,9 @@ package com.gcs.gcsplatform.service.pnl;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
+import com.gcs.gcsplatform.entity.trade.Trade;
+import com.gcs.gcsplatform.entity.trade.TradeSide;
 import org.springframework.stereotype.Service;
 
 import static com.gcs.gcsplatform.util.BigDecimalUtils.isAnyNullOrZero;
@@ -12,7 +15,18 @@ import static com.gcs.gcsplatform.util.BigDecimalUtils.isNullOrZero;
 public class PnlCalculationServiceBean implements PnlCalculationService {
 
     @Override
-    public BigDecimal calculatePnl(Long numdays, BigDecimal nominal, BigDecimal brokerage, BigDecimal xrate,
+    public BigDecimal calculatePnl(Trade trade, TradeSide side) {
+        return calculatePnl(trade.getNumdays(), trade.getNominal(), trade.getBrokerage(side), trade.getXrate2(),
+                trade.getStartPrice(), trade.getCash(side));
+    }
+
+    @Override
+    public BigDecimal calculatePnl(InvoiceLine invoiceLine) {
+        return calculatePnl(invoiceLine.getNumdays(), invoiceLine.getNominal(), invoiceLine.getBrokerage(),
+                invoiceLine.getXrate(), invoiceLine.getStartPrice(), invoiceLine.getCash());
+    }
+
+    private BigDecimal calculatePnl(Long numdays, BigDecimal nominal, BigDecimal brokerage, BigDecimal xrate,
             BigDecimal startPrice, Boolean cash) {
         BigDecimal numdaysDecimal = numdays != null ? BigDecimal.valueOf(numdays) : null;
         boolean isCash = Boolean.TRUE.equals(cash);

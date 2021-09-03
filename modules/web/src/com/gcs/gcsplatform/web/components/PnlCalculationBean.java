@@ -43,8 +43,7 @@ public class PnlCalculationBean {
     }
 
     private void updatePnl(Trade trade, TradeSide side, BigDecimal fxValue) {
-        BigDecimal pnl = pnlCalculationService.calculatePnl(trade.getNumdays(), trade.getNominal(),
-                trade.getBrokerage(side), trade.getXrate2(), trade.getStartPrice(), trade.getCash(side));
+        BigDecimal pnl = pnlCalculationService.calculatePnl(trade, side);
         trade.setPnl(pnl, side);
         BigDecimal gbpEquivalent = pnlCalculationService.calculateFxEquivalent(pnl, fxValue);
         trade.setGbpEquivalent(gbpEquivalent, side);

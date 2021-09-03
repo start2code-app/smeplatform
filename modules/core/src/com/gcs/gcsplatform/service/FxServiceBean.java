@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.persistence.TemporalType;
 
+import com.gcs.gcsplatform.config.CurrencyConfig;
 import com.haulmont.cuba.core.global.DataManager;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,8 @@ public class FxServiceBean implements FxService {
 
     @Inject
     private DataManager dataManager;
+    @Inject
+    private CurrencyConfig currencyConfig;
 
     @Nullable
     @Override
@@ -30,5 +33,11 @@ public class FxServiceBean implements FxService {
                 .parameter("fxDate", getFirstDayOfMonth(fxDate), TemporalType.DATE)
                 .optional()
                 .orElse(null);
+    }
+
+    @Nullable
+    @Override
+    public BigDecimal getUsdFxValue(Date fxDate) {
+        return getFxValue(currencyConfig.getUsdCurrency().getCurrency(), fxDate);
     }
 }

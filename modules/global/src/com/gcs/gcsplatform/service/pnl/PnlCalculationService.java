@@ -2,23 +2,30 @@ package com.gcs.gcsplatform.service.pnl;
 
 import java.math.BigDecimal;
 
+import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
+import com.gcs.gcsplatform.entity.trade.Trade;
+import com.gcs.gcsplatform.entity.trade.TradeSide;
+
 public interface PnlCalculationService {
 
     String NAME = "gcsplatform_PnlCalculationService";
 
     /**
-     * Calculates PNL. Returns zero if any of numeric arguments is null or zero.
+     * Calculates PNL for trade.
      *
-     * @param numdays    Number of days
-     * @param nominal    Nominal
-     * @param brokerage  Brokerage
-     * @param xrate      Xrate
-     * @param startPrice Start price
-     * @param cash       Cash
+     * @param trade Trade
+     * @param side  Trade side (buy/sell)
      * @return PNL
      */
-    BigDecimal calculatePnl(Long numdays, BigDecimal nominal, BigDecimal brokerage, BigDecimal xrate,
-            BigDecimal startPrice, Boolean cash);
+    BigDecimal calculatePnl(Trade trade, TradeSide side);
+
+    /**
+     * Calculates PNL for invoice line.
+     *
+     * @param invoiceLine Invoice line
+     * @return PNL
+     */
+    BigDecimal calculatePnl(InvoiceLine invoiceLine);
 
     /**
      * Calculates FX amount equivalent. Returns zero if any of arguments is zero.

@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.gcs.gcsplatform.entity.trade.ClosedTrade;
 import com.haulmont.chile.core.annotations.NumberFormat;
 import com.haulmont.cuba.core.entity.StandardEntity;
 
@@ -23,8 +24,13 @@ public class InvoiceLine extends StandardEntity {
     @Column(name = "CONTRACT_NUMBER", length = 20)
     private String contractNumber;
 
-    @Column(name = "TRADEREF", length = 20)
-    private String traderef;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "START_DATE")
+    private Date startDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "END_DATE")
+    private Date endDate;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "TRADE_DATE")
@@ -39,11 +45,32 @@ public class InvoiceLine extends StandardEntity {
     @Column(name = "SELLER", length = 30)
     private String seller;
 
+    @Column(name = "COUNTERPARTY", length = 30)
+    private String counterparty;
+
+    @Column(name = "COUNTERPARTY_CODE", length = 10)
+    private String counterpartyCode;
+
+    @Column(name = "BROKER", length = 10)
+    private String broker;
+
+    @Column(name = "NOTES", length = 200)
+    private String notes;
+
     @Column(name = "ISIN", length = 20)
     private String isin;
 
     @Column(name = "INVOICE_CODE", length = 5)
-    private String invoiceCode;
+    private String location;
+
+    @Column(name = "CURRENCY", length = 10)
+    private String currency;
+
+    @Column(name = "BASE_CURRENCY", length = 10)
+    private String baseCurrency;
+
+    @Column(name = "CROSS_RATE", length = 50)
+    private String crossRate;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "VALUE_DATE")
@@ -56,14 +83,17 @@ public class InvoiceLine extends StandardEntity {
     @Column(name = "NUMDAYS")
     private Long numdays;
 
-    @Column(name = "BASE_CURRENCY", length = 10)
-    private String baseCurrency;
-
     @Column(name = "NOMINAL", precision = 10, scale = 4)
     private BigDecimal nominal;
 
+    @Column(name = "HAIR_CUT", precision = 10, scale = 4)
+    private BigDecimal hairCut;
+
+    @Column(name = "REPO_RATE", precision = 10, scale = 4)
+    private BigDecimal repoRate;
+
     @Column(name = "XRATE", precision = 10, scale = 4)
-    private BigDecimal xrate;
+    private BigDecimal xrate = BigDecimal.ONE;
 
     @Column(name = "BROKERAGE", precision = 10, scale = 4)
     @NumberFormat(pattern = "#,##0.0000")
@@ -72,25 +102,127 @@ public class InvoiceLine extends StandardEntity {
     @Column(name = "START_PRICE", precision = 10, scale = 4)
     private BigDecimal startPrice;
 
-    @Column(name = "CASH")
-    private Boolean cash;
-
     @Column(name = "PNL", precision = 10, scale = 4)
     private BigDecimal pnl;
+
+    @Column(name = "FX", precision = 10, scale = 4)
+    private BigDecimal fx;
 
     @Column(name = "GBP_EQUIVALENT", precision = 10, scale = 4)
     private BigDecimal gbpEquivalent;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "INVOICE_ID")
-    private Invoice invoice;
+    @Column(name = "INVOICE_GENERATED")
+    private Boolean invoiceGenerated = false;
 
-    public String getTraderef() {
-        return traderef;
+    @Column(name = "CASH")
+    private Boolean cash;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TRADE_ID")
+    private ClosedTrade trade;
+
+    public BigDecimal getFx() {
+        return fx;
     }
 
-    public void setTraderef(String traderef) {
-        this.traderef = traderef;
+    public void setFx(BigDecimal fx) {
+        this.fx = fx;
+    }
+
+    public Boolean getInvoiceGenerated() {
+        return invoiceGenerated;
+    }
+
+    public void setInvoiceGenerated(Boolean invoiceGenerated) {
+        this.invoiceGenerated = invoiceGenerated;
+    }
+
+    public String getCrossRate() {
+        return crossRate;
+    }
+
+    public void setCrossRate(String crossRate) {
+        this.crossRate = crossRate;
+    }
+
+    public ClosedTrade getTrade() {
+        return trade;
+    }
+
+    public void setTrade(ClosedTrade trade) {
+        this.trade = trade;
+    }
+
+    public BigDecimal getRepoRate() {
+        return repoRate;
+    }
+
+    public void setRepoRate(BigDecimal repoRate) {
+        this.repoRate = repoRate;
+    }
+
+    public BigDecimal getHairCut() {
+        return hairCut;
+    }
+
+    public void setHairCut(BigDecimal hairCut) {
+        this.hairCut = hairCut;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public String getBroker() {
+        return broker;
+    }
+
+    public void setBroker(String broker) {
+        this.broker = broker;
+    }
+
+    public String getCounterpartyCode() {
+        return counterpartyCode;
+    }
+
+    public void setCounterpartyCode(String counterpartyCode) {
+        this.counterpartyCode = counterpartyCode;
+    }
+
+    public String getCounterparty() {
+        return counterparty;
+    }
+
+    public void setCounterparty(String counterparty) {
+        this.counterparty = counterparty;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
     public Long getNumdays() {
@@ -133,12 +265,12 @@ public class InvoiceLine extends StandardEntity {
         this.xrate = xrate;
     }
 
-    public String getInvoiceCode() {
-        return invoiceCode;
+    public String getLocation() {
+        return location;
     }
 
-    public void setInvoiceCode(String invoiceCode) {
-        this.invoiceCode = invoiceCode;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getBaseCurrency() {
@@ -155,14 +287,6 @@ public class InvoiceLine extends StandardEntity {
 
     public void setGbpEquivalent(BigDecimal gbpEquivalent) {
         this.gbpEquivalent = gbpEquivalent;
-    }
-
-    public Invoice getInvoice() {
-        return invoice;
-    }
-
-    public void setInvoice(Invoice invoice) {
-        this.invoice = invoice;
     }
 
     public void setMaturityDate(Date maturityDate) {

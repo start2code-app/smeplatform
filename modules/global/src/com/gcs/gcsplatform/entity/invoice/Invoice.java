@@ -2,18 +2,13 @@ package com.gcs.gcsplatform.entity.invoice;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.haulmont.chile.core.annotations.Composition;
 import com.haulmont.cuba.core.entity.StandardEntity;
-import com.haulmont.cuba.core.entity.annotation.OnDelete;
-import com.haulmont.cuba.core.global.DeletePolicy;
 
 @Table(name = "GCSPLATFORM_INVOICE")
 @Entity(name = "gcsplatform_Invoice")
@@ -29,6 +24,9 @@ public class Invoice extends StandardEntity {
 
     @Column(name = "COUNTERPARTY_CODE", length = 10)
     private String counterpartyCode;
+
+    @Column(name = "LOCATION", length = 50)
+    private String location;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "START_DATE")
@@ -56,10 +54,13 @@ public class Invoice extends StandardEntity {
     @Column(name = "PRINTED")
     private Boolean printed;
 
-    @Composition
-    @OnDelete(DeletePolicy.CASCADE)
-    @OneToMany(mappedBy = "invoice")
-    private List<InvoiceLine> lines;
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
     public BigDecimal getGbpAmount() {
         return gbpAmount;
@@ -149,11 +150,4 @@ public class Invoice extends StandardEntity {
         this.currency = currency;
     }
 
-    public List<InvoiceLine> getLines() {
-        return lines;
-    }
-
-    public void setLines(List<InvoiceLine> lines) {
-        this.lines = lines;
-    }
 }
