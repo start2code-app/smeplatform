@@ -62,6 +62,8 @@
                                    property="billingCountry"/>
                         <checkBox id="cashField"
                                   property="cash"/>
+                        <checkBox id="activeField"
+                                  property="active"/>
                     </column>
                     <column width="250px">
                         <textField id="emailField"

@@ -26,6 +26,7 @@ create table GCSPLATFORM_COUNTERPARTY (
     EMAIL1 varchar(50),
     EMAIL2 varchar(50),
     CASH boolean,
+    ACTIVE boolean,
     --
     primary key (ID)
 )^
