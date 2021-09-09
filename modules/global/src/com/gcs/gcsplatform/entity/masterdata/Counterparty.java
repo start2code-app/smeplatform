@@ -65,6 +65,17 @@ public class Counterparty extends StandardEntity {
     @Column(name = "CASH")
     private Boolean cash;
 
+    @Column(name = "ACTIVE")
+    private Boolean active = true;
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
     public Boolean getCash() {
         return cash;
     }
