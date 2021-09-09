@@ -81,7 +81,7 @@ public abstract class Trade extends StandardEntity {
     @Column(name = "NOMINAL", precision = 10, scale = 2)
     private BigDecimal nominal;
 
-    @Column(name = "NOTES", length = 100)
+    @Column(name = "NOTES", length = 200)
     private String notes;
 
     @Column(name = "NUMDAYS")
