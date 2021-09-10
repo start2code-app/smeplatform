@@ -25,7 +25,7 @@ public class Invoice extends StandardEntity {
     @Column(name = "COUNTERPARTY_CODE", length = 10)
     private String counterpartyCode;
 
-    @Column(name = "LOCATION", length = 50)
+    @Column(name = "LOCATION", length = 5)
     private String location;
 
     @Temporal(TemporalType.TIMESTAMP)

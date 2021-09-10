@@ -37,9 +37,6 @@
                         type="remove"/>
                 <action id="refresh"
                         type="refresh"/>
-                <action id="snapshot"/>
-                <action id="createInvoice"
-                        trackSelection="true"/>
             </actions>
             <columns>
                 <column id="contractNumber"/>
@@ -84,8 +81,8 @@
                 <column id="startPrice"/>
                 <column id="pnl"/>
                 <column id="fx"/>
+                <column id="fxUsd"/>
                 <column id="gbpEquivalent"/>
-                <column id="invoiceGenerated"/>
                 <column id="cash"/>
             </columns>
             <rowsCount/>
@@ -101,12 +98,7 @@
                         action="invoiceLinesTable.refresh"/>
                 <button id="snapshotBtn"
                         caption="msg://snapshotBtn.caption"
-                        action="invoiceLinesTable.snapshot"
                         stylename="friendly"/>
-                <button id="createInvoiceBtn"
-                        caption="msg://createInvoiceBtn.caption"
-                        action="invoiceLinesTable.createInvoice"
-                        stylename="warning"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions"

@@ -11,7 +11,7 @@ create table GCSPLATFORM_INVOICE (
     ISSUE integer,
     CURRENCY varchar(10),
     COUNTERPARTY_CODE varchar(10),
-    LOCATION varchar(50),
+    LOCATION varchar(5),
     START_DATE datetime(3),
     END_DATE datetime(3),
     AMOUNT decimal(10, 4),

@@ -10,8 +10,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;
+import com.gcs.gcsplatform.entity.trade.TradeSide;
 import com.haulmont.chile.core.annotations.NumberFormat;
 import com.haulmont.cuba.core.entity.StandardEntity;
 
@@ -60,7 +62,7 @@ public class InvoiceLine extends StandardEntity {
     @Column(name = "ISIN", length = 20)
     private String isin;
 
-    @Column(name = "INVOICE_CODE", length = 5)
+    @Column(name = "LOCATION", length = 5)
     private String location;
 
     @Column(name = "CURRENCY", length = 10)
@@ -108,18 +110,46 @@ public class InvoiceLine extends StandardEntity {
     @Column(name = "FX", precision = 10, scale = 4)
     private BigDecimal fx;
 
+    @Column(name = "FX_USD", precision = 10, scale = 4)
+    private BigDecimal fxUsd;
+
     @Column(name = "GBP_EQUIVALENT", precision = 10, scale = 4)
     private BigDecimal gbpEquivalent;
-
-    @Column(name = "INVOICE_GENERATED")
-    private Boolean invoiceGenerated = false;
 
     @Column(name = "CASH")
     private Boolean cash;
 
+    @NotNull
+    @Column(name = "TRADE_SIDE", nullable = false)
+    private String tradeSide;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TRADE_ID")
     private ClosedTrade trade;
+
+    public void setBuyerOrSeller(String counterparty) {
+        if (getTradeSide() == TradeSide.BUY) {
+            setBuyer(counterparty);
+        } else {
+            setSeller(counterparty);
+        }
+    }
+
+    public TradeSide getTradeSide() {
+        return tradeSide == null ? null : TradeSide.fromId(tradeSide);
+    }
+
+    public void setTradeSide(TradeSide tradeSide) {
+        this.tradeSide = tradeSide == null ? null : tradeSide.getId();
+    }
+
+    public BigDecimal getFxUsd() {
+        return fxUsd;
+    }
+
+    public void setFxUsd(BigDecimal fxUsd) {
+        this.fxUsd = fxUsd;
+    }
 
     public BigDecimal getFx() {
         return fx;
@@ -127,14 +157,6 @@ public class InvoiceLine extends StandardEntity {
 
     public void setFx(BigDecimal fx) {
         this.fx = fx;
-    }
-
-    public Boolean getInvoiceGenerated() {
-        return invoiceGenerated;
-    }
-
-    public void setInvoiceGenerated(Boolean invoiceGenerated) {
-        this.invoiceGenerated = invoiceGenerated;
     }
 
     public String getCrossRate() {

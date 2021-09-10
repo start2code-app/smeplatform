@@ -233,11 +233,27 @@ public abstract class Trade extends StandardEntity {
         }
     }
 
+    public void setBroker(String broker, TradeSide side) {
+        if (side == TradeSide.BUY) {
+            setBuybroker(broker);
+        } else {
+            setSellbroker(broker);
+        }
+    }
+
     public String getCounterparty(TradeSide side) {
         if (side == TradeSide.BUY) {
             return buyer;
         } else {
             return seller;
+        }
+    }
+
+    public void setCounterparty(String counterparty, TradeSide side) {
+        if (side == TradeSide.BUY) {
+            setBuyer(counterparty);
+        } else {
+            setSeller(counterparty);
         }
     }
 
@@ -249,11 +265,27 @@ public abstract class Trade extends StandardEntity {
         }
     }
 
+    public void setInvoiceCode(String invoiceCode, TradeSide side) {
+        if (side == TradeSide.BUY) {
+            setBuyerInvoiceCode(invoiceCode);
+        } else {
+            setSellerInvoiceCode(invoiceCode);
+        }
+    }
+
     public String getCounterpartyCode(TradeSide side) {
         if (side == TradeSide.BUY) {
             return buyerCode;
         } else {
             return sellerCode;
+        }
+    }
+
+    public void setCounterpartyCode(String counterpartyCode, TradeSide side) {
+        if (side == TradeSide.BUY) {
+            setBuyerCode(counterpartyCode);
+        } else {
+            setSellerCode(counterpartyCode);
         }
     }
 

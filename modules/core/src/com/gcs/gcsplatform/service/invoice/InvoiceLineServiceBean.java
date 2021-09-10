@@ -1,22 +1,21 @@
-package com.gcs.gcsplatform.service;
+package com.gcs.gcsplatform.service.invoice;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
-import com.gcs.gcsplatform.entity.invoice.Invoice;
 import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
 import com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerageType;
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.entity.trade.TradeSide;
+import com.gcs.gcsplatform.service.FxService;
 import com.gcs.gcsplatform.service.pnl.PnlCalculationService;
-import com.haulmont.cuba.core.entity.KeyValueEntity;
 import com.haulmont.cuba.core.global.DataManager;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +25,8 @@ import static com.gcs.gcsplatform.util.DateUtils.getFirstDayOfMonth;
 import static com.gcs.gcsplatform.util.DateUtils.getLastDayOfMonth;
 import static org.apache.commons.lang3.StringUtils.defaultString;
 
-@Service(InvoiceService.NAME)
-public class InvoiceServiceBean implements InvoiceService {
+@Service(InvoiceLineService.NAME)
+public class InvoiceLineServiceBean implements InvoiceLineService {
 
     private Map<CounterpartyBrokerageType, String> brokerageTypeForInvoiceMap;
 
@@ -46,48 +45,16 @@ public class InvoiceServiceBean implements InvoiceService {
     }
 
     @Override
-    public Invoice createInvoice(InvoiceLine invoiceLine) {
-        Invoice invoice = dataManager.create(Invoice.class);
-        invoice.setLocation(invoiceLine.getLocation());
-        invoice.setCurrency(invoiceLine.getCurrency());
-        invoice.setCounterpartyCode(invoiceLine.getCounterpartyCode());
-        Date startDate = invoiceLine.getStartDate();
-        invoice.setStartDate(startDate);
-        invoice.setEndDate(invoiceLine.getEndDate());
-        invoice.setFxUsd(fxService.getUsdFxValue(startDate));
-        invoice.setFx(invoiceLine.getFx());
-        calculateAmount(invoice);
-        return invoice;
-    }
-
-    private void calculateAmount(Invoice invoice) {
-        KeyValueEntity keyValue = dataManager.loadValues(
-                "select sum(e.pnl) as amount, sum(e.gbpEquivalent) as gbpAmount "
-                        + "from gcsplatform_InvoiceLine e "
-                        + "where e.startDate = :startDate "
-                        + "and e.currency = :currency "
-                        + "and e.counterpartyCode = :counterpartyCode "
-                        + "and e.location = :location")
-                .parameter("startDate", invoice.getStartDate())
-                .parameter("currency", invoice.getCurrency())
-                .parameter("counterpartyCode", invoice.getCounterpartyCode())
-                .parameter("location", invoice.getLocation())
-                .properties("amount", "gbpAmount")
-                .one();
-        invoice.setAmount(keyValue.getValue("amount"));
-        invoice.setGbpAmount(keyValue.getValue("gbpAmount"));
-    }
-
-    @Override
     public Collection<InvoiceLine> splitTrade(ClosedTrade trade) {
         ArrayList<InvoiceLine> invoiceLines = new ArrayList<>();
         BigDecimal fxValue = fxService.getFxValue(trade.getTradeCurrency(), trade.getInvoiceDate());
-        invoiceLines.add(splitTrade(trade, TradeSide.BUY, fxValue));
-        invoiceLines.add(splitTrade(trade, TradeSide.SELL, fxValue));
+        BigDecimal fxUsdValue = fxService.getUsdFxValue(trade.getInvoiceDate());
+        invoiceLines.add(splitTrade(trade, TradeSide.BUY, fxValue, fxUsdValue));
+        invoiceLines.add(splitTrade(trade, TradeSide.SELL, fxValue, fxUsdValue));
         return invoiceLines;
     }
 
-    private InvoiceLine splitTrade(ClosedTrade trade, TradeSide side, BigDecimal fxValue) {
+    private InvoiceLine splitTrade(ClosedTrade trade, TradeSide side, BigDecimal fxValue, BigDecimal fxUsdValue) {
         InvoiceLine invoiceLine = dataManager.create(InvoiceLine.class);
         invoiceLine.setTrade(trade);
         invoiceLine.setBroker(trade.getBroker(side));
@@ -119,6 +86,8 @@ public class InvoiceServiceBean implements InvoiceService {
         BigDecimal pnl = pnlCalculationService.calculatePnl(invoiceLine);
         invoiceLine.setPnl(pnl);
         invoiceLine.setFx(fxValue);
+        invoiceLine.setFxUsd(fxUsdValue);
+        invoiceLine.setTradeSide(side);
         invoiceLine.setGbpEquivalent(pnlCalculationService.calculateFxEquivalent(pnl, fxValue));
         return invoiceLine;
     }

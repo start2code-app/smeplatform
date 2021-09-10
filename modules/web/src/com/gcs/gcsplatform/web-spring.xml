@@ -32,9 +32,13 @@
                 <entry key="gcsplatform_UtiService"
                        value="com.gcs.gcsplatform.service.UtiService"/>
                 <entry key="gcsplatform_InvoiceService"
-                       value="com.gcs.gcsplatform.service.InvoiceService"/>
+                       value="com.gcs.gcsplatform.service.invoice.InvoiceService"/>
                 <entry key="gcsplatform_PnlCalculationService"
                        value="com.gcs.gcsplatform.service.pnl.PnlCalculationService"/>
+                <entry key="gcsplatform_InvoiceSnapshotService"
+                       value="com.gcs.gcsplatform.service.invoice.InvoiceSnapshotService"/>
+                <entry key="gcsplatform_InvoiceLineService"
+                       value="com.gcs.gcsplatform.service.invoice.InvoiceLineService"/>
             </map>
         </property>
     </bean>

@@ -27,10 +27,6 @@
         <groupTable id="invoicesTable"
                     width="100%"
                     dataContainer="invoicesDc">
-            <actions>
-                <action id="remove"
-                        type="remove"/>
-            </actions>
             <columns>
                 <column id="issue"/>
                 <column id="currency"/>
@@ -52,11 +48,6 @@
                 <column id="printed"/>
             </columns>
             <rowsCount/>
-            <buttonsPanel id="buttonsPanel"
-                          alwaysVisible="true">
-                <button id="removeBtn"
-                        action="invoicesTable.remove"/>
-            </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions"
               spacing="true"
