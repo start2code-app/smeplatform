@@ -101,24 +101,11 @@ public abstract class TradeBrowse<T extends Trade> extends StandardLookup<T> {
                                         .build(),
                                 startDate,
                                 endDate);
-                        recalculatePnl(trades);
+                        pnlCalculationBean.recalculatePnl(trades);
                         showPnlChartScreen(trades);
                     }
                 })
                 .show();
-    }
-
-    /**
-     * Recalculates PNL.
-     * <p>
-     * Note: recalculated PNL value is not being persisted, it is only used in chart.
-     *
-     * @param trades Trades
-     */
-    protected void recalculatePnl(Collection<T> trades) {
-        for (T trade : trades) {
-            pnlCalculationBean.updatePnl(trade);
-        }
     }
 
     protected void showPnlChartScreen(Collection<T> trades) {

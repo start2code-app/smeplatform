@@ -26,7 +26,7 @@ public class DailyBlotterBrowse extends ClosedTradeBrowse {
                         .build(),
                 today,
                 tomorrow);
-        recalculatePnl(trades);
+        pnlCalculationBean.recalculatePnl(trades);
         showPnlChartScreen(trades);
     }
 }

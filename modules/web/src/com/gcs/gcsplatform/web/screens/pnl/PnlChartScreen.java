@@ -85,13 +85,11 @@ public class PnlChartScreen extends Screen {
     protected void initPnlByBrokerTable(Collection<? extends Trade> trades) {
         Collection<Pnl> pnlByBroker = pnlService.getPnlByBroker(trades);
         pnlByBrokerDc.setItems(pnlByBroker);
-        pnlByBrokerTable.expandAll();
     }
 
     protected void initPnlByCounterpartyTable(Collection<? extends Trade> trades) {
         Collection<Pnl> pnlByCounterparty = pnlService.getPnlByCounterparty(trades);
         pnlByCounterpartyDc.setItems(pnlByCounterparty);
-        pnlByCounterpartyTable.expandAll();
     }
 
     protected void initCategoryChart(Collection<? extends Trade> trades) {
