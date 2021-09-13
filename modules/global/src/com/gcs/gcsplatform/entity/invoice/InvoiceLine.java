@@ -12,6 +12,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import com.gcs.gcsplatform.entity.HasNumdays;
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;
 import com.gcs.gcsplatform.entity.trade.TradeSide;
 import com.haulmont.chile.core.annotations.NumberFormat;
@@ -19,7 +20,7 @@ import com.haulmont.cuba.core.entity.StandardEntity;
 
 @Table(name = "GCSPLATFORM_INVOICE_LINE")
 @Entity(name = "gcsplatform_InvoiceLine")
-public class InvoiceLine extends StandardEntity {
+public class InvoiceLine extends StandardEntity implements HasNumdays {
 
     private static final long serialVersionUID = 4221618502379911685L;
 
@@ -247,10 +248,12 @@ public class InvoiceLine extends StandardEntity {
         this.startDate = startDate;
     }
 
+    @Override
     public Long getNumdays() {
         return numdays;
     }
 
+    @Override
     public void setNumdays(Long numdays) {
         this.numdays = numdays;
     }
@@ -315,6 +318,7 @@ public class InvoiceLine extends StandardEntity {
         this.maturityDate = maturityDate;
     }
 
+    @Override
     public Date getMaturityDate() {
         return maturityDate;
     }
@@ -331,6 +335,7 @@ public class InvoiceLine extends StandardEntity {
         this.valueDate = valueDate;
     }
 
+    @Override
     public Date getValueDate() {
         return valueDate;
     }

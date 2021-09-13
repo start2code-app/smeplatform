@@ -6,7 +6,10 @@
     <data>
         <instance id="invoiceLineDc"
                   class="com.gcs.gcsplatform.entity.invoice.InvoiceLine">
-            <view extends="_local"/>
+            <view extends="_local">
+                <property name="trade"
+                          view="_local"/>
+            </view>
             <loader/>
         </instance>
         <collection id="counterpartiesDc"
@@ -44,6 +47,8 @@
                     <textField id="sellerField"
                                editable="false"
                                property="seller"/>
+                    <textField id="brokerageField"
+                               property="brokerage"/>
                     <textField id="counterpartyCodeField"
                                editable="false"
                                property="counterpartyCode"/>
@@ -70,6 +75,7 @@
                 </column>
                 <column width="250px">
                     <textField id="fxField"
+                               editable="false"
                                property="fx"/>
                     <dateField id="valueDateField"
                                property="valueDate"/>

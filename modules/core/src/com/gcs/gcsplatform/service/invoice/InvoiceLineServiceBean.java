@@ -24,6 +24,7 @@ import static com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerageType.SP
 import static com.gcs.gcsplatform.util.DateUtils.getFirstDayOfMonth;
 import static com.gcs.gcsplatform.util.DateUtils.getLastDayOfMonth;
 import static org.apache.commons.lang3.StringUtils.defaultString;
+import static org.apache.commons.lang3.StringUtils.firstNonBlank;
 
 @Service(InvoiceLineService.NAME)
 public class InvoiceLineServiceBean implements InvoiceLineService {
@@ -93,10 +94,10 @@ public class InvoiceLineServiceBean implements InvoiceLineService {
     }
 
     private String generateContractNumber(Trade trade, TradeSide side) {
-        String category = defaultString(trade.getCategory(), "X");
+        String category = firstNonBlank(trade.getCategory(), "X");
         String brokerageType = brokerageTypeForInvoiceMap.getOrDefault(trade.getBrokerageType(), "X");
-        String traderef = defaultString(trade.getTraderef(), "X");
-        String broker = defaultString(trade.getBroker(side), "X");
+        String traderef = firstNonBlank(trade.getTraderef(), "X");
+        String broker = firstNonBlank(trade.getBroker(side), "X");
         return String.format("%s:%s:%s:%s:%s", category, brokerageType, traderef, side.getId(), broker);
     }
 }

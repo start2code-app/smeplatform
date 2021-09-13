@@ -1,23 +1,24 @@
 package com.gcs.gcsplatform.web.screens.invoiceline;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import javax.inject.Inject;
 
-import com.gcs.gcsplatform.entity.invoice.Invoice;
 import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
 import com.gcs.gcsplatform.entity.masterdata.Counterparty;
 import com.gcs.gcsplatform.entity.masterdata.Currency;
-import com.gcs.gcsplatform.entity.trade.ClosedTrade;
-import com.gcs.gcsplatform.service.invoice.InvoiceService;
-import com.haulmont.cuba.core.global.CommitContext;
-import com.haulmont.cuba.core.global.DataManager;
-import com.haulmont.cuba.core.global.View;
-import com.haulmont.cuba.core.global.ViewBuilder;
+import com.gcs.gcsplatform.web.components.BrokerageBean;
+import com.gcs.gcsplatform.web.components.PnlCalculationBean;
+import com.gcs.gcsplatform.web.components.invoice.InvoiceBackportBean;
+import com.gcs.gcsplatform.web.components.invoice.InvoiceCalculationBean;
+import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.LookupPickerField;
 import com.haulmont.cuba.gui.model.DataContext;
 import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.EditedEntityContainer;
 import com.haulmont.cuba.gui.screen.LoadDataBeforeShow;
+import com.haulmont.cuba.gui.screen.MessageBundle;
 import com.haulmont.cuba.gui.screen.StandardEditor;
 import com.haulmont.cuba.gui.screen.Subscribe;
 import com.haulmont.cuba.gui.screen.Target;
@@ -38,15 +39,20 @@ public class InvoiceLineEdit extends StandardEditor<InvoiceLine> {
     protected LookupPickerField<Currency> currencyLookupPickerField;
 
     @Inject
-    protected DataManager dataManager;
+    protected BrokerageBean brokerageBean;
     @Inject
-    protected InvoiceService invoiceService;
+    protected PnlCalculationBean pnlCalculationBean;
+    @Inject
+    protected InvoiceBackportBean invoiceBackportBean;
+    @Inject
+    protected InvoiceCalculationBean invoiceCalculationBean;
+    @Inject
+    protected Notifications notifications;
+    @Inject
+    protected MessageBundle messageBundle;
 
     @Inject
     protected InstanceContainer<InvoiceLine> invoiceLineDc;
-
-    // todo: numdays calculation on value/maturity date change. validations
-    // todo: pnl/gbp calculation
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
@@ -69,40 +75,69 @@ public class InvoiceLineEdit extends StandardEditor<InvoiceLine> {
         invoiceLine.setCounterpartyCode(counterparty != null ? counterparty.getBillingInfo1() : null);
         invoiceLine.setLocation(counterparty != null ? counterparty.getBillingInfo3() : null);
         invoiceLine.setBuyerOrSeller(counterparty != null ? counterparty.getCounterparty() : null);
+        brokerageBean.updateBrokerage(invoiceLine);
+        pnlCalculationBean.updatePnl(getEditedEntity());
+    }
+
+    @Subscribe("valueDateField")
+    protected void onValueDateFieldValueChange(HasValue.ValueChangeEvent<Date> event) {
+        if (!event.isUserOriginated()) {
+            return;
+        }
+
+        Date value = event.getValue();
+        Date prevValue = event.getPrevValue();
+        InvoiceLine invoiceLine = getEditedEntity();
+        Date maturityDate = invoiceLine.getMaturityDate();
+
+        if (value != null && maturityDate != null && value.after(maturityDate)) {
+            notifications.create(Notifications.NotificationType.TRAY)
+                    .withDescription(messageBundle.getMessage("valueDate.validationMsg"))
+                    .show();
+            invoiceLine.setValueDate(prevValue);
+            return;
+        }
+        pnlCalculationBean.updatePnl(invoiceLine);
+    }
+
+    @Subscribe("maturityDateField")
+    protected void onMaturityDateFieldValueChange(HasValue.ValueChangeEvent<Date> event) {
+        if (!event.isUserOriginated()) {
+            return;
+        }
+
+        Date value = event.getValue();
+        Date prevValue = event.getPrevValue();
+        InvoiceLine invoiceLine = getEditedEntity();
+        Date valueDate = invoiceLine.getValueDate();
+
+        if (value != null && valueDate != null && value.before(valueDate)) {
+            notifications.create(Notifications.NotificationType.TRAY)
+                    .withDescription(messageBundle.getMessage("maturityDate.validationMsg"))
+                    .show();
+            invoiceLine.setMaturityDate(prevValue);
+            return;
+        }
+        pnlCalculationBean.updatePnl(invoiceLine);
+    }
+
+    @Subscribe("brokerageField")
+    protected void onBrokerageFieldValueChange(HasValue.ValueChangeEvent<BigDecimal> event) {
+        pnlCalculationBean.updatePnl(getEditedEntity());
+    }
+
+    @Subscribe("nominalField")
+    protected void onNominalFieldValueChange(HasValue.ValueChangeEvent<BigDecimal> event) {
+        pnlCalculationBean.updatePnl(getEditedEntity());
+    }
+
+    @Subscribe(target = Target.DATA_CONTEXT)
+    protected void onPreCommit(DataContext.PreCommitEvent event) {
+        invoiceBackportBean.backportChangesToTrade(getEditedEntity());
     }
 
     @Subscribe(target = Target.DATA_CONTEXT)
     protected void onPostCommit(DataContext.PostCommitEvent event) {
-        CommitContext commitContext = new CommitContext();
-        recalculateOrCreateInvoice(commitContext);
-        backportChangesToTrade(commitContext);
-        dataManager.commit(commitContext);
-    }
-
-    protected void recalculateOrCreateInvoice(CommitContext commitContext) {
-        Invoice invoice = invoiceService.findInvoice(getEditedEntity(), ViewBuilder.of(Invoice.class)
-                .addView(View.LOCAL)
-                .build());
-        if (invoice != null) {
-            invoice = invoiceService.calculateAmount(invoice);
-        } else {
-            invoice = invoiceService.createInvoice(getEditedEntity());
-        }
-        commitContext.addInstanceToCommit(invoice);
-    }
-
-    protected void backportChangesToTrade(CommitContext commitContext) {
-        InvoiceLine invoiceLine = getEditedEntity();
-        ClosedTrade trade = invoiceLine.getTrade();
-        trade.setBrokerage(invoiceLine.getBrokerage(), invoiceLine.getTradeSide());
-        trade.setCounterparty(invoiceLine.getCounterparty(), invoiceLine.getTradeSide());
-        trade.setInvoiceCode(invoiceLine.getLocation(), invoiceLine.getTradeSide());
-        trade.setCounterpartyCode(invoiceLine.getCounterpartyCode(), invoiceLine.getTradeSide());
-        trade.setTradeCurrency(invoiceLine.getCurrency());
-        trade.setMaturityDate(invoiceLine.getMaturityDate());
-        trade.setValueDate(invoiceLine.getValueDate());
-        trade.setNominal(invoiceLine.getNominal());
-        trade.setNotes(invoiceLine.getNotes());
-        commitContext.addInstanceToCommit(trade);
+        invoiceCalculationBean.recalculateOrCreateInvoice(getEditedEntity());
     }
 }

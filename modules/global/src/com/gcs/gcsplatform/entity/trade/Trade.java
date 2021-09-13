@@ -9,6 +9,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import com.gcs.gcsplatform.entity.HasNumdays;
 import com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerageType;
 import com.haulmont.chile.core.annotations.MetaClass;
 import com.haulmont.chile.core.annotations.MetaProperty;
@@ -18,7 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 
 @MetaClass(name = "gcsplatform_Trade")
 @MappedSuperclass
-public abstract class Trade extends StandardEntity {
+public abstract class Trade extends StandardEntity implements HasNumdays {
 
     private static final long serialVersionUID = -5968057577009538611L;
 
@@ -405,6 +406,7 @@ public abstract class Trade extends StandardEntity {
         this.maturityDate = maturityDate;
     }
 
+    @Override
     public Date getMaturityDate() {
         return maturityDate;
     }
@@ -421,6 +423,7 @@ public abstract class Trade extends StandardEntity {
         this.valueDate = valueDate;
     }
 
+    @Override
     public Date getValueDate() {
         return valueDate;
     }
@@ -441,10 +444,12 @@ public abstract class Trade extends StandardEntity {
         this.buyerCash = buyerCash;
     }
 
+    @Override
     public void setNumdays(Long numdays) {
         this.numdays = numdays;
     }
 
+    @Override
     public Long getNumdays() {
         return numdays;
     }
