@@ -76,7 +76,7 @@ public class InvoiceLineEdit extends StandardEditor<InvoiceLine> {
         invoiceLine.setLocation(counterparty != null ? counterparty.getBillingInfo3() : null);
         invoiceLine.setBuyerOrSeller(counterparty != null ? counterparty.getCounterparty() : null);
         brokerageBean.updateBrokerage(invoiceLine);
-        pnlCalculationBean.updatePnl(getEditedEntity());
+        pnlCalculationBean.updatePnl(getEditedEntity(), invoiceLine.getFx());
     }
 
     @Subscribe("valueDateField")
@@ -97,7 +97,7 @@ public class InvoiceLineEdit extends StandardEditor<InvoiceLine> {
             invoiceLine.setValueDate(prevValue);
             return;
         }
-        pnlCalculationBean.updatePnl(invoiceLine);
+        pnlCalculationBean.updatePnl(invoiceLine, invoiceLine.getFx());
     }
 
     @Subscribe("maturityDateField")
@@ -118,17 +118,17 @@ public class InvoiceLineEdit extends StandardEditor<InvoiceLine> {
             invoiceLine.setMaturityDate(prevValue);
             return;
         }
-        pnlCalculationBean.updatePnl(invoiceLine);
+        pnlCalculationBean.updatePnl(invoiceLine, invoiceLine.getFx());
     }
 
     @Subscribe("brokerageField")
     protected void onBrokerageFieldValueChange(HasValue.ValueChangeEvent<BigDecimal> event) {
-        pnlCalculationBean.updatePnl(getEditedEntity());
+        pnlCalculationBean.updatePnl(getEditedEntity(), getEditedEntity().getFx());
     }
 
     @Subscribe("nominalField")
     protected void onNominalFieldValueChange(HasValue.ValueChangeEvent<BigDecimal> event) {
-        pnlCalculationBean.updatePnl(getEditedEntity());
+        pnlCalculationBean.updatePnl(getEditedEntity(), getEditedEntity().getFx());
     }
 
     @Subscribe(target = Target.DATA_CONTEXT)

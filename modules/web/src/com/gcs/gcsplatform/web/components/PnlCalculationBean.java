@@ -1,6 +1,12 @@
 package com.gcs.gcsplatform.web.components;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.HasNumdays;
@@ -13,8 +19,6 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.stereotype.Component;
 
 import static com.gcs.gcsplatform.util.DateUtils.getDaysBetweenDates;
-import static com.gcs.gcsplatform.util.DateUtils.getFirstDayOfMonth;
-import static com.gcs.gcsplatform.util.DateUtils.getYearMonth;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
@@ -58,7 +62,7 @@ public class PnlCalculationBean {
         if (maturityDate == null) {
             maturityDate = new Date();
         }
-        hasNumdays.setNumdays(getDaysBetweenDates(hasNumdays.getMaturityDate(), hasNumdays.getValueDate()));
+        hasNumdays.setNumdays(getDaysBetweenDates(maturityDate, hasNumdays.getValueDate()));
     }
 
     /**
@@ -66,10 +70,8 @@ public class PnlCalculationBean {
      *
      * @param invoiceLine Invoice line
      */
-    public void updatePnl(InvoiceLine invoiceLine) {
+    public void updatePnl(InvoiceLine invoiceLine, BigDecimal fxValue) {
         updateNumdays(invoiceLine);
-        BigDecimal fxValue = fxService.getFxValue(invoiceLine.getCurrency(), invoiceLine.getStartDate());
-        invoiceLine.setFx(fxValue);
         BigDecimal pnl = pnlCalculationService.calculatePnl(invoiceLine);
         invoiceLine.setPnl(pnl);
         BigDecimal gbpEquivalent = pnlCalculationService.calculateFxEquivalent(pnl, fxValue);
@@ -83,7 +85,6 @@ public class PnlCalculationBean {
      */
     public void updatePnl(Trade trade, BigDecimal fxValue) {
         updateNumdays(trade);
-        BigDecimal fxValue = fxService.getFxValue(trade.getTradeCurrency(), trade.getInvoiceDate());
         updatePnl(trade, TradeSide.BUY, fxValue);
         updatePnl(trade, TradeSide.SELL, fxValue);
     }

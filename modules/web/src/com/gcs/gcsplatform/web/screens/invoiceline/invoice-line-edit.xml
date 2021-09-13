@@ -75,7 +75,6 @@
                 </column>
                 <column width="250px">
                     <textField id="fxField"
-                               editable="false"
                                property="fx"/>
                     <dateField id="valueDateField"
                                property="valueDate"/>
