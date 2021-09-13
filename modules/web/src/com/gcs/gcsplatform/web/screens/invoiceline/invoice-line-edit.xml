@@ -85,6 +85,9 @@
                     <textField id="pnlField"
                                editable="false"
                                property="pnl"/>
+                    <textField id="gbpEquivalentField"
+                               editable="false"
+                               property="gbpEquivalent"/>
                 </column>
             </form>
         </scrollBox>

@@ -45,6 +45,9 @@ public class InvoiceLineEdit extends StandardEditor<InvoiceLine> {
     @Inject
     protected InstanceContainer<InvoiceLine> invoiceLineDc;
 
+    // todo: numdays calculation on value/maturity date change. validations
+    // todo: pnl/gbp calculation
+
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
         initFieldValueToStringPropertyMapping(currencyLookupPickerField, invoiceLineDc, "currency", "currency");
