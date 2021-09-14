@@ -22,12 +22,13 @@ import com.haulmont.cuba.gui.screen.UiController;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
 import org.apache.commons.collections4.CollectionUtils;
 
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+
 @UiController("gcsplatform_PnlChartScreen")
 @UiDescriptor("pnl-chart-screen.xml")
 public class PnlChartScreen extends Screen {
 
     protected Collection<? extends Trade> trades;
-    protected String heading;
 
     @Inject
     protected PnlGroupService pnlGroupService;
@@ -59,12 +60,16 @@ public class PnlChartScreen extends Screen {
     protected CollectionContainer<BrokerageTypeCount> brokerageTypeCountDc;
 
     public void setCaption(String caption) {
-        getWindow().setCaption(caption);
+        if (isNotBlank(caption)) {
+            getWindow().setCaption(caption);
+        }
     }
 
     public void setHeading(String heading) {
-        pnlChartHeading.setValue(heading);
-        pnlChartHeading.setVisible(true);
+        if (isNotBlank(heading)) {
+            pnlChartHeading.setValue(heading);
+            pnlChartHeading.setVisible(true);
+        }
     }
 
     public void setTrades(Collection<? extends Trade> trades) {

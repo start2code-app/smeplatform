@@ -118,21 +118,31 @@
                         collapsed="true"/>
                 <column id="gmSla"
                         collapsed="true"/>
+                <column id="buyerLocation"
+                        collapsed="true"/>
+                <column id="sellerLocation"
+                        collapsed="true"/>
+                <column id="buyerInvoiceCode"
+                        collapsed="true"/>
+                <column id="sellerInvoiceCode"
+                        collapsed="true"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn"
-                        action="tradesTable.create"/>
-                <button id="editBtn"
-                        action="tradesTable.edit"/>
-                <button id="removeBtn"
-                        action="tradesTable.remove"/>
-                <button id="refreshBtn"
-                        action="tradesTable.refresh"/>
-                <button id="utiBtn"
-                        stylename="warning"
-                        caption="msg://uti"/>
+                <hbox spacing="true">
+                    <button id="createBtn"
+                            action="tradesTable.create"/>
+                    <button id="editBtn"
+                            action="tradesTable.edit"/>
+                    <button id="removeBtn"
+                            action="tradesTable.remove"/>
+                    <button id="refreshBtn"
+                            action="tradesTable.refresh"/>
+                    <button id="utiBtn"
+                            stylename="warning"
+                            caption="msg://uti"/>
+                </hbox>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions"

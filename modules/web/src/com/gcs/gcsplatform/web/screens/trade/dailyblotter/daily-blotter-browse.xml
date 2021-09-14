@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://dailyBlotterBrowse.caption"
-        messagesPack="com.gcs.gcsplatform.web.screens.trade.dailyblotter">
+        messagesPack="com.gcs.gcsplatform.web.screens.trade.dailyblotter"
+        extends="com/gcs/gcsplatform/web/screens/trade/trade-browse.xml">
     <data>
         <collection id="tradesDc"
                     class="com.gcs.gcsplatform.entity.trade.ClosedTrade">

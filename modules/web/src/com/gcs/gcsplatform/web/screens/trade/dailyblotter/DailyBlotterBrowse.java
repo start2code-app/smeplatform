@@ -42,7 +42,7 @@ public class DailyBlotterBrowse extends TradeBrowse<ClosedTrade> {
                 today,
                 tomorrow);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        pnlChartBean.showPnlChartScreen(this, trades, dateFormat.format(today),
-                messageBundle.getMessage("dailyPnl.caption"));
+        pnlChartBean.showPnlChartScreen(this, trades, messageBundle.getMessage("dailyPnl.caption"),
+                dateFormat.format(today));
     }
 }

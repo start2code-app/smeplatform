@@ -18,8 +18,8 @@ public class PnlChartBean {
     @Inject
     private ScreenBuilders screenBuilders;
 
-    public void showPnlChartScreen(FrameOwner frameOwner, Collection<? extends Trade> trades, String heading,
-            String caption) {
+    public void showPnlChartScreen(FrameOwner frameOwner, Collection<? extends Trade> trades, String caption,
+            String heading) {
         PnlChartScreen pnlChartScreen = screenBuilders.screen(frameOwner)
                 .withScreenClass(PnlChartScreen.class)
                 .withOpenMode(OpenMode.NEW_TAB)
@@ -30,7 +30,7 @@ public class PnlChartBean {
         pnlChartScreen.show();
     }
 
-    public void showPnlChartScreen(FrameOwner frameOwner, Collection<? extends Trade> trades, String heading) {
-        showPnlChartScreen(frameOwner, trades, heading, null);
+    public void showPnlChartScreen(FrameOwner frameOwner, Collection<? extends Trade> trades, String caption) {
+        showPnlChartScreen(frameOwner, trades, caption, null);
     }
 }

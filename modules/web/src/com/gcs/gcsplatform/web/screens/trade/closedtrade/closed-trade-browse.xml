@@ -17,8 +17,10 @@
     <layout>
         <groupTable id="tradesTable">
             <buttonsPanel>
-                <fragment id="btnPnlChartDialogFragment"
-                          screen="gcsplatform_BtnPnlChartDialogFragment"/>
+                <hbox>
+                    <fragment id="btnPnlChartDialogFragment"
+                              screen="gcsplatform_BtnPnlChartDialogFragment"/>
+                </hbox>
             </buttonsPanel>
         </groupTable>
     </layout>

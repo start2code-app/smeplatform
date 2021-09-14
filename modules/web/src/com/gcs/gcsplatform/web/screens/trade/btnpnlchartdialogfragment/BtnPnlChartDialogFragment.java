@@ -87,7 +87,7 @@ public class BtnPnlChartDialogFragment extends ScreenFragment {
                         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                         String heading = String.format("%s-%s", dateFormat.format(startDate),
                                 dateFormat.format(endDate));
-                        pnlChartBean.showPnlChartScreen(this, trades, heading, caption);
+                        pnlChartBean.showPnlChartScreen(this, trades, caption, heading);
                     }
                 })
                 .show();
