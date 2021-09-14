@@ -81,7 +81,6 @@
                 <column id="startPrice"/>
                 <column id="pnl"/>
                 <column id="fx"/>
-                <column id="fxUsd"/>
                 <column id="gbpEquivalent"/>
                 <column id="cash"/>
             </columns>

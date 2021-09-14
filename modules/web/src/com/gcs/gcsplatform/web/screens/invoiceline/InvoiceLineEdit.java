@@ -39,8 +39,6 @@ public class InvoiceLineEdit extends StandardEditor<InvoiceLine> {
     protected LookupPickerField<Currency> currencyLookupPickerField;
 
     @Inject
-    protected BrokerageBean brokerageBean;
-    @Inject
     protected PnlCalculationBean pnlCalculationBean;
     @Inject
     protected InvoiceBackportBean invoiceBackportBean;
@@ -75,8 +73,6 @@ public class InvoiceLineEdit extends StandardEditor<InvoiceLine> {
         invoiceLine.setCounterpartyCode(counterparty != null ? counterparty.getBillingInfo1() : null);
         invoiceLine.setLocation(counterparty != null ? counterparty.getBillingInfo3() : null);
         invoiceLine.setBuyerOrSeller(counterparty != null ? counterparty.getCounterparty() : null);
-        brokerageBean.updateBrokerage(invoiceLine);
-        pnlCalculationBean.updatePnl(getEditedEntity());
     }
 
     @Subscribe("valueDateField")
@@ -123,12 +119,23 @@ public class InvoiceLineEdit extends StandardEditor<InvoiceLine> {
 
     @Subscribe("brokerageField")
     protected void onBrokerageFieldValueChange(HasValue.ValueChangeEvent<BigDecimal> event) {
-        pnlCalculationBean.updatePnl(getEditedEntity());
+        if (event.isUserOriginated()) {
+            pnlCalculationBean.updatePnl(getEditedEntity());
+        }
     }
 
     @Subscribe("nominalField")
     protected void onNominalFieldValueChange(HasValue.ValueChangeEvent<BigDecimal> event) {
-        pnlCalculationBean.updatePnl(getEditedEntity());
+        if (event.isUserOriginated()) {
+            pnlCalculationBean.updatePnl(getEditedEntity());
+        }
+    }
+
+    @Subscribe("fxField")
+    protected void onFxFieldValueChange(HasValue.ValueChangeEvent<BigDecimal> event) {
+        if (event.isUserOriginated()) {
+            pnlCalculationBean.updatePnl(getEditedEntity());
+        }
     }
 
     @Subscribe(target = Target.DATA_CONTEXT)

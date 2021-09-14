@@ -11,6 +11,7 @@ import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.invoice.Invoice;
 import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
+import com.gcs.gcsplatform.service.FxService;
 import com.haulmont.cuba.core.entity.KeyValueEntity;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.View;
@@ -21,6 +22,8 @@ public class InvoiceServiceBean implements InvoiceService {
 
     @Inject
     private DataManager dataManager;
+    @Inject
+    private FxService fxService;
 
     @Override
     public Collection<Invoice> createInvoices(Collection<InvoiceLine> invoiceLines) {
@@ -51,7 +54,8 @@ public class InvoiceServiceBean implements InvoiceService {
         invoice.setCurrency(invoiceLine.getCurrency());
         invoice.setCounterpartyCode(invoiceLine.getCounterpartyCode());
         invoice.setStartDate(invoiceLine.getStartDate());
-        invoice.setFxUsd(invoiceLine.getFxUsd());
+        invoice.setEndDate(invoiceLine.getEndDate());
+        invoice.setFxUsd(fxService.getUsdFxValue(invoiceLine.getStartDate()));
         invoice.setFx(invoiceLine.getFx());
         invoice.setAmount(invoiceLine.getPnl());
         invoice.setGbpAmount(invoiceLine.getGbpEquivalent());
@@ -87,11 +91,12 @@ public class InvoiceServiceBean implements InvoiceService {
                         + "where e.startDate = :startDate "
                         + "and e.currency = :currency "
                         + "and e.counterpartyCode = :counterpartyCode "
-                        + "and e.location = :location", Invoice.class)
+                        + "and e.location = :location")
                 .parameter("startDate", invoiceLine.getStartDate())
                 .parameter("currency", invoiceLine.getCurrency())
                 .parameter("counterpartyCode", invoiceLine.getCounterpartyCode())
                 .parameter("location", invoiceLine.getLocation())
+                .view(view)
                 .optional()
                 .orElse(null);
     }

@@ -1,10 +1,12 @@
 package com.gcs.gcsplatform.service.invoice;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.inject.Inject;
 
+import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;
-import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.CommitContext;
 import com.haulmont.cuba.core.global.DataManager;
 import org.springframework.stereotype.Service;
@@ -22,17 +24,13 @@ public class InvoiceSnapshotServiceBean implements InvoiceSnapshotService {
     @Override
     public void makeSnapshot(Collection<ClosedTrade> trades) {
         CommitContext commitContext = new CommitContext();
-        trades.stream()
+        List<InvoiceLine> invoiceLines = trades.stream()
                 .map(closedTrade -> invoiceLineService.splitTrade(closedTrade))
-                .peek(invoiceLines -> addInstancesToCommit(invoiceLines, commitContext))
-                .map(invoiceLines -> invoiceService.createInvoices(invoiceLines))
-                .forEach(invoices -> addInstancesToCommit(invoices, commitContext));
+                .flatMap(Collection::stream)
+                .peek(commitContext::addInstanceToCommit)
+                .collect(Collectors.toList());
+        invoiceService.createInvoices(invoiceLines)
+                .forEach(commitContext::addInstanceToCommit);
         dataManager.commit(commitContext);
-    }
-
-    private <E extends Entity> void addInstancesToCommit(Collection<E> entities, CommitContext commitContext) {
-        for (E entity : entities) {
-            commitContext.addInstanceToCommit(entity);
-        }
     }
 }

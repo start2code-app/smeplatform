@@ -24,14 +24,14 @@ public class DateUtils {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.set(Calendar.DATE, cal.getActualMinimum(Calendar.DATE));
-        return cal.getTime();
+        return org.apache.commons.lang3.time.DateUtils.truncate(cal.getTime(), Calendar.DATE);
     }
 
     public static Date getLastDayOfMonth(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE));
-        return cal.getTime();
+        return org.apache.commons.lang3.time.DateUtils.truncate(cal.getTime(), Calendar.DATE);
     }
 
     public static Date getNextWorkingDay() {
