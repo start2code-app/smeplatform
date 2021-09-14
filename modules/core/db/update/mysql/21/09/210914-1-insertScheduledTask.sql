@@ -1,0 +1,1 @@
+INSERT INTO SYS_SCHEDULED_TASK VALUES ('5d5507db836c2d4c0345574d2d8cb229','2021-09-14 12:10:16.675','admin','2021-09-14 12:10:16.675',NULL,NULL,NULL,NULL,'B',NULL,NULL,'gcsplatform_ClosedTradePnlUpdateService','updatePnl','<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<params/>\n',NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'P');
