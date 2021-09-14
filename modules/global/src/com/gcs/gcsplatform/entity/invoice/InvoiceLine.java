@@ -111,9 +111,6 @@ public class InvoiceLine extends StandardEntity {
     @Column(name = "FX", precision = 10, scale = 4)
     private BigDecimal fx;
 
-    @Column(name = "FX_USD", precision = 10, scale = 4)
-    private BigDecimal fxUsd;
-
     @Column(name = "GBP_EQUIVALENT", precision = 10, scale = 4)
     private BigDecimal gbpEquivalent;
 
@@ -142,14 +139,6 @@ public class InvoiceLine extends StandardEntity {
 
     public void setTradeSide(TradeSide tradeSide) {
         this.tradeSide = tradeSide == null ? null : tradeSide.getId();
-    }
-
-    public BigDecimal getFxUsd() {
-        return fxUsd;
-    }
-
-    public void setFxUsd(BigDecimal fxUsd) {
-        this.fxUsd = fxUsd;
     }
 
     public BigDecimal getFx() {

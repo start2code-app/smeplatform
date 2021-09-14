@@ -35,7 +35,6 @@ create table GCSPLATFORM_INVOICE_LINE (
     START_PRICE decimal(10, 4),
     PNL decimal(10, 4),
     FX decimal(10, 4),
-    FX_USD decimal(10, 4),
     GBP_EQUIVALENT decimal(10, 4),
     CASH boolean,
     TRADE_SIDE varchar(50) not null,
