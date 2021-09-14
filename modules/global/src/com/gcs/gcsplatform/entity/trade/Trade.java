@@ -80,6 +80,7 @@ public abstract class Trade extends StandardEntity implements HasNumdays {
     private Date maturityDate;
 
     @Column(name = "NOMINAL", precision = 10, scale = 2)
+    @NumberFormat(pattern = "#,##0.0000")
     private BigDecimal nominal;
 
     @Column(name = "NOTES", length = 200)

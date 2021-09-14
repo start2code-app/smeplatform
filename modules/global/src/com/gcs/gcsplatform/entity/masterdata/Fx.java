@@ -14,7 +14,9 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import com.haulmont.cuba.core.entity.StandardEntity;
+import com.haulmont.cuba.core.entity.annotation.PublishEntityChangedEvents;
 
+@PublishEntityChangedEvents
 @Table(name = "GCSPLATFORM_FX", indexes = {
         @Index(name = "IDX_GCSPLATFORM_FX_UNQ", columnList = "CURRENCY_ID, BILLING_DATE", unique = true)
 })

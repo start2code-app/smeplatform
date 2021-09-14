@@ -35,7 +35,7 @@ public class DateUtils {
     }
 
     public static Date getNextWorkingDay() {
-        Date nextDay = org.apache.commons.lang3.time.DateUtils.addDays(new Date(), 1);
+        Date nextDay = org.apache.commons.lang3.time.DateUtils.addDays(getCurrentDate(), 1);
         while (isWeekend(nextDay)) {
             nextDay = org.apache.commons.lang3.time.DateUtils.addDays(nextDay, 1);
         }
@@ -54,10 +54,14 @@ public class DateUtils {
     }
 
     public static boolean isDateInCurrentMonth(Date date) {
-        Date today = new Date();
+        Date today = getCurrentDate();
         if (date == null) {
             return false;
         }
         return org.apache.commons.lang3.time.DateUtils.truncatedEquals(today, date, Calendar.MONTH);
+    }
+
+    public static Date getCurrentDate() {
+        return org.apache.commons.lang3.time.DateUtils.truncate(new Date(), Calendar.DATE);
     }
 }

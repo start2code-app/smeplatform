@@ -21,8 +21,8 @@
                        value="com.gcs.gcsplatform.service.BrokerageService"/>
                 <entry key="gcsplatform_FxService"
                        value="com.gcs.gcsplatform.service.FxService"/>
-                <entry key="gcsplatform_PnlService"
-                       value="com.gcs.gcsplatform.service.pnl.PnlService"/>
+                <entry key="gcsplatform_PnlGroupService"
+                       value="com.gcs.gcsplatform.service.pnl.PnlGroupService"/>
                 <entry key="gcsplatform_TradeService"
                        value="com.gcs.gcsplatform.service.TradeService"/>
                 <entry key="gcsplatform_PnlChartService"
@@ -39,6 +39,14 @@
                        value="com.gcs.gcsplatform.service.invoice.InvoiceSnapshotService"/>
                 <entry key="gcsplatform_InvoiceLineService"
                        value="com.gcs.gcsplatform.service.invoice.InvoiceLineService"/>
+                <entry key="gcsplatform_PnlBulkCalculationService"
+                       value="com.gcs.gcsplatform.service.pnl.PnlBulkCalculationService"/>
+                <entry key="gcsplatform_OpenedTradeService"
+                       value="com.gcs.gcsplatform.service.OpenedTradeService"/>
+                <entry key="gcsplatform_ClosedTradeService"
+                       value="com.gcs.gcsplatform.service.trade.ClosedTradeService"/>
+                <entry key="gcsplatform_ClosedTradePnlUpdateService"
+                       value="com.gcs.gcsplatform.service.pnl.ClosedTradePnlUpdateService"/>
             </map>
         </property>
     </bean>

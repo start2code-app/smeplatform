@@ -52,6 +52,24 @@ public interface TradeService {
     <T extends Trade> Collection<T> getEnrichedTradesForPnlChart(Class<T> tradeClass, View view);
 
     /**
+     * Gets list of closed trades with specified currency and month.
+     *
+     * @param currency    Trade currency
+     * @param billingDate FX billing month
+     * @param view        View
+     * @return List of trades
+     */
+    Collection<ClosedTrade> getClosedTradesToUpdateFx(String currency, Date billingDate, View view);
+
+    /**
+     * Gets list of closed trades without pnl/gbp calculated.
+     *
+     * @param view View
+     * @return List of trades
+     */
+    Collection<ClosedTrade> getClosedTradesWithoutPnl(View view);
+
+    /**
      * Gets corresponding live trade by contract number. If no such found, returns null.
      *
      * @param closedTrade Closed trade

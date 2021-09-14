@@ -5,9 +5,9 @@ import java.util.Collection;
 import com.gcs.gcsplatform.entity.pnl.Pnl;
 import com.gcs.gcsplatform.entity.trade.Trade;
 
-public interface PnlService {
+public interface PnlGroupService {
 
-    String NAME = "gcsplatform_PnlService";
+    String NAME = "gcsplatform_PnlGroupService";
 
     /**
      * Groups and sums PNL by counterparty, currency.

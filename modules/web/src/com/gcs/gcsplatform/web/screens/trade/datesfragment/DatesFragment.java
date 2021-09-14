@@ -4,6 +4,7 @@ import java.util.Date;
 import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.trade.Trade;
+import com.gcs.gcsplatform.web.components.NumDaysBean;
 import com.gcs.gcsplatform.web.components.PnlCalculationBean;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.components.DateField;
@@ -19,6 +20,8 @@ import com.haulmont.cuba.gui.screen.UiDescriptor;
 @UiDescriptor("dates-fragment.xml")
 public class DatesFragment extends ScreenFragment {
 
+    @Inject
+    protected NumDaysBean numDaysBean;
     @Inject
     protected PnlCalculationBean pnlCalculationBean;
     @Inject
@@ -50,7 +53,8 @@ public class DatesFragment extends ScreenFragment {
             trade.setValueDate(prevValue);
             return;
         }
-        pnlCalculationBean.updateNumdays(trade);
+        numDaysBean.updateNumdays(trade);
+
     }
 
     @Subscribe("maturityDateField")
@@ -71,7 +75,7 @@ public class DatesFragment extends ScreenFragment {
             trade.setMaturityDate(prevValue);
             return;
         }
-        pnlCalculationBean.updateNumdays(trade);
+        numDaysBean.updateNumdays(trade);
     }
 
     public DateField<Date> getMaturityDateField() {

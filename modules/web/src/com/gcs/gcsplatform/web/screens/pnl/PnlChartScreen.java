@@ -10,7 +10,7 @@ import com.gcs.gcsplatform.entity.pnl.chart.CategoryCount;
 import com.gcs.gcsplatform.entity.pnl.chart.TotalPnl;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.service.pnl.PnlChartService;
-import com.gcs.gcsplatform.service.pnl.PnlService;
+import com.gcs.gcsplatform.service.pnl.PnlGroupService;
 import com.haulmont.cuba.gui.components.GroupTable;
 import com.haulmont.cuba.gui.components.HBoxLayout;
 import com.haulmont.cuba.gui.components.ScrollBoxLayout;
@@ -28,7 +28,7 @@ public class PnlChartScreen extends Screen {
     protected Collection<? extends Trade> trades;
 
     @Inject
-    protected PnlService pnlService;
+    protected PnlGroupService pnlGroupService;
     @Inject
     protected PnlChartService pnlChartService;
 
@@ -83,12 +83,12 @@ public class PnlChartScreen extends Screen {
     }
 
     protected void initPnlByBrokerTable(Collection<? extends Trade> trades) {
-        Collection<Pnl> pnlByBroker = pnlService.getPnlByBroker(trades);
+        Collection<Pnl> pnlByBroker = pnlGroupService.getPnlByBroker(trades);
         pnlByBrokerDc.setItems(pnlByBroker);
     }
 
     protected void initPnlByCounterpartyTable(Collection<? extends Trade> trades) {
-        Collection<Pnl> pnlByCounterparty = pnlService.getPnlByCounterparty(trades);
+        Collection<Pnl> pnlByCounterparty = pnlGroupService.getPnlByCounterparty(trades);
         pnlByCounterpartyDc.setItems(pnlByCounterparty);
     }
 

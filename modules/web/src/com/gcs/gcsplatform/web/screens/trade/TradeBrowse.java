@@ -6,7 +6,6 @@ import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.service.TradeService;
-import com.gcs.gcsplatform.web.components.PnlCalculationBean;
 import com.gcs.gcsplatform.web.components.TradeValidationBean;
 import com.gcs.gcsplatform.web.events.TradeClosedEvent;
 import com.gcs.gcsplatform.web.screens.pnl.PnlChartScreen;
@@ -20,6 +19,7 @@ import com.haulmont.cuba.gui.app.core.inputdialog.DialogOutcome;
 import com.haulmont.cuba.gui.app.core.inputdialog.InputParameter;
 import com.haulmont.cuba.gui.components.Button;
 import com.haulmont.cuba.gui.components.ValidationErrors;
+import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.Install;
 import com.haulmont.cuba.gui.screen.LoadDataBeforeShow;
@@ -31,6 +31,7 @@ import com.haulmont.cuba.gui.screen.Subscribe;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
 import org.springframework.context.event.EventListener;
 
+import static com.gcs.gcsplatform.util.DateUtils.getCurrentDate;
 import static com.gcs.gcsplatform.util.DateUtils.getFirstDayOfMonth;
 import static com.gcs.gcsplatform.util.DateUtils.getLastDayOfMonth;
 
@@ -49,9 +50,9 @@ public abstract class TradeBrowse<T extends Trade> extends StandardLookup<T> {
     protected ScreenBuilders screenBuilders;
     @Inject
     protected TradeValidationBean tradeValidationBean;
-    @Inject
-    protected PnlCalculationBean pnlCalculationBean;
 
+    @Inject
+    protected CollectionContainer<T> tradesDc;
     @Inject
     protected CollectionLoader<T> tradesDl;
 
@@ -71,7 +72,7 @@ public abstract class TradeBrowse<T extends Trade> extends StandardLookup<T> {
 
     @Subscribe("pnlChartBtn")
     protected void onPnlChartBtnClick(Button.ClickEvent event) {
-        Date today = new Date();
+        Date today = getCurrentDate();
         dialogs.createInputDialog(this)
                 .withCaption(messageBundle.getMessage("buildPnlChartDialog.caption"))
                 .withParameter(InputParameter.dateParameter("startDate")
@@ -95,13 +96,13 @@ public abstract class TradeBrowse<T extends Trade> extends StandardLookup<T> {
                     if (inputDialogCloseEvent.closedWith(DialogOutcome.OK)) {
                         Date startDate = inputDialogCloseEvent.getValue("startDate");
                         Date endDate = inputDialogCloseEvent.getValue("endDate");
-                        Collection<T> trades = tradeService.getEnrichedTradesForPnlChart(getTradeClass(),
-                                ViewBuilder.of(getTradeClass())
+                        Class<T> tradeClass = tradesDc.getEntityMetaClass().getJavaClass();
+                        Collection<T> trades = tradeService.getEnrichedTradesForPnlChart(tradeClass,
+                                ViewBuilder.of(tradeClass)
                                         .addView(View.LOCAL)
                                         .build(),
                                 startDate,
                                 endDate);
-                        pnlCalculationBean.recalculatePnl(trades);
                         showPnlChartScreen(trades);
                     }
                 })
@@ -129,6 +130,4 @@ public abstract class TradeBrowse<T extends Trade> extends StandardLookup<T> {
     protected void onTradeClosed(TradeClosedEvent event) {
         tradesDl.load();
     }
-
-    public abstract Class<T> getTradeClass();
 }

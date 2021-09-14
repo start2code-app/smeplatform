@@ -8,9 +8,4 @@ import com.haulmont.cuba.gui.screen.UiDescriptor;
 @UiController("gcsplatform_CallOptionTrade.browse")
 @UiDescriptor("call-option-trade-browse.xml")
 public class CallOptionTradeBrowse extends TradeBrowse<CallOptionTrade> {
-
-    @Override
-    public Class<CallOptionTrade> getTradeClass() {
-        return CallOptionTrade.class;
-    }
 }

@@ -16,6 +16,8 @@ import com.haulmont.cuba.core.global.MetadataTools;
 import com.haulmont.cuba.gui.model.DataContext;
 import org.springframework.stereotype.Component;
 
+import static com.gcs.gcsplatform.util.DateUtils.getCurrentDate;
+
 @Component(CloseTradeBean.NAME)
 public class CloseTradeBean {
 
@@ -62,7 +64,7 @@ public class CloseTradeBean {
             trade.setOrigtraderef(trade.getTraderef());
         }
         trade.setValueDate(maturityDate);
-        trade.setTradeDate(new Date());
+        trade.setTradeDate(getCurrentDate());
         trade.setTraderef(getNextTradeRef());
         addPostCommitListener(dataContext);
         dataContext.commit();
@@ -77,7 +79,7 @@ public class CloseTradeBean {
         }
         metadataTools.copy(trade, closedTrade);
         closedTrade.setMaturityDate(maturityDate);
-        closedTrade.setInvoiceDate(new Date());
+        closedTrade.setInvoiceDate(getCurrentDate());
     }
 
     private void addPostCommitListener(DataContext dataContext) {

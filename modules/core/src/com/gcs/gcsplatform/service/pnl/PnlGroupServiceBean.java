@@ -18,8 +18,8 @@ import org.springframework.stereotype.Service;
 
 import static com.gcs.gcsplatform.util.BigDecimalUtils.isNullOrZero;
 
-@Service(PnlService.NAME)
-public class PnlServiceBean implements PnlService {
+@Service(PnlGroupService.NAME)
+public class PnlGroupServiceBean implements PnlGroupService {
 
     @Inject
     private Metadata metadata;

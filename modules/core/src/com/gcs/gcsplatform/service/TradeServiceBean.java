@@ -19,6 +19,9 @@ import com.haulmont.cuba.core.global.queryconditions.JpqlCondition;
 import com.haulmont.cuba.core.global.queryconditions.LogicalCondition;
 import org.springframework.stereotype.Service;
 
+import static com.gcs.gcsplatform.util.DateUtils.getFirstDayOfMonth;
+import static com.gcs.gcsplatform.util.DateUtils.getLastDayOfMonth;
+
 @Service(TradeService.NAME)
 public class TradeServiceBean implements TradeService {
 
@@ -30,7 +33,8 @@ public class TradeServiceBean implements TradeService {
     @Override
     public <T extends Trade> Collection<T> getTrades(Class<T> tradeClass, View view, @Nullable Date startDate,
             @Nullable Date endDate) {
-        return getTrades(tradeClass, view, startDate, endDate, null);
+        return getTrades(tradeClass, view, startDate, endDate, null)
+                .list();
     }
 
     @Override
@@ -45,12 +49,37 @@ public class TradeServiceBean implements TradeService {
         tradeEnrichedCondition.add(new JpqlCondition("e.sellbroker is not null"));
         tradeEnrichedCondition.add(new JpqlCondition("e.category is not null"));
 
-        return getTrades(tradeClass, view, startDate, endDate, tradeEnrichedCondition);
+        return getTrades(tradeClass, view, startDate, endDate, tradeEnrichedCondition)
+                .list();
     }
 
     @Override
     public <T extends Trade> Collection<T> getEnrichedTradesForPnlChart(Class<T> tradeClass, View view) {
         return getEnrichedTradesForPnlChart(tradeClass, view, null, null);
+    }
+
+    @Override
+    public Collection<ClosedTrade> getClosedTradesToUpdateFx(String currency, Date billingDate, View view) {
+        LogicalCondition tradeEnrichedCondition = LogicalCondition.and();
+
+        tradeEnrichedCondition.add(new JpqlCondition("e.currency = :currency"));
+
+        return getTrades(ClosedTrade.class, view, getFirstDayOfMonth(billingDate), getLastDayOfMonth(billingDate),
+                tradeEnrichedCondition)
+                .parameter("currency", currency)
+                .list();
+    }
+
+    @Override
+    public Collection<ClosedTrade> getClosedTradesWithoutPnl(View view) {
+        return dataManager.load(ClosedTrade.class)
+                .query("select e from gcsplatform_ClosedTrade e "
+                        + "where e.buyPnl is null "
+                        + "or e.sellPnl is null "
+                        + "or e.buyGbpEquivalent is null "
+                        + "or e.sellGbpEquivalent is null")
+                .view(view)
+                .list();
     }
 
     @Nullable
@@ -65,8 +94,8 @@ public class TradeServiceBean implements TradeService {
                 .orElse(null);
     }
 
-    private <T extends Trade> Collection<T> getTrades(Class<T> tradeClass, View view, @Nullable Date startDate,
-            @Nullable Date endDate, Condition condition) {
+    private <T extends Trade> FluentLoader.ByQuery<T, UUID> getTrades(Class<T> tradeClass, View view,
+            @Nullable Date startDate, @Nullable Date endDate, Condition condition) {
         String tradeEntity = metadataTools.getEntityName(tradeClass);
         FluentLoader.ByQuery<T, UUID> query = dataManager.load(tradeClass)
                 .query("select e from " + tradeEntity + " e ")
@@ -89,6 +118,6 @@ public class TradeServiceBean implements TradeService {
         }
         query.condition(logicalCondition);
 
-        return query.list();
+        return query;
     }
 }

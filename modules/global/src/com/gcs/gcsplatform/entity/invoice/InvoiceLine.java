@@ -87,6 +87,7 @@ public class InvoiceLine extends StandardEntity implements HasNumdays {
     private Long numdays;
 
     @Column(name = "NOMINAL", precision = 10, scale = 4)
+    @NumberFormat(pattern = "#,##0.0000")
     private BigDecimal nominal;
 
     @Column(name = "HAIR_CUT", precision = 10, scale = 4)

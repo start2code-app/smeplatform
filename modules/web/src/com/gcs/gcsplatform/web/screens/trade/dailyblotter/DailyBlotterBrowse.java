@@ -12,21 +12,22 @@ import com.haulmont.cuba.gui.screen.UiController;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
 import org.apache.commons.lang3.time.DateUtils;
 
+import static com.gcs.gcsplatform.util.DateUtils.getCurrentDate;
+
 @UiController("gcsplatform_DailyBlotter.browse")
 @UiDescriptor("daily-blotter-browse.xml")
 public class DailyBlotterBrowse extends ClosedTradeBrowse {
 
     @Override
     protected void onPnlChartBtnClick(Button.ClickEvent event) {
-        Date today = new Date();
+        Date today = getCurrentDate();
         Date tomorrow = DateUtils.addDays(today, 1);
-        Collection<ClosedTrade> trades = tradeService.getEnrichedTradesForPnlChart(getTradeClass(),
-                ViewBuilder.of(getTradeClass())
+        Collection<ClosedTrade> trades = tradeService.getEnrichedTradesForPnlChart(ClosedTrade.class,
+                ViewBuilder.of(ClosedTrade.class)
                         .addView(View.LOCAL)
                         .build(),
                 today,
                 tomorrow);
-        pnlCalculationBean.recalculatePnl(trades);
         showPnlChartScreen(trades);
     }
 }

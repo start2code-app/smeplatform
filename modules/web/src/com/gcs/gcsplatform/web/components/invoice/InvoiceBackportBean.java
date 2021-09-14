@@ -25,5 +25,8 @@ public class InvoiceBackportBean {
         trade.setValueDate(invoiceLine.getValueDate());
         trade.setNominal(invoiceLine.getNominal());
         trade.setNotes(invoiceLine.getNotes());
+        trade.setGbpEquivalent(invoiceLine.getGbpEquivalent(), invoiceLine.getTradeSide());
+        trade.setPnl(invoiceLine.getPnl(), invoiceLine.getTradeSide());
+        trade.setXrate1(invoiceLine.getFx());
     }
 }

@@ -20,9 +20,4 @@ public class ClosedLiveTradeBrowse extends TradeBrowse<ClosedLiveTrade> {
     protected void onBeforeShow(BeforeShowEvent event) {
         pnlChartBtn.setVisible(false);
     }
-
-    @Override
-    public Class<ClosedLiveTrade> getTradeClass() {
-        return ClosedLiveTrade.class;
-    }
 }

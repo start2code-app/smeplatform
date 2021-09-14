@@ -27,9 +27,4 @@ public class LiveTradeBrowse extends TradeBrowse<LiveTrade> {
     protected void liveTradeUpdatedEventListener(LiveTradeUpdatedEvent event) {
         tradesDl.load();
     }
-
-    @Override
-    public Class<LiveTrade> getTradeClass() {
-        return LiveTrade.class;
-    }
 }
