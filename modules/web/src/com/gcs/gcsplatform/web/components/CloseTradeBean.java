@@ -1,7 +1,6 @@
 package com.gcs.gcsplatform.web.components;
 
 import java.util.Date;
-import java.util.UUID;
 import javax.inject.Inject;
 
 import com.gcs.gcsplatform.config.TradeConfig;
@@ -33,6 +32,8 @@ public class CloseTradeBean {
     private Events events;
     @Inject
     private TradeConfig tradeConfig;
+    @Inject
+    private PnlCalculationBean pnlCalculationBean;
 
     /**
      * Creates ClosedTrade/ClosedLiveTrade instance based on provided trade and then removes original trade.
@@ -80,6 +81,7 @@ public class CloseTradeBean {
         metadataTools.copy(trade, closedTrade);
         closedTrade.setMaturityDate(maturityDate);
         closedTrade.setInvoiceDate(getCurrentDate());
+        pnlCalculationBean.updatePnl(closedTrade);
     }
 
     private void addPostCommitListener(DataContext dataContext) {
