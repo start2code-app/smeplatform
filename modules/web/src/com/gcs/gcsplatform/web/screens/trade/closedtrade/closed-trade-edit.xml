@@ -7,5 +7,37 @@
         <instance id="tradeDc"
                   class="com.gcs.gcsplatform.entity.trade.ClosedTrade"/>
     </data>
-    <layout/>
+    <layout>
+        <tabSheet id="tradeTabSheet">
+            <tab id="pnlTab"
+                 caption="msg://pnlTab.caption"
+                 spacing="true"
+                 margin="true">
+                <form id="pnlForm"
+                      dataContainer="tradeDc">
+                    <column width="250px">
+                        <currencyField id="buyPnlField"
+                                       property="buyPnl"
+                                       editable="false"/>
+                        <currencyField id="buyGbpEquivalentField"
+                                       currency="GBP"
+                                       property="buyGbpEquivalent"
+                                       editable="false"/>
+                        <textField id="fxRateField"
+                                   property="xrate1"
+                                   editable="false"/>
+                    </column>
+                    <column width="250px">
+                        <currencyField id="sellPnlField"
+                                       property="sellPnl"
+                                       editable="false"/>
+                        <currencyField id="sellGbpEquivalentField"
+                                       currency="GBP"
+                                       property="sellGbpEquivalent"
+                                       editable="false"/>
+                    </column>
+                </form>
+            </tab>
+        </tabSheet>
+    </layout>
 </window>

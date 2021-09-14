@@ -1,10 +1,13 @@
 package com.gcs.gcsplatform.web.screens.trade;
 
+import java.math.BigDecimal;
 import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.masterdata.Currency;
 import com.gcs.gcsplatform.entity.trade.Trade;
+import com.gcs.gcsplatform.web.components.PnlCalculationBean;
 import com.haulmont.cuba.core.global.PersistenceHelper;
+import com.haulmont.cuba.gui.components.CurrencyField;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.LookupPickerField;
 import com.haulmont.cuba.gui.model.DataContext;
@@ -39,6 +42,12 @@ public abstract class TradeEdit<T extends Trade> extends StandardEditor<T> {
         initFieldValueToStringPropertyMapping(currencyLookupPickerField, tradeDc, "currency", "currency");
         initFieldValueToStringPropertyMapping(tradeCurrencyLookupPickerField, tradeDc, "currency", "tradeCurrency");
 
+        /*
+         * Subscribe manually to preserve listeners execution order. First listener maps field value to entity.
+         */
+        currencyLookupPickerField.addValueChangeListener(this::onCurrencyLookupPickerFieldValueChange);
+
+
         initialWindowCaption = getWindow().getCaption();
         isNew = PersistenceHelper.isNew(getEditedEntity());
         if (!isNew) {
@@ -46,7 +55,6 @@ public abstract class TradeEdit<T extends Trade> extends StandardEditor<T> {
         }
     }
 
-    @Subscribe("currencyLookupPickerField")
     protected void onCurrencyLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Currency> event) {
         if (event.isUserOriginated()) {
             tradeCurrencyLookupPickerField.setValue(event.getValue());
