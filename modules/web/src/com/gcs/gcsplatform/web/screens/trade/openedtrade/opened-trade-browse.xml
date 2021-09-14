@@ -14,5 +14,13 @@
             </loader>
         </collection>
     </data>
-    <layout/>
+    <layout>
+        <groupTable id="tradesTable">
+            <buttonsPanel>
+                <button id="pnlChartBtn"
+                        stylename="friendly"
+                        caption="msg://pnl"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
 </window>

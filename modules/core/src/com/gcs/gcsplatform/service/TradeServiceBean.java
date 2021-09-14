@@ -60,12 +60,12 @@ public class TradeServiceBean implements TradeService {
 
     @Override
     public Collection<ClosedTrade> getClosedTradesToUpdateFx(String currency, Date billingDate, View view) {
-        LogicalCondition tradeEnrichedCondition = LogicalCondition.and();
+        LogicalCondition tradeCurrencyCondition = LogicalCondition.and();
 
-        tradeEnrichedCondition.add(new JpqlCondition("e.currency = :currency"));
+        tradeCurrencyCondition.add(new JpqlCondition("e.tradeCurrency = :currency"));
 
         return getTrades(ClosedTrade.class, view, getFirstDayOfMonth(billingDate), getLastDayOfMonth(billingDate),
-                tradeEnrichedCondition)
+                tradeCurrencyCondition)
                 .parameter("currency", currency)
                 .list();
     }

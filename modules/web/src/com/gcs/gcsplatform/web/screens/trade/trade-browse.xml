@@ -130,9 +130,6 @@
                         action="tradesTable.remove"/>
                 <button id="refreshBtn"
                         action="tradesTable.refresh"/>
-                <button id="pnlChartBtn"
-                        stylename="friendly"
-                        caption="msg://pnl"/>
                 <button id="utiBtn"
                         stylename="warning"
                         caption="msg://uti"/>

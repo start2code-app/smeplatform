@@ -25,7 +25,7 @@ public class FxServiceBean implements FxService {
     @Nullable
     @Override
     public BigDecimal getFxValue(String currency, Date fxDate) {
-        if (currency == null) {
+        if (currency == null || fxDate == null) {
             return null;
         }
         Date fxDateStart = DateUtils.truncate(fxDate, Calendar.MONTH);

@@ -13,6 +13,7 @@ import com.gcs.gcsplatform.service.pnl.PnlChartService;
 import com.gcs.gcsplatform.service.pnl.PnlGroupService;
 import com.haulmont.cuba.gui.components.GroupTable;
 import com.haulmont.cuba.gui.components.HBoxLayout;
+import com.haulmont.cuba.gui.components.Label;
 import com.haulmont.cuba.gui.components.ScrollBoxLayout;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.screen.Screen;
@@ -26,6 +27,7 @@ import org.apache.commons.collections4.CollectionUtils;
 public class PnlChartScreen extends Screen {
 
     protected Collection<? extends Trade> trades;
+    protected String heading;
 
     @Inject
     protected PnlGroupService pnlGroupService;
@@ -40,6 +42,8 @@ public class PnlChartScreen extends Screen {
     protected HBoxLayout noDataBox;
     @Inject
     protected ScrollBoxLayout pnlScrollBox;
+    @Inject
+    protected Label<String> pnlChartHeading;
 
     @Inject
     protected CollectionContainer<Pnl> pnlByCounterpartyDc;
@@ -53,6 +57,15 @@ public class PnlChartScreen extends Screen {
     protected CollectionContainer<CategoryCount> categoryCountDc;
     @Inject
     protected CollectionContainer<BrokerageTypeCount> brokerageTypeCountDc;
+
+    public void setCaption(String caption) {
+        getWindow().setCaption(caption);
+    }
+
+    public void setHeading(String heading) {
+        pnlChartHeading.setValue(heading);
+        pnlChartHeading.setVisible(true);
+    }
 
     public void setTrades(Collection<? extends Trade> trades) {
         this.trades = trades;

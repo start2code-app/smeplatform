@@ -5,8 +5,11 @@ import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.trade.OpenedTrade;
 import com.gcs.gcsplatform.service.OpenedTradeService;
+import com.gcs.gcsplatform.web.components.pnl.PnlChartBean;
 import com.gcs.gcsplatform.web.screens.trade.TradeBrowse;
 import com.haulmont.cuba.gui.components.Button;
+import com.haulmont.cuba.gui.screen.MessageBundle;
+import com.haulmont.cuba.gui.screen.Subscribe;
 import com.haulmont.cuba.gui.screen.UiController;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
 
@@ -15,11 +18,15 @@ import com.haulmont.cuba.gui.screen.UiDescriptor;
 public class OpenedTradeBrowse extends TradeBrowse<OpenedTrade> {
 
     @Inject
+    protected PnlChartBean pnlChartBean;
+    @Inject
     protected OpenedTradeService openedTradeService;
+    @Inject
+    protected MessageBundle messageBundle;
 
-    @Override
+    @Subscribe("pnlChartBtn")
     protected void onPnlChartBtnClick(Button.ClickEvent event) {
         Collection<OpenedTrade> trades = openedTradeService.getOpenedTradesForPnlChart();
-        showPnlChartScreen(trades);
+        pnlChartBean.showPnlChartScreen(this, trades, messageBundle.getMessage("openedTradesPnl.caption"));
     }
 }

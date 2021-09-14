@@ -75,4 +75,6 @@ public abstract class TradeEdit<T extends Trade> extends StandardEditor<T> {
     public DataContext getDataContext() {
         return getScreenData().getDataContext();
     }
+
+
 }

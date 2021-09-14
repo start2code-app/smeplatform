@@ -6,8 +6,11 @@ import javax.inject.Inject;
 import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.entity.trade.TradeSide;
+import com.gcs.gcsplatform.service.FxService;
 import com.gcs.gcsplatform.service.pnl.PnlCalculationService;
 import org.springframework.stereotype.Component;
+
+import static com.gcs.gcsplatform.util.DateUtils.getDaysBetweenDates;
 
 @Component(PnlCalculationBean.NAME)
 public class PnlCalculationBean {
@@ -16,13 +19,18 @@ public class PnlCalculationBean {
 
     @Inject
     private PnlCalculationService pnlCalculationService;
+    @Inject
+    private FxService fxService;
 
     /**
-     * Updates PNL value, its GBP equivalent and FX of specified invoice line.
+     * Updates numdays, PNL value, its GBP equivalent of specified invoice line.
+     *
+     * FX is being taken from invoice line itself since it can be manually filled by a user.
      *
      * @param invoiceLine Invoice line
      */
     public void updatePnl(InvoiceLine invoiceLine) {
+        invoiceLine.setNumdays(getDaysBetweenDates(invoiceLine.getMaturityDate(), invoiceLine.getValueDate()));
         BigDecimal pnl = pnlCalculationService.calculatePnl(invoiceLine);
         invoiceLine.setPnl(pnl);
         BigDecimal gbpEquivalent = pnlCalculationService.calculateFxEquivalent(pnl, invoiceLine.getFx());
@@ -30,11 +38,13 @@ public class PnlCalculationBean {
     }
 
     /**
-     * Updates PNL value and its GBP equivalent and FX of specified trade.
+     * Updates numdays, PNL value and its GBP equivalent and FX of specified trade.
      *
      * @param trade Trade
      */
     public void updatePnl(Trade trade) {
+        trade.setNumdays(getDaysBetweenDates(trade.getMaturityDate(), trade.getValueDate()));
+        trade.setXrate1(fxService.getFxValue(trade.getTradeCurrency(), trade.getInvoiceDate()));
         updatePnl(trade, TradeSide.BUY);
         updatePnl(trade, TradeSide.SELL);
     }

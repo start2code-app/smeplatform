@@ -43,8 +43,6 @@
                        value="com.gcs.gcsplatform.service.pnl.PnlBulkCalculationService"/>
                 <entry key="gcsplatform_OpenedTradeService"
                        value="com.gcs.gcsplatform.service.OpenedTradeService"/>
-                <entry key="gcsplatform_ClosedTradeService"
-                       value="com.gcs.gcsplatform.service.trade.ClosedTradeService"/>
                 <entry key="gcsplatform_ClosedTradePnlUpdateService"
                        value="com.gcs.gcsplatform.service.pnl.ClosedTradePnlUpdateService"/>
             </map>

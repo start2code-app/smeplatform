@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://dailyBlotterBrowse.caption"
-        messagesPack="com.gcs.gcsplatform.web.screens.trade.dailyblotter"
-        extends="com/gcs/gcsplatform/web/screens/trade/closedtrade/closed-trade-browse.xml">
+        messagesPack="com.gcs.gcsplatform.web.screens.trade.dailyblotter">
     <data>
-        <collection id="tradesDc">
+        <collection id="tradesDc"
+                    class="com.gcs.gcsplatform.entity.trade.ClosedTrade">
             <loader id="tradesDl">
                 <query>
                     <![CDATA[select e from gcsplatform_ClosedTrade e
@@ -14,5 +14,13 @@
             </loader>
         </collection>
     </data>
-    <layout/>
+    <layout>
+        <groupTable id="tradesTable">
+            <buttonsPanel>
+                <button id="pnlChartBtn"
+                        stylename="friendly"
+                        caption="msg://pnl"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
 </window>
