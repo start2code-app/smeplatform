@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://invoiceBrowse.caption"
+        focusComponent="invoicesTable"
+        messagesPack="com.gcs.gcsplatform.web.screens.invoice">
+    <data readOnly="true">
+        <collection id="invoicesDc"
+                    class="com.gcs.gcsplatform.entity.invoice.Invoice">
+            <view extends="_local"/>
+            <loader id="invoicesDl">
+                <query>
+                    <![CDATA[select e from gcsplatform_Invoice e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="invoicesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="invoicesTable"
+                dataLoader="invoicesDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="invoicesTable"
+                    width="100%"
+                    dataContainer="invoicesDc">
+            <columns>
+                <column id="issue"/>
+                <column id="currency"/>
+                <column id="counterpartyCode"/>
+                <column id="location"/>
+                <column id="startDate">
+                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
+                               format="dd/MM/yyyy"/>
+                </column>
+                <column id="endDate">
+                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
+                               format="dd/MM/yyyy"/>
+                </column>
+                <column id="amount"/>
+                <column id="fx"/>
+                <column id="fxUsd"/>
+                <column id="gbpAmount"/>
+                <column id="posted"/>
+                <column id="printed"/>
+            </columns>
+            <rowsCount/>
+        </groupTable>
+        <hbox id="lookupActions"
+              spacing="true"
+              visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

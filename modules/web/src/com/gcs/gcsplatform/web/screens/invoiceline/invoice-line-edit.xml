@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://invoiceLineEdit.caption"
+        focusComponent="form"
+        messagesPack="com.gcs.gcsplatform.web.screens.invoiceline">
+    <data>
+        <instance id="invoiceLineDc"
+                  class="com.gcs.gcsplatform.entity.invoice.InvoiceLine">
+            <view extends="_local">
+                <property name="trade"
+                          view="_local"/>
+            </view>
+            <loader/>
+        </instance>
+        <collection id="counterpartiesDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.Counterparty">
+            <view extends="_local"/>
+            <loader id="counterpartiesDl">
+                <query>select e from gcsplatform_Counterparty e order by e.counterparty</query>
+            </loader>
+        </collection>
+        <collection id="currenciesDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.Currency">
+            <view extends="_minimal"/>
+            <loader id="currenciesDl">
+                <query>select e from gcsplatform_Currency e order by e.currency</query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="AUTO"
+                width="AUTO"
+                modal="true"
+                forceDialog="true"/>
+    <layout expand="scrollBox"
+            spacing="true">
+        <scrollBox id="scrollBox"
+                   spacing="true">
+            <form id="form"
+                  dataContainer="invoiceLineDc">
+                <column width="250px">
+                    <textField id="contractNumberField"
+                               editable="false"
+                               property="contractNumber"/>
+                    <textField id="buyerField"
+                               editable="false"
+                               property="buyer"/>
+                    <textField id="sellerField"
+                               editable="false"
+                               property="seller"/>
+                    <textField id="brokerageField"
+                               property="brokerage"/>
+                    <textField id="counterpartyCodeField"
+                               editable="false"
+                               property="counterpartyCode"/>
+                    <lookupPickerField id="counterpartyLookupPickerField"
+                                       caption="msg://com.gcs.gcsplatform.entity.invoice/InvoiceLine.counterparty"
+                                       optionsContainer="counterpartiesDc">
+                        <actions>
+                            <action id="lookup"
+                                    type="picker_lookup"/>
+                            <action id="clear"
+                                    type="picker_clear"/>
+                        </actions>
+                    </lookupPickerField>
+                    <lookupPickerField id="currencyLookupPickerField"
+                                       caption="msg://com.gcs.gcsplatform.entity.invoice/InvoiceLine.currency"
+                                       optionsContainer="currenciesDc">
+                        <actions>
+                            <action id="lookup"
+                                    type="picker_lookup"/>
+                            <action id="clear"
+                                    type="picker_clear"/>
+                        </actions>
+                    </lookupPickerField>
+                </column>
+                <column width="250px">
+                    <textField id="fxField"
+                               property="fx"/>
+                    <dateField id="valueDateField"
+                               property="valueDate"/>
+                    <dateField id="maturityDateField"
+                               property="maturityDate"/>
+                    <textField id="numdaysField"
+                               editable="false"
+                               property="numdays"/>
+                    <textField id="nominalField"
+                               property="nominal"/>
+                    <textField id="notesField"
+                               property="notes"/>
+                    <textField id="pnlField"
+                               editable="false"
+                               property="pnl"/>
+                    <textField id="gbpEquivalentField"
+                               editable="false"
+                               property="gbpEquivalent"/>
+                </column>
+            </form>
+        </scrollBox>
+        <hbox id="editActions"
+              spacing="true">
+            <button id="commitAndCloseBtn"
+                    action="windowCommitAndClose"/>
+            <button id="closeBtn"
+                    action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

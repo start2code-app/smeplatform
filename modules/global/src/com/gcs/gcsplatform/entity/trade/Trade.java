@@ -78,7 +78,8 @@ public abstract class Trade extends StandardEntity {
     @Column(name = "MATURITY_DATE")
     private Date maturityDate;
 
-    @Column(name = "NOMINAL", precision = 10, scale = 2)
+    @Column(name = "NOMINAL", precision = 10, scale = 4)
+    @NumberFormat(pattern = "#,##0.0000")
     private BigDecimal nominal;
 
     @Column(name = "NOTES", length = 200)
@@ -223,6 +224,142 @@ public abstract class Trade extends StandardEntity {
             return CounterpartyBrokerageType.MORE_THAN_THIRTY;
         }
         return null;
+    }
+
+    public String getBroker(TradeSide side) {
+        if (side == TradeSide.BUY) {
+            return buybroker;
+        } else {
+            return sellbroker;
+        }
+    }
+
+    public void setBroker(String broker, TradeSide side) {
+        if (side == TradeSide.BUY) {
+            setBuybroker(broker);
+        } else {
+            setSellbroker(broker);
+        }
+    }
+
+    public String getCounterparty(TradeSide side) {
+        if (side == TradeSide.BUY) {
+            return buyer;
+        } else {
+            return seller;
+        }
+    }
+
+    public void setCounterparty(String counterparty, TradeSide side) {
+        if (side == TradeSide.BUY) {
+            setBuyer(counterparty);
+        } else {
+            setSeller(counterparty);
+        }
+    }
+
+    public String getInvoiceCode(TradeSide side) {
+        if (side == TradeSide.BUY) {
+            return buyerInvoiceCode;
+        } else {
+            return sellerInvoiceCode;
+        }
+    }
+
+    public void setInvoiceCode(String invoiceCode, TradeSide side) {
+        if (side == TradeSide.BUY) {
+            setBuyerInvoiceCode(invoiceCode);
+        } else {
+            setSellerInvoiceCode(invoiceCode);
+        }
+    }
+
+    public String getCounterpartyCode(TradeSide side) {
+        if (side == TradeSide.BUY) {
+            return buyerCode;
+        } else {
+            return sellerCode;
+        }
+    }
+
+    public void setCounterpartyCode(String counterpartyCode, TradeSide side) {
+        if (side == TradeSide.BUY) {
+            setBuyerCode(counterpartyCode);
+        } else {
+            setSellerCode(counterpartyCode);
+        }
+    }
+
+    public Boolean getCash(TradeSide side) {
+        if (side == TradeSide.BUY) {
+            return buyerCash;
+        } else {
+            return sellerCash;
+        }
+    }
+
+    public Boolean getSplit(TradeSide side) {
+        if (side == TradeSide.BUY) {
+            return buySplit;
+        } else {
+            return sellSplit;
+        }
+    }
+
+    public String getSplitBroker(TradeSide side) {
+        if (side == TradeSide.BUY) {
+            return buySplitBroker;
+        } else {
+            return sellSplitBroker;
+        }
+    }
+
+    public BigDecimal getBrokerage(TradeSide side) {
+        if (side == TradeSide.BUY) {
+            return buybrokerage;
+        } else {
+            return sellbrokerage;
+        }
+    }
+
+    public void setBrokerage(BigDecimal brokerage, TradeSide side) {
+        if (side == TradeSide.BUY) {
+            setBuybrokerage(brokerage);
+        } else {
+            setSellbrokerage(brokerage);
+        }
+    }
+
+    public BigDecimal getPnl(TradeSide side) {
+        if (side == TradeSide.BUY) {
+            return buyPnl;
+        } else {
+            return sellPnl;
+        }
+    }
+
+    public void setPnl(BigDecimal pnl, TradeSide side) {
+        if (side == TradeSide.BUY) {
+            setBuyPnl(pnl);
+        } else {
+            setSellPnl(pnl);
+        }
+    }
+
+    public BigDecimal getGbpEquivalent(TradeSide side) {
+        if (side == TradeSide.BUY) {
+            return buyGbpEquivalent;
+        } else {
+            return sellGbpEquivalent;
+        }
+    }
+
+    public void setGbpEquivalent(BigDecimal gbpEquivalent, TradeSide side) {
+        if (side == TradeSide.BUY) {
+            setBuyGbpEquivalent(gbpEquivalent);
+        } else {
+            setSellGbpEquivalent(gbpEquivalent);
+        }
     }
 
     public Date getInvoiceDate() {

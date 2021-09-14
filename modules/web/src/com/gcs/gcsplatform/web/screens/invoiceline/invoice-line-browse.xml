@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://invoiceLineBrowse.caption"
+        focusComponent="invoiceLinesTable"
+        messagesPack="com.gcs.gcsplatform.web.screens.invoiceline">
+    <data readOnly="true">
+        <collection id="invoiceLinesDc"
+                    class="com.gcs.gcsplatform.entity.invoice.InvoiceLine">
+            <view extends="_local"/>
+            <loader id="invoiceLinesDl">
+                <query>
+                    <![CDATA[select e from gcsplatform_InvoiceLine e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="invoiceLinesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="invoiceLinesTable"
+                dataLoader="invoiceLinesDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="invoiceLinesTable"
+                    width="100%"
+                    dataContainer="invoiceLinesDc"
+                    multiselect="true">
+            <actions>
+                <action id="create"
+                        type="create"/>
+                <action id="edit"
+                        type="edit"/>
+                <action id="remove"
+                        type="remove"/>
+                <action id="refresh"
+                        type="refresh"/>
+            </actions>
+            <columns>
+                <column id="contractNumber"/>
+                <column id="startDate">
+                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
+                               format="dd/MM/yyyy"/>
+                </column>
+                <column id="endDate">
+                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
+                               format="dd/MM/yyyy"/>
+                </column>
+                <column id="tradeDate">
+                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
+                               format="dd/MM/yyyy"/>
+                </column>
+                <column id="bondDescription"/>
+                <column id="buyer"/>
+                <column id="seller"/>
+                <column id="counterparty"/>
+                <column id="counterpartyCode"/>
+                <column id="broker"/>
+                <column id="notes"/>
+                <column id="isin"/>
+                <column id="location"/>
+                <column id="currency"/>
+                <column id="baseCurrency"/>
+                <column id="crossRate"/>
+                <column id="valueDate">
+                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
+                               format="dd/MM/yyyy"/>
+                </column>
+                <column id="maturityDate">
+                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
+                               format="dd/MM/yyyy"/>
+                </column>
+                <column id="numdays"/>
+                <column id="nominal"/>
+                <column id="hairCut"/>
+                <column id="repoRate"/>
+                <column id="xrate"/>
+                <column id="brokerage"/>
+                <column id="startPrice"/>
+                <column id="pnl"/>
+                <column id="fx"/>
+                <column id="gbpEquivalent"/>
+                <column id="cash"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="invoiceLinesTable.create"/>
+                <button id="editBtn"
+                        action="invoiceLinesTable.edit"/>
+                <button id="removeBtn"
+                        action="invoiceLinesTable.remove"/>
+                <button id="refreshBtn"
+                        action="invoiceLinesTable.refresh"/>
+                <button id="snapshotBtn"
+                        caption="msg://snapshotBtn.caption"
+                        stylename="friendly"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions"
+              spacing="true"
+              visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

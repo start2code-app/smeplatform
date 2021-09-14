@@ -50,7 +50,7 @@ public class DatesFragment extends ScreenFragment {
             trade.setValueDate(prevValue);
             return;
         }
-        pnlCalculationBean.updateNumdays(trade);
+        pnlCalculationBean.updatePnl(trade);
     }
 
     @Subscribe("maturityDateField")
@@ -71,7 +71,7 @@ public class DatesFragment extends ScreenFragment {
             trade.setMaturityDate(prevValue);
             return;
         }
-        pnlCalculationBean.updateNumdays(trade);
+        pnlCalculationBean.updatePnl(trade);
     }
 
     public DateField<Date> getMaturityDateField() {

@@ -10,9 +10,10 @@ import com.gcs.gcsplatform.entity.pnl.chart.CategoryCount;
 import com.gcs.gcsplatform.entity.pnl.chart.TotalPnl;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.service.pnl.PnlChartService;
-import com.gcs.gcsplatform.service.pnl.PnlService;
+import com.gcs.gcsplatform.service.pnl.PnlGroupService;
 import com.haulmont.cuba.gui.components.GroupTable;
 import com.haulmont.cuba.gui.components.HBoxLayout;
+import com.haulmont.cuba.gui.components.Label;
 import com.haulmont.cuba.gui.components.ScrollBoxLayout;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.screen.Screen;
@@ -21,6 +22,8 @@ import com.haulmont.cuba.gui.screen.UiController;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
 import org.apache.commons.collections4.CollectionUtils;
 
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+
 @UiController("gcsplatform_PnlChartScreen")
 @UiDescriptor("pnl-chart-screen.xml")
 public class PnlChartScreen extends Screen {
@@ -28,7 +31,7 @@ public class PnlChartScreen extends Screen {
     protected Collection<? extends Trade> trades;
 
     @Inject
-    protected PnlService pnlService;
+    protected PnlGroupService pnlGroupService;
     @Inject
     protected PnlChartService pnlChartService;
 
@@ -40,6 +43,8 @@ public class PnlChartScreen extends Screen {
     protected HBoxLayout noDataBox;
     @Inject
     protected ScrollBoxLayout pnlScrollBox;
+    @Inject
+    protected Label<String> pnlChartHeading;
 
     @Inject
     protected CollectionContainer<Pnl> pnlByCounterpartyDc;
@@ -53,6 +58,19 @@ public class PnlChartScreen extends Screen {
     protected CollectionContainer<CategoryCount> categoryCountDc;
     @Inject
     protected CollectionContainer<BrokerageTypeCount> brokerageTypeCountDc;
+
+    public void setCaption(String caption) {
+        if (isNotBlank(caption)) {
+            getWindow().setCaption(caption);
+        }
+    }
+
+    public void setHeading(String heading) {
+        if (isNotBlank(heading)) {
+            pnlChartHeading.setValue(heading);
+            pnlChartHeading.setVisible(true);
+        }
+    }
 
     public void setTrades(Collection<? extends Trade> trades) {
         this.trades = trades;
@@ -83,12 +101,12 @@ public class PnlChartScreen extends Screen {
     }
 
     protected void initPnlByBrokerTable(Collection<? extends Trade> trades) {
-        Collection<Pnl> pnlByBroker = pnlService.getPnlByBroker(trades);
+        Collection<Pnl> pnlByBroker = pnlGroupService.getPnlByBroker(trades);
         pnlByBrokerDc.setItems(pnlByBroker);
     }
 
     protected void initPnlByCounterpartyTable(Collection<? extends Trade> trades) {
-        Collection<Pnl> pnlByCounterparty = pnlService.getPnlByCounterparty(trades);
+        Collection<Pnl> pnlByCounterparty = pnlGroupService.getPnlByCounterparty(trades);
         pnlByCounterpartyDc.setItems(pnlByCounterparty);
     }
 

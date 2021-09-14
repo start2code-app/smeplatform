@@ -14,5 +14,14 @@
             </loader>
         </collection>
     </data>
-    <layout/>
+    <layout>
+        <groupTable id="tradesTable">
+            <buttonsPanel>
+                <hbox>
+                    <fragment id="btnPnlChartDialogFragment"
+                              screen="gcsplatform_BtnPnlChartDialogFragment"/>
+                </hbox>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
 </window>

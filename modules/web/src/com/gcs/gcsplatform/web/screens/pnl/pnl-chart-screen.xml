@@ -28,6 +28,9 @@
         <scrollBox id="pnlScrollBox"
                    spacing="true"
                    visible="false">
+            <label id="pnlChartHeading"
+                   stylename="h2"
+                   visible="false"/>
             <hbox id="totalPnlChartBox"
                   margin="true"
                   spacing="true"

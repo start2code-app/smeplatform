@@ -26,6 +26,12 @@ public class UpdateCorrespondingLiveTradeBean {
     @Inject
     private Events events;
 
+    /**
+     * Updates corresponding live trade with all of the changes of closed trade.
+     *
+     * @param closedTrade Closed trade
+     * @param dataContext Screen data context
+     */
     public void update(ClosedTrade closedTrade, DataContext dataContext) {
         if (!DateUtils.isDateInCurrentMonth(closedTrade.getInvoiceDate())) {
             return;

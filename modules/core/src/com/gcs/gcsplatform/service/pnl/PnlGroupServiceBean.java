@@ -11,14 +11,15 @@ import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.pnl.Pnl;
 import com.gcs.gcsplatform.entity.trade.Trade;
+import com.gcs.gcsplatform.entity.trade.TradeSide;
 import com.haulmont.cuba.core.global.Metadata;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import static com.gcs.gcsplatform.util.BigDecimalUtils.isNullOrZero;
 
-@Service(PnlService.NAME)
-public class PnlServiceBean implements PnlService {
+@Service(PnlGroupService.NAME)
+public class PnlGroupServiceBean implements PnlGroupService {
 
     @Inject
     private Metadata metadata;
@@ -27,38 +28,37 @@ public class PnlServiceBean implements PnlService {
     public Collection<Pnl> getPnlByCounterparty(Collection<? extends Trade> trades) {
         Map<PnlGroup, Pnl> pnlMap = new HashMap<>();
         for (Trade trade : trades) {
-            sumPnl(pnlMap, trade.getTradeCurrency(), trade.getBuyer(), trade.getBuyPnl(), trade.getBuyGbpEquivalent());
-            sumPnl(pnlMap, trade.getTradeCurrency(), trade.getSeller(), trade.getSellPnl(),
-                    trade.getSellGbpEquivalent());
+            sumPnlByCounterparty(pnlMap, trade, TradeSide.BUY);
+            sumPnlByCounterparty(pnlMap, trade, TradeSide.SELL);
         }
         return new ArrayList<>(pnlMap.values());
+    }
+
+    private void sumPnlByCounterparty(Map<PnlGroup, Pnl> pnlMap, Trade trade, TradeSide side) {
+        sumPnl(pnlMap, trade.getTradeCurrency(), null, trade.getCounterparty(side), trade.getPnl(side),
+                trade.getGbpEquivalent(side));
     }
 
     @Override
     public Collection<Pnl> getPnlByBroker(Collection<? extends Trade> trades) {
         Map<PnlGroup, Pnl> pnlMap = new HashMap<>();
         for (Trade trade : trades) {
-            boolean isBuySplit = Boolean.TRUE.equals(trade.getBuySplit()) && StringUtils.isNotBlank(
-                    trade.getBuySplitBroker());
-            if (isBuySplit) {
-                sumSplitPnl(pnlMap, trade.getTradeCurrency(), trade.getBuybroker(), trade.getBuySplitBroker(),
-                        trade.getBuyer(), trade.getBuyPnl(), trade.getBuyGbpEquivalent());
-            } else {
-                sumPnl(pnlMap, trade.getTradeCurrency(), trade.getBuybroker(), trade.getBuyer(), trade.getBuyPnl(),
-                        trade.getBuyGbpEquivalent());
-            }
-
-            boolean isSellSplit = Boolean.TRUE.equals(trade.getSellSplit()) && StringUtils.isNotBlank(
-                    trade.getSellSplitBroker());
-            if (isSellSplit) {
-                sumSplitPnl(pnlMap, trade.getTradeCurrency(), trade.getSellbroker(), trade.getSellSplitBroker(),
-                        trade.getSeller(), trade.getSellPnl(), trade.getSellGbpEquivalent());
-            } else {
-                sumPnl(pnlMap, trade.getTradeCurrency(), trade.getSellbroker(), trade.getSeller(),
-                        trade.getSellPnl(), trade.getSellGbpEquivalent());
-            }
+            sumPnlByBroker(pnlMap, trade, TradeSide.BUY);
+            sumPnlByBroker(pnlMap, trade, TradeSide.SELL);
         }
         return new ArrayList<>(pnlMap.values());
+    }
+
+    private void sumPnlByBroker(Map<PnlGroup, Pnl> pnlMap, Trade trade, TradeSide side) {
+        boolean isSplit = Boolean.TRUE.equals(trade.getSplit(side)) && StringUtils.isNotBlank(
+                trade.getSplitBroker(side));
+        if (isSplit) {
+            sumSplitPnl(pnlMap, trade.getTradeCurrency(), trade.getBroker(side), trade.getSplitBroker(side),
+                    trade.getCounterparty(side), trade.getPnl(side), trade.getGbpEquivalent(side));
+        } else {
+            sumPnl(pnlMap, trade.getTradeCurrency(), trade.getBroker(side), trade.getCounterparty(side),
+                    trade.getPnl(side), trade.getGbpEquivalent(side));
+        }
     }
 
     private void sumSplitPnl(Map<PnlGroup, Pnl> pnlMap, String tradeCurrency, String broker, String splitBroker,
@@ -68,11 +68,6 @@ public class PnlServiceBean implements PnlService {
                 RoundingMode.HALF_EVEN);
         sumPnl(pnlMap, tradeCurrency, broker, counterparty, splitPnl, splitGbpEquivalent);
         sumPnl(pnlMap, tradeCurrency, splitBroker, counterparty, splitPnl, splitGbpEquivalent);
-    }
-
-    private void sumPnl(Map<PnlGroup, Pnl> pnlMap, String tradeCurrency, String counterparty,
-            BigDecimal pnlValue, BigDecimal gbpEquivalent) {
-        sumPnl(pnlMap, tradeCurrency, null, counterparty, pnlValue, gbpEquivalent);
     }
 
     private void sumPnl(Map<PnlGroup, Pnl> pnlMap, String tradeCurrency, String broker, String counterparty,
