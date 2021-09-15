@@ -30,7 +30,8 @@ public interface InvoiceService {
 
     /**
      * Calculates invoice amount and gbp equivalent by existing invoice lines.
-     * Increments issue attribute by 1.
+     *
+     * Increments issue number if invoice was printed already.
      *
      * @param invoice Invoice
      * @return Recalculated invoice

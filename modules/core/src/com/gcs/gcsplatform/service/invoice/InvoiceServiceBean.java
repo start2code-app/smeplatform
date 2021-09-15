@@ -79,7 +79,11 @@ public class InvoiceServiceBean implements InvoiceService {
                 .one();
         invoice.setAmount(keyValue.getValue("amount"));
         invoice.setGbpAmount(keyValue.getValue("gbpAmount"));
-        invoice.setIssue(invoice.getIssue() + 1);
+        if (Boolean.TRUE.equals(invoice.getPrinted())) {
+            invoice.setIssue(invoice.getIssue() + 1);
+        }
+        invoice.setPrinted(false);
+        invoice.setPosted(false);
         return invoice;
     }
 
