@@ -18,6 +18,14 @@ public class PnlChartBean {
     @Inject
     private ScreenBuilders screenBuilders;
 
+    /**
+     * Builds and shows PNL chart screen.
+     *
+     * @param frameOwner Frame owner
+     * @param trades     Trades for PNL chart
+     * @param caption    PNL screen caption (on main tab sheet)
+     * @param heading    PNL screen heading
+     */
     public void showPnlChartScreen(FrameOwner frameOwner, Collection<? extends Trade> trades, String caption,
             String heading) {
         PnlChartScreen pnlChartScreen = screenBuilders.screen(frameOwner)
