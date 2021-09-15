@@ -1,4 +1,4 @@
-package com.gcs.gcsplatform.service;
+package com.gcs.gcsplatform.service.trade;
 
 import java.util.Collection;
 import java.util.Date;
@@ -77,5 +77,5 @@ public interface TradeService {
      * @return Live trade
      */
     @Nullable
-    LiveTrade getCorrespondingLiveTrade(ClosedTrade closedTrade, View view);
+    LiveTrade findCorrespondingLiveTrade(ClosedTrade closedTrade, View view);
 }

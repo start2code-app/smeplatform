@@ -86,8 +86,27 @@
                  caption="msg://datesTab.caption"
                  spacing="true"
                  margin="true">
-                <fragment id="datesFragment"
-                          screen="gcsplatform_DatesFragment"/>
+                <form id="datesForm"
+                      dataContainer="tradeDc">
+                    <column width="250px">
+                        <dateField id="valueDateField"
+                                   property="valueDate"
+                                   resolution="DAY"/>
+                        <dateField id="maturityDateField"
+                                   property="maturityDate"
+                                   resolution="DAY"
+                                   editable="false"/>
+                        <dateField id="tradeDateField"
+                                   resolution="DAY"
+                                   property="tradeDate"/>
+                        <dateField id="invoiceDateField"
+                                   resolution="DAY"
+                                   property="invoiceDate"/>
+                        <textField id="numdaysField"
+                                   property="numdays"
+                                   editable="false"/>
+                    </column>
+                </form>
             </tab>
             <tab id="notesTab"
                  caption="msg://notesTab.caption"

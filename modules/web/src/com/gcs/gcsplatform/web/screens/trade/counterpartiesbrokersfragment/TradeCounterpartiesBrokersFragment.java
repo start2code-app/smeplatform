@@ -8,8 +8,9 @@ import com.gcs.gcsplatform.entity.masterdata.Counterparty;
 import com.gcs.gcsplatform.entity.masterdata.Dealer;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.service.AgentService;
-import com.gcs.gcsplatform.web.components.BrokerageBean;
+import com.gcs.gcsplatform.web.components.brokerage.BrokerageBean;
 import com.gcs.gcsplatform.web.screens.agent.AgentBrowse;
+import com.gcs.gcsplatform.web.screens.counterparty.CounterpartyBrowse;
 import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;
 import com.haulmont.cuba.gui.components.HasValue;
@@ -212,5 +213,17 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
     protected void sellerAgentLookupPickerFieldLookupScreenConfigurer(Screen screen) {
         AgentBrowse agentBrowse = (AgentBrowse) screen;
         agentBrowse.setCounterparty(sellerLookupPickerField.getValue());
+    }
+
+    @Install(to = "buyerLookupPickerField.lookup", subject = "screenConfigurer")
+    protected void buyerLookupPickerFieldLookupScreenConfigurer(Screen screen) {
+        CounterpartyBrowse counterpartyBrowse = (CounterpartyBrowse) screen;
+        counterpartyBrowse.setOnlyActive(true);
+    }
+
+    @Install(to = "sellerLookupPickerField.lookup", subject = "screenConfigurer")
+    protected void sellerLookupPickerFieldLookupScreenConfigurer(Screen screen) {
+        CounterpartyBrowse counterpartyBrowse = (CounterpartyBrowse) screen;
+        counterpartyBrowse.setOnlyActive(true);
     }
 }

@@ -510,6 +510,7 @@ create table GCSPLATFORM_INVOICE (
     FX decimal(10, 4),
     FX_USD decimal(10, 4),
     GBP_AMOUNT decimal(10, 4),
+    USD_AMOUNT decimal(10, 4),
     POSTED boolean,
     PRINTED boolean,
     --

@@ -6,7 +6,7 @@ import java.util.Date;
 import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;
-import com.gcs.gcsplatform.service.TradeService;
+import com.gcs.gcsplatform.service.trade.TradeService;
 import com.gcs.gcsplatform.web.components.pnl.PnlChartBean;
 import com.gcs.gcsplatform.web.screens.trade.TradeBrowse;
 import com.haulmont.cuba.core.global.View;

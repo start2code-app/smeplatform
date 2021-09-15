@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;
-import com.gcs.gcsplatform.service.TradeService;
+import com.gcs.gcsplatform.service.trade.TradeService;
 import com.haulmont.cuba.core.global.CommitContext;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.View;

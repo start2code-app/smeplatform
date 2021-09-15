@@ -1,4 +1,4 @@
-package com.gcs.gcsplatform.service;
+package com.gcs.gcsplatform.service.trade;
 
 import java.util.Collection;
 import java.util.Date;
@@ -84,7 +84,7 @@ public class TradeServiceBean implements TradeService {
 
     @Nullable
     @Override
-    public LiveTrade getCorrespondingLiveTrade(ClosedTrade closedTrade, View view) {
+    public LiveTrade findCorrespondingLiveTrade(ClosedTrade closedTrade, View view) {
         return dataManager.load(LiveTrade.class)
                 .query("select e from gcsplatform_LiveTrade e "
                         + "where e.traderef = :traderef")

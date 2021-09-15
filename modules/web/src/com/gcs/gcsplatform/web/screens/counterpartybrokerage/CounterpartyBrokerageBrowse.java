@@ -7,7 +7,7 @@ import com.gcs.gcsplatform.entity.masterdata.Category;
 import com.gcs.gcsplatform.entity.masterdata.Counterparty;
 import com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerage;
 import com.gcs.gcsplatform.service.CategoryService;
-import com.gcs.gcsplatform.web.components.InitialBrokerageBean;
+import com.gcs.gcsplatform.web.components.brokerage.InitialBrokerageBean;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;

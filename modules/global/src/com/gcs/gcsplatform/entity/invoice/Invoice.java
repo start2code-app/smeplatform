@@ -48,11 +48,22 @@ public class Invoice extends StandardEntity {
     @Column(name = "GBP_AMOUNT", precision = 10, scale = 4)
     private BigDecimal gbpAmount;
 
+    @Column(name = "USD_AMOUNT", precision = 10, scale = 4)
+    private BigDecimal usdAmount;
+
     @Column(name = "POSTED")
     private Boolean posted;
 
     @Column(name = "PRINTED")
     private Boolean printed;
+
+    public BigDecimal getUsdAmount() {
+        return usdAmount;
+    }
+
+    public void setUsdAmount(BigDecimal usdAmount) {
+        this.usdAmount = usdAmount;
+    }
 
     public String getLocation() {
         return location;

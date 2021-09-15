@@ -4,21 +4,27 @@ import java.math.BigDecimal;
 import java.util.Date;
 import javax.inject.Inject;
 
+import com.gcs.gcsplatform.entity.invoice.Invoice;
 import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
 import com.gcs.gcsplatform.entity.masterdata.Counterparty;
 import com.gcs.gcsplatform.entity.masterdata.Currency;
-import com.gcs.gcsplatform.web.components.BrokerageBean;
-import com.gcs.gcsplatform.web.components.PnlCalculationBean;
+import com.gcs.gcsplatform.service.invoice.InvoiceService;
+import com.gcs.gcsplatform.web.components.pnl.PnlCalculationBean;
 import com.gcs.gcsplatform.web.components.invoice.InvoiceBackportBean;
 import com.gcs.gcsplatform.web.components.invoice.InvoiceCalculationBean;
+import com.gcs.gcsplatform.web.screens.counterparty.CounterpartyBrowse;
+import com.haulmont.cuba.core.global.View;
+import com.haulmont.cuba.core.global.ViewBuilder;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.LookupPickerField;
 import com.haulmont.cuba.gui.model.DataContext;
 import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.EditedEntityContainer;
+import com.haulmont.cuba.gui.screen.Install;
 import com.haulmont.cuba.gui.screen.LoadDataBeforeShow;
 import com.haulmont.cuba.gui.screen.MessageBundle;
+import com.haulmont.cuba.gui.screen.Screen;
 import com.haulmont.cuba.gui.screen.StandardEditor;
 import com.haulmont.cuba.gui.screen.Subscribe;
 import com.haulmont.cuba.gui.screen.Target;
@@ -33,11 +39,15 @@ import static com.gcs.gcsplatform.web.util.ScreenUtil.initFieldValueToStringProp
 @LoadDataBeforeShow
 public class InvoiceLineEdit extends StandardEditor<InvoiceLine> {
 
+    protected Invoice originalInvoice;
+
     @Inject
     protected LookupPickerField<Counterparty> counterpartyLookupPickerField;
     @Inject
     protected LookupPickerField<Currency> currencyLookupPickerField;
 
+    @Inject
+    protected InvoiceService invoiceService;
     @Inject
     protected PnlCalculationBean pnlCalculationBean;
     @Inject
@@ -62,6 +72,13 @@ public class InvoiceLineEdit extends StandardEditor<InvoiceLine> {
          * Subscribe manually to preserve listeners execution order. First listener maps field value to entity.
          */
         counterpartyLookupPickerField.addValueChangeListener(this::onCounterpartyLookupPickerFieldValueChange);
+
+        /*
+         * Save original invoice to recalculate it after invoice line modifying.
+         */
+        originalInvoice = invoiceService.findInvoice(getEditedEntity(), ViewBuilder.of(Invoice.class)
+                .addView(View.LOCAL)
+                .build());
     }
 
     protected void onCounterpartyLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Counterparty> event) {
@@ -145,6 +162,12 @@ public class InvoiceLineEdit extends StandardEditor<InvoiceLine> {
 
     @Subscribe(target = Target.DATA_CONTEXT)
     protected void onPostCommit(DataContext.PostCommitEvent event) {
-        invoiceCalculationBean.recalculateOrCreateInvoice(getEditedEntity());
+        invoiceCalculationBean.recalculateOrCreateInvoice(getEditedEntity(), originalInvoice);
+    }
+
+    @Install(to = "counterpartyLookupPickerField.lookup", subject = "screenConfigurer")
+    protected void counterpartyLookupPickerFieldLookupScreenConfigurer(Screen screen) {
+        CounterpartyBrowse counterpartyBrowse = (CounterpartyBrowse) screen;
+        counterpartyBrowse.setOnlyActive(true);
     }
 }

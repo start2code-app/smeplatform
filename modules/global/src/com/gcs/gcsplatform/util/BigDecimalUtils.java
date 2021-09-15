@@ -25,4 +25,11 @@ public class BigDecimalUtils {
         }
         return false;
     }
+
+    public static BigDecimal getNumberOrNull(BigDecimal number) {
+        if (number == null) {
+            return BigDecimal.ZERO;
+        }
+        return number;
+    }
 }

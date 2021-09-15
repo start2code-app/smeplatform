@@ -53,12 +53,4 @@ public class PnlCalculationServiceBean implements PnlCalculationService {
                     .divide(BigDecimal.valueOf(36), RoundingMode.HALF_EVEN);
         }
     }
-
-    @Override
-    public BigDecimal calculateFxEquivalent(BigDecimal amount, BigDecimal fxValue) {
-        if (isAnyNullOrZero(amount, fxValue)) {
-            return BigDecimal.ZERO;
-        }
-        return amount.divide(fxValue, RoundingMode.HALF_EVEN);
-    }
 }

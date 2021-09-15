@@ -4,7 +4,7 @@ import java.util.Collection;
 import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.trade.OpenedTrade;
-import com.gcs.gcsplatform.service.OpenedTradeService;
+import com.gcs.gcsplatform.service.trade.OpenedTradeService;
 import com.gcs.gcsplatform.web.components.pnl.PnlChartBean;
 import com.gcs.gcsplatform.web.screens.trade.TradeBrowse;
 import com.haulmont.cuba.gui.components.Button;

@@ -3,7 +3,7 @@ package com.gcs.gcsplatform.web.screens.trade;
 import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.trade.Trade;
-import com.gcs.gcsplatform.web.components.TradeValidationBean;
+import com.gcs.gcsplatform.web.components.trade.TradeValidationBean;
 import com.gcs.gcsplatform.web.events.TradeClosedEvent;
 import com.gcs.gcsplatform.web.screens.uti.UtiScreen;
 import com.haulmont.cuba.gui.ScreenBuilders;

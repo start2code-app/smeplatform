@@ -1,4 +1,4 @@
-package com.gcs.gcsplatform.web.components;
+package com.gcs.gcsplatform.web.components.trade;
 
 import com.gcs.gcsplatform.entity.trade.OpenedTrade;
 import com.gcs.gcsplatform.entity.trade.Trade;

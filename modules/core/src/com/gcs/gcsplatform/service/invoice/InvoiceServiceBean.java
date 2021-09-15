@@ -11,11 +11,14 @@ import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.invoice.Invoice;
 import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
-import com.gcs.gcsplatform.service.FxService;
+import com.gcs.gcsplatform.service.fx.FxCalculationService;
+import com.gcs.gcsplatform.service.fx.FxService;
 import com.haulmont.cuba.core.entity.KeyValueEntity;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.View;
 import org.springframework.stereotype.Service;
+
+import static com.gcs.gcsplatform.util.BigDecimalUtils.getNumberOrNull;
 
 @Service(InvoiceService.NAME)
 public class InvoiceServiceBean implements InvoiceService {
@@ -24,6 +27,8 @@ public class InvoiceServiceBean implements InvoiceService {
     private DataManager dataManager;
     @Inject
     private FxService fxService;
+    @Inject
+    private FxCalculationService fxCalculationService;
 
     @Override
     public Collection<Invoice> createInvoices(Collection<InvoiceLine> invoiceLines) {
@@ -55,10 +60,11 @@ public class InvoiceServiceBean implements InvoiceService {
         invoice.setCounterpartyCode(invoiceLine.getCounterpartyCode());
         invoice.setStartDate(invoiceLine.getStartDate());
         invoice.setEndDate(invoiceLine.getEndDate());
-        invoice.setFxUsd(fxService.getUsdFxValue(invoiceLine.getStartDate()));
+        invoice.setFxUsd(fxService.findUsdFxValue(invoiceLine.getStartDate()));
         invoice.setFx(invoiceLine.getFx());
         invoice.setAmount(invoiceLine.getPnl());
         invoice.setGbpAmount(invoiceLine.getGbpEquivalent());
+        invoice.setUsdAmount(fxCalculationService.calculateUsdEquivalent(invoice.getGbpAmount(), invoice.getFxUsd()));
         return invoice;
     }
 
@@ -77,9 +83,14 @@ public class InvoiceServiceBean implements InvoiceService {
                 .parameter("location", invoice.getLocation())
                 .properties("amount", "gbpAmount")
                 .one();
-        invoice.setAmount(keyValue.getValue("amount"));
-        invoice.setGbpAmount(keyValue.getValue("gbpAmount"));
-        invoice.setIssue(invoice.getIssue() + 1);
+        invoice.setAmount(getNumberOrNull(keyValue.getValue("amount")));
+        invoice.setGbpAmount(getNumberOrNull(keyValue.getValue("gbpAmount")));
+        invoice.setUsdAmount(fxCalculationService.calculateUsdEquivalent(invoice.getGbpAmount(), invoice.getFxUsd()));
+        if (Boolean.TRUE.equals(invoice.getPrinted())) {
+            invoice.setIssue(invoice.getIssue() + 1);
+            invoice.setPrinted(false);
+            invoice.setPosted(false);
+        }
         return invoice;
     }
 

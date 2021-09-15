@@ -1,15 +1,17 @@
 package com.gcs.gcsplatform.web.screens.trade.closedtrade;
 
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.Objects;
 import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.masterdata.Currency;
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;
-import com.gcs.gcsplatform.web.components.PnlCalculationBean;
-import com.gcs.gcsplatform.web.components.UpdateCorrespondingLiveTradeBean;
+import com.gcs.gcsplatform.web.components.pnl.PnlCalculationBean;
+import com.gcs.gcsplatform.web.components.trade.UpdateCorrespondingLiveTradeBean;
 import com.gcs.gcsplatform.web.screens.trade.TradeEdit;
-import com.gcs.gcsplatform.web.screens.trade.datesfragment.DatesFragment;
 import com.haulmont.cuba.gui.components.CurrencyField;
+import com.haulmont.cuba.gui.components.DateField;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.model.DataContext;
 import com.haulmont.cuba.gui.screen.Subscribe;
@@ -26,7 +28,7 @@ public class ClosedTradeEdit extends TradeEdit<ClosedTrade> {
     protected PnlCalculationBean pnlCalculationBean;
 
     @Inject
-    protected DatesFragment datesFragment;
+    protected DateField<Date> maturityDateField;
     @Inject
     protected CurrencyField<BigDecimal> buyPnlField;
     @Inject
@@ -35,16 +37,12 @@ public class ClosedTradeEdit extends TradeEdit<ClosedTrade> {
     @Inject
     protected UpdateCorrespondingLiveTradeBean updateCorrespondingLiveTradeBean;
 
-    @Subscribe
-    public void onBeforeShow(BeforeShowEvent event) {
-        datesFragment.getMaturityDateField().setEditable(true);
-    }
-
     @Override
     protected void onAfterShow(AfterShowEvent event) {
         super.onAfterShow(event);
         tradeCurrencyLookupPickerField.addValueChangeListener(this::onTradeCurrencyLookupPickerFieldValueChange);
         updatePnlCurrencySign();
+        maturityDateField.setEditable(true);
     }
 
     protected void onTradeCurrencyLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Currency> event) {
@@ -55,8 +53,8 @@ public class ClosedTradeEdit extends TradeEdit<ClosedTrade> {
 
     @Override
     protected void onCurrencyLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Currency> event) {
+        super.onCurrencyLookupPickerFieldValueChange(event);
         if (event.isUserOriginated()) {
-            tradeCurrencyLookupPickerField.setValue(event.getValue());
             updateTradeCurrency();
         }
     }
@@ -75,6 +73,33 @@ public class ClosedTradeEdit extends TradeEdit<ClosedTrade> {
         }
         buyPnlField.setShowCurrencyLabel(currencyIsNotBlank);
         sellPnlField.setShowCurrencyLabel(currencyIsNotBlank);
+    }
+
+    @Override
+    protected void onValueDateFieldValueChange(HasValue.ValueChangeEvent<Date> event) {
+        super.onValueDateFieldValueChange(event);
+        Date value = event.getValue();
+        Date prevValue = event.getPrevValue();
+        if (event.isUserOriginated() && !Objects.equals(value, prevValue)) {
+            pnlCalculationBean.updatePnl(tradeDc.getItem());
+        }
+    }
+
+    @Override
+    protected void onMaturityDateFieldValueChange(HasValue.ValueChangeEvent<Date> event) {
+        super.onMaturityDateFieldValueChange(event);
+        Date value = event.getValue();
+        Date prevValue = event.getPrevValue();
+        if (event.isUserOriginated() && !Objects.equals(value, prevValue)) {
+            pnlCalculationBean.updatePnl(tradeDc.getItem());
+        }
+    }
+
+    @Subscribe("invoiceDateField")
+    protected void onInvoiceDateFieldValueChange(HasValue.ValueChangeEvent<Date> event) {
+        if (event.isUserOriginated()) {
+            pnlCalculationBean.updatePnl(tradeDc.getItem());
+        }
     }
 
     @Subscribe("startPriceField")

@@ -9,7 +9,8 @@ import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.entity.trade.TradeSide;
-import com.gcs.gcsplatform.service.FxService;
+import com.gcs.gcsplatform.service.fx.FxService;
+import com.gcs.gcsplatform.service.fx.FxCalculationService;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,8 @@ public class PnlBulkCalculationServiceBean implements PnlBulkCalculationService 
     private FxService fxService;
     @Inject
     private PnlCalculationService pnlCalculationService;
+    @Inject
+    private FxCalculationService fxCalculationService;
 
     @Override
     public void bulkCalculatePnl(Collection<? extends Trade> trades) {
@@ -31,7 +34,7 @@ public class PnlBulkCalculationServiceBean implements PnlBulkCalculationService 
                 .filter(trade -> Objects.nonNull(trade.getTradeCurrency()))
                 .collect(groupingBy(this::createTradeGroup, toList()))
                 .forEach((group, ts) -> {
-                    BigDecimal fxValue = fxService.getFxValue(group.getCurrency(), group.getInvoiceDate());
+                    BigDecimal fxValue = fxService.findFxValue(group.getCurrency(), group.getInvoiceDate());
                     for (Trade t : ts) {
                         t.setXrate1(fxValue);
                         updatePnl(t);
@@ -53,7 +56,7 @@ public class PnlBulkCalculationServiceBean implements PnlBulkCalculationService 
     private void updatePnl(Trade trade, TradeSide side) {
         BigDecimal pnl = pnlCalculationService.calculatePnl(trade, side);
         trade.setPnl(pnl, side);
-        BigDecimal gbpEquivalent = pnlCalculationService.calculateFxEquivalent(pnl, trade.getXrate1());
+        BigDecimal gbpEquivalent = fxCalculationService.calculateGbpEquivalent(pnl, trade.getXrate1());
         trade.setGbpEquivalent(gbpEquivalent, side);
     }
 

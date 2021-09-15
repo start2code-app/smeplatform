@@ -1,10 +1,10 @@
-package com.gcs.gcsplatform.web.components;
+package com.gcs.gcsplatform.web.components.trade;
 
 import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;
 import com.gcs.gcsplatform.entity.trade.LiveTrade;
-import com.gcs.gcsplatform.service.TradeService;
+import com.gcs.gcsplatform.service.trade.TradeService;
 import com.gcs.gcsplatform.util.DateUtils;
 import com.gcs.gcsplatform.web.events.LiveTradeUpdatedEvent;
 import com.haulmont.cuba.core.global.Events;
@@ -36,7 +36,7 @@ public class UpdateCorrespondingLiveTradeBean {
         if (!DateUtils.isDateInCurrentMonth(closedTrade.getInvoiceDate())) {
             return;
         }
-        LiveTrade liveTrade = tradeService.getCorrespondingLiveTrade(closedTrade,
+        LiveTrade liveTrade = tradeService.findCorrespondingLiveTrade(closedTrade,
                 ViewBuilder.of(LiveTrade.class)
                         .addView(View.LOCAL)
                         .build());
