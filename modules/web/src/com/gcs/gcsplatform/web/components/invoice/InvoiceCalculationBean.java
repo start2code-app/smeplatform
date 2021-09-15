@@ -5,8 +5,10 @@ import javax.inject.Inject;
 import com.gcs.gcsplatform.entity.invoice.Invoice;
 import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
 import com.gcs.gcsplatform.service.invoice.InvoiceService;
+import com.gcs.gcsplatform.web.events.InvoiceLineUpdatedEvent;
 import com.haulmont.cuba.core.global.CommitContext;
 import com.haulmont.cuba.core.global.DataManager;
+import com.haulmont.cuba.core.global.Events;
 import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;
 import org.springframework.stereotype.Component;
@@ -20,6 +22,8 @@ public class InvoiceCalculationBean {
     private InvoiceService invoiceService;
     @Inject
     private DataManager dataManager;
+    @Inject
+    private Events events;
 
     /**
      * Searches for a corresponding invoice and recalculates pnl/gbp amount by selecting all of the related invoice
@@ -53,5 +57,6 @@ public class InvoiceCalculationBean {
             commitContext.addInstanceToCommit(originalInvoice);
         }
         dataManager.commit(commitContext);
+        events.publish(new InvoiceLineUpdatedEvent(this));
     }
 }

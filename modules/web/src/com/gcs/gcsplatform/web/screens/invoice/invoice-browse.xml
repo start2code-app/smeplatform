@@ -45,8 +45,8 @@
                 <column id="fxUsd"/>
                 <column id="gbpAmount"/>
                 <column id="usdAmount"/>
-                <column id="posted"/>
                 <column id="printed"/>
+                <column id="posted"/>
             </columns>
             <rowsCount/>
         </groupTable>
