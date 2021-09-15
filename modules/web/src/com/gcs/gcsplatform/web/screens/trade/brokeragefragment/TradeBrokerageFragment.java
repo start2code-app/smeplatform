@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import com.gcs.gcsplatform.entity.masterdata.Category;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.web.components.brokerage.BrokerageBean;
+import com.gcs.gcsplatform.web.events.TradeClosedEvent;
 import com.haulmont.cuba.gui.components.CheckBox;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.LookupPickerField;
@@ -18,6 +19,7 @@ import com.haulmont.cuba.gui.screen.Subscribe;
 import com.haulmont.cuba.gui.screen.Target;
 import com.haulmont.cuba.gui.screen.UiController;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
+import org.springframework.context.event.EventListener;
 
 import static com.gcs.gcsplatform.web.util.ScreenUtil.initFieldValueToStringPropertyMapping;
 
@@ -77,8 +79,17 @@ public class TradeBrokerageFragment extends ScreenFragment {
         origtraderefField.setVisible(Boolean.TRUE.equals(trade.getSubs()));
     }
 
+    protected void onCategoryLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Category> event) {
+        if (event.isUserOriginated()) {
+            brokerageBean.updateBrokerage(tradeDc.getItem());
+        }
+    }
+
     @Subscribe("subsCheckBox")
     protected void onSubsCheckBoxValueChange(HasValue.ValueChangeEvent<Boolean> event) {
+        if (!event.isUserOriginated()) {
+            return;
+        }
         if (Boolean.TRUE.equals(event.getValue())) {
             origtraderefField.setVisible(true);
             sellBrokerageField.setEditable(false);
@@ -161,9 +172,8 @@ public class TradeBrokerageFragment extends ScreenFragment {
         brokerageBean.updateBrokerage(tradeDc.getItem());
     }
 
-    protected void onCategoryLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Category> event) {
-        if (event.isUserOriginated()) {
-            brokerageBean.updateBrokerage(tradeDc.getItem());
-        }
+    @EventListener
+    protected void onTradeClosed(TradeClosedEvent event) {
+        origtraderefField.setVisible(Boolean.TRUE.equals(tradeDc.getItem().getSubs()));
     }
 }

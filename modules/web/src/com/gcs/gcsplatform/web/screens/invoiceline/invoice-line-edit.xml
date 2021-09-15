@@ -16,7 +16,10 @@
                     class="com.gcs.gcsplatform.entity.masterdata.Counterparty">
             <view extends="_local"/>
             <loader id="counterpartiesDl">
-                <query>select e from gcsplatform_Counterparty e order by e.counterparty</query>
+                <query><![CDATA[select e from gcsplatform_Counterparty e
+                    where e.active = true
+                    order by e.counterparty]]>
+                </query>
             </loader>
         </collection>
         <collection id="currenciesDc"
