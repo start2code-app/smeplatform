@@ -7,11 +7,25 @@ public interface FxCalculationService {
     String NAME = "gcsplatform_FxCalculationService";
 
     /**
-     * Calculates FX amount equivalent. Returns zero if any of arguments is zero.
+     * Calculates GBP equivalent dividing specified amount in foreign currency by specified GBP exchange rate
+     * against foreign currency.
+     * <p>
+     * Returns zero if any of arguments is zero.
      *
-     * @param amount  Amount
-     * @param fxValue Foreign exchange value
-     * @return FX amount equivalent
+     * @param amount  Amount in foreign currency
+     * @param fxValue GBP to foreign currency exchange rate
+     * @return GBP equivalent
      */
-    BigDecimal calculateFxEquivalent(BigDecimal amount, BigDecimal fxValue);
+    BigDecimal calculateGbpEquivalent(BigDecimal amount, BigDecimal fxValue);
+
+    /**
+     * Calculates USD equivalent multiplying specified amount in GBP by specified GBP exchange rate against USD.
+     * <p>
+     * Returns zero if any of arguments is zero.
+     *
+     * @param gbpAmount  GBP amount
+     * @param usdFxValue GBP to USD exchange rate
+     * @return USD equivalent
+     */
+    BigDecimal calculateUsdEquivalent(BigDecimal gbpAmount, BigDecimal usdFxValue);
 }

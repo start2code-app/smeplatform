@@ -11,6 +11,7 @@ import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.invoice.Invoice;
 import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
+import com.gcs.gcsplatform.service.fx.FxCalculationService;
 import com.gcs.gcsplatform.service.fx.FxService;
 import com.haulmont.cuba.core.entity.KeyValueEntity;
 import com.haulmont.cuba.core.global.DataManager;
@@ -24,6 +25,8 @@ public class InvoiceServiceBean implements InvoiceService {
     private DataManager dataManager;
     @Inject
     private FxService fxService;
+    @Inject
+    private FxCalculationService fxCalculationService;
 
     @Override
     public Collection<Invoice> createInvoices(Collection<InvoiceLine> invoiceLines) {
@@ -59,6 +62,7 @@ public class InvoiceServiceBean implements InvoiceService {
         invoice.setFx(invoiceLine.getFx());
         invoice.setAmount(invoiceLine.getPnl());
         invoice.setGbpAmount(invoiceLine.getGbpEquivalent());
+        invoice.setUsdAmount(fxCalculationService.calculateUsdEquivalent(invoice.getGbpAmount(), invoice.getFxUsd()));
         return invoice;
     }
 
@@ -79,6 +83,7 @@ public class InvoiceServiceBean implements InvoiceService {
                 .one();
         invoice.setAmount(keyValue.getValue("amount"));
         invoice.setGbpAmount(keyValue.getValue("gbpAmount"));
+        invoice.setUsdAmount(fxCalculationService.calculateUsdEquivalent(invoice.getGbpAmount(), invoice.getFxUsd()));
         if (Boolean.TRUE.equals(invoice.getPrinted())) {
             invoice.setIssue(invoice.getIssue() + 1);
             invoice.setPrinted(false);

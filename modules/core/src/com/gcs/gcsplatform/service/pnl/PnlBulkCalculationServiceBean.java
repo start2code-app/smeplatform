@@ -56,7 +56,7 @@ public class PnlBulkCalculationServiceBean implements PnlBulkCalculationService 
     private void updatePnl(Trade trade, TradeSide side) {
         BigDecimal pnl = pnlCalculationService.calculatePnl(trade, side);
         trade.setPnl(pnl, side);
-        BigDecimal gbpEquivalent = fxCalculationService.calculateFxEquivalent(pnl, trade.getXrate1());
+        BigDecimal gbpEquivalent = fxCalculationService.calculateGbpEquivalent(pnl, trade.getXrate1());
         trade.setGbpEquivalent(gbpEquivalent, side);
     }
 

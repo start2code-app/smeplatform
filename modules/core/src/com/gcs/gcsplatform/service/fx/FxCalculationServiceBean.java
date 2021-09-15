@@ -11,10 +11,18 @@ import static com.gcs.gcsplatform.util.BigDecimalUtils.isAnyNullOrZero;
 public class FxCalculationServiceBean implements FxCalculationService {
 
     @Override
-    public BigDecimal calculateFxEquivalent(BigDecimal amount, BigDecimal fxValue) {
+    public BigDecimal calculateGbpEquivalent(BigDecimal amount, BigDecimal fxValue) {
         if (isAnyNullOrZero(amount, fxValue)) {
             return BigDecimal.ZERO;
         }
         return amount.divide(fxValue, RoundingMode.HALF_EVEN);
+    }
+
+    @Override
+    public BigDecimal calculateUsdEquivalent(BigDecimal gbpAmount, BigDecimal usdFxValue) {
+        if (isAnyNullOrZero(gbpAmount, usdFxValue)) {
+            return BigDecimal.ZERO;
+        }
+        return gbpAmount.multiply(usdFxValue);
     }
 }
