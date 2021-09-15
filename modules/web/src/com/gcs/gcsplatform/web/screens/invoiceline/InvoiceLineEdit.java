@@ -4,12 +4,16 @@ import java.math.BigDecimal;
 import java.util.Date;
 import javax.inject.Inject;
 
+import com.gcs.gcsplatform.entity.invoice.Invoice;
 import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
 import com.gcs.gcsplatform.entity.masterdata.Counterparty;
 import com.gcs.gcsplatform.entity.masterdata.Currency;
+import com.gcs.gcsplatform.service.invoice.InvoiceService;
 import com.gcs.gcsplatform.web.components.pnl.PnlCalculationBean;
 import com.gcs.gcsplatform.web.components.invoice.InvoiceBackportBean;
 import com.gcs.gcsplatform.web.components.invoice.InvoiceCalculationBean;
+import com.haulmont.cuba.core.global.View;
+import com.haulmont.cuba.core.global.ViewBuilder;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.LookupPickerField;
@@ -32,11 +36,15 @@ import static com.gcs.gcsplatform.web.util.ScreenUtil.initFieldValueToStringProp
 @LoadDataBeforeShow
 public class InvoiceLineEdit extends StandardEditor<InvoiceLine> {
 
+    protected Invoice originalInvoice;
+
     @Inject
     protected LookupPickerField<Counterparty> counterpartyLookupPickerField;
     @Inject
     protected LookupPickerField<Currency> currencyLookupPickerField;
 
+    @Inject
+    protected InvoiceService invoiceService;
     @Inject
     protected PnlCalculationBean pnlCalculationBean;
     @Inject
@@ -61,6 +69,13 @@ public class InvoiceLineEdit extends StandardEditor<InvoiceLine> {
          * Subscribe manually to preserve listeners execution order. First listener maps field value to entity.
          */
         counterpartyLookupPickerField.addValueChangeListener(this::onCounterpartyLookupPickerFieldValueChange);
+
+        /*
+         * Save original invoice to recalculate it after invoice line modifying.
+         */
+        originalInvoice = invoiceService.findInvoice(getEditedEntity(), ViewBuilder.of(Invoice.class)
+                .addView(View.LOCAL)
+                .build());
     }
 
     protected void onCounterpartyLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Counterparty> event) {
@@ -144,6 +159,6 @@ public class InvoiceLineEdit extends StandardEditor<InvoiceLine> {
 
     @Subscribe(target = Target.DATA_CONTEXT)
     protected void onPostCommit(DataContext.PostCommitEvent event) {
-        invoiceCalculationBean.recalculateOrCreateInvoice(getEditedEntity());
+        invoiceCalculationBean.recalculateOrCreateInvoice(getEditedEntity(), originalInvoice);
     }
 }
