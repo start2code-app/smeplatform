@@ -1,6 +1,7 @@
 package com.gcs.gcsplatform.web.screens.trade.closedtrade;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.masterdata.Currency;
@@ -8,8 +9,8 @@ import com.gcs.gcsplatform.entity.trade.ClosedTrade;
 import com.gcs.gcsplatform.web.components.pnl.PnlCalculationBean;
 import com.gcs.gcsplatform.web.components.trade.UpdateCorrespondingLiveTradeBean;
 import com.gcs.gcsplatform.web.screens.trade.TradeEdit;
-import com.gcs.gcsplatform.web.screens.trade.datesfragment.DatesFragment;
 import com.haulmont.cuba.gui.components.CurrencyField;
+import com.haulmont.cuba.gui.components.DateField;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.model.DataContext;
 import com.haulmont.cuba.gui.screen.Subscribe;
@@ -26,7 +27,7 @@ public class ClosedTradeEdit extends TradeEdit<ClosedTrade> {
     protected PnlCalculationBean pnlCalculationBean;
 
     @Inject
-    protected DatesFragment datesFragment;
+    protected DateField<Date> maturityDateField;
     @Inject
     protected CurrencyField<BigDecimal> buyPnlField;
     @Inject
@@ -35,16 +36,12 @@ public class ClosedTradeEdit extends TradeEdit<ClosedTrade> {
     @Inject
     protected UpdateCorrespondingLiveTradeBean updateCorrespondingLiveTradeBean;
 
-    @Subscribe
-    public void onBeforeShow(BeforeShowEvent event) {
-        datesFragment.getMaturityDateField().setEditable(true);
-    }
-
     @Override
     protected void onAfterShow(AfterShowEvent event) {
         super.onAfterShow(event);
         tradeCurrencyLookupPickerField.addValueChangeListener(this::onTradeCurrencyLookupPickerFieldValueChange);
         updatePnlCurrencySign();
+        maturityDateField.setEditable(true);
     }
 
     protected void onTradeCurrencyLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Currency> event) {
@@ -75,6 +72,13 @@ public class ClosedTradeEdit extends TradeEdit<ClosedTrade> {
         }
         buyPnlField.setShowCurrencyLabel(currencyIsNotBlank);
         sellPnlField.setShowCurrencyLabel(currencyIsNotBlank);
+    }
+
+    @Subscribe("invoiceDateField")
+    protected void onInvoiceDateFieldValueChange(HasValue.ValueChangeEvent<Date> event) {
+        if (event.isUserOriginated()) {
+            pnlCalculationBean.updatePnl(tradeDc.getItem());
+        }
     }
 
     @Subscribe("startPriceField")
