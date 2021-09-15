@@ -36,7 +36,7 @@ public class UpdateCorrespondingLiveTradeBean {
         if (!DateUtils.isDateInCurrentMonth(closedTrade.getInvoiceDate())) {
             return;
         }
-        LiveTrade liveTrade = tradeService.getCorrespondingLiveTrade(closedTrade,
+        LiveTrade liveTrade = tradeService.findCorrespondingLiveTrade(closedTrade,
                 ViewBuilder.of(LiveTrade.class)
                         .addView(View.LOCAL)
                         .build());

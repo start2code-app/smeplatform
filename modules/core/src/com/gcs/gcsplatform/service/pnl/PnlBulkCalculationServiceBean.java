@@ -31,7 +31,7 @@ public class PnlBulkCalculationServiceBean implements PnlBulkCalculationService 
                 .filter(trade -> Objects.nonNull(trade.getTradeCurrency()))
                 .collect(groupingBy(this::createTradeGroup, toList()))
                 .forEach((group, ts) -> {
-                    BigDecimal fxValue = fxService.getFxValue(group.getCurrency(), group.getInvoiceDate());
+                    BigDecimal fxValue = fxService.findFxValue(group.getCurrency(), group.getInvoiceDate());
                     for (Trade t : ts) {
                         t.setXrate1(fxValue);
                         updatePnl(t);

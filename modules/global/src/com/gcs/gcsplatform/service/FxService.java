@@ -16,7 +16,7 @@ public interface FxService {
      * @return Foreign exchange rate or null
      */
     @Nullable
-    BigDecimal getFxValue(String currency, Date fxDate);
+    BigDecimal findFxValue(String currency, Date fxDate);
 
     /**
      * Gets USD exchange rate value of specified date (considers only month and year). If no such, returns null.
@@ -25,5 +25,5 @@ public interface FxService {
      * @return USD exchange rate or null
      */
     @Nullable
-    BigDecimal getUsdFxValue(Date fxDate);
+    BigDecimal findUsdFxValue(Date fxDate);
 }

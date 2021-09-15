@@ -12,8 +12,6 @@ import com.haulmont.cuba.core.global.DataManager;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.stereotype.Service;
 
-import static com.gcs.gcsplatform.util.DateUtils.getFirstDayOfMonth;
-
 @Service(FxService.NAME)
 public class FxServiceBean implements FxService {
 
@@ -24,7 +22,7 @@ public class FxServiceBean implements FxService {
 
     @Nullable
     @Override
-    public BigDecimal getFxValue(String currency, Date fxDate) {
+    public BigDecimal findFxValue(String currency, Date fxDate) {
         if (currency == null || fxDate == null) {
             return null;
         }
@@ -43,7 +41,7 @@ public class FxServiceBean implements FxService {
 
     @Nullable
     @Override
-    public BigDecimal getUsdFxValue(Date fxDate) {
-        return getFxValue(currencyConfig.getUsdCurrency().getCurrency(), fxDate);
+    public BigDecimal findUsdFxValue(Date fxDate) {
+        return findFxValue(currencyConfig.getUsdCurrency().getCurrency(), fxDate);
     }
 }

@@ -77,5 +77,5 @@ public interface TradeService {
      * @return Live trade
      */
     @Nullable
-    LiveTrade getCorrespondingLiveTrade(ClosedTrade closedTrade, View view);
+    LiveTrade findCorrespondingLiveTrade(ClosedTrade closedTrade, View view);
 }

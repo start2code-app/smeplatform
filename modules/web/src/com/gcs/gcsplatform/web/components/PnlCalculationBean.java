@@ -44,7 +44,7 @@ public class PnlCalculationBean {
      */
     public void updatePnl(Trade trade) {
         trade.setNumdays(getDaysBetweenDates(trade.getMaturityDate(), trade.getValueDate()));
-        trade.setXrate1(fxService.getFxValue(trade.getTradeCurrency(), trade.getInvoiceDate()));
+        trade.setXrate1(fxService.findFxValue(trade.getTradeCurrency(), trade.getInvoiceDate()));
         updatePnl(trade, TradeSide.BUY);
         updatePnl(trade, TradeSide.SELL);
     }
