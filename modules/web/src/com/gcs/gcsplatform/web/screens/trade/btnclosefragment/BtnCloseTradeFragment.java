@@ -4,7 +4,7 @@ import java.util.Date;
 import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.trade.Trade;
-import com.gcs.gcsplatform.web.components.CloseTradeBean;
+import com.gcs.gcsplatform.web.components.trade.CloseTradeBean;
 import com.gcs.gcsplatform.web.screens.trade.TradeEdit;
 import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.Notifications;

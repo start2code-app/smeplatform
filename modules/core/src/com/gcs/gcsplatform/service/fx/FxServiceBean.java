@@ -1,4 +1,4 @@
-package com.gcs.gcsplatform.service;
+package com.gcs.gcsplatform.service.fx;
 
 import java.math.BigDecimal;
 import java.util.Calendar;

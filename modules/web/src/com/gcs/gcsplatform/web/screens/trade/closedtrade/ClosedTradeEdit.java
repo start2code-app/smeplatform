@@ -5,8 +5,8 @@ import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.masterdata.Currency;
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;
-import com.gcs.gcsplatform.web.components.PnlCalculationBean;
-import com.gcs.gcsplatform.web.components.UpdateCorrespondingLiveTradeBean;
+import com.gcs.gcsplatform.web.components.pnl.PnlCalculationBean;
+import com.gcs.gcsplatform.web.components.trade.UpdateCorrespondingLiveTradeBean;
 import com.gcs.gcsplatform.web.screens.trade.TradeEdit;
 import com.gcs.gcsplatform.web.screens.trade.datesfragment.DatesFragment;
 import com.haulmont.cuba.gui.components.CurrencyField;

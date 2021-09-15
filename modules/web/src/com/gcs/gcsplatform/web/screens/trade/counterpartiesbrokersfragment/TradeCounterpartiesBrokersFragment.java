@@ -8,7 +8,7 @@ import com.gcs.gcsplatform.entity.masterdata.Counterparty;
 import com.gcs.gcsplatform.entity.masterdata.Dealer;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.service.AgentService;
-import com.gcs.gcsplatform.web.components.BrokerageBean;
+import com.gcs.gcsplatform.web.components.brokerage.BrokerageBean;
 import com.gcs.gcsplatform.web.screens.agent.AgentBrowse;
 import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;

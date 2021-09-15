@@ -1,4 +1,4 @@
-package com.gcs.gcsplatform.web.components;
+package com.gcs.gcsplatform.web.components.brokerage;
 
 import java.util.List;
 import java.util.stream.Collectors;

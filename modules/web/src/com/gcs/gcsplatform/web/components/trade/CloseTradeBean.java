@@ -1,4 +1,4 @@
-package com.gcs.gcsplatform.web.components;
+package com.gcs.gcsplatform.web.components.trade;
 
 import java.util.Date;
 import javax.inject.Inject;
@@ -8,6 +8,7 @@ import com.gcs.gcsplatform.entity.trade.ClosedLiveTrade;
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;
 import com.gcs.gcsplatform.entity.trade.LiveTrade;
 import com.gcs.gcsplatform.entity.trade.Trade;
+import com.gcs.gcsplatform.web.components.pnl.PnlCalculationBean;
 import com.gcs.gcsplatform.web.events.TradeClosedEvent;
 import com.haulmont.cuba.core.app.UniqueNumbersService;
 import com.haulmont.cuba.core.global.Events;

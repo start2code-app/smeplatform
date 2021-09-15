@@ -8,7 +8,7 @@ import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;
-import com.gcs.gcsplatform.service.TradeService;
+import com.gcs.gcsplatform.service.trade.TradeService;
 import com.gcs.gcsplatform.service.invoice.InvoiceSnapshotService;
 import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;

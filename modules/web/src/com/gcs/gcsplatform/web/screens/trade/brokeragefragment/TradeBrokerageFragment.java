@@ -5,7 +5,7 @@ import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.masterdata.Category;
 import com.gcs.gcsplatform.entity.trade.Trade;
-import com.gcs.gcsplatform.web.components.BrokerageBean;
+import com.gcs.gcsplatform.web.components.brokerage.BrokerageBean;
 import com.haulmont.cuba.gui.components.CheckBox;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.LookupPickerField;
