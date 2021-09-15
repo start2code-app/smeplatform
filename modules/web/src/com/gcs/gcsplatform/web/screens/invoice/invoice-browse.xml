@@ -44,6 +44,7 @@
                 <column id="fx"/>
                 <column id="fxUsd"/>
                 <column id="gbpAmount"/>
+                <column id="usdAmount"/>
                 <column id="posted"/>
                 <column id="printed"/>
             </columns>

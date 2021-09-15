@@ -18,6 +18,8 @@ import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.View;
 import org.springframework.stereotype.Service;
 
+import static com.gcs.gcsplatform.util.BigDecimalUtils.getNumberOrNull;
+
 @Service(InvoiceService.NAME)
 public class InvoiceServiceBean implements InvoiceService {
 
@@ -81,8 +83,8 @@ public class InvoiceServiceBean implements InvoiceService {
                 .parameter("location", invoice.getLocation())
                 .properties("amount", "gbpAmount")
                 .one();
-        invoice.setAmount(keyValue.getValue("amount"));
-        invoice.setGbpAmount(keyValue.getValue("gbpAmount"));
+        invoice.setAmount(getNumberOrNull(keyValue.getValue("amount")));
+        invoice.setGbpAmount(getNumberOrNull(keyValue.getValue("gbpAmount")));
         invoice.setUsdAmount(fxCalculationService.calculateUsdEquivalent(invoice.getGbpAmount(), invoice.getFxUsd()));
         if (Boolean.TRUE.equals(invoice.getPrinted())) {
             invoice.setIssue(invoice.getIssue() + 1);
