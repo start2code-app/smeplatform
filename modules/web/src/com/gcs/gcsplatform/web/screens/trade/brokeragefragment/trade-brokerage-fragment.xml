@@ -35,7 +35,8 @@
                                         type="picker_clear"/>
                             </actions>
                         </lookupPickerField>
-                        <pickerField id="brokerageTypeField"
+                        <lookupField id="brokerageTypeField"
+                                     optionsEnum="com.gcs.gcsplatform.entity.masterdata.BrokerageType"
                                      property="brokerageType"/>
                     </column>
                 </form>

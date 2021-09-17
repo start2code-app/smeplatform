@@ -124,7 +124,6 @@ create table GCSPLATFORM_LIVE_TRADE (
     CURRENCY varchar(5),
     BUY_GBP_EQUIVALENT decimal(10, 4),
     SELL_GBP_EQUIVALENT decimal(10, 4),
-    GC boolean,
     HAIR_CUT decimal(10, 4),
     ISIN varchar(20),
     MATURITY_DATE date,
@@ -137,7 +136,6 @@ create table GCSPLATFORM_LIVE_TRADE (
     SELLBROKERAGE decimal(10, 4),
     SELLER varchar(30),
     SELLER_AGENT varchar(30),
-    SPECIAL boolean,
     START_PRICE decimal(10, 4),
     STATUS varchar(10),
     SUBS boolean,
@@ -150,8 +148,6 @@ create table GCSPLATFORM_LIVE_TRADE (
     XRATE1 decimal(10, 4),
     XRATE2 decimal(10, 4),
     XRATE3 decimal(10, 4),
-    SUB_THIRTY boolean,
-    MORE_THAN_THIRTY boolean,
     GM_SLA boolean,
     BUYER_LOCATION varchar(5),
     SELLER_LOCATION varchar(5),
@@ -167,6 +163,7 @@ create table GCSPLATFORM_LIVE_TRADE (
     SELLER_CODE varchar(50),
     BUYER_INVOICE_CODE varchar(50),
     SELLER_INVOICE_CODE varchar(50),
+    BROKERAGE_TYPE varchar(50),
     --
     primary key (ID)
 )^
@@ -195,7 +192,6 @@ create table GCSPLATFORM_CALL_OPTION_TRADE (
     CURRENCY varchar(5),
     BUY_GBP_EQUIVALENT decimal(10, 4),
     SELL_GBP_EQUIVALENT decimal(10, 4),
-    GC boolean,
     HAIR_CUT decimal(10, 4),
     ISIN varchar(20),
     MATURITY_DATE date,
@@ -208,7 +204,6 @@ create table GCSPLATFORM_CALL_OPTION_TRADE (
     SELLBROKERAGE decimal(10, 4),
     SELLER varchar(30),
     SELLER_AGENT varchar(30),
-    SPECIAL boolean,
     START_PRICE decimal(10, 4),
     STATUS varchar(10),
     SUBS boolean,
@@ -221,8 +216,6 @@ create table GCSPLATFORM_CALL_OPTION_TRADE (
     XRATE1 decimal(10, 4),
     XRATE2 decimal(10, 4),
     XRATE3 decimal(10, 4),
-    SUB_THIRTY boolean,
-    MORE_THAN_THIRTY boolean,
     GM_SLA boolean,
     BUYER_LOCATION varchar(5),
     SELLER_LOCATION varchar(5),
@@ -238,6 +231,7 @@ create table GCSPLATFORM_CALL_OPTION_TRADE (
     SELLER_CODE varchar(50),
     BUYER_INVOICE_CODE varchar(50),
     SELLER_INVOICE_CODE varchar(50),
+    BROKERAGE_TYPE varchar(50),
     --
     primary key (ID)
 )^
@@ -266,7 +260,6 @@ create table GCSPLATFORM_CLOSED_TRADE (
     CURRENCY varchar(5),
     BUY_GBP_EQUIVALENT decimal(10, 4),
     SELL_GBP_EQUIVALENT decimal(10, 4),
-    GC boolean,
     HAIR_CUT decimal(10, 4),
     ISIN varchar(20),
     MATURITY_DATE date,
@@ -279,7 +272,6 @@ create table GCSPLATFORM_CLOSED_TRADE (
     SELLBROKERAGE decimal(10, 4),
     SELLER varchar(30),
     SELLER_AGENT varchar(30),
-    SPECIAL boolean,
     START_PRICE decimal(10, 4),
     STATUS varchar(10),
     SUBS boolean,
@@ -292,8 +284,6 @@ create table GCSPLATFORM_CLOSED_TRADE (
     XRATE1 decimal(10, 4),
     XRATE2 decimal(10, 4),
     XRATE3 decimal(10, 4),
-    SUB_THIRTY boolean,
-    MORE_THAN_THIRTY boolean,
     GM_SLA boolean,
     BUYER_LOCATION varchar(5),
     SELLER_LOCATION varchar(5),
@@ -309,6 +299,7 @@ create table GCSPLATFORM_CLOSED_TRADE (
     SELLER_CODE varchar(50),
     BUYER_INVOICE_CODE varchar(50),
     SELLER_INVOICE_CODE varchar(50),
+    BROKERAGE_TYPE varchar(50),
     --
     primary key (ID)
 )^
@@ -337,7 +328,6 @@ create table GCSPLATFORM_OPENED_TRADE (
     CURRENCY varchar(5),
     BUY_GBP_EQUIVALENT decimal(10, 4),
     SELL_GBP_EQUIVALENT decimal(10, 4),
-    GC boolean,
     HAIR_CUT decimal(10, 4),
     ISIN varchar(20),
     MATURITY_DATE date,
@@ -350,7 +340,6 @@ create table GCSPLATFORM_OPENED_TRADE (
     SELLBROKERAGE decimal(10, 4),
     SELLER varchar(30),
     SELLER_AGENT varchar(30),
-    SPECIAL boolean,
     START_PRICE decimal(10, 4),
     STATUS varchar(10),
     SUBS boolean,
@@ -363,8 +352,6 @@ create table GCSPLATFORM_OPENED_TRADE (
     XRATE1 decimal(10, 4),
     XRATE2 decimal(10, 4),
     XRATE3 decimal(10, 4),
-    SUB_THIRTY boolean,
-    MORE_THAN_THIRTY boolean,
     GM_SLA boolean,
     BUYER_LOCATION varchar(5),
     SELLER_LOCATION varchar(5),
@@ -380,6 +367,7 @@ create table GCSPLATFORM_OPENED_TRADE (
     SELLER_CODE varchar(50),
     BUYER_INVOICE_CODE varchar(50),
     SELLER_INVOICE_CODE varchar(50),
+    BROKERAGE_TYPE varchar(50),
     --
     primary key (ID)
 )^
@@ -408,7 +396,6 @@ create table GCSPLATFORM_CLOSED_LIVE_TRADE (
     CURRENCY varchar(5),
     BUY_GBP_EQUIVALENT decimal(10, 4),
     SELL_GBP_EQUIVALENT decimal(10, 4),
-    GC boolean,
     HAIR_CUT decimal(10, 4),
     ISIN varchar(20),
     MATURITY_DATE date,
@@ -421,7 +408,6 @@ create table GCSPLATFORM_CLOSED_LIVE_TRADE (
     SELLBROKERAGE decimal(10, 4),
     SELLER varchar(30),
     SELLER_AGENT varchar(30),
-    SPECIAL boolean,
     START_PRICE decimal(10, 4),
     STATUS varchar(10),
     SUBS boolean,
@@ -434,8 +420,6 @@ create table GCSPLATFORM_CLOSED_LIVE_TRADE (
     XRATE1 decimal(10, 4),
     XRATE2 decimal(10, 4),
     XRATE3 decimal(10, 4),
-    SUB_THIRTY boolean,
-    MORE_THAN_THIRTY boolean,
     GM_SLA boolean,
     BUYER_LOCATION varchar(5),
     SELLER_LOCATION varchar(5),
@@ -451,6 +435,7 @@ create table GCSPLATFORM_CLOSED_LIVE_TRADE (
     SELLER_CODE varchar(50),
     BUYER_INVOICE_CODE varchar(50),
     SELLER_INVOICE_CODE varchar(50),
+    BROKERAGE_TYPE varchar(50),
     --
     primary key (ID)
 )^
