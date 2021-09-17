@@ -3,7 +3,7 @@ package com.gcs.gcsplatform.service;
 import java.math.BigDecimal;
 import javax.annotation.Nullable;
 
-import com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerageType;
+import com.gcs.gcsplatform.entity.masterdata.BrokerageType;
 
 public interface BrokerageService {
 
@@ -19,5 +19,5 @@ public interface BrokerageService {
      * @return Counterparty brokerage or null
      */
     @Nullable
-    BigDecimal findBrokerageValue(String counterparty, String category, CounterpartyBrokerageType brokerageType);
+    BigDecimal findBrokerageValue(String counterparty, String category, BrokerageType brokerageType);
 }

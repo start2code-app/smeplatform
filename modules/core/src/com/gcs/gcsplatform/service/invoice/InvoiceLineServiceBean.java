@@ -2,21 +2,15 @@ package com.gcs.gcsplatform.service.invoice;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
-import com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerageType;
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.entity.trade.TradeSide;
 import com.haulmont.cuba.core.global.Metadata;
 import org.springframework.stereotype.Service;
 
-import static com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerageType.GC;
-import static com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerageType.SPECIAL;
 import static com.gcs.gcsplatform.util.DateUtils.getFirstDayOfMonth;
 import static com.gcs.gcsplatform.util.DateUtils.getLastDayOfMonth;
 import static org.apache.commons.lang3.StringUtils.firstNonBlank;
@@ -24,17 +18,8 @@ import static org.apache.commons.lang3.StringUtils.firstNonBlank;
 @Service(InvoiceLineService.NAME)
 public class InvoiceLineServiceBean implements InvoiceLineService {
 
-    private Map<CounterpartyBrokerageType, String> brokerageTypeForInvoiceMap;
-
     @Inject
     private Metadata metadata;
-
-    @PostConstruct
-    private void init() {
-        brokerageTypeForInvoiceMap = new HashMap<>();
-        brokerageTypeForInvoiceMap.put(GC, "GEN");
-        brokerageTypeForInvoiceMap.put(SPECIAL, "SPE");
-    }
 
     @Override
     public Collection<InvoiceLine> splitTrade(ClosedTrade trade) {
@@ -82,7 +67,7 @@ public class InvoiceLineServiceBean implements InvoiceLineService {
 
     private String generateContractNumber(Trade trade, TradeSide side) {
         String category = firstNonBlank(trade.getCategory(), "X");
-        String brokerageType = brokerageTypeForInvoiceMap.getOrDefault(trade.getBrokerageType(), "X");
+        String brokerageType = trade.getBrokerageType() != null ? trade.getBrokerageType().getId() : "X";
         String traderef = firstNonBlank(trade.getTraderef(), "X");
         String broker = firstNonBlank(trade.getBroker(side), "X");
         return String.format("%s:%s:%s:%s:%s", category, brokerageType, traderef, side.getId(), broker);

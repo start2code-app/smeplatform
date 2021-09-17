@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Objects;
 import javax.inject.Inject;
 
-import com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerageType;
+import com.gcs.gcsplatform.entity.masterdata.BrokerageType;
 import com.gcs.gcsplatform.entity.pnl.Pnl;
 import com.gcs.gcsplatform.entity.pnl.chart.BrokerageTypeCount;
 import com.gcs.gcsplatform.entity.pnl.chart.CategoryCount;
@@ -16,8 +16,8 @@ import com.gcs.gcsplatform.entity.trade.Trade;
 import com.haulmont.cuba.core.global.Metadata;
 import org.springframework.stereotype.Service;
 
-import static com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerageType.GC;
-import static com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerageType.SPECIAL;
+import static com.gcs.gcsplatform.entity.masterdata.BrokerageType.GC;
+import static com.gcs.gcsplatform.entity.masterdata.BrokerageType.SPECIAL;
 import static com.gcs.gcsplatform.util.DateUtils.getYearMonth;
 import static java.util.Map.Entry.comparingByKey;
 import static java.util.stream.Collectors.counting;
@@ -88,7 +88,7 @@ public class PnlChartServiceBean implements PnlChartService {
 
     @Override
     public Collection<BrokerageTypeCount> getBrokerageTypeCount(Collection<? extends Trade> trades) {
-        Map<CounterpartyBrokerageType, Long> brokerageTypeCountMap = trades.stream()
+        Map<BrokerageType, Long> brokerageTypeCountMap = trades.stream()
                 .filter(trade -> trade.getBrokerageType() == GC || trade.getBrokerageType() == SPECIAL)
                 .collect(groupingBy(Trade::getBrokerageType, counting()));
         return brokerageTypeCountMap.entrySet().stream()

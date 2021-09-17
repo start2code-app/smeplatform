@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import com.gcs.gcsplatform.entity.masterdata.Category;
 import com.gcs.gcsplatform.entity.masterdata.Counterparty;
 import com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerage;
-import com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerageType;
+import com.gcs.gcsplatform.entity.masterdata.BrokerageType;
 import com.haulmont.cuba.core.global.Metadata;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -31,14 +31,14 @@ public class InitialBrokerageBean {
      */
     public void enrichBrokerageWithInitialData(List<CounterpartyBrokerage> brokerageList, List<Category> categories,
             Counterparty counterparty) {
-        List<Pair<String, CounterpartyBrokerageType>> pairs = brokerageList.stream()
+        List<Pair<String, BrokerageType>> pairs = brokerageList.stream()
                 .map(brokerage -> new ImmutablePair<>(brokerage.getCategory().getCategory(),
                         brokerage.getBrokerageType()))
                 .collect(Collectors.toList());
 
         for (Category category : categories) {
-            for (CounterpartyBrokerageType type : CounterpartyBrokerageType.values()) {
-                Pair<String, CounterpartyBrokerageType> pair = new ImmutablePair<>(category.getCategory(), type);
+            for (BrokerageType type : BrokerageType.values()) {
+                Pair<String, BrokerageType> pair = new ImmutablePair<>(category.getCategory(), type);
                 if (!pairs.contains(pair)) {
                     CounterpartyBrokerage brokerage = metadata.create(CounterpartyBrokerage.class);
                     brokerage.setCounterparty(counterparty);

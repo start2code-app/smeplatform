@@ -35,14 +35,8 @@
                                         type="picker_clear"/>
                             </actions>
                         </lookupPickerField>
-                        <checkBox id="gcCheckBox"
-                                  property="gc"/>
-                        <checkBox id="specialCheckBox"
-                                  property="special"/>
-                        <checkBox id="subThirtyCheckBox"
-                                  property="subThirty"/>
-                        <checkBox id="moreThanThirtyCheckBox"
-                                  property="moreThanThirty"/>
+                        <pickerField id="brokerageTypeField"
+                                     property="brokerageType"/>
                     </column>
                 </form>
             </groupBox>

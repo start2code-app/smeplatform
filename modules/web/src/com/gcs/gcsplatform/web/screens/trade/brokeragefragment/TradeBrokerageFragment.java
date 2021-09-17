@@ -3,6 +3,7 @@ package com.gcs.gcsplatform.web.screens.trade.brokeragefragment;
 import java.math.BigDecimal;
 import javax.inject.Inject;
 
+import com.gcs.gcsplatform.entity.masterdata.BrokerageType;
 import com.gcs.gcsplatform.entity.masterdata.Category;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.web.components.brokerage.BrokerageBean;
@@ -10,6 +11,7 @@ import com.gcs.gcsplatform.web.events.TradeClosedEvent;
 import com.haulmont.cuba.gui.components.CheckBox;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.LookupPickerField;
+import com.haulmont.cuba.gui.components.PickerField;
 import com.haulmont.cuba.gui.components.TextField;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.model.InstanceContainer;
@@ -37,19 +39,11 @@ public class TradeBrokerageFragment extends ScreenFragment {
     @Inject
     protected CheckBox broOverideCheckBox;
     @Inject
-    protected CheckBox gcCheckBox;
-    @Inject
     protected TextField<String> origtraderefField;
     @Inject
     protected TextField<BigDecimal> sellBrokerageField;
     @Inject
-    protected CheckBox specialCheckBox;
-    @Inject
     protected CheckBox subsCheckBox;
-    @Inject
-    protected CheckBox subThirtyCheckBox;
-    @Inject
-    protected CheckBox moreThanThirtyCheckBox;
 
     @Inject
     protected InstanceContainer<Trade> tradeDc;
@@ -120,56 +114,11 @@ public class TradeBrokerageFragment extends ScreenFragment {
         }
     }
 
-    @Subscribe("gcCheckBox")
-    protected void onGcCheckBoxValueChange(HasValue.ValueChangeEvent<Boolean> event) {
-        if (!event.isUserOriginated()) {
-            return;
+    @Subscribe("brokerageTypeField")
+    protected void onBrokerageTypeFieldValueChange(HasValue.ValueChangeEvent<BrokerageType> event) {
+        if (event.isUserOriginated()) {
+            brokerageBean.updateBrokerage(tradeDc.getItem());
         }
-        if (Boolean.TRUE.equals(event.getValue())) {
-            specialCheckBox.setValue(false);
-            subThirtyCheckBox.setValue(false);
-            moreThanThirtyCheckBox.setValue(false);
-        }
-        brokerageBean.updateBrokerage(tradeDc.getItem());
-    }
-
-    @Subscribe("specialCheckBox")
-    protected void onSpecialCheckBoxValueChange(HasValue.ValueChangeEvent<Boolean> event) {
-        if (!event.isUserOriginated()) {
-            return;
-        }
-        if (Boolean.TRUE.equals(event.getValue())) {
-            gcCheckBox.setValue(false);
-            subThirtyCheckBox.setValue(false);
-            moreThanThirtyCheckBox.setValue(false);
-        }
-        brokerageBean.updateBrokerage(tradeDc.getItem());
-    }
-
-    @Subscribe("subThirtyCheckBox")
-    protected void onSubThirtyCheckBoxValueChange(HasValue.ValueChangeEvent<Boolean> event) {
-        if (!event.isUserOriginated()) {
-            return;
-        }
-        if (Boolean.TRUE.equals(event.getValue())) {
-            specialCheckBox.setValue(false);
-            gcCheckBox.setValue(false);
-            moreThanThirtyCheckBox.setValue(false);
-        }
-        brokerageBean.updateBrokerage(tradeDc.getItem());
-    }
-
-    @Subscribe("moreThanThirtyCheckBox")
-    protected void onMoreThanThirtyCheckBoxValueChange(HasValue.ValueChangeEvent<Boolean> event) {
-        if (!event.isUserOriginated()) {
-            return;
-        }
-        if (Boolean.TRUE.equals(event.getValue())) {
-            specialCheckBox.setValue(false);
-            subThirtyCheckBox.setValue(false);
-            gcCheckBox.setValue(false);
-        }
-        brokerageBean.updateBrokerage(tradeDc.getItem());
     }
 
     @EventListener
