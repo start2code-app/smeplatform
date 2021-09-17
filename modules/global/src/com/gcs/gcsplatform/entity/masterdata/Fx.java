@@ -13,6 +13,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import com.haulmont.chile.core.annotations.NumberFormat;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.cuba.core.entity.annotation.PublishEntityChangedEvents;
 
@@ -32,6 +33,7 @@ public class Fx extends StandardEntity {
 
     @NotNull
     @Column(name = "FX_VALUE", nullable = false, precision = 10, scale = 4)
+    @NumberFormat(pattern = "#,##0.0000")
     private BigDecimal fxValue;
 
     @Temporal(TemporalType.DATE)

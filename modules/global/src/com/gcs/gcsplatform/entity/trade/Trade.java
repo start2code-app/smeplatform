@@ -141,6 +141,7 @@ public abstract class Trade extends StandardEntity {
     private Date valueDate;
 
     @Column(name = "XRATE1", precision = 10, scale = 4)
+    @NumberFormat(pattern = "#,##0.0000")
     private BigDecimal xrate1;
 
     @Column(name = "XRATE2", precision = 10, scale = 4)

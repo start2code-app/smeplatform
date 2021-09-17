@@ -109,6 +109,7 @@ public class InvoiceLine extends StandardEntity {
     private BigDecimal pnl;
 
     @Column(name = "FX", precision = 10, scale = 4)
+    @NumberFormat(pattern = "#,##0.0000")
     private BigDecimal fx;
 
     @Column(name = "GBP_EQUIVALENT", precision = 10, scale = 4)
