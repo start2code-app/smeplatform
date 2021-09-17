@@ -8,6 +8,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.haulmont.chile.core.annotations.NumberFormat;
 import com.haulmont.cuba.core.entity.StandardEntity;
 
 @Table(name = "GCSPLATFORM_INVOICE")
@@ -28,11 +29,11 @@ public class Invoice extends StandardEntity {
     @Column(name = "LOCATION", length = 5)
     private String location;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "START_DATE")
     private Date startDate;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "END_DATE")
     private Date endDate;
 
@@ -40,9 +41,11 @@ public class Invoice extends StandardEntity {
     private BigDecimal amount;
 
     @Column(name = "FX", precision = 10, scale = 4)
+    @NumberFormat(pattern = "#,##0.0000")
     private BigDecimal fx;
 
     @Column(name = "FX_USD", precision = 10, scale = 4)
+    @NumberFormat(pattern = "#,##0.0000")
     private BigDecimal fxUsd;
 
     @Column(name = "GBP_AMOUNT", precision = 10, scale = 4)

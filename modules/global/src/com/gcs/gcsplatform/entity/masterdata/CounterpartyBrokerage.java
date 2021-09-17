@@ -41,11 +41,11 @@ public class CounterpartyBrokerage extends StandardEntity {
     @Column(name = "BROKERAGE_TYPE", nullable = false)
     private String brokerageType;
 
-    public CounterpartyBrokerageType getBrokerageType() {
-        return brokerageType == null ? null : CounterpartyBrokerageType.fromId(brokerageType);
+    public BrokerageType getBrokerageType() {
+        return brokerageType == null ? null : BrokerageType.fromId(brokerageType);
     }
 
-    public void setBrokerageType(CounterpartyBrokerageType brokerageType) {
+    public void setBrokerageType(BrokerageType brokerageType) {
         this.brokerageType = brokerageType == null ? null : brokerageType.getId();
     }
 

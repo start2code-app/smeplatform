@@ -19,6 +19,7 @@ import com.haulmont.cuba.gui.screen.Subscribe;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
 import org.apache.commons.lang3.StringUtils;
 
+import static com.gcs.gcsplatform.util.DateUtils.getDaysBetweenDates;
 import static com.gcs.gcsplatform.web.util.ScreenUtil.initFieldValueToStringPropertyMapping;
 
 @UiDescriptor("trade-edit.xml")
@@ -89,7 +90,9 @@ public abstract class TradeEdit<T extends Trade> extends StandardEditor<T> {
                     .withDescription(messageBundle.getMessage("valueDate.validationMsg"))
                     .show();
             trade.setValueDate(prevValue);
+            return;
         }
+        updateNumDays();
     }
 
     @Subscribe("maturityDateField")
@@ -108,7 +111,14 @@ public abstract class TradeEdit<T extends Trade> extends StandardEditor<T> {
                     .withDescription(messageBundle.getMessage("maturityDate.validationMsg"))
                     .show();
             trade.setMaturityDate(prevValue);
+            return;
         }
+        updateNumDays();
+    }
+
+    protected void updateNumDays() {
+        Trade trade = tradeDc.getItem();
+        trade.setNumdays(getDaysBetweenDates(trade.getMaturityDate(), trade.getValueDate()));
     }
 
     public boolean isNew() {

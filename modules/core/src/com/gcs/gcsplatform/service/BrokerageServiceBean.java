@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
-import com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerageType;
+import com.gcs.gcsplatform.entity.masterdata.BrokerageType;
 import com.haulmont.cuba.core.global.DataManager;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class BrokerageServiceBean implements BrokerageService {
     @Nullable
     @Override
     public BigDecimal findBrokerageValue(String counterparty, String category,
-            CounterpartyBrokerageType brokerageType) {
+            BrokerageType brokerageType) {
         if (counterparty == null || category == null || brokerageType == null) {
             return null;
         }

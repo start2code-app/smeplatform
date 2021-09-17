@@ -2,7 +2,6 @@ package com.gcs.gcsplatform.web.screens.trade.closedtrade;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Objects;
 import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.masterdata.Currency;
@@ -14,6 +13,7 @@ import com.haulmont.cuba.gui.components.CurrencyField;
 import com.haulmont.cuba.gui.components.DateField;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.model.DataContext;
+import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.Subscribe;
 import com.haulmont.cuba.gui.screen.Target;
 import com.haulmont.cuba.gui.screen.UiController;
@@ -47,7 +47,7 @@ public class ClosedTradeEdit extends TradeEdit<ClosedTrade> {
 
     protected void onTradeCurrencyLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Currency> event) {
         if (event.isUserOriginated()) {
-            updateTradeCurrency();
+            updatePnlCurrencySign();
         }
     }
 
@@ -55,13 +55,8 @@ public class ClosedTradeEdit extends TradeEdit<ClosedTrade> {
     protected void onCurrencyLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Currency> event) {
         super.onCurrencyLookupPickerFieldValueChange(event);
         if (event.isUserOriginated()) {
-            updateTradeCurrency();
+            updatePnlCurrencySign();
         }
-    }
-
-    protected void updateTradeCurrency() {
-        updatePnlCurrencySign();
-        pnlCalculationBean.updatePnl(tradeDc.getItem());
     }
 
     protected void updatePnlCurrencySign() {
@@ -75,43 +70,16 @@ public class ClosedTradeEdit extends TradeEdit<ClosedTrade> {
         sellPnlField.setShowCurrencyLabel(currencyIsNotBlank);
     }
 
-    @Override
-    protected void onValueDateFieldValueChange(HasValue.ValueChangeEvent<Date> event) {
-        super.onValueDateFieldValueChange(event);
-        Date value = event.getValue();
-        Date prevValue = event.getPrevValue();
-        if (event.isUserOriginated() && !Objects.equals(value, prevValue)) {
-            pnlCalculationBean.updatePnl(tradeDc.getItem());
-        }
-    }
-
-    @Override
-    protected void onMaturityDateFieldValueChange(HasValue.ValueChangeEvent<Date> event) {
-        super.onMaturityDateFieldValueChange(event);
-        Date value = event.getValue();
-        Date prevValue = event.getPrevValue();
-        if (event.isUserOriginated() && !Objects.equals(value, prevValue)) {
-            pnlCalculationBean.updatePnl(tradeDc.getItem());
-        }
-    }
-
-    @Subscribe("invoiceDateField")
-    protected void onInvoiceDateFieldValueChange(HasValue.ValueChangeEvent<Date> event) {
-        if (event.isUserOriginated()) {
-            pnlCalculationBean.updatePnl(tradeDc.getItem());
-        }
-    }
-
-    @Subscribe("startPriceField")
-    protected void onStartPriceFieldValueChange(HasValue.ValueChangeEvent<BigDecimal> event) {
-        if (event.isUserOriginated()) {
-            pnlCalculationBean.updatePnl(tradeDc.getItem());
-        }
-    }
-
-    @Subscribe("nominalField")
-    protected void onNominalFieldValueChange(HasValue.ValueChangeEvent<BigDecimal> event) {
-        if (event.isUserOriginated()) {
+    @Subscribe(id = "tradeDc", target = Target.DATA_CONTAINER)
+    protected void onTradeDcItemPropertyChange(InstanceContainer.ItemPropertyChangeEvent<ClosedTrade> event) {
+        String property = event.getProperty();
+        if (property.equals("nominal")
+                || property.equals("startPrice")
+                || property.equals("invoiceDate")
+                || property.equals("numdays")
+                || property.equals("tradeCurrency")
+                || property.equals("buybrokerage")
+                || property.equals("sellbrokerage")) {
             pnlCalculationBean.updatePnl(tradeDc.getItem());
         }
     }

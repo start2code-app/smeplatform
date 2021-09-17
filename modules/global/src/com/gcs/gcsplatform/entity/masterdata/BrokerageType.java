@@ -5,16 +5,17 @@ import com.haulmont.chile.core.datatypes.impl.EnumClass;
 import javax.annotation.Nullable;
 
 
-public enum CounterpartyBrokerageType implements EnumClass<String> {
+public enum BrokerageType implements EnumClass<String> {
 
-    GC("GC"),
-    SPECIAL("SPECIAL"),
-    SUB_THIRTY("SUB_THIRTY"),
-    MORE_THAN_THIRTY("MORE_THAN_THIRTY");
+    GC("GEN"),
+    SPECIAL("SPE"),
+    SUB_THIRTY_DAYS("S30D"),
+    MORE_THAN_THIRTY_DAYS("M30D"),
+    SUB_TEN_MILLION("S10M");
 
     private String id;
 
-    CounterpartyBrokerageType(String value) {
+    BrokerageType(String value) {
         this.id = value;
     }
 
@@ -23,8 +24,8 @@ public enum CounterpartyBrokerageType implements EnumClass<String> {
     }
 
     @Nullable
-    public static CounterpartyBrokerageType fromId(String id) {
-        for (CounterpartyBrokerageType at : CounterpartyBrokerageType.values()) {
+    public static BrokerageType fromId(String id) {
+        for (BrokerageType at : BrokerageType.values()) {
             if (at.getId().equals(id)) {
                 return at;
             }

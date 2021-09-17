@@ -32,13 +32,12 @@
                         type="remove"/>
                 <action id="refresh"
                         type="refresh"/>
+                <action id="excel"
+                        type="excel"/>
             </actions>
             <columns>
                 <column id="traderef"/>
-                <column id="tradeDate">
-                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
-                               format="dd/MM/yyyy"/>
-                </column>
+                <column id="tradeDate"/>
                 <column id="bondDescription"/>
                 <column id="isin"/>
                 <column id="buyer"/>
@@ -46,18 +45,9 @@
                 <column id="seller"/>
                 <column id="sellbrokerage"/>
                 <column id="nominal"/>
-                <column id="invoiceDate">
-                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
-                               format="dd/MM/yyyy"/>
-                </column>
-                <column id="valueDate">
-                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
-                               format="dd/MM/yyyy"/>
-                </column>
-                <column id="maturityDate">
-                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
-                               format="dd/MM/yyyy"/>
-                </column>
+                <column id="invoiceDate"/>
+                <column id="valueDate"/>
+                <column id="maturityDate"/>
                 <column id="hairCut"/>
                 <column id="currency"/>
                 <column id="brokerInitials"/>
@@ -104,13 +94,7 @@
                         collapsed="true"/>
                 <column id="xrate3"
                         collapsed="true"/>
-                <column id="gc"
-                        collapsed="true"/>
-                <column id="special"
-                        collapsed="true"/>
-                <column id="subThirty"
-                        collapsed="true"/>
-                <column id="moreThanThirty"
+                <column id="brokerageType"
                         collapsed="true"/>
                 <column id="brooveride"
                         collapsed="true"/>
@@ -126,6 +110,10 @@
                         collapsed="true"/>
                 <column id="sellerInvoiceCode"
                         collapsed="true"/>
+                <column id="buybroker"
+                        collapsed="true"/>
+                <column id="sellbroker"
+                        collapsed="true"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
@@ -139,6 +127,8 @@
                             action="tradesTable.remove"/>
                     <button id="refreshBtn"
                             action="tradesTable.refresh"/>
+                    <button id="excelBtn"
+                            action="tradesTable.excel"/>
                     <button id="utiBtn"
                             stylename="warning"
                             caption="msg://uti"/>

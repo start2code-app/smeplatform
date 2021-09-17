@@ -35,14 +35,9 @@
                                         type="picker_clear"/>
                             </actions>
                         </lookupPickerField>
-                        <checkBox id="gcCheckBox"
-                                  property="gc"/>
-                        <checkBox id="specialCheckBox"
-                                  property="special"/>
-                        <checkBox id="subThirtyCheckBox"
-                                  property="subThirty"/>
-                        <checkBox id="moreThanThirtyCheckBox"
-                                  property="moreThanThirty"/>
+                        <lookupField id="brokerageTypeField"
+                                     optionsEnum="com.gcs.gcsplatform.entity.masterdata.BrokerageType"
+                                     property="brokerageType"/>
                     </column>
                 </form>
             </groupBox>
@@ -53,7 +48,7 @@
                 <form id="broOverideForm"
                       dataContainer="tradeDc">
                     <column width="200px">
-                        <checkBox id="broOverideCheckBox"
+                        <checkBox id="broOverrideCheckBox"
                                   property="brooveride"/>
                         <checkBox id="subsCheckBox"
                                   property="subs"/>

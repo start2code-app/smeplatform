@@ -26,15 +26,15 @@ public class InvoiceLine extends StandardEntity {
     @Column(name = "CONTRACT_NUMBER", length = 100)
     private String contractNumber;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "START_DATE")
     private Date startDate;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "END_DATE")
     private Date endDate;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "TRADE_DATE")
     private Date tradeDate;
 
@@ -74,11 +74,11 @@ public class InvoiceLine extends StandardEntity {
     @Column(name = "CROSS_RATE", length = 50)
     private String crossRate;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "VALUE_DATE")
     private Date valueDate;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "MATURITY_DATE")
     private Date maturityDate;
 
@@ -109,6 +109,7 @@ public class InvoiceLine extends StandardEntity {
     private BigDecimal pnl;
 
     @Column(name = "FX", precision = 10, scale = 4)
+    @NumberFormat(pattern = "#,##0.0000")
     private BigDecimal fx;
 
     @Column(name = "GBP_EQUIVALENT", precision = 10, scale = 4)

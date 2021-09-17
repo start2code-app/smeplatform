@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:ext="http://schemas.haulmont.com/cuba/window-ext.xsd"
         caption="msg://openedTradeEdit.caption"
         messagesPack="com.gcs.gcsplatform.web.screens.trade.openedtrade"
         extends="com/gcs/gcsplatform/web/screens/trade/trade-edit.xml">
@@ -10,8 +11,10 @@
     <layout>
         <hbox id="editActions">
             <fragment id="btnCloseReopenTradeFragment"
+                      ext:index="1"
                       screen="gcsplatform_BtnCloseReopenTradeFragment"/>
             <fragment id="btnCloseTradeFragment"
+                      ext:index="2"
                       screen="gcsplatform_BtnCloseTradeFragment"/>
         </hbox>
     </layout>

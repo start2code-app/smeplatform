@@ -1,6 +1,6 @@
 package com.gcs.gcsplatform.entity.pnl.chart;
 
-import com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerageType;
+import com.gcs.gcsplatform.entity.masterdata.BrokerageType;
 import com.haulmont.chile.core.annotations.MetaClass;
 import com.haulmont.chile.core.annotations.MetaProperty;
 import com.haulmont.cuba.core.entity.BaseUuidEntity;
@@ -24,11 +24,11 @@ public class BrokerageTypeCount extends BaseUuidEntity {
         this.count = count;
     }
 
-    public CounterpartyBrokerageType getBrokerageType() {
-        return brokerageType == null ? null : CounterpartyBrokerageType.fromId(brokerageType);
+    public BrokerageType getBrokerageType() {
+        return brokerageType == null ? null : BrokerageType.fromId(brokerageType);
     }
 
-    public void setBrokerageType(CounterpartyBrokerageType brokerageType) {
+    public void setBrokerageType(BrokerageType brokerageType) {
         this.brokerageType = brokerageType == null ? null : brokerageType.getId();
     }
 }

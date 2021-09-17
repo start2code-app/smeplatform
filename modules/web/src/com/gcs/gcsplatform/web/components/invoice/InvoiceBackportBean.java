@@ -10,23 +10,19 @@ public class InvoiceBackportBean {
     public static final String NAME = "gcsplatform_InvoiceBackportBean";
 
     /**
-     * Backports changes of invoice to a corresponding trade.
+     * Backports changes of specified invoice line to a corresponding trade.
      *
      * @param invoiceLine Invoice line
      */
     public void backportChangesToTrade(InvoiceLine invoiceLine) {
         ClosedTrade trade = invoiceLine.getTrade();
         trade.setBrokerage(invoiceLine.getBrokerage(), invoiceLine.getTradeSide());
-        trade.setCounterparty(invoiceLine.getCounterparty(), invoiceLine.getTradeSide());
-        trade.setInvoiceCode(invoiceLine.getLocation(), invoiceLine.getTradeSide());
-        trade.setCounterpartyCode(invoiceLine.getCounterpartyCode(), invoiceLine.getTradeSide());
-        trade.setTradeCurrency(invoiceLine.getCurrency());
         trade.setMaturityDate(invoiceLine.getMaturityDate());
         trade.setValueDate(invoiceLine.getValueDate());
+        trade.setNumdays(invoiceLine.getNumdays());
         trade.setNominal(invoiceLine.getNominal());
         trade.setNotes(invoiceLine.getNotes());
         trade.setGbpEquivalent(invoiceLine.getGbpEquivalent(), invoiceLine.getTradeSide());
         trade.setPnl(invoiceLine.getPnl(), invoiceLine.getTradeSide());
-        trade.setXrate1(invoiceLine.getFx());
     }
 }

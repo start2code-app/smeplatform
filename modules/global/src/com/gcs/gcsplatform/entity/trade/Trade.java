@@ -9,7 +9,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerageType;
+import com.gcs.gcsplatform.entity.masterdata.BrokerageType;
 import com.haulmont.chile.core.annotations.MetaClass;
 import com.haulmont.chile.core.annotations.MetaProperty;
 import com.haulmont.chile.core.annotations.NumberFormat;
@@ -65,16 +65,13 @@ public abstract class Trade extends StandardEntity {
     @Column(name = "SELL_GBP_EQUIVALENT", precision = 10, scale = 4)
     private BigDecimal sellGbpEquivalent;
 
-    @Column(name = "GC")
-    private Boolean gc;
-
     @Column(name = "HAIR_CUT", precision = 10, scale = 4)
     private BigDecimal hairCut;
 
     @Column(name = "ISIN", length = 20)
     private String isin;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "MATURITY_DATE")
     private Date maturityDate;
 
@@ -107,9 +104,6 @@ public abstract class Trade extends StandardEntity {
     @Column(name = "SELLER_AGENT", length = 30)
     private String sellerAgent;
 
-    @Column(name = "SPECIAL")
-    private Boolean special;
-
     @Column(name = "START_PRICE", precision = 10, scale = 4)
     private BigDecimal startPrice;
 
@@ -122,11 +116,11 @@ public abstract class Trade extends StandardEntity {
     @Column(name = "TRADE_CURRENCY", length = 5)
     private String tradeCurrency;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "TRADE_DATE")
     private Date tradeDate;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "INVOICE_DATE")
     private Date invoiceDate;
 
@@ -136,11 +130,12 @@ public abstract class Trade extends StandardEntity {
     @Column(name = "UTI", length = 50)
     private String uti;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "VALUE_DATE")
     private Date valueDate;
 
     @Column(name = "XRATE1", precision = 10, scale = 4)
+    @NumberFormat(pattern = "#,##0.0000")
     private BigDecimal xrate1;
 
     @Column(name = "XRATE2", precision = 10, scale = 4)
@@ -148,12 +143,6 @@ public abstract class Trade extends StandardEntity {
 
     @Column(name = "XRATE3", precision = 10, scale = 4)
     private BigDecimal xrate3;
-
-    @Column(name = "SUB_THIRTY")
-    private Boolean subThirty;
-
-    @Column(name = "MORE_THAN_THIRTY")
-    private Boolean moreThanThirty;
 
     @Column(name = "GM_SLA")
     private Boolean gmSla;
@@ -200,28 +189,23 @@ public abstract class Trade extends StandardEntity {
     @Column(name = "SELLER_INVOICE_CODE", length = 50)
     private String sellerInvoiceCode;
 
+    @Column(name = "BROKERAGE_TYPE")
+    private String brokerageType;
+
+    public BrokerageType getBrokerageType() {
+        return brokerageType == null ? null : BrokerageType.fromId(brokerageType);
+    }
+
+    public void setBrokerageType(BrokerageType brokerageType) {
+        this.brokerageType = brokerageType == null ? null : brokerageType.getId();
+    }
+
     @Nullable
     @Transient
     @MetaProperty(related = {"buybroker", "sellbroker"})
     public String getBrokerInitials() {
         if (StringUtils.isNotBlank(buybroker) && StringUtils.isNotBlank(sellbroker)) {
             return String.format("%s/%s", buybroker, sellbroker);
-        }
-        return null;
-    }
-
-    @Nullable
-    @Transient
-    @MetaProperty(related = {"gc", "special", "subThirty", "moreThanThirty"})
-    public CounterpartyBrokerageType getBrokerageType() {
-        if (Boolean.TRUE.equals(gc)) {
-            return CounterpartyBrokerageType.GC;
-        } else if (Boolean.TRUE.equals(special)) {
-            return CounterpartyBrokerageType.SPECIAL;
-        } else if (Boolean.TRUE.equals(subThirty)) {
-            return CounterpartyBrokerageType.SUB_THIRTY;
-        } else if (Boolean.TRUE.equals(moreThanThirty)) {
-            return CounterpartyBrokerageType.MORE_THAN_THIRTY;
         }
         return null;
     }
@@ -530,22 +514,6 @@ public abstract class Trade extends StandardEntity {
         this.gmSla = gmSla;
     }
 
-    public Boolean getMoreThanThirty() {
-        return moreThanThirty;
-    }
-
-    public void setMoreThanThirty(Boolean moreThanThirty) {
-        this.moreThanThirty = moreThanThirty;
-    }
-
-    public Boolean getSubThirty() {
-        return subThirty;
-    }
-
-    public void setSubThirty(Boolean subThirty) {
-        this.subThirty = subThirty;
-    }
-
     public BigDecimal getXrate3() {
         return xrate3;
     }
@@ -616,14 +584,6 @@ public abstract class Trade extends StandardEntity {
 
     public void setStartPrice(BigDecimal startPrice) {
         this.startPrice = startPrice;
-    }
-
-    public Boolean getSpecial() {
-        return special;
-    }
-
-    public void setSpecial(Boolean special) {
-        this.special = special;
     }
 
     public String getSellerAgent() {
@@ -704,14 +664,6 @@ public abstract class Trade extends StandardEntity {
 
     public void setHairCut(BigDecimal hairCut) {
         this.hairCut = hairCut;
-    }
-
-    public Boolean getGc() {
-        return gc;
-    }
-
-    public void setGc(Boolean gc) {
-        this.gc = gc;
     }
 
     public BigDecimal getBuyGbpEquivalent() {
