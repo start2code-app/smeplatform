@@ -40,18 +40,9 @@
             </actions>
             <columns>
                 <column id="contractNumber"/>
-                <column id="startDate">
-                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
-                               format="dd/MM/yyyy"/>
-                </column>
-                <column id="endDate">
-                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
-                               format="dd/MM/yyyy"/>
-                </column>
-                <column id="tradeDate">
-                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
-                               format="dd/MM/yyyy"/>
-                </column>
+                <column id="startDate"/>
+                <column id="endDate"/>
+                <column id="tradeDate"/>
                 <column id="bondDescription"/>
                 <column id="buyer"/>
                 <column id="seller"/>
@@ -64,14 +55,8 @@
                 <column id="currency"/>
                 <column id="baseCurrency"/>
                 <column id="crossRate"/>
-                <column id="valueDate">
-                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
-                               format="dd/MM/yyyy"/>
-                </column>
-                <column id="maturityDate">
-                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
-                               format="dd/MM/yyyy"/>
-                </column>
+                <column id="valueDate"/>
+                <column id="maturityDate"/>
                 <column id="numdays"/>
                 <column id="nominal"/>
                 <column id="hairCut"/>

@@ -34,7 +34,7 @@ public class Fx extends StandardEntity {
     @Column(name = "FX_VALUE", nullable = false, precision = 10, scale = 4)
     private BigDecimal fxValue;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "BILLING_DATE", nullable = false)
     @NotNull
     private Date billingDate;

@@ -74,7 +74,7 @@ public abstract class Trade extends StandardEntity {
     @Column(name = "ISIN", length = 20)
     private String isin;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "MATURITY_DATE")
     private Date maturityDate;
 
@@ -122,11 +122,11 @@ public abstract class Trade extends StandardEntity {
     @Column(name = "TRADE_CURRENCY", length = 5)
     private String tradeCurrency;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "TRADE_DATE")
     private Date tradeDate;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "INVOICE_DATE")
     private Date invoiceDate;
 
@@ -136,7 +136,7 @@ public abstract class Trade extends StandardEntity {
     @Column(name = "UTI", length = 50)
     private String uti;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "VALUE_DATE")
     private Date valueDate;
 

@@ -32,14 +32,8 @@
                 <column id="currency"/>
                 <column id="counterpartyCode"/>
                 <column id="location"/>
-                <column id="startDate">
-                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
-                               format="dd/MM/yyyy"/>
-                </column>
-                <column id="endDate">
-                    <formatter class="com.haulmont.cuba.gui.components.formatters.DateFormatter"
-                               format="dd/MM/yyyy"/>
-                </column>
+                <column id="startDate"/>
+                <column id="endDate"/>
                 <column id="amount"/>
                 <column id="fx"/>
                 <column id="fxUsd"/>

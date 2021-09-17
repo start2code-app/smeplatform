@@ -28,11 +28,11 @@ public class Invoice extends StandardEntity {
     @Column(name = "LOCATION", length = 5)
     private String location;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "START_DATE")
     private Date startDate;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "END_DATE")
     private Date endDate;
 
