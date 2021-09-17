@@ -1,37 +1,26 @@
 package com.gcs.gcsplatform.web.screens.invoiceline;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import javax.inject.Inject;
 
-import com.gcs.gcsplatform.entity.invoice.Invoice;
 import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
-import com.gcs.gcsplatform.entity.masterdata.Counterparty;
-import com.gcs.gcsplatform.entity.masterdata.Currency;
-import com.gcs.gcsplatform.service.invoice.InvoiceService;
-import com.gcs.gcsplatform.web.components.pnl.PnlCalculationBean;
 import com.gcs.gcsplatform.web.components.invoice.InvoiceBackportBean;
 import com.gcs.gcsplatform.web.components.invoice.InvoiceCalculationBean;
-import com.gcs.gcsplatform.web.screens.counterparty.CounterpartyBrowse;
-import com.haulmont.cuba.core.global.View;
-import com.haulmont.cuba.core.global.ViewBuilder;
+import com.gcs.gcsplatform.web.components.pnl.PnlCalculationBean;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.components.HasValue;
-import com.haulmont.cuba.gui.components.LookupPickerField;
 import com.haulmont.cuba.gui.model.DataContext;
 import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.EditedEntityContainer;
-import com.haulmont.cuba.gui.screen.Install;
 import com.haulmont.cuba.gui.screen.LoadDataBeforeShow;
 import com.haulmont.cuba.gui.screen.MessageBundle;
-import com.haulmont.cuba.gui.screen.Screen;
 import com.haulmont.cuba.gui.screen.StandardEditor;
 import com.haulmont.cuba.gui.screen.Subscribe;
 import com.haulmont.cuba.gui.screen.Target;
 import com.haulmont.cuba.gui.screen.UiController;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
 
-import static com.gcs.gcsplatform.web.util.ScreenUtil.initFieldValueToStringPropertyMapping;
+import static com.gcs.gcsplatform.util.DateUtils.getDaysBetweenDates;
 
 @UiController("gcsplatform_InvoiceLine.edit")
 @UiDescriptor("invoice-line-edit.xml")
@@ -39,15 +28,6 @@ import static com.gcs.gcsplatform.web.util.ScreenUtil.initFieldValueToStringProp
 @LoadDataBeforeShow
 public class InvoiceLineEdit extends StandardEditor<InvoiceLine> {
 
-    protected Invoice originalInvoice;
-
-    @Inject
-    protected LookupPickerField<Counterparty> counterpartyLookupPickerField;
-    @Inject
-    protected LookupPickerField<Currency> currencyLookupPickerField;
-
-    @Inject
-    protected InvoiceService invoiceService;
     @Inject
     protected PnlCalculationBean pnlCalculationBean;
     @Inject
@@ -58,39 +38,6 @@ public class InvoiceLineEdit extends StandardEditor<InvoiceLine> {
     protected Notifications notifications;
     @Inject
     protected MessageBundle messageBundle;
-
-    @Inject
-    protected InstanceContainer<InvoiceLine> invoiceLineDc;
-
-    @Subscribe
-    protected void onAfterShow(AfterShowEvent event) {
-        initFieldValueToStringPropertyMapping(currencyLookupPickerField, invoiceLineDc, "currency", "currency");
-        initFieldValueToStringPropertyMapping(counterpartyLookupPickerField, invoiceLineDc, "counterparty",
-                "counterparty");
-
-        /*
-         * Subscribe manually to preserve listeners execution order. First listener maps field value to entity.
-         */
-        counterpartyLookupPickerField.addValueChangeListener(this::onCounterpartyLookupPickerFieldValueChange);
-
-        /*
-         * Save original invoice to recalculate it after invoice line modifying.
-         */
-        originalInvoice = invoiceService.findInvoice(getEditedEntity(), ViewBuilder.of(Invoice.class)
-                .addView(View.LOCAL)
-                .build());
-    }
-
-    protected void onCounterpartyLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Counterparty> event) {
-        if (!event.isUserOriginated()) {
-            return;
-        }
-        InvoiceLine invoiceLine = getEditedEntity();
-        Counterparty counterparty = event.getValue();
-        invoiceLine.setCounterpartyCode(counterparty != null ? counterparty.getBillingInfo1() : null);
-        invoiceLine.setLocation(counterparty != null ? counterparty.getBillingInfo3() : null);
-        invoiceLine.setBuyerOrSeller(counterparty != null ? counterparty.getCounterparty() : null);
-    }
 
     @Subscribe("valueDateField")
     protected void onValueDateFieldValueChange(HasValue.ValueChangeEvent<Date> event) {
@@ -110,7 +57,7 @@ public class InvoiceLineEdit extends StandardEditor<InvoiceLine> {
             invoiceLine.setValueDate(prevValue);
             return;
         }
-        pnlCalculationBean.updatePnl(invoiceLine);
+        updateNumDays();
     }
 
     @Subscribe("maturityDateField")
@@ -131,26 +78,20 @@ public class InvoiceLineEdit extends StandardEditor<InvoiceLine> {
             invoiceLine.setMaturityDate(prevValue);
             return;
         }
-        pnlCalculationBean.updatePnl(invoiceLine);
+        updateNumDays();
     }
 
-    @Subscribe("brokerageField")
-    protected void onBrokerageFieldValueChange(HasValue.ValueChangeEvent<BigDecimal> event) {
-        if (event.isUserOriginated()) {
-            pnlCalculationBean.updatePnl(getEditedEntity());
-        }
+    protected void updateNumDays() {
+        InvoiceLine invoiceLine = getEditedEntity();
+        invoiceLine.setNumdays(getDaysBetweenDates(invoiceLine.getMaturityDate(), invoiceLine.getValueDate()));
     }
 
-    @Subscribe("nominalField")
-    protected void onNominalFieldValueChange(HasValue.ValueChangeEvent<BigDecimal> event) {
-        if (event.isUserOriginated()) {
-            pnlCalculationBean.updatePnl(getEditedEntity());
-        }
-    }
-
-    @Subscribe("fxField")
-    protected void onFxFieldValueChange(HasValue.ValueChangeEvent<BigDecimal> event) {
-        if (event.isUserOriginated()) {
+    @Subscribe(id = "invoiceLineDc", target = Target.DATA_CONTAINER)
+    protected void onInvoiceLineDcItemPropertyChange(InstanceContainer.ItemPropertyChangeEvent<InvoiceLine> event) {
+        String property = event.getProperty();
+        if (property.equals("nominal")
+                || property.equals("brokerage")
+                || property.equals("numdays")) {
             pnlCalculationBean.updatePnl(getEditedEntity());
         }
     }
@@ -162,12 +103,6 @@ public class InvoiceLineEdit extends StandardEditor<InvoiceLine> {
 
     @Subscribe(target = Target.DATA_CONTEXT)
     protected void onPostCommit(DataContext.PostCommitEvent event) {
-        invoiceCalculationBean.recalculateOrCreateInvoice(getEditedEntity(), originalInvoice);
-    }
-
-    @Install(to = "counterpartyLookupPickerField.lookup", subject = "screenConfigurer")
-    protected void counterpartyLookupPickerFieldLookupScreenConfigurer(Screen screen) {
-        CounterpartyBrowse counterpartyBrowse = (CounterpartyBrowse) screen;
-        counterpartyBrowse.setOnlyActive(true);
+        invoiceCalculationBean.recalculateInvoice(getEditedEntity());
     }
 }

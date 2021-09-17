@@ -29,8 +29,6 @@
                     dataContainer="invoiceLinesDc"
                     multiselect="true">
             <actions>
-                <action id="create"
-                        type="create"/>
                 <action id="edit"
                         type="edit"/>
                 <action id="remove"
@@ -72,8 +70,6 @@
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn"
-                        action="invoiceLinesTable.create"/>
                 <button id="editBtn"
                         action="invoiceLinesTable.edit"/>
                 <button id="removeBtn"
