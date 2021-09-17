@@ -123,6 +123,7 @@
                     action="windowCommitAndClose"
                     caption="msg://save.caption"/>
             <button id="closeBtn"
+                    align="MIDDLE_RIGHT"
                     action="windowClose"/>
         </hbox>
     </layout>

@@ -32,6 +32,8 @@
                         type="remove"/>
                 <action id="refresh"
                         type="refresh"/>
+                <action id="excel"
+                        type="excel"/>
             </actions>
             <columns>
                 <column id="traderef"/>
@@ -92,13 +94,7 @@
                         collapsed="true"/>
                 <column id="xrate3"
                         collapsed="true"/>
-                <column id="gc"
-                        collapsed="true"/>
-                <column id="special"
-                        collapsed="true"/>
-                <column id="subThirty"
-                        collapsed="true"/>
-                <column id="moreThanThirty"
+                <column id="brokerageType"
                         collapsed="true"/>
                 <column id="brooveride"
                         collapsed="true"/>
@@ -114,6 +110,10 @@
                         collapsed="true"/>
                 <column id="sellerInvoiceCode"
                         collapsed="true"/>
+                <column id="buybroker"
+                        collapsed="true"/>
+                <column id="sellbroker"
+                        collapsed="true"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
@@ -127,6 +127,8 @@
                             action="tradesTable.remove"/>
                     <button id="refreshBtn"
                             action="tradesTable.refresh"/>
+                    <button id="excelBtn"
+                            action="tradesTable.excel"/>
                     <button id="utiBtn"
                             stylename="warning"
                             caption="msg://uti"/>
