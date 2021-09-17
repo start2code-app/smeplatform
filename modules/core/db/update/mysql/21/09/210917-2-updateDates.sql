@@ -29,7 +29,7 @@ alter table GCSPLATFORM_CALL_OPTION_TRADE modify column MATURITY_DATE date ;
 alter table GCSPLATFORM_CALL_OPTION_TRADE modify column VALUE_DATE date ;
 
 -- fx
-alter table GCSPLATFORM_FX modify column BILLING_DATE date ;
+alter table GCSPLATFORM_FX modify column BILLING_DATE date not null ;
 
 -- invoice
 alter table GCSPLATFORM_INVOICE modify column START_DATE date ;
