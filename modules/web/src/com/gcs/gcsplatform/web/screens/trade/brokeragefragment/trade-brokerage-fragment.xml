@@ -47,7 +47,7 @@
                 <form id="broOverideForm"
                       dataContainer="tradeDc">
                     <column width="200px">
-                        <checkBox id="broOverideCheckBox"
+                        <checkBox id="broOverrideCheckBox"
                                   property="brooveride"/>
                         <checkBox id="subsCheckBox"
                                   property="subs"/>

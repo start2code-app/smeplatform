@@ -37,7 +37,7 @@ public class TradeBrokerageFragment extends ScreenFragment {
     @Inject
     protected LookupPickerField<Category> categoryLookupPickerField;
     @Inject
-    protected CheckBox broOverideCheckBox;
+    protected CheckBox broOverrideCheckBox;
     @Inject
     protected TextField<String> origtraderefField;
     @Inject
@@ -90,15 +90,15 @@ public class TradeBrokerageFragment extends ScreenFragment {
             sellBrokerageField.setValue(BigDecimal.ZERO);
             buyBrokerageField.setEditable(false);
             buyBrokerageField.setValue(BigDecimal.ZERO);
-            broOverideCheckBox.setValue(false);
+            broOverrideCheckBox.setValue(false);
         } else {
             origtraderefField.setVisible(false);
             brokerageBean.updateBrokerage(tradeDc.getItem());
         }
     }
 
-    @Subscribe("broOverideCheckBox")
-    protected void onbroOverideCheckBoxValueChange(HasValue.ValueChangeEvent<Boolean> event) {
+    @Subscribe("broOverrideCheckBox")
+    protected void onBroOverrideCheckBoxValueChange(HasValue.ValueChangeEvent<Boolean> event) {
         if (!event.isUserOriginated()) {
             return;
         }
