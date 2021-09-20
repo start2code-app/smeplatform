@@ -15,7 +15,7 @@ public class FxCalculationServiceBean implements FxCalculationService {
         if (isAnyNullOrZero(amount, fxValue)) {
             return BigDecimal.ZERO;
         }
-        return amount.divide(fxValue, RoundingMode.HALF_EVEN);
+        return amount.divide(fxValue, 2, RoundingMode.HALF_UP);
     }
 
     @Override
