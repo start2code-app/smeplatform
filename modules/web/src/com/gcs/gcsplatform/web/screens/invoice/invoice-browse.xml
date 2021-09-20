@@ -50,7 +50,7 @@
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
                 <button id="excelBtn"
-                        action="tradesTable.excel"/>
+                        action="invoicesTable.excel"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions"

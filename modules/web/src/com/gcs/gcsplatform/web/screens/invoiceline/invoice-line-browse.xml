@@ -79,7 +79,7 @@
                 <button id="refreshBtn"
                         action="invoiceLinesTable.refresh"/>
                 <button id="excelBtn"
-                        action="tradesTable.excel"/>
+                        action="invoiceLinesTable.excel"/>
                 <button id="snapshotBtn"
                         caption="msg://snapshotBtn.caption"
                         stylename="friendly"/>
