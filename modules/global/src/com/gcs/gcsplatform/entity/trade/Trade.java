@@ -59,10 +59,10 @@ public abstract class Trade extends StandardEntity {
     @Column(name = "CURRENCY", length = 5)
     private String currency;
 
-    @Column(name = "BUY_GBP_EQUIVALENT", precision = 10, scale = 4)
+    @Column(name = "BUY_GBP_EQUIVALENT", precision = 10, scale = 2)
     private BigDecimal buyGbpEquivalent;
 
-    @Column(name = "SELL_GBP_EQUIVALENT", precision = 10, scale = 4)
+    @Column(name = "SELL_GBP_EQUIVALENT", precision = 10, scale = 2)
     private BigDecimal sellGbpEquivalent;
 
     @Column(name = "HAIR_CUT", precision = 10, scale = 4)
@@ -165,10 +165,10 @@ public abstract class Trade extends StandardEntity {
     @Column(name = "SELL_SPLIT_BROKER", length = 10)
     private String sellSplitBroker;
 
-    @Column(name = "BUY_PNL", precision = 10, scale = 4)
+    @Column(name = "BUY_PNL", precision = 10, scale = 2)
     private BigDecimal buyPnl;
 
-    @Column(name = "SELL_PNL", precision = 10, scale = 4)
+    @Column(name = "SELL_PNL", precision = 10, scale = 2)
     private BigDecimal sellPnl;
 
     @Column(name = "BUYER_CASH")

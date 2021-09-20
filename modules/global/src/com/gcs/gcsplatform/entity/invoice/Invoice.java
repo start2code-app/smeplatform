@@ -37,7 +37,7 @@ public class Invoice extends StandardEntity {
     @Column(name = "END_DATE")
     private Date endDate;
 
-    @Column(name = "AMOUNT", precision = 10, scale = 4)
+    @Column(name = "AMOUNT", precision = 10, scale = 2)
     private BigDecimal amount;
 
     @Column(name = "FX", precision = 10, scale = 4)
@@ -48,10 +48,10 @@ public class Invoice extends StandardEntity {
     @NumberFormat(pattern = "#,##0.0000")
     private BigDecimal fxUsd;
 
-    @Column(name = "GBP_AMOUNT", precision = 10, scale = 4)
+    @Column(name = "GBP_AMOUNT", precision = 10, scale = 2)
     private BigDecimal gbpAmount;
 
-    @Column(name = "USD_AMOUNT", precision = 10, scale = 4)
+    @Column(name = "USD_AMOUNT", precision = 10, scale = 2)
     private BigDecimal usdAmount;
 
     @Column(name = "POSTED")
