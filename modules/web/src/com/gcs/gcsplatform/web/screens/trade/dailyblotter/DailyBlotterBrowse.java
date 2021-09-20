@@ -36,11 +36,10 @@ public class DailyBlotterBrowse extends TradeBrowse<ClosedTrade> {
         Date today = getCurrentDate();
         Date tomorrow = DateUtils.addDays(today, 1);
         Collection<ClosedTrade> trades = tradeService.getEnrichedTradesForPnlChart(ClosedTrade.class,
-                ViewBuilder.of(ClosedTrade.class)
+                today, tomorrow, ViewBuilder.of(ClosedTrade.class)
                         .addView(View.LOCAL)
-                        .build(),
-                today,
-                tomorrow);
+                        .build()
+        );
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         pnlChartBean.showPnlChartScreen(this, trades, messageBundle.getMessage("dailyPnl.caption"),
                 dateFormat.format(today));

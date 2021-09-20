@@ -64,4 +64,11 @@ public class DateUtils {
     public static Date getCurrentDate() {
         return new Date();
     }
+
+    public static Date getPreviousMonth() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) - 1);
+        Date previousMonth = calendar.getTime();
+        return org.apache.commons.lang3.time.DateUtils.truncate(previousMonth, Calendar.MONTH);
+    }
 }

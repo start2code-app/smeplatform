@@ -7,8 +7,6 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.persistence.TemporalType;
 
-import com.gcs.gcsplatform.entity.trade.ClosedTrade;
-import com.gcs.gcsplatform.entity.trade.LiveTrade;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.FluentLoader;
@@ -19,9 +17,6 @@ import com.haulmont.cuba.core.global.queryconditions.JpqlCondition;
 import com.haulmont.cuba.core.global.queryconditions.LogicalCondition;
 import org.springframework.stereotype.Service;
 
-import static com.gcs.gcsplatform.util.DateUtils.getFirstDayOfMonth;
-import static com.gcs.gcsplatform.util.DateUtils.getLastDayOfMonth;
-
 @Service(TradeService.NAME)
 public class TradeServiceBean implements TradeService {
 
@@ -31,64 +26,77 @@ public class TradeServiceBean implements TradeService {
     private MetadataTools metadataTools;
 
     @Override
-    public <T extends Trade> Collection<T> getTrades(Class<T> tradeClass, View view, @Nullable Date startDate,
-            @Nullable Date endDate) {
-        return getTrades(tradeClass, view, startDate, endDate, null)
+    public <T extends Trade> Collection<T> getTrades(Class<T> tradeClass, @Nullable Date startDate,
+            @Nullable Date endDate, View view) {
+        return getTrades(tradeClass, startDate, endDate, null, view)
                 .list();
     }
 
     @Override
     public <T extends Trade> Collection<T> getTrades(Class<T> tradeClass, View view) {
-        return getTrades(tradeClass, view, null, null);
+        return getTrades(tradeClass, null, null, view);
     }
 
     @Override
-    public <T extends Trade> Collection<T> getEnrichedTradesForPnlChart(Class<T> tradeClass, View view,
-            @Nullable Date startDate, @Nullable Date endDate) {
-        LogicalCondition tradeEnrichedCondition = LogicalCondition.and();
+    public <T extends Trade> Collection<T> getEnrichedTradesForPnlChart(Class<T> tradeClass, @Nullable Date startDate,
+            @Nullable Date endDate, View view) {
+        LogicalCondition condition = LogicalCondition.and();
 
-        tradeEnrichedCondition.add(new JpqlCondition("e.buyer is not null"));
-        tradeEnrichedCondition.add(new JpqlCondition("e.buybroker is not null"));
-        tradeEnrichedCondition.add(new JpqlCondition("e.tradeCurrency is not null"));
-        tradeEnrichedCondition.add(new JpqlCondition("e.seller is not null"));
-        tradeEnrichedCondition.add(new JpqlCondition("e.sellbroker is not null"));
-        tradeEnrichedCondition.add(new JpqlCondition("e.category is not null"));
+        condition.add(new JpqlCondition("e.buyer is not null"));
+        condition.add(new JpqlCondition("e.buybroker is not null"));
+        condition.add(new JpqlCondition("e.tradeCurrency is not null"));
+        condition.add(new JpqlCondition("e.seller is not null"));
+        condition.add(new JpqlCondition("e.sellbroker is not null"));
+        condition.add(new JpqlCondition("e.category is not null"));
 
-        return getTrades(tradeClass, view, startDate, endDate, tradeEnrichedCondition)
+        return getTrades(tradeClass, startDate, endDate, condition, view)
                 .list();
     }
 
     @Override
     public <T extends Trade> Collection<T> getEnrichedTradesForPnlChart(Class<T> tradeClass, View view) {
-        return getEnrichedTradesForPnlChart(tradeClass, view, null, null);
+        return getEnrichedTradesForPnlChart(tradeClass, null, null, view);
     }
 
     @Override
-    public Collection<ClosedTrade> getClosedTradesToUpdateFx(String currency, Date billingDate, View view) {
-        LogicalCondition tradeCurrencyCondition = LogicalCondition.and();
+    public <T extends Trade> Collection<T> getTradesByCurrency(Class<T> tradeClass, String currency,
+            @Nullable Date startDate, @Nullable Date endDate, View view) {
+        LogicalCondition condition = LogicalCondition.and();
 
-        tradeCurrencyCondition.add(new JpqlCondition("e.tradeCurrency = :currency"));
+        condition.add(new JpqlCondition("e.tradeCurrency = :currency"));
 
-        return getTrades(ClosedTrade.class, view, getFirstDayOfMonth(billingDate), getLastDayOfMonth(billingDate),
-                tradeCurrencyCondition)
+        return getTrades(tradeClass, startDate, startDate, condition, view)
                 .parameter("currency", currency)
+                .list();
+    }
+
+    @Override
+    public <T extends Trade> Collection<T> getTradesByCounterparty(Class<T> tradeClass, String counterparty,
+            @Nullable Date startDate, @Nullable Date endDate, View view) {
+        LogicalCondition condition = LogicalCondition.and();
+
+        condition.add(new JpqlCondition("e.counterparty = :counterparty"));
+
+        return getTrades(tradeClass, startDate, endDate, condition, view)
+                .parameter("counterparty", counterparty)
                 .list();
     }
 
     @Nullable
     @Override
-    public LiveTrade findCorrespondingLiveTrade(ClosedTrade closedTrade, View view) {
-        return dataManager.load(LiveTrade.class)
-                .query("select e from gcsplatform_LiveTrade e "
+    public <T extends Trade> T findTrade(Class<T> tradeClass, String traderef, View view) {
+        String tradeEntity = metadataTools.getEntityName(tradeClass);
+        return dataManager.load(tradeClass)
+                .query("select e from " + tradeEntity + " e "
                         + "where e.traderef = :traderef")
-                .parameter("traderef", closedTrade.getTraderef())
+                .parameter("traderef", traderef)
                 .view(view)
                 .optional()
                 .orElse(null);
     }
 
-    private <T extends Trade> FluentLoader.ByQuery<T, UUID> getTrades(Class<T> tradeClass, View view,
-            @Nullable Date startDate, @Nullable Date endDate, Condition condition) {
+    private <T extends Trade> FluentLoader.ByQuery<T, UUID> getTrades(Class<T> tradeClass, @Nullable Date startDate,
+            @Nullable Date endDate, @Nullable Condition condition, View view) {
         String tradeEntity = metadataTools.getEntityName(tradeClass);
         FluentLoader.ByQuery<T, UUID> query = dataManager.load(tradeClass)
                 .query("select e from " + tradeEntity + " e ")

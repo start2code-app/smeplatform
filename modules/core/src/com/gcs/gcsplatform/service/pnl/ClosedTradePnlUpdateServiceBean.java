@@ -12,6 +12,9 @@ import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;
 import org.springframework.stereotype.Service;
 
+import static com.gcs.gcsplatform.util.DateUtils.getFirstDayOfMonth;
+import static com.gcs.gcsplatform.util.DateUtils.getLastDayOfMonth;
+
 @Service(ClosedTradePnlUpdateService.NAME)
 public class ClosedTradePnlUpdateServiceBean implements ClosedTradePnlUpdateService {
 
@@ -33,10 +36,10 @@ public class ClosedTradePnlUpdateServiceBean implements ClosedTradePnlUpdateServ
 
     @Override
     public void updatePnl(String currency, Date billingDate) {
-        Collection<ClosedTrade> trades = tradeService.getClosedTradesToUpdateFx(currency, billingDate, ViewBuilder.of(
-                ClosedTrade.class)
-                .addView(View.LOCAL)
-                .build());
+        Collection<ClosedTrade> trades = tradeService.getTradesByCurrency(ClosedTrade.class, currency,
+                getFirstDayOfMonth(billingDate), getLastDayOfMonth(billingDate), ViewBuilder.of(ClosedTrade.class)
+                        .addView(View.LOCAL)
+                        .build());
         calculatePnlAndSave(trades);
     }
 
