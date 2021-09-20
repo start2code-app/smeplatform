@@ -75,7 +75,7 @@ public class TradeServiceBean implements TradeService {
             @Nullable Date startDate, @Nullable Date endDate, View view) {
         LogicalCondition condition = LogicalCondition.and();
 
-        condition.add(new JpqlCondition("e.counterparty = :counterparty"));
+        condition.add(new JpqlCondition("e.buyer = :counterparty or e.seller = :counterparty"));
 
         return getTrades(tradeClass, startDate, endDate, condition, view)
                 .parameter("counterparty", counterparty)
