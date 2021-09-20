@@ -10,6 +10,8 @@ import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;
 import com.gcs.gcsplatform.service.trade.TradeService;
 import com.gcs.gcsplatform.service.invoice.InvoiceSnapshotService;
+import com.gcs.gcsplatform.web.events.InvoiceLineUpdatedEvent;
+import com.haulmont.cuba.core.global.Events;
 import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;
 import com.haulmont.cuba.gui.backgroundwork.BackgroundWorkWindow;
@@ -44,6 +46,8 @@ public class InvoiceLineBrowse extends StandardLookup<InvoiceLine> {
     protected InvoiceSnapshotService invoiceSnapshotService;
     @Inject
     protected MessageBundle messageBundle;
+    @Inject
+    protected Events events;
 
     @Inject
     protected CollectionLoader<InvoiceLine> invoiceLinesDl;
@@ -84,6 +88,7 @@ public class InvoiceLineBrowse extends StandardLookup<InvoiceLine> {
 
         @Override
         public void done(Void result) {
+            events.publish(new InvoiceLineUpdatedEvent(this));
             invoiceLinesDl.load();
         }
     }
