@@ -43,14 +43,14 @@ public class PnlCalculationServiceBean implements PnlCalculationService {
                     .multiply(numdaysDecimal)
                     .multiply(startPrice)
                     .multiply(BigDecimal.TEN)
-                    .divide(BigDecimal.valueOf(36), RoundingMode.HALF_EVEN);
+                    .divide(BigDecimal.valueOf(36), 2, RoundingMode.HALF_UP);
         } else {
             return nominal
                     .multiply(xrateOrDefault)
                     .multiply(brokerage)
                     .multiply(numdaysDecimal)
                     .multiply(BigDecimal.valueOf(1000))
-                    .divide(BigDecimal.valueOf(36), RoundingMode.HALF_EVEN);
+                    .divide(BigDecimal.valueOf(36), 2, RoundingMode.HALF_UP);
         }
     }
 }

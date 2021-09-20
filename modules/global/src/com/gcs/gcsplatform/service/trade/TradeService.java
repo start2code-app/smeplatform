@@ -26,6 +26,15 @@ public interface TradeService {
             @Nullable Date endDate);
 
     /**
+     * Gets list of trades.
+     *
+     * @param tradeClass Trade class
+     * @param view       View
+     * @return List of trades
+     */
+    <T extends Trade> Collection<T> getTrades(Class<T> tradeClass, View view);
+
+    /**
      * Gets list of trades enriched with fields required to build PNL chart.
      * Selects trades in date interval.
      * <p>
@@ -60,14 +69,6 @@ public interface TradeService {
      * @return List of trades
      */
     Collection<ClosedTrade> getClosedTradesToUpdateFx(String currency, Date billingDate, View view);
-
-    /**
-     * Gets list of closed trades without pnl/gbp calculated.
-     *
-     * @param view View
-     * @return List of trades
-     */
-    Collection<ClosedTrade> getClosedTradesWithoutPnl(View view);
 
     /**
      * Gets corresponding live trade by contract number. If no such found, returns null.

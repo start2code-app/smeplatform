@@ -24,9 +24,10 @@ public class ClosedTradePnlUpdateServiceBean implements ClosedTradePnlUpdateServ
 
     @Override
     public void updatePnl() {
-        Collection<ClosedTrade> trades = tradeService.getClosedTradesWithoutPnl(ViewBuilder.of(ClosedTrade.class)
-                .addView(View.LOCAL)
-                .build());
+        Collection<ClosedTrade> trades = tradeService.getTrades(ClosedTrade.class,
+                ViewBuilder.of(ClosedTrade.class)
+                        .addView(View.LOCAL)
+                        .build());
         calculatePnlAndSave(trades);
     }
 
