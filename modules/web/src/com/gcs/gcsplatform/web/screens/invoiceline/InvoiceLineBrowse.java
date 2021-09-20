@@ -8,18 +8,21 @@ import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;
-import com.gcs.gcsplatform.service.trade.TradeService;
 import com.gcs.gcsplatform.service.invoice.InvoiceSnapshotService;
+import com.gcs.gcsplatform.service.trade.TradeService;
+import com.gcs.gcsplatform.web.components.invoice.InvoiceCalculationBean;
 import com.gcs.gcsplatform.web.events.InvoiceLineUpdatedEvent;
 import com.haulmont.cuba.core.global.Events;
 import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;
+import com.haulmont.cuba.gui.RemoveOperation;
 import com.haulmont.cuba.gui.backgroundwork.BackgroundWorkWindow;
 import com.haulmont.cuba.gui.components.Button;
 import com.haulmont.cuba.gui.components.GroupTable;
 import com.haulmont.cuba.gui.executors.BackgroundTask;
 import com.haulmont.cuba.gui.executors.TaskLifeCycle;
 import com.haulmont.cuba.gui.model.CollectionLoader;
+import com.haulmont.cuba.gui.screen.Install;
 import com.haulmont.cuba.gui.screen.LoadDataBeforeShow;
 import com.haulmont.cuba.gui.screen.LookupComponent;
 import com.haulmont.cuba.gui.screen.MessageBundle;
@@ -42,6 +45,8 @@ public class InvoiceLineBrowse extends StandardLookup<InvoiceLine> {
 
     @Inject
     protected TradeService tradeService;
+    @Inject
+    protected InvoiceCalculationBean invoiceCalculationBean;
     @Inject
     protected InvoiceSnapshotService invoiceSnapshotService;
     @Inject
@@ -69,6 +74,13 @@ public class InvoiceLineBrowse extends StandardLookup<InvoiceLine> {
                         .build(),
                 getFirstDayOfMonth(previousMonth),
                 getLastDayOfMonth(previousMonth));
+    }
+
+    @Install(to = "invoiceLinesTable.remove", subject = "afterActionPerformedHandler")
+    protected void invoiceLinesTableRemoveAfterActionPerformedHandler(
+            RemoveOperation.AfterActionPerformedEvent<InvoiceLine> afterActionPerformedEvent) {
+        InvoiceLine invoiceLine = afterActionPerformedEvent.getItems().get(0);
+        invoiceCalculationBean.recalculateInvoice(invoiceLine);
     }
 
     protected class SnapshotTask extends BackgroundTask<Integer, Void> {
