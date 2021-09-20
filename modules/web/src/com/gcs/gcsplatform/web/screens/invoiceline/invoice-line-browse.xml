@@ -35,6 +35,8 @@
                         type="remove"/>
                 <action id="refresh"
                         type="refresh"/>
+                <action id="excel"
+                        type="excel"/>
             </actions>
             <columns>
                 <column id="contractNumber"/>
@@ -76,6 +78,8 @@
                         action="invoiceLinesTable.remove"/>
                 <button id="refreshBtn"
                         action="invoiceLinesTable.refresh"/>
+                <button id="excelBtn"
+                        action="tradesTable.excel"/>
                 <button id="snapshotBtn"
                         caption="msg://snapshotBtn.caption"
                         stylename="friendly"/>

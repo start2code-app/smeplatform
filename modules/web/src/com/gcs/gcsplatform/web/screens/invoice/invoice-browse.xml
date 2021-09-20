@@ -27,6 +27,10 @@
         <groupTable id="invoicesTable"
                     width="100%"
                     dataContainer="invoicesDc">
+            <actions>
+                <action id="excel"
+                        type="excel"/>
+            </actions>
             <columns>
                 <column id="issue"/>
                 <column id="currency"/>
@@ -43,6 +47,11 @@
                 <column id="posted"/>
             </columns>
             <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="excelBtn"
+                        action="tradesTable.excel"/>
+            </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions"
               spacing="true"
