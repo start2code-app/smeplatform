@@ -105,14 +105,14 @@ public class InvoiceLine extends StandardEntity {
     @Column(name = "START_PRICE", precision = 10, scale = 4)
     private BigDecimal startPrice;
 
-    @Column(name = "PNL", precision = 10, scale = 2)
+    @Column(name = "PNL", precision = 10, scale = 4)
     private BigDecimal pnl;
 
     @Column(name = "FX", precision = 10, scale = 4)
     @NumberFormat(pattern = "#,##0.0000")
     private BigDecimal fx;
 
-    @Column(name = "GBP_EQUIVALENT", precision = 10, scale = 2)
+    @Column(name = "GBP_EQUIVALENT", precision = 10, scale = 4)
     private BigDecimal gbpEquivalent;
 
     @Column(name = "CASH")
