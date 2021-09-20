@@ -26,8 +26,7 @@
         </filter>
         <groupTable id="invoiceLinesTable"
                     width="100%"
-                    dataContainer="invoiceLinesDc"
-                    multiselect="true">
+                    dataContainer="invoiceLinesDc">
             <actions>
                 <action id="edit"
                         type="edit"/>

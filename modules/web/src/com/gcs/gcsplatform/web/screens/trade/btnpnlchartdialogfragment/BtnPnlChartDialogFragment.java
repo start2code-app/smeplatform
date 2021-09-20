@@ -79,11 +79,10 @@ public class BtnPnlChartDialogFragment extends ScreenFragment {
                         Date startDate = inputDialogCloseEvent.getValue("startDate");
                         Date endDate = inputDialogCloseEvent.getValue("endDate");
                         Collection<? extends Trade> trades = tradeService.getEnrichedTradesForPnlChart(tradeClass,
-                                ViewBuilder.of(tradeClass)
+                                startDate, endDate, ViewBuilder.of(tradeClass)
                                         .addView(View.LOCAL)
-                                        .build(),
-                                startDate,
-                                endDate);
+                                        .build()
+                        );
                         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                         String heading = String.format("%s-%s", dateFormat.format(startDate),
                                 dateFormat.format(endDate));

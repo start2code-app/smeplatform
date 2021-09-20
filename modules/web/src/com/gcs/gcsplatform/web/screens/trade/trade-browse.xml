@@ -21,8 +21,7 @@
         </filter>
         <groupTable id="tradesTable"
                     width="100%"
-                    dataContainer="tradesDc"
-                    multiselect="false">
+                    dataContainer="tradesDc">
             <actions>
                 <action id="create"
                         type="create"/>

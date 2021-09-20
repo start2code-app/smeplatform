@@ -43,7 +43,6 @@
             <groupTable id="counterpartiesTable"
                         width="100%"
                         height="100%"
-                        multiselect="false"
                         dataContainer="counterpartiesDc">
                 <actions>
                     <action id="edit"
