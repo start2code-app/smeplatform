@@ -38,6 +38,11 @@ public class TradeServiceBean implements TradeService {
     }
 
     @Override
+    public <T extends Trade> Collection<T> getTrades(Class<T> tradeClass, View view) {
+        return getTrades(tradeClass, view, null, null);
+    }
+
+    @Override
     public <T extends Trade> Collection<T> getEnrichedTradesForPnlChart(Class<T> tradeClass, View view,
             @Nullable Date startDate, @Nullable Date endDate) {
         LogicalCondition tradeEnrichedCondition = LogicalCondition.and();
@@ -67,18 +72,6 @@ public class TradeServiceBean implements TradeService {
         return getTrades(ClosedTrade.class, view, getFirstDayOfMonth(billingDate), getLastDayOfMonth(billingDate),
                 tradeCurrencyCondition)
                 .parameter("currency", currency)
-                .list();
-    }
-
-    @Override
-    public Collection<ClosedTrade> getClosedTradesWithoutPnl(View view) {
-        return dataManager.load(ClosedTrade.class)
-                .query("select e from gcsplatform_ClosedTrade e "
-                        + "where e.buyPnl is null "
-                        + "or e.sellPnl is null "
-                        + "or e.buyGbpEquivalent is null "
-                        + "or e.sellGbpEquivalent is null")
-                .view(view)
                 .list();
     }
 
