@@ -68,6 +68,15 @@
         <item id="screenProfiler"/>
         <item id="performanceStatistics"/>
     </menu>
+    <menu id="reports"
+          icon="FAX">
+        <item id="report$Report.browse"/>
+        <item id="report$ReportGroup.browse"/>
+        <item id="report$Report.run"/>
+        <item id="report$showChart"/>
+        <item id="report$showReportTable"/>
+        <item id="report$showPivotTable"/>
+    </menu>
     <menu id="help"
           icon="QUESTION_CIRCLE">
         <item id="aboutWindow"
