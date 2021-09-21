@@ -47,6 +47,8 @@
                        value="com.gcs.gcsplatform.service.pnl.ClosedTradePnlUpdateService"/>
                 <entry key="gcsplatform_FxCalculationService"
                        value="com.gcs.gcsplatform.service.fx.FxCalculationService"/>
+                <entry key="gcsplatform_ReportDataConversionService"
+                       value="com.gcs.gcsplatform.service.report.ReportDataConversionService"/>
             </map>
         </property>
     </bean>
