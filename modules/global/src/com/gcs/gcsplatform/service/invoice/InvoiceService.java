@@ -21,14 +21,6 @@ public interface InvoiceService {
     Collection<Invoice> createInvoices(Collection<InvoiceLine> invoiceLines);
 
     /**
-     * Creates invoice by specified invoice line.
-     *
-     * @param invoiceLine Invoice line
-     * @return Invoice
-     */
-    Invoice createInvoice(InvoiceLine invoiceLine);
-
-    /**
      * Calculates invoice amount and gbp equivalent by existing invoice lines.
      *
      * Increments issue number if specified invoice was printed already and marks the invoice as not printed.

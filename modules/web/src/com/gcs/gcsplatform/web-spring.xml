@@ -49,6 +49,12 @@
                        value="com.gcs.gcsplatform.service.fx.FxCalculationService"/>
                 <entry key="gcsplatform_ReportDataConversionService"
                        value="com.gcs.gcsplatform.service.report.ReportDataConversionService"/>
+                <entry key="gcsplatform_InvoiceReportService"
+                       value="com.gcs.gcsplatform.service.report.InvoiceReportService"/>
+                <entry key="gcsplatform_CompanyService"
+                       value="com.gcs.gcsplatform.service.CompanyService"/>
+                <entry key="gcsplatform_BankService"
+                       value="com.gcs.gcsplatform.service.BankService"/>
             </map>
         </property>
     </bean>

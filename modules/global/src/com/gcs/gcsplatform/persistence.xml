@@ -17,5 +17,8 @@
         <class>com.gcs.gcsplatform.entity.pnl.Pnl</class>
         <class>com.gcs.gcsplatform.entity.invoice.InvoiceLine</class>
         <class>com.gcs.gcsplatform.entity.invoice.Invoice</class>
+        <class>com.gcs.gcsplatform.entity.masterdata.Bank</class>
+        <class>com.gcs.gcsplatform.entity.masterdata.Company</class>
+        <class>com.gcs.gcsplatform.entity.masterdata.InvoiceBank</class>
     </persistence-unit>
 </persistence>

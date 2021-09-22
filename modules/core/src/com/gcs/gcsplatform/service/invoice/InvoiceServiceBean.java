@@ -52,8 +52,7 @@ public class InvoiceServiceBean implements InvoiceService {
         }
     }
 
-    @Override
-    public Invoice createInvoice(InvoiceLine invoiceLine) {
+    private Invoice createInvoice(InvoiceLine invoiceLine) {
         Invoice invoice = dataManager.create(Invoice.class);
         invoice.setLocation(invoiceLine.getLocation());
         invoice.setCurrency(invoiceLine.getCurrency());
