@@ -55,6 +55,8 @@
                        value="com.gcs.gcsplatform.service.CompanyService"/>
                 <entry key="gcsplatform_BankService"
                        value="com.gcs.gcsplatform.service.BankService"/>
+                <entry key="gcsplatform_CounterpartyService"
+                       value="com.gcs.gcsplatform.service.CounterpartyService"/>
             </map>
         </property>
     </bean>

@@ -9,5 +9,9 @@ public interface InvoiceReportService {
 
     String NAME = "gcsplatform_InvoiceReportService";
 
+    List<Map<String, Object>> getHeader(Invoice invoice);
+
     List<Map<String, Object>> getInvoiceLines(Invoice invoice);
+
+    List<Map<String, Object>> getBottom(Invoice invoice);
 }

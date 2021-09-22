@@ -10,7 +10,7 @@ public interface ReportDataConversionService {
 
     String NAME = "gcsplatform_ReportDataConversionService";
 
-    <V extends Entity<T>, T> List<Map<String, Object>> entityToMapList(V entity);
+    <V extends Entity<T>, T> Map<String, Object> entityToMap(V entity);
 
     <V extends Entity<T>, T> List<Map<String, Object>> entityCollectionToMapList(Collection<V> entities);
 }

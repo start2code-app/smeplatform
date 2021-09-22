@@ -13,6 +13,7 @@ create table GCSPLATFORM_COMPANY (
     ADDRESS1 varchar(50),
     ADDRESS2 varchar(50),
     TEL varchar(50),
+    ADDITIONAL_COMPANY_NAME_LINE varchar(50),
     --
     primary key (ID)
 );

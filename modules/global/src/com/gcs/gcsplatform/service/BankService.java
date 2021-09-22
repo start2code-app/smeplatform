@@ -2,7 +2,7 @@ package com.gcs.gcsplatform.service;
 
 import javax.annotation.Nullable;
 
-import com.gcs.gcsplatform.entity.masterdata.Bank;
+import com.gcs.gcsplatform.entity.masterdata.InvoiceBank;
 import com.haulmont.cuba.core.global.View;
 
 public interface BankService {
@@ -18,5 +18,5 @@ public interface BankService {
      * @return Bank or null
      */
     @Nullable
-    Bank findBank(String location, String currency, View view);
+    InvoiceBank findInvoiceBank(String location, String currency, View view);
 }

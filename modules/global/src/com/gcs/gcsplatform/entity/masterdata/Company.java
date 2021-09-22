@@ -10,27 +10,38 @@ import com.haulmont.cuba.core.entity.StandardEntity;
 
 @Table(name = "GCSPLATFORM_COMPANY")
 @Entity(name = "gcsplatform_Company")
-@NamePattern("%s|name")
+@NamePattern("%s|companyName")
 public class Company extends StandardEntity {
 
     private static final long serialVersionUID = 3850791492866128675L;
 
     @Column(name = "NAME", nullable = false, length = 50)
     @NotNull
-    private String name;
+    private String companyName;
 
     @Column(name = "LOCATION", nullable = false, unique = true, length = 5)
     @NotNull
     private String location;
 
     @Column(name = "ADDRESS1", length = 50)
-    private String address1;
+    private String companyAddress1;
 
     @Column(name = "ADDRESS2", length = 50)
-    private String address2;
+    private String companyAddress2;
 
     @Column(name = "TEL", length = 50)
     private String tel;
+
+    @Column(name = "ADDITIONAL_COMPANY_NAME_LINE", length = 50)
+    private String additionalCompanyNameLine;
+
+    public String getAdditionalCompanyNameLine() {
+        return additionalCompanyNameLine;
+    }
+
+    public void setAdditionalCompanyNameLine(String additionalCompanyNameLine) {
+        this.additionalCompanyNameLine = additionalCompanyNameLine;
+    }
 
     public String getLocation() {
         return location;
@@ -48,27 +59,27 @@ public class Company extends StandardEntity {
         this.tel = tel;
     }
 
-    public String getAddress2() {
-        return address2;
+    public String getCompanyAddress2() {
+        return companyAddress2;
     }
 
-    public void setAddress2(String address2) {
-        this.address2 = address2;
+    public void setCompanyAddress2(String companyAddress2) {
+        this.companyAddress2 = companyAddress2;
     }
 
-    public String getAddress1() {
-        return address1;
+    public String getCompanyAddress1() {
+        return companyAddress1;
     }
 
-    public void setAddress1(String address1) {
-        this.address1 = address1;
+    public void setCompanyAddress1(String companyAddress1) {
+        this.companyAddress1 = companyAddress1;
     }
 
-    public String getName() {
-        return name;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 }

@@ -23,7 +23,7 @@ public interface InvoiceLineService {
      * Gets all invoice lines corresponding to specified invoice.
      *
      * @param invoice Invoice
-     * @param view
+     * @param view    View
      * @return List of invoice lines
      */
     Collection<InvoiceLine> getInvoiceLines(Invoice invoice, View view);
