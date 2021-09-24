@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://companyEdit.caption"
+        focusComponent="form"
+        messagesPack="com.gcs.gcsplatform.web.screens.company">
+    <data>
+        <instance id="companyDc"
+                  class="com.gcs.gcsplatform.entity.masterdata.Company">
+            <view extends="_local"/>
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="AUTO"
+                width="AUTO"
+                modal="true"
+                forceDialog="true"/>
+    <layout expand="editActions"
+            spacing="true">
+        <form id="form"
+              dataContainer="companyDc">
+            <column width="250px">
+                <textField id="companyNameField"
+                           property="companyName"/>
+                <textField id="locationField"
+                           property="location"/>
+                <textField id="companyAddress1Field"
+                           property="companyAddress1"/>
+                <textField id="companyAddress2Field"
+                           property="companyAddress2"/>
+                <textField id="telField"
+                           property="tel"/>
+                <textField id="additionalCompanyNameLineField"
+                           property="additionalCompanyNameLine"/>
+            </column>
+        </form>
+        <hbox id="editActions"
+              spacing="true">
+            <button id="commitAndCloseBtn"
+                    action="windowCommitAndClose"/>
+            <button id="closeBtn"
+                    action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

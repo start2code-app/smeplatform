@@ -548,3 +548,69 @@ create table GCSPLATFORM_INVOICE_LINE (
     primary key (ID)
 )^
 -- end GCSPLATFORM_INVOICE_LINE
+-- begin GCSPLATFORM_COMPANY
+create table GCSPLATFORM_COMPANY (
+    ID varchar(32),
+    VERSION integer not null,
+    CREATE_TS datetime(3),
+    CREATED_BY varchar(50),
+    UPDATE_TS datetime(3),
+    UPDATED_BY varchar(50),
+    DELETE_TS datetime(3),
+    DELETED_BY varchar(50),
+    --
+    NAME varchar(50) not null,
+    LOCATION varchar(5) not null,
+    ADDRESS1 varchar(50),
+    ADDRESS2 varchar(50),
+    TEL varchar(50),
+    ADDITIONAL_COMPANY_NAME_LINE varchar(50),
+    --
+    primary key (ID)
+)^
+-- end GCSPLATFORM_COMPANY
+-- begin GCSPLATFORM_INVOICE_BANK
+create table GCSPLATFORM_INVOICE_BANK (
+    ID varchar(32),
+    VERSION integer not null,
+    CREATE_TS datetime(3),
+    CREATED_BY varchar(50),
+    UPDATE_TS datetime(3),
+    UPDATED_BY varchar(50),
+    DELETE_TS datetime(3),
+    DELETED_BY varchar(50),
+    --
+    LOCATION varchar(5) not null,
+    CURRENCY_ID varchar(32) not null,
+    BANK_ID varchar(32) not null,
+    --
+    primary key (ID)
+)^
+-- end GCSPLATFORM_INVOICE_BANK
+-- begin GCSPLATFORM_BANK
+create table GCSPLATFORM_BANK (
+    ID varchar(32),
+    VERSION integer not null,
+    CREATE_TS datetime(3),
+    CREATED_BY varchar(50),
+    UPDATE_TS datetime(3),
+    UPDATED_BY varchar(50),
+    DELETE_TS datetime(3),
+    DELETED_BY varchar(50),
+    --
+    BANK_NAME varchar(50) not null,
+    ACCOUNT_NAME varchar(50) not null,
+    ACCOUNT_NUMBER varchar(50) not null,
+    SORT_CODE varchar(50) not null,
+    SWIFT_BIC varchar(50) not null,
+    ADDITIONAL_BANK_LINE_CAPTION varchar(50),
+    ADDITIONAL_BANK_LINE varchar(50),
+    ADDITIONAL_LINE1 varchar(100),
+    ADDITIONAL_LINE2 varchar(100),
+    ADDITIONAL_LINE3 varchar(100),
+    ADDITIONAL_LINE4 varchar(100),
+    ADDITIONAL_LINE5 varchar(100),
+    --
+    primary key (ID)
+)^
+-- end GCSPLATFORM_BANK

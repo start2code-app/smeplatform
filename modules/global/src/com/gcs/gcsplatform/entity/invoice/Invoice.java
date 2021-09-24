@@ -1,13 +1,16 @@
 package com.gcs.gcsplatform.entity.invoice;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
+import com.haulmont.chile.core.annotations.MetaProperty;
 import com.haulmont.chile.core.annotations.NumberFormat;
 import com.haulmont.cuba.core.entity.StandardEntity;
 
@@ -59,6 +62,13 @@ public class Invoice extends StandardEntity {
 
     @Column(name = "PRINTED")
     private Boolean printed;
+
+    @Transient
+    @MetaProperty(related = {"issue", "counterpartyCode", "currency", "startDate"})
+    public String getInvoiceNumber() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMyy");
+        return String.format("%s%s%s-V%s", counterpartyCode, dateFormat.format(startDate), currency, issue);
+    }
 
     public BigDecimal getUsdAmount() {
         return usdAmount;

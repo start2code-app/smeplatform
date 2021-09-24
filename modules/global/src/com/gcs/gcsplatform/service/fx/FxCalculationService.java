@@ -28,4 +28,15 @@ public interface FxCalculationService {
      * @return USD equivalent
      */
     BigDecimal calculateUsdEquivalent(BigDecimal gbpAmount, BigDecimal usdFxValue);
+
+    /**
+     * Calculates reversed USD fx by dividing 1 to fx and multiplying it by usd fx.
+     *
+     * Returns zero if any of arguments is zero.
+     *
+     * @param fx    GBP to foreign currency exchange rate
+     * @param fxUsd GBP to USD exchange rate
+     * @return foreign currency against USD exchange rate
+     */
+    BigDecimal calculateFxAgainstUsd(BigDecimal fx, BigDecimal fxUsd);
 }

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://bankEdit.caption"
+        focusComponent="form"
+        messagesPack="com.gcs.gcsplatform.web.screens.bank">
+    <data>
+        <instance id="bankDc"
+                  class="com.gcs.gcsplatform.entity.masterdata.Bank">
+            <view extends="_local"/>
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="AUTO"
+                width="AUTO"
+                modal="true"
+                forceDialog="true"/>
+    <layout expand="scrollBox"
+            spacing="true">
+        <scrollBox id="scrollBox"
+                   spacing="true">
+            <form id="form"
+                  dataContainer="bankDc">
+                <column width="250px">
+                    <textField id="bankNameField"
+                               property="bankName"/>
+                    <textField id="accountNameField"
+                               property="accountName"/>
+                    <textField id="accountNumberField"
+                               property="accountNumber"/>
+                    <textField id="sortCodeField"
+                               property="sortCode"/>
+                    <textField id="swiftBicField"
+                               property="swiftBic"/>
+                    <textField id="additionalBankLineCaptionField"
+                               property="additionalBankLineCaption"/>
+                    <textField id="additionalBankLineField"
+                               property="additionalBankLine"/>
+                    <textField id="additionalLine1Field"
+                               property="additionalLine1"/>
+                    <textField id="additionalLine2Field"
+                               property="additionalLine2"/>
+                    <textField id="additionalLine3Field"
+                               property="additionalLine3"/>
+                    <textField id="additionalLine4Field"
+                               property="additionalLine4"/>
+                    <textField id="additionalLine5Field"
+                               property="additionalLine5"/>
+                </column>
+            </form>
+        </scrollBox>
+        <hbox id="editActions"
+              spacing="true">
+            <button id="commitAndCloseBtn"
+                    action="windowCommitAndClose"/>
+            <button id="closeBtn"
+                    action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

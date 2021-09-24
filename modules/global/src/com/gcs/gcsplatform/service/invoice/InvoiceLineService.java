@@ -2,8 +2,10 @@ package com.gcs.gcsplatform.service.invoice;
 
 import java.util.Collection;
 
+import com.gcs.gcsplatform.entity.invoice.Invoice;
 import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;
+import com.haulmont.cuba.core.global.View;
 
 public interface InvoiceLineService {
 
@@ -16,4 +18,13 @@ public interface InvoiceLineService {
      * @return Collection of invoice lines
      */
     Collection<InvoiceLine> splitTrade(ClosedTrade trade);
+
+    /**
+     * Gets all invoice lines corresponding to specified invoice.
+     *
+     * @param invoice Invoice
+     * @param view    View
+     * @return List of invoice lines
+     */
+    Collection<InvoiceLine> getInvoiceLines(Invoice invoice, View view);
 }

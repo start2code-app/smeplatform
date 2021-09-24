@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import javax.inject.Inject;
 
+import com.gcs.gcsplatform.entity.invoice.Invoice;
 import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.entity.trade.TradeSide;
-import com.haulmont.cuba.core.global.Metadata;
+import com.haulmont.cuba.core.global.DataManager;
+import com.haulmont.cuba.core.global.View;
 import org.springframework.stereotype.Service;
 
 import static com.gcs.gcsplatform.util.DateUtils.getFirstDayOfMonth;
@@ -19,7 +21,7 @@ import static org.apache.commons.lang3.StringUtils.firstNonBlank;
 public class InvoiceLineServiceBean implements InvoiceLineService {
 
     @Inject
-    private Metadata metadata;
+    private DataManager dataManager;
 
     @Override
     public Collection<InvoiceLine> splitTrade(ClosedTrade trade) {
@@ -30,7 +32,7 @@ public class InvoiceLineServiceBean implements InvoiceLineService {
     }
 
     private InvoiceLine splitTrade(ClosedTrade trade, TradeSide side) {
-        InvoiceLine invoiceLine = metadata.create(InvoiceLine.class);
+        InvoiceLine invoiceLine = dataManager.create(InvoiceLine.class);
         invoiceLine.setTrade(trade);
         invoiceLine.setBroker(trade.getBroker(side));
         invoiceLine.setCrossRate(trade.getCpair1());
@@ -71,5 +73,21 @@ public class InvoiceLineServiceBean implements InvoiceLineService {
         String traderef = firstNonBlank(trade.getTraderef(), "X");
         String broker = firstNonBlank(trade.getBroker(side), "X");
         return String.format("%s:%s:%s:%s:%s", category, brokerageType, traderef, side.getId(), broker);
+    }
+
+    @Override
+    public Collection<InvoiceLine> getInvoiceLines(Invoice invoice, View view) {
+        return dataManager.load(InvoiceLine.class)
+                .query("select e from gcsplatform_InvoiceLine e "
+                        + "where e.startDate = :startDate "
+                        + "and e.currency = :currency "
+                        + "and e.counterpartyCode = :counterpartyCode "
+                        + "and e.location = :location")
+                .parameter("startDate", invoice.getStartDate())
+                .parameter("currency", invoice.getCurrency())
+                .parameter("counterpartyCode", invoice.getCounterpartyCode())
+                .parameter("location", invoice.getLocation())
+                .view(view)
+                .list();
     }
 }

@@ -44,6 +44,12 @@
               caption="mainMsg://menu_config.gcsplatform_Currency.browse"/>
         <item screen="gcsplatform_Fx.browse"
               caption="mainMsg://menu_config.gcsplatform_Fx.browse"/>
+        <item screen="gcsplatform_Bank.browse"
+              caption="mainMsg://menu_config.gcsplatform_Bank.browse"/>
+        <item screen="gcsplatform_InvoiceBank.browse"
+              caption="mainMsg://menu_config.gcsplatform_InvoiceBank.browse"/>
+        <item screen="gcsplatform_Company.browse"
+              caption="mainMsg://menu_config.gcsplatform_Company.browse"/>
     </menu>
     <menu id="administration"
           icon="COG">
@@ -67,6 +73,15 @@
         <item id="serverLog"/>
         <item id="screenProfiler"/>
         <item id="performanceStatistics"/>
+    </menu>
+    <menu id="reports"
+          icon="FAX">
+        <item id="report$Report.browse"/>
+        <item id="report$ReportGroup.browse"/>
+        <item id="report$Report.run"/>
+        <item id="report$showChart"/>
+        <item id="report$showReportTable"/>
+        <item id="report$showPivotTable"/>
     </menu>
     <menu id="help"
           icon="QUESTION_CIRCLE">

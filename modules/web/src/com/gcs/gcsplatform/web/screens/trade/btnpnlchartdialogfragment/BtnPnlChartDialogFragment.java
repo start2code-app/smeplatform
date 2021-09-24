@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.inject.Inject;
 
+import com.gcs.gcsplatform.config.DateFormatConfig;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.service.trade.TradeService;
 import com.gcs.gcsplatform.web.components.pnl.PnlChartBean;
@@ -40,6 +41,8 @@ public class BtnPnlChartDialogFragment extends ScreenFragment {
     protected Dialogs dialogs;
     @Inject
     protected MessageBundle messageBundle;
+    @Inject
+    protected DateFormatConfig dateFormatConfig;
 
     @Inject
     protected PnlChartBean pnlChartBean;
@@ -83,7 +86,7 @@ public class BtnPnlChartDialogFragment extends ScreenFragment {
                                         .addView(View.LOCAL)
                                         .build()
                         );
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                        SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatConfig.getDefaultDateFormat());
                         String heading = String.format("%s-%s", dateFormat.format(startDate),
                                 dateFormat.format(endDate));
                         pnlChartBean.showPnlChartScreen(this, trades, caption, heading);

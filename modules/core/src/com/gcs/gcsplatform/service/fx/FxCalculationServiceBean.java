@@ -25,4 +25,14 @@ public class FxCalculationServiceBean implements FxCalculationService {
         }
         return gbpAmount.multiply(usdFxValue);
     }
+
+    @Override
+    public BigDecimal calculateFxAgainstUsd(BigDecimal fx, BigDecimal usdFx) {
+        if (isAnyNullOrZero(fx, usdFx)) {
+            return BigDecimal.ZERO;
+        }
+        return BigDecimal.ONE
+                .divide(fx, 4, RoundingMode.HALF_UP)
+                .multiply(usdFx);
+    }
 }

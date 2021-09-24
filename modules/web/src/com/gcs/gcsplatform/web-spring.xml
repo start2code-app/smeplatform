@@ -47,6 +47,16 @@
                        value="com.gcs.gcsplatform.service.pnl.ClosedTradePnlUpdateService"/>
                 <entry key="gcsplatform_FxCalculationService"
                        value="com.gcs.gcsplatform.service.fx.FxCalculationService"/>
+                <entry key="gcsplatform_ReportDataConversionService"
+                       value="com.gcs.gcsplatform.service.report.ReportDataConversionService"/>
+                <entry key="gcsplatform_InvoiceReportService"
+                       value="com.gcs.gcsplatform.service.report.InvoiceReportService"/>
+                <entry key="gcsplatform_CompanyService"
+                       value="com.gcs.gcsplatform.service.CompanyService"/>
+                <entry key="gcsplatform_BankService"
+                       value="com.gcs.gcsplatform.service.BankService"/>
+                <entry key="gcsplatform_CounterpartyService"
+                       value="com.gcs.gcsplatform.service.CounterpartyService"/>
             </map>
         </property>
     </bean>

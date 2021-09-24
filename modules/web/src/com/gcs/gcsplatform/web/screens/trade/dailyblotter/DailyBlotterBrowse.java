@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Date;
 import javax.inject.Inject;
 
+import com.gcs.gcsplatform.config.DateFormatConfig;
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;
 import com.gcs.gcsplatform.service.trade.TradeService;
 import com.gcs.gcsplatform.web.components.pnl.PnlChartBean;
@@ -30,6 +31,8 @@ public class DailyBlotterBrowse extends TradeBrowse<ClosedTrade> {
     protected PnlChartBean pnlChartBean;
     @Inject
     protected MessageBundle messageBundle;
+    @Inject
+    protected DateFormatConfig dateFormatConfig;
 
     @Subscribe("pnlChartBtn")
     protected void onPnlChartBtnClick(Button.ClickEvent event) {
@@ -40,7 +43,7 @@ public class DailyBlotterBrowse extends TradeBrowse<ClosedTrade> {
                         .addView(View.LOCAL)
                         .build()
         );
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatConfig.getDefaultDateFormat());
         pnlChartBean.showPnlChartScreen(this, trades, messageBundle.getMessage("dailyPnl.caption"),
                 dateFormat.format(today));
     }
