@@ -1,0 +1,2 @@
+INSERT INTO `GCSPLATFORM_COMPANY` VALUES ('4f3b83df9fefdd182fde8b0891ddc28d',1,'2021-09-22 17:12:30.003','admin','2021-09-22 17:12:30.003',NULL,NULL,NULL,'Global Credit Securities LLP','LON','288 Bishopsgate','London EC2M 4QP','+44 207 426 1482',NULL),
+('9ca191ba960422b61e1bda97355cc70b',2,'2021-09-22 17:13:23.501','admin','2021-09-23 14:15:39.304','admin',NULL,NULL,'Global Credit Securities (Hong Kong) Limited','HK','Level 43, AIA Tower, 183 Electric Road','North Point, Hong Kong','+852 2824 8250 , +852 2824 8251','(Hong Kong) Limited');
