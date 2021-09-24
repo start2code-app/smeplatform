@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://bankBrowse.caption"
+        focusComponent="banksTable"
+        messagesPack="com.gcs.gcsplatform.web.screens.bank">
+    <data readOnly="true">
+        <collection id="banksDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.Bank">
+            <view extends="_local"/>
+            <loader id="banksDl">
+                <query>
+                    <![CDATA[select e from gcsplatform_Bank e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="banksTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="banksTable"
+                dataLoader="banksDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="banksTable"
+                    width="100%"
+                    dataContainer="banksDc">
+            <actions>
+                <action id="create"
+                        type="create"/>
+                <action id="edit"
+                        type="edit"/>
+                <action id="remove"
+                        type="remove"/>
+            </actions>
+            <columns>
+                <column id="bankName"/>
+                <column id="accountName"/>
+                <column id="accountNumber"/>
+                <column id="sortCode"/>
+                <column id="swiftBic"/>
+                <column id="additionalBankLineCaption"/>
+                <column id="additionalBankLine"/>
+                <column id="additionalLine1"/>
+                <column id="additionalLine2"/>
+                <column id="additionalLine3"/>
+                <column id="additionalLine4"/>
+                <column id="additionalLine5"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="banksTable.create"/>
+                <button id="editBtn"
+                        action="banksTable.edit"/>
+                <button id="removeBtn"
+                        action="banksTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions"
+              spacing="true"
+              visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

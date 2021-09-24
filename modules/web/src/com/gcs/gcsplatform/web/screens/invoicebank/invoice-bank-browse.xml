@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://invoiceBankBrowse.caption"
+        focusComponent="invoiceBanksTable"
+        messagesPack="com.gcs.gcsplatform.web.screens.invoicebank">
+    <data readOnly="true">
+        <collection id="invoiceBanksDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.InvoiceBank">
+            <view extends="_local">
+                <property name="currency"
+                          view="_minimal"/>
+                <property name="bank"
+                          view="_minimal"/>
+            </view>
+            <loader id="invoiceBanksDl">
+                <query>
+                    <![CDATA[select e from gcsplatform_InvoiceBank e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="invoiceBanksTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="invoiceBanksTable"
+                dataLoader="invoiceBanksDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="invoiceBanksTable"
+                    width="100%"
+                    dataContainer="invoiceBanksDc">
+            <actions>
+                <action id="create"
+                        type="create"/>
+                <action id="edit"
+                        type="edit"/>
+                <action id="remove"
+                        type="remove"/>
+            </actions>
+            <columns>
+                <column id="location"/>
+                <column id="currency"/>
+                <column id="bank"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="invoiceBanksTable.create"/>
+                <button id="editBtn"
+                        action="invoiceBanksTable.edit"/>
+                <button id="removeBtn"
+                        action="invoiceBanksTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions"
+              spacing="true"
+              visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

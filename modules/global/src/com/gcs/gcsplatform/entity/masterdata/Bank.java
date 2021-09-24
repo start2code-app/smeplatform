@@ -5,10 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
 
 @Table(name = "GCSPLATFORM_BANK")
 @Entity(name = "gcsplatform_Bank")
+@NamePattern("%s|bankName")
 public class Bank extends StandardEntity {
 
     private static final long serialVersionUID = 6445836540888375347L;
