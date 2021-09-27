@@ -3,7 +3,7 @@
         xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
         caption="msg://brokerBrowse.caption"
         focusComponent="brokersTable"
-        messagesPack="com.gcs.gcsplatform.web.screens.name">
+        messagesPack="com.gcs.gcsplatform.web.screens.broker">
     <data readOnly="true">
         <collection id="brokersDc"
                     class="com.gcs.gcsplatform.entity.masterdata.Broker">
