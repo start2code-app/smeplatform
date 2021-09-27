@@ -19,10 +19,12 @@ import com.haulmont.cuba.security.app.role.annotation.EntityAccess;
 import com.haulmont.cuba.security.app.role.annotation.EntityAttributeAccess;
 import com.haulmont.cuba.security.app.role.annotation.Role;
 import com.haulmont.cuba.security.app.role.annotation.ScreenAccess;
+import com.haulmont.cuba.security.app.role.annotation.SpecificAccess;
 import com.haulmont.cuba.security.entity.EntityOp;
 import com.haulmont.cuba.security.role.EntityAttributePermissionsContainer;
 import com.haulmont.cuba.security.role.EntityPermissionsContainer;
 import com.haulmont.cuba.security.role.ScreenPermissionsContainer;
+import com.haulmont.cuba.security.role.SpecificPermissionsContainer;
 
 @Role(name = "Back Office")
 public class BackOfficeRole extends AnnotatedRoleDefinition {
@@ -88,5 +90,11 @@ public class BackOfficeRole extends AnnotatedRoleDefinition {
     @Override
     public EntityAttributePermissionsContainer entityAttributePermissions() {
         return super.entityAttributePermissions();
+    }
+
+    @SpecificAccess(permissions = "app.editClosedTradesWhenSnapshotTaken")
+    @Override
+    public SpecificPermissionsContainer specificPermissions() {
+        return super.specificPermissions();
     }
 }
