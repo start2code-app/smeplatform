@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.UUID;
 import javax.inject.Inject;
 
-import com.gcs.gcsplatform.entity.masterdata.Agent;
+import com.gcs.gcsplatform.entity.masterdata.Trader;
 import com.gcs.gcsplatform.entity.masterdata.Category;
 import com.gcs.gcsplatform.entity.masterdata.Counterparty;
 import com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerage;
@@ -60,9 +60,9 @@ public class CounterpartyEdit extends StandardEditor<Counterparty> {
     protected ScreenValidation screenValidation;
 
     @Inject
-    protected CollectionContainer<Agent> agentsDc;
+    protected CollectionContainer<Trader> tradersDc;
     @Inject
-    protected CollectionLoader<Agent> agentsDl;
+    protected CollectionLoader<Trader> tradersDl;
     @Inject
     protected CollectionContainer<CounterpartyBrokerage> brokeragesDc;
     @Inject
@@ -71,11 +71,11 @@ public class CounterpartyEdit extends StandardEditor<Counterparty> {
     @Inject
     protected GroupTable<CounterpartyBrokerage> brokeragesTable;
     @Inject
-    protected GroupTable<Agent> agentsTable;
+    protected GroupTable<Trader> tradersTable;
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
-        agentsDl.setParameter("counterparty", getEditedEntity());
+        tradersDl.setParameter("counterparty", getEditedEntity());
         brokeragesDl.setParameter("counterparty", getEditedEntity());
     }
 
@@ -99,28 +99,28 @@ public class CounterpartyEdit extends StandardEditor<Counterparty> {
         dataContext.setModified(dataContext.merge(brokerage), brokerageValueNotNull);
     }
 
-    @Subscribe("agentsTable.add")
-    protected void onAgentsTableAdd(Action.ActionPerformedEvent event) {
-        Agent agent = dataContext.create(Agent.class);
-        agent.setCounterparty(dataManager.getReference(Id.of(getEditedEntity())));
-        agentsDc.getMutableItems().add(agent);
-        agentsTable.setSelected(agent);
+    @Subscribe("tradersTable.add")
+    protected void onTradersTableAdd(Action.ActionPerformedEvent event) {
+        Trader trader = dataContext.create(Trader.class);
+        trader.setCounterparty(dataManager.getReference(Id.of(getEditedEntity())));
+        tradersDc.getMutableItems().add(trader);
+        tradersTable.setSelected(trader);
     }
 
-    @Subscribe("agentsTable.remove")
-    protected void onAgentsTableRemove(Action.ActionPerformedEvent event) {
-        Agent selected = agentsTable.getSingleSelected();
+    @Subscribe("tradersTable.remove")
+    protected void onTradersTableRemove(Action.ActionPerformedEvent event) {
+        Trader selected = tradersTable.getSingleSelected();
         dataContext.remove(selected);
-        agentsDc.getMutableItems().remove(selected);
+        tradersDc.getMutableItems().remove(selected);
     }
 
-    @Install(to = "agentsTable.agent", subject = "columnGenerator")
-    protected Component agentsTableAgentColumnGenerator(Agent agent) {
-        Component component = validatableFields.get(agent.getId());
+    @Install(to = "tradersTable.name", subject = "columnGenerator")
+    protected Component tradersTableNameColumnGenerator(Trader trader) {
+        Component component = validatableFields.get(trader.getId());
         if (component == null) {
             TextField<String> textField = uiComponents.create(TextField.class);
-            textField.setValueSource(new ContainerValueSource<>(agentsTable.getInstanceContainer(agent), "agent"));
-            validatableFields.put(agent.getId(), textField);
+            textField.setValueSource(new ContainerValueSource<>(tradersTable.getInstanceContainer(trader), "name"));
+            validatableFields.put(trader.getId(), textField);
             return textField;
         }
         return component;

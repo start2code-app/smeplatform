@@ -1,0 +1,1 @@
+drop table if exists GCSPLATFORM_AGENT__U56135 cascade ;

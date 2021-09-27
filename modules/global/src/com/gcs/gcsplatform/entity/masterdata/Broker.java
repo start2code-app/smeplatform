@@ -12,15 +12,15 @@ import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.cuba.security.entity.User;
 
-@NamePattern("%s|dealer")
-@Table(name = "GCSPLATFORM_DEALER")
-@Entity(name = "gcsplatform_Dealer")
-public class Dealer extends StandardEntity {
+@NamePattern("%s|name")
+@Table(name = "GCSPLATFORM_BROKER")
+@Entity(name = "gcsplatform_Broker")
+public class Broker extends StandardEntity {
 
     private static final long serialVersionUID = -2373023222222239327L;
 
-    @Column(name = "DEALER", nullable = false, unique = true, length = 10)
-    private String dealer;
+    @Column(name = "NAME", nullable = false, unique = true, length = 10)
+    private String name;
 
     @NotNull
     @OneToOne(fetch = FetchType.LAZY, optional = false)
@@ -35,11 +35,11 @@ public class Dealer extends StandardEntity {
         this.user = user;
     }
 
-    public String getDealer() {
-        return dealer;
+    public String getName() {
+        return name;
     }
 
-    public void setDealer(String dealer) {
-        this.dealer = dealer;
+    public void setName(String name) {
+        this.name = name;
     }
 }

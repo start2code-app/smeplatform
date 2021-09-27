@@ -32,10 +32,10 @@
           expanded="true">
         <item screen="gcsplatform_Counterparty.browse"
               caption="mainMsg://menu_config.gcsplatform_Counterparty.browse"/>
-        <item screen="gcsplatform_Agent.browse"
-              caption="mainMsg://menu_config.gcsplatform_Agent.browse"/>
-        <item screen="gcsplatform_Dealer.browse"
-              caption="mainMsg://menu_config.gcsplatform_Dealer.browse"/>
+        <item screen="gcsplatform_Trader.browse"
+              caption="mainMsg://menu_config.gcsplatform_Trader.browse"/>
+        <item screen="gcsplatform_Broker.browse"
+              caption="mainMsg://menu_config.gcsplatform_Broker.browse"/>
         <item screen="gcsplatform_Category.browse"
               caption="mainMsg://menu_config.gcsplatform_Category.browse"/>
         <item screen="gcsplatform_CounterpartyBrokerage.browse"

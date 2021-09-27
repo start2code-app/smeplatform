@@ -31,23 +31,7 @@ create table GCSPLATFORM_COUNTERPARTY (
     primary key (ID)
 )^
 -- end GCSPLATFORM_COUNTERPARTY
--- begin GCSPLATFORM_AGENT
-create table GCSPLATFORM_AGENT (
-    ID varchar(32),
-    VERSION integer not null,
-    CREATE_TS datetime(3),
-    CREATED_BY varchar(50),
-    UPDATE_TS datetime(3),
-    UPDATED_BY varchar(50),
-    DELETE_TS datetime(3),
-    DELETED_BY varchar(50),
-    --
-    COUNTERPARTY_ID varchar(32) not null,
-    AGENT varchar(30) not null,
-    --
-    primary key (ID)
-)^
--- end GCSPLATFORM_AGENT
+
 -- begin GCSPLATFORM_CATEGORY
 create table GCSPLATFORM_CATEGORY (
     ID varchar(32),
@@ -64,23 +48,7 @@ create table GCSPLATFORM_CATEGORY (
     primary key (ID)
 )^
 -- end GCSPLATFORM_CATEGORY
--- begin GCSPLATFORM_DEALER
-create table GCSPLATFORM_DEALER (
-    ID varchar(32),
-    VERSION integer not null,
-    CREATE_TS datetime(3),
-    CREATED_BY varchar(50),
-    UPDATE_TS datetime(3),
-    UPDATED_BY varchar(50),
-    DELETE_TS datetime(3),
-    DELETED_BY varchar(50),
-    --
-    DEALER varchar(10) not null,
-    USER_ID varchar(32) not null,
-    --
-    primary key (ID)
-)^
--- end GCSPLATFORM_DEALER
+
 -- begin GCSPLATFORM_COUNTERPARTY_BROKERAGE
 create table GCSPLATFORM_COUNTERPARTY_BROKERAGE (
     ID varchar(32),
@@ -614,3 +582,37 @@ create table GCSPLATFORM_BANK (
     primary key (ID)
 )^
 -- end GCSPLATFORM_BANK
+-- begin GCSPLATFORM_BROKER
+create table GCSPLATFORM_BROKER (
+    ID varchar(32),
+    VERSION integer not null,
+    CREATE_TS datetime(3),
+    CREATED_BY varchar(50),
+    UPDATE_TS datetime(3),
+    UPDATED_BY varchar(50),
+    DELETE_TS datetime(3),
+    DELETED_BY varchar(50),
+    --
+    NAME varchar(10) not null,
+    USER_ID varchar(32) not null,
+    --
+    primary key (ID)
+)^
+-- end GCSPLATFORM_BROKER
+-- begin GCSPLATFORM_TRADER
+create table GCSPLATFORM_TRADER (
+    ID varchar(32),
+    VERSION integer not null,
+    CREATE_TS datetime(3),
+    CREATED_BY varchar(50),
+    UPDATE_TS datetime(3),
+    UPDATED_BY varchar(50),
+    DELETE_TS datetime(3),
+    DELETED_BY varchar(50),
+    --
+    COUNTERPARTY_ID varchar(32) not null,
+    NAME varchar(30) not null,
+    --
+    primary key (ID)
+)^
+-- end GCSPLATFORM_TRADER

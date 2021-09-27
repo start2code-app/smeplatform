@@ -11,10 +11,10 @@ import javax.validation.constraints.NotNull;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
 
-@NamePattern("%s|agent")
-@Table(name = "GCSPLATFORM_AGENT")
-@Entity(name = "gcsplatform_Agent")
-public class Agent extends StandardEntity {
+@NamePattern("%s|name")
+@Table(name = "GCSPLATFORM_TRADER")
+@Entity(name = "gcsplatform_Trader")
+public class Trader extends StandardEntity {
 
     private static final long serialVersionUID = 3345582555019626972L;
 
@@ -23,16 +23,16 @@ public class Agent extends StandardEntity {
     @NotNull
     private Counterparty counterparty;
 
-    @Column(name = "AGENT", nullable = false, unique = true, length = 30)
+    @Column(name = "NAME", nullable = false, unique = true, length = 30)
     @NotNull
-    private String agent;
+    private String name;
 
-    public String getAgent() {
-        return agent;
+    public String getName() {
+        return name;
     }
 
-    public void setAgent(String agent) {
-        this.agent = agent;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Counterparty getCounterparty() {

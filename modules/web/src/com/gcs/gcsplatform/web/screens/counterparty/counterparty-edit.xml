@@ -22,12 +22,12 @@
                 </query>
             </loader>
         </collection>
-        <collection id="agentsDc"
-                    class="com.gcs.gcsplatform.entity.masterdata.Agent">
+        <collection id="tradersDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.Trader">
             <view extends="_local"/>
-            <loader id="agentsDl">
+            <loader id="tradersDl">
                 <query>
-                    <![CDATA[select e from gcsplatform_Agent e
+                    <![CDATA[select e from gcsplatform_Trader e
                              where e.counterparty = :counterparty]]>
                 </query>
             </loader>
@@ -109,12 +109,12 @@
                     <rows/>
                 </groupTable>
             </tab>
-            <tab id="agentsTab"
-                 caption="msg://agentsTab.caption"
+            <tab id="tradersTab"
+                 caption="msg://tradersTab.caption"
                  spacing="true"
                  margin="true">
-                <groupTable id="agentsTable"
-                            dataContainer="agentsDc"
+                <groupTable id="tradersTable"
+                            dataContainer="tradersDc"
                             height="100%"
                             width="100%"
                             editable="true">
@@ -125,14 +125,14 @@
                                 type="remove"/>
                     </actions>
                     <columns>
-                        <column id="agent"
+                        <column id="name"
                                 editable="true"/>
                     </columns>
                     <buttonsPanel>
                         <button id="addBtn"
-                                action="agentsTable.add"/>
+                                action="tradersTable.add"/>
                         <button id="removeBtn"
-                                action="agentsTable.remove"/>
+                                action="tradersTable.remove"/>
                     </buttonsPanel>
                 </groupTable>
             </tab>

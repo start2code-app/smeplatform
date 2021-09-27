@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
-        caption="msg://agentEdit.caption"
+        caption="msg://traderEdit.caption"
         focusComponent="form"
-        messagesPack="com.gcs.gcsplatform.web.screens.agent">
+        messagesPack="com.gcs.gcsplatform.web.screens.trader">
     <data>
-        <instance id="agentDc"
-                  class="com.gcs.gcsplatform.entity.masterdata.Agent">
+        <instance id="traderDc"
+                  class="com.gcs.gcsplatform.entity.masterdata.Trader">
             <view extends="_local">
                 <property name="counterparty"
                           view="_minimal"/>
@@ -20,7 +20,7 @@
     <layout expand="editActions"
             spacing="true">
         <form id="form"
-              dataContainer="agentDc">
+              dataContainer="traderDc">
             <column width="350px">
                 <pickerField id="counterpartyField"
                              property="counterparty">
@@ -31,8 +31,8 @@
                                 type="picker_clear"/>
                     </actions>
                 </pickerField>
-                <textField id="agentNameField"
-                           property="agent"/>
+                <textField id="traderNameField"
+                           property="name"/>
             </column>
         </form>
         <hbox id="editActions"

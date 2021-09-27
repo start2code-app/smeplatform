@@ -2,12 +2,12 @@ package com.gcs.gcsplatform.core.role;
 
 import com.gcs.gcsplatform.entity.invoice.Invoice;
 import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
-import com.gcs.gcsplatform.entity.masterdata.Agent;
+import com.gcs.gcsplatform.entity.masterdata.Trader;
 import com.gcs.gcsplatform.entity.masterdata.Category;
 import com.gcs.gcsplatform.entity.masterdata.Counterparty;
 import com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerage;
 import com.gcs.gcsplatform.entity.masterdata.Currency;
-import com.gcs.gcsplatform.entity.masterdata.Dealer;
+import com.gcs.gcsplatform.entity.masterdata.Broker;
 import com.gcs.gcsplatform.entity.masterdata.Fx;
 import com.gcs.gcsplatform.entity.trade.CallOptionTrade;
 import com.gcs.gcsplatform.entity.trade.ClosedLiveTrade;
@@ -19,11 +19,9 @@ import com.haulmont.cuba.security.app.role.annotation.EntityAccess;
 import com.haulmont.cuba.security.app.role.annotation.EntityAttributeAccess;
 import com.haulmont.cuba.security.app.role.annotation.Role;
 import com.haulmont.cuba.security.app.role.annotation.ScreenAccess;
-import com.haulmont.cuba.security.app.role.annotation.ScreenComponentAccess;
 import com.haulmont.cuba.security.entity.EntityOp;
 import com.haulmont.cuba.security.role.EntityAttributePermissionsContainer;
 import com.haulmont.cuba.security.role.EntityPermissionsContainer;
-import com.haulmont.cuba.security.role.ScreenComponentPermissionsContainer;
 import com.haulmont.cuba.security.role.ScreenPermissionsContainer;
 
 @Role(name = "Back Office")
@@ -45,10 +43,10 @@ public class BackOfficeRole extends AnnotatedRoleDefinition {
             "gcsplatform_ClosedLiveTrade.edit",
             "gcsplatform_Counterparty.browse",
             "gcsplatform_Counterparty.edit",
-            "gcsplatform_Agent.browse",
-            "gcsplatform_Agent.edit",
-            "gcsplatform_Dealer.browse",
-            "gcsplatform_Dealer.edit",
+            "gcsplatform_Trader.browse",
+            "gcsplatform_Trader.edit",
+            "gcsplatform_Broker.browse",
+            "gcsplatform_Broker.edit",
             "gcsplatform_Category.browse",
             "gcsplatform_Category.edit",
             "gcsplatform_CounterpartyBrokerage.browse",
@@ -73,8 +71,8 @@ public class BackOfficeRole extends AnnotatedRoleDefinition {
     @EntityAccess(entityClass = CallOptionTrade.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
     @EntityAccess(entityClass = LiveTrade.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
     @EntityAccess(entityClass = Counterparty.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
-    @EntityAccess(entityClass = Agent.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
-    @EntityAccess(entityClass = Dealer.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
+    @EntityAccess(entityClass = Trader.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
+    @EntityAccess(entityClass = Broker.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
     @EntityAccess(entityClass = Category.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
     @EntityAccess(entityClass = CounterpartyBrokerage.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
     @EntityAccess(entityClass = Currency.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})

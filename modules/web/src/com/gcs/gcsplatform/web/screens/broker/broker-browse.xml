@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
-        caption="msg://dealerBrowse.caption"
-        focusComponent="dealersTable"
-        messagesPack="com.gcs.gcsplatform.web.screens.dealer">
+        caption="msg://brokerBrowse.caption"
+        focusComponent="brokersTable"
+        messagesPack="com.gcs.gcsplatform.web.screens.name">
     <data readOnly="true">
-        <collection id="dealersDc"
-                    class="com.gcs.gcsplatform.entity.masterdata.Dealer">
+        <collection id="brokersDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.Broker">
             <view extends="_local">
                 <property name="user"
                           view="_minimal"/>
             </view>
-            <loader id="dealersDl">
+            <loader id="brokersDl">
                 <query>
-                    <![CDATA[select e from gcsplatform_Dealer e order by e.dealer]]>
+                    <![CDATA[select e from gcsplatform_Broker e order by e.name]]>
                 </query>
             </loader>
         </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="dealersTable"
+    <layout expand="brokersTable"
             spacing="true">
         <filter id="filter"
-                applyTo="dealersTable"
-                dataLoader="dealersDl">
+                applyTo="brokersTable"
+                dataLoader="brokersDl">
             <properties include=".*"/>
         </filter>
-        <groupTable id="dealersTable"
+        <groupTable id="brokersTable"
                     width="100%"
-                    dataContainer="dealersDc">
+                    dataContainer="brokersDc">
             <actions>
                 <action id="create"
                         type="create"/>
@@ -39,18 +39,18 @@
                         type="remove"/>
             </actions>
             <columns>
-                <column id="dealer"/>
+                <column id="name"/>
                 <column id="user"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
                 <button id="createBtn"
-                        action="dealersTable.create"/>
+                        action="brokersTable.create"/>
                 <button id="editBtn"
-                        action="dealersTable.edit"/>
+                        action="brokersTable.edit"/>
                 <button id="removeBtn"
-                        action="dealersTable.remove"/>
+                        action="brokersTable.remove"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions"

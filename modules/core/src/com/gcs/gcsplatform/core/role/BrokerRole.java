@@ -1,11 +1,11 @@
 package com.gcs.gcsplatform.core.role;
 
-import com.gcs.gcsplatform.entity.masterdata.Agent;
+import com.gcs.gcsplatform.entity.masterdata.Trader;
 import com.gcs.gcsplatform.entity.masterdata.Category;
 import com.gcs.gcsplatform.entity.masterdata.Counterparty;
 import com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerage;
 import com.gcs.gcsplatform.entity.masterdata.Currency;
-import com.gcs.gcsplatform.entity.masterdata.Dealer;
+import com.gcs.gcsplatform.entity.masterdata.Broker;
 import com.gcs.gcsplatform.entity.masterdata.Fx;
 import com.gcs.gcsplatform.entity.trade.CallOptionTrade;
 import com.gcs.gcsplatform.entity.trade.ClosedLiveTrade;
@@ -53,8 +53,8 @@ public class BrokerRole extends AnnotatedRoleDefinition {
     @EntityAccess(entityClass = CallOptionTrade.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
     @EntityAccess(entityClass = LiveTrade.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
     @EntityAccess(entityClass = Counterparty.class, operations = {EntityOp.READ})
-    @EntityAccess(entityClass = Agent.class, operations = {EntityOp.READ})
-    @EntityAccess(entityClass = Dealer.class, operations = {EntityOp.READ})
+    @EntityAccess(entityClass = Trader.class, operations = {EntityOp.READ})
+    @EntityAccess(entityClass = Broker.class, operations = {EntityOp.READ})
     @EntityAccess(entityClass = Category.class, operations = {EntityOp.READ})
     @EntityAccess(entityClass = CounterpartyBrokerage.class, operations = {EntityOp.READ})
     @EntityAccess(entityClass = Currency.class, operations = {EntityOp.READ})

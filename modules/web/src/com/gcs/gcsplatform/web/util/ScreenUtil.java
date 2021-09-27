@@ -16,8 +16,8 @@ public class ScreenUtil {
      * <p>
      * Sets default field value by entity string property value.
      * <p>
-     * The reason of this mapping is that trade entity does not have actual foreign keys to dealer/brokerage
-     * category/counterparty entities and uses string properties instead.
+     * The reason of this mapping is that trade entity does not have actual foreign keys to broker/counterparty/trader
+     * entities and uses string properties instead.
      *
      * @param field              Source field
      * @param container          Target entity container

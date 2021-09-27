@@ -15,8 +15,8 @@
                   ref="cuba_ServerSelector"/>
         <property name="remoteServices">
             <map>
-                <entry key="gcsplatform_AgentService"
-                       value="com.gcs.gcsplatform.service.AgentService"/>
+                <entry key="gcsplatform_TraderService"
+                       value="com.gcs.gcsplatform.service.TraderService"/>
                 <entry key="gcsplatform_BrokerageService"
                        value="com.gcs.gcsplatform.service.BrokerageService"/>
                 <entry key="gcsplatform_FxService"

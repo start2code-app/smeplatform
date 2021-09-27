@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
-        caption="msg://dealerEdit.caption"
+        caption="msg://brokerEdit.caption"
         focusComponent="form"
-        messagesPack="com.gcs.gcsplatform.web.screens.dealer">
+        messagesPack="com.gcs.gcsplatform.web.screens.name">
     <data>
-        <instance id="dealerDc"
-                  class="com.gcs.gcsplatform.entity.masterdata.Dealer">
+        <instance id="brokerDc"
+                  class="com.gcs.gcsplatform.entity.masterdata.Broker">
             <view extends="_local">
                 <property name="user"
                           view="_minimal"/>
@@ -20,10 +20,10 @@
     <layout expand="editActions"
             spacing="true">
         <form id="form"
-              dataContainer="dealerDc">
+              dataContainer="brokerDc">
             <column width="350px">
-                <textField id="dealerField"
-                           property="dealer"/>
+                <textField id="brokerField"
+                           property="name"/>
                 <pickerField id="userField"
                              property="user">
                     <actions>
