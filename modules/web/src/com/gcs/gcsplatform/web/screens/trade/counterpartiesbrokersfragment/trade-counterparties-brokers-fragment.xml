@@ -63,8 +63,8 @@
                                         type="picker_clear"/>
                             </actions>
                         </lookupPickerField>
-                        <lookupPickerField id="buyerAgentLookupPickerField"
-                                           caption="msg://com.gcs.gcsplatform.entity.trade/Trade.buyerAgent"
+                        <lookupPickerField id="buyerTraderLookupPickerField"
+                                           caption="msg://com.gcs.gcsplatform.entity.trade/Trade.buyerTrader"
                                            optionsContainer="tradersDc">
                             <actions>
                                 <action id="lookup"
@@ -117,8 +117,8 @@
                                         type="picker_clear"/>
                             </actions>
                         </lookupPickerField>
-                        <lookupPickerField id="sellerAgentLookupPickerField"
-                                           caption="msg://com.gcs.gcsplatform.entity.trade/Trade.sellerAgent"
+                        <lookupPickerField id="sellerTraderLookupPickerField"
+                                           caption="msg://com.gcs.gcsplatform.entity.trade/Trade.sellerTrader"
                                            optionsContainer="tradersDc">
                             <actions>
                                 <action id="lookup"

@@ -38,8 +38,8 @@ public abstract class Trade extends StandardEntity {
     @Column(name = "BUYER", length = 30)
     private String buyer;
 
-    @Column(name = "BUYER_AGENT", length = 30)
-    private String buyerAgent;
+    @Column(name = "BUYER_TRADER", length = 30)
+    private String buyerTrader;
 
     @Column(name = "CALLOPTION", length = 20)
     private String calloption;
@@ -101,8 +101,8 @@ public abstract class Trade extends StandardEntity {
     @Column(name = "SELLER", length = 30)
     private String seller;
 
-    @Column(name = "SELLER_AGENT", length = 30)
-    private String sellerAgent;
+    @Column(name = "SELLER_TRADER", length = 30)
+    private String sellerTrader;
 
     @Column(name = "START_PRICE", precision = 10, scale = 4)
     private BigDecimal startPrice;
@@ -586,12 +586,12 @@ public abstract class Trade extends StandardEntity {
         this.startPrice = startPrice;
     }
 
-    public String getSellerAgent() {
-        return sellerAgent;
+    public String getSellerTrader() {
+        return sellerTrader;
     }
 
-    public void setSellerAgent(String sellerAgent) {
-        this.sellerAgent = sellerAgent;
+    public void setSellerTrader(String sellerTrader) {
+        this.sellerTrader = sellerTrader;
     }
 
     public String getSeller() {
@@ -722,12 +722,12 @@ public abstract class Trade extends StandardEntity {
         this.calloption = calloption;
     }
 
-    public String getBuyerAgent() {
-        return buyerAgent;
+    public String getBuyerTrader() {
+        return buyerTrader;
     }
 
-    public void setBuyerAgent(String buyerAgent) {
-        this.buyerAgent = buyerAgent;
+    public void setBuyerTrader(String buyerTrader) {
+        this.buyerTrader = buyerTrader;
     }
 
     public String getBuyer() {

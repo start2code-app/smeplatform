@@ -51,7 +51,7 @@
                 <column id="currency"/>
                 <column id="brokerInitials"/>
                 <column id="notes"/>
-                <column id="buyerAgent"
+                <column id="buyerTrader"
                         collapsed="true"/>
                 <column id="calloption"
                         collapsed="true"/>
@@ -77,7 +77,7 @@
                         collapsed="true"/>
                 <column id="repoRate"
                         collapsed="true"/>
-                <column id="sellerAgent"
+                <column id="sellerTrader"
                         collapsed="true"/>
                 <column id="startPrice"
                         collapsed="true"/>
