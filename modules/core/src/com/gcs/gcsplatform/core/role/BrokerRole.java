@@ -1,5 +1,8 @@
 package com.gcs.gcsplatform.core.role;
 
+import com.gcs.gcsplatform.entity.masterdata.Bank;
+import com.gcs.gcsplatform.entity.masterdata.Company;
+import com.gcs.gcsplatform.entity.masterdata.InvoiceBank;
 import com.gcs.gcsplatform.entity.masterdata.Trader;
 import com.gcs.gcsplatform.entity.masterdata.Category;
 import com.gcs.gcsplatform.entity.masterdata.Counterparty;
@@ -59,6 +62,9 @@ public class BrokerRole extends AnnotatedRoleDefinition {
     @EntityAccess(entityClass = CounterpartyBrokerage.class, operations = {EntityOp.READ})
     @EntityAccess(entityClass = Currency.class, operations = {EntityOp.READ})
     @EntityAccess(entityClass = Fx.class, operations = {EntityOp.READ})
+    @EntityAccess(entityClass = Bank.class, operations = {EntityOp.READ})
+    @EntityAccess(entityClass = InvoiceBank.class, operations = {EntityOp.READ})
+    @EntityAccess(entityClass = Company.class, operations = {EntityOp.READ})
     @Override
     public EntityPermissionsContainer entityPermissions() {
         return super.entityPermissions();
