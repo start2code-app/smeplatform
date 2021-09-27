@@ -7,13 +7,18 @@ import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
 import com.gcs.gcsplatform.web.components.invoice.InvoiceBackportBean;
 import com.gcs.gcsplatform.web.components.invoice.InvoiceCalculationBean;
 import com.gcs.gcsplatform.web.components.pnl.PnlCalculationBean;
+import com.gcs.gcsplatform.web.screens.invoiceline.brokerageselection.BrokerageSelectionFragment;
 import com.haulmont.cuba.gui.Notifications;
+import com.haulmont.cuba.gui.components.Button;
 import com.haulmont.cuba.gui.components.HasValue;
+import com.haulmont.cuba.gui.components.PopupButton;
+import com.haulmont.cuba.gui.components.ValidationErrors;
 import com.haulmont.cuba.gui.model.DataContext;
 import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.EditedEntityContainer;
 import com.haulmont.cuba.gui.screen.LoadDataBeforeShow;
 import com.haulmont.cuba.gui.screen.MessageBundle;
+import com.haulmont.cuba.gui.screen.ScreenValidation;
 import com.haulmont.cuba.gui.screen.StandardEditor;
 import com.haulmont.cuba.gui.screen.Subscribe;
 import com.haulmont.cuba.gui.screen.Target;
@@ -29,11 +34,18 @@ import static com.gcs.gcsplatform.util.DateUtils.getDaysBetweenDates;
 public class InvoiceLineEdit extends StandardEditor<InvoiceLine> {
 
     @Inject
+    protected PopupButton brokeragePopupButton;
+    @Inject
+    protected BrokerageSelectionFragment brokerageSelectionFragment;
+
+    @Inject
     protected PnlCalculationBean pnlCalculationBean;
     @Inject
     protected InvoiceBackportBean invoiceBackportBean;
     @Inject
     protected InvoiceCalculationBean invoiceCalculationBean;
+    @Inject
+    protected ScreenValidation screenValidation;
     @Inject
     protected Notifications notifications;
     @Inject
@@ -44,7 +56,6 @@ public class InvoiceLineEdit extends StandardEditor<InvoiceLine> {
         if (!event.isUserOriginated()) {
             return;
         }
-
         Date value = event.getValue();
         Date prevValue = event.getPrevValue();
         InvoiceLine invoiceLine = getEditedEntity();
@@ -104,5 +115,26 @@ public class InvoiceLineEdit extends StandardEditor<InvoiceLine> {
     @Subscribe(target = Target.DATA_CONTEXT)
     protected void onPostCommit(DataContext.PostCommitEvent event) {
         invoiceCalculationBean.recalculateInvoice(getEditedEntity());
+    }
+
+    @Subscribe("savePopupBtn")
+    protected void onSavePopupBtnClick(Button.ClickEvent event) {
+        ValidationErrors validationErrors = screenValidation.validateUiComponents(
+                brokerageSelectionFragment.getFragment());
+        if (validationErrors.isEmpty()) {
+            invoiceBackportBean.backportBrokerage(getEditedEntity(),
+                    brokerageSelectionFragment.getBrokerage(),
+                    brokerageSelectionFragment.getCategory(),
+                    brokerageSelectionFragment.getBrokerageType(),
+                    brokerageSelectionFragment.getBroOverride());
+            brokeragePopupButton.setPopupVisible(false);
+        } else {
+            screenValidation.showValidationErrors(this, validationErrors);
+        }
+    }
+
+    @Subscribe("closePopupBtn")
+    protected void onClosePopupBtnClick(Button.ClickEvent event) {
+        brokeragePopupButton.setPopupVisible(false);
     }
 }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fragment xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd"
+          messagesPack="com.gcs.gcsplatform.web.screens.invoiceline.brokerageselection">
+    <data>
+        <instance id="invoiceLineDc"
+                  class="com.gcs.gcsplatform.entity.invoice.InvoiceLine"
+                  provided="true"/>
+        <collection id="categoryDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.Category">
+            <view extends="_minimal"/>
+            <loader id="categoryDl">
+                <query>select e from gcsplatform_Category e order by e.category</query>
+            </loader>
+        </collection>
+    </data>
+    <layout>
+        <form id="brokerageTypeForm">
+            <column width="250px">
+                <lookupField id="categoryLookupField"
+                             caption="msg://com.gcs.gcsplatform.entity.trade/Trade.category"
+                             optionsContainer="categoryDc"/>
+                <lookupField id="brokerageTypeField"
+                             caption="msg://brokerageType.caption"
+                             optionsEnum="com.gcs.gcsplatform.entity.masterdata.BrokerageType"/>
+                <checkBox id="broOverrideCheckBox"
+                          caption="msg://broOverride.caption"/>
+                <textField id="brokerageField"
+                           caption="msg://brokerage.caption"
+                           datatype="decimal"
+                           editable="false">
+                    <formatter class="com.haulmont.cuba.gui.components.formatters.NumberFormatter"
+                               format="#,##0.0000"/>
+                </textField>
+            </column>
+        </form>
+    </layout>
+</fragment>

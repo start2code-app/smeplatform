@@ -12,6 +12,8 @@ import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;
 import org.springframework.stereotype.Component;
 
+import static com.gcs.gcsplatform.util.BigDecimalUtils.isNotNullOrZero;
+
 @Component(InvoiceCalculationBean.NAME)
 public class InvoiceCalculationBean {
 
@@ -28,6 +30,8 @@ public class InvoiceCalculationBean {
      * Searches for a corresponding invoice and recalculates its pnl/gbp amount by selecting all of the related invoice
      * lines.
      *
+     * If invoice amount is zero or null, removes the invoice.
+     *
      * @param invoiceLine Invoice line
      */
     public void recalculateInvoice(InvoiceLine invoiceLine) {
@@ -36,7 +40,11 @@ public class InvoiceCalculationBean {
                 .build());
         if (invoice != null) {
             invoice = invoiceService.calculateAmount(invoice);
-            dataManager.commit(invoice);
+            if (isNotNullOrZero(invoice.getAmount())) {
+                dataManager.commit(invoice);
+            } else {
+                dataManager.remove(invoice);
+            }
             events.publish(new InvoiceLineUpdatedEvent(this));
         }
     }

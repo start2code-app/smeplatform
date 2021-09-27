@@ -7,15 +7,14 @@ import javax.inject.Inject;
 import com.gcs.gcsplatform.entity.invoice.Invoice;
 import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;
-import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.entity.trade.TradeSide;
+import com.gcs.gcsplatform.util.ContractNumber;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.View;
 import org.springframework.stereotype.Service;
 
 import static com.gcs.gcsplatform.util.DateUtils.getFirstDayOfMonth;
 import static com.gcs.gcsplatform.util.DateUtils.getLastDayOfMonth;
-import static org.apache.commons.lang3.StringUtils.firstNonBlank;
 
 @Service(InvoiceLineService.NAME)
 public class InvoiceLineServiceBean implements InvoiceLineService {
@@ -58,21 +57,13 @@ public class InvoiceLineServiceBean implements InvoiceLineService {
         invoiceLine.setCash(trade.getCash(side));
         invoiceLine.setBondDescription(trade.getBondDescription());
         invoiceLine.setBrokerage(trade.getBrokerage(side));
-        invoiceLine.setContractNumber(generateContractNumber(trade, side));
+        invoiceLine.setContractNumber(ContractNumber.of(trade, side).toString());
         invoiceLine.setStartPrice(trade.getStartPrice());
         invoiceLine.setPnl(trade.getPnl(side));
         invoiceLine.setFx(trade.getXrate1());
         invoiceLine.setTradeSide(side);
         invoiceLine.setGbpEquivalent(trade.getGbpEquivalent(side));
         return invoiceLine;
-    }
-
-    private String generateContractNumber(Trade trade, TradeSide side) {
-        String category = firstNonBlank(trade.getCategory(), "X");
-        String brokerageType = trade.getBrokerageType() != null ? trade.getBrokerageType().getId() : "X";
-        String traderef = firstNonBlank(trade.getTraderef(), "X");
-        String broker = firstNonBlank(trade.getBroker(side), "X");
-        return String.format("%s:%s:%s:%s:%s", category, brokerageType, traderef, side.getId(), broker);
     }
 
     @Override

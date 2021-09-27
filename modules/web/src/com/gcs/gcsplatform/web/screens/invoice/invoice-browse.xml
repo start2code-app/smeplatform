@@ -10,7 +10,7 @@
             <view extends="_local"/>
             <loader id="invoicesDl">
                 <query>
-                    <![CDATA[select e from gcsplatform_Invoice e]]>
+                    <![CDATA[select e from gcsplatform_Invoice e order by e.updateTs desc]]>
                 </query>
             </loader>
         </collection>

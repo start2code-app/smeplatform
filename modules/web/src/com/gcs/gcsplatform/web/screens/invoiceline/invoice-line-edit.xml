@@ -48,7 +48,36 @@
                                editable="false"
                                property="counterpartyCode"/>
                     <textField id="brokerageField"
+                               editable="false"
                                property="brokerage"/>
+                    <hbox>
+                        <popupButton id="brokeragePopupButton"
+                                     popupOpenDirection="BOTTOM_CENTER"
+                                     showActionIcons="true"
+                                     caption="msg://brokeragePopupButton.caption"
+                                     align="MIDDLE_RIGHT"
+                                     width="250px">
+                            <popup>
+                                <vbox width="AUTO"
+                                      height="AUTO"
+                                      spacing="true"
+                                      margin="true">
+                                    <fragment id="brokerageSelectionFragment"
+                                              screen="gcsplatform_BrokerageSelectionFragment"/>
+                                    <hbox spacing="true">
+                                        <button id="savePopupBtn"
+                                                caption="mainMsg://actions.Save"
+                                                stylename="primary"
+                                                icon="SAVE"/>
+                                        <button id="closePopupBtn"
+                                                caption="mainMsg://actions.Cancel"
+                                                icon="REMOVE"/>
+                                    </hbox>
+                                </vbox>
+                            </popup>
+                        </popupButton>
+                    </hbox>
+
                     <dateField id="valueDateField"
                                property="valueDate"/>
                     <dateField id="maturityDateField"

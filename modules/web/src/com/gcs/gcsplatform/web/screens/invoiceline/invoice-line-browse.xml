@@ -10,7 +10,7 @@
             <view extends="_local"/>
             <loader id="invoiceLinesDl">
                 <query>
-                    <![CDATA[select e from gcsplatform_InvoiceLine e]]>
+                    <![CDATA[select e from gcsplatform_InvoiceLine e order by e.contractNumber]]>
                 </query>
             </loader>
         </collection>
