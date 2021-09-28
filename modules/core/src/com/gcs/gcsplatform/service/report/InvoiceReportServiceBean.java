@@ -74,9 +74,9 @@ public class InvoiceReportServiceBean implements InvoiceReportService {
                 return Collections.emptyMap();
             }
             Map<String, Object> bankMap = reportDataConversionService.entityToMap(usdBank.getBank());
-            BigDecimal fxAgainstUsd = fxCalculationService.calculateFxAgainstUsd(invoice.getFx(), invoice.getFxUsd());
+            BigDecimal crossRate = fxCalculationService.calculateCrossRate(invoice.getFx(), invoice.getFxUsd());
             bankMap.put("totalDueUsd", String.format("Total Due USD: %.2f , FX : %.4f", invoice.getUsdAmount(),
-                    fxAgainstUsd));
+                    crossRate));
             bankMap.put("bankCurrency", usdCurrency);
             return bankMap;
         } else {

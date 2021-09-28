@@ -2,6 +2,7 @@ package com.gcs.gcsplatform.service.invoice;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.invoice.Invoice;
@@ -25,9 +26,15 @@ public class InvoiceLineServiceBean implements InvoiceLineService {
     @Override
     public Collection<InvoiceLine> splitTrade(ClosedTrade trade) {
         ArrayList<InvoiceLine> invoiceLines = new ArrayList<>();
-        invoiceLines.add(splitTrade(trade, TradeSide.BUY));
-        invoiceLines.add(splitTrade(trade, TradeSide.SELL));
+        splitTrade(invoiceLines, trade, TradeSide.BUY);
+        splitTrade(invoiceLines, trade, TradeSide.SELL);
         return invoiceLines;
+    }
+
+    private void splitTrade(List<InvoiceLine> invoiceLines, ClosedTrade trade, TradeSide side) {
+        if (trade.getPutOnInvoice(side)) {
+            invoiceLines.add(splitTrade(trade, side));
+        }
     }
 
     private InvoiceLine splitTrade(ClosedTrade trade, TradeSide side) {
@@ -36,9 +43,9 @@ public class InvoiceLineServiceBean implements InvoiceLineService {
         invoiceLine.setBroker(trade.getBroker(side));
         invoiceLine.setCrossRate(trade.getCpair1());
         invoiceLine.setHairCut(trade.getHairCut());
-        invoiceLine.setCurrency(trade.getTradeCurrency());
-        invoiceLine.setBaseCurrency(trade.getCurrency());
-        invoiceLine.setXrate(trade.getXrate2());
+        invoiceLine.setCurrency(trade.getCurrency());
+        invoiceLine.setBaseCurrency(trade.getBondCurrency());
+        invoiceLine.setXrate(trade.getXrate());
         invoiceLine.setValueDate(trade.getValueDate());
         invoiceLine.setMaturityDate(trade.getMaturityDate());
         invoiceLine.setLocation(trade.getInvoiceCode(side));
@@ -60,7 +67,7 @@ public class InvoiceLineServiceBean implements InvoiceLineService {
         invoiceLine.setContractNumber(ContractNumber.of(trade, side).toString());
         invoiceLine.setStartPrice(trade.getStartPrice());
         invoiceLine.setPnl(trade.getPnl(side));
-        invoiceLine.setFx(trade.getXrate1());
+        invoiceLine.setFx(trade.getFx());
         invoiceLine.setTradeSide(side);
         invoiceLine.setGbpEquivalent(trade.getGbpEquivalent(side));
         return invoiceLine;

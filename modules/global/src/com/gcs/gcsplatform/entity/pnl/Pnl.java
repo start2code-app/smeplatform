@@ -22,7 +22,7 @@ public class Pnl extends StandardEntity {
 
     @Transient
     @MetaProperty
-    private String tradeCurrency;
+    private String currency;
 
     @Transient
     @MetaProperty
@@ -48,12 +48,12 @@ public class Pnl extends StandardEntity {
         this.pnl = pnl;
     }
 
-    public String getTradeCurrency() {
-        return tradeCurrency;
+    public String getCurrency() {
+        return currency;
     }
 
-    public void setTradeCurrency(String tradeCurrency) {
-        this.tradeCurrency = tradeCurrency;
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public String getCounterparty() {

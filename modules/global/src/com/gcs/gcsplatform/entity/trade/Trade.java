@@ -2,6 +2,7 @@ package com.gcs.gcsplatform.entity.trade;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -9,11 +10,14 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import com.gcs.gcsplatform.config.CurrencyConfig;
 import com.gcs.gcsplatform.entity.masterdata.BrokerageType;
 import com.haulmont.chile.core.annotations.MetaClass;
 import com.haulmont.chile.core.annotations.MetaProperty;
 import com.haulmont.chile.core.annotations.NumberFormat;
 import com.haulmont.cuba.core.entity.StandardEntity;
+import com.haulmont.cuba.core.global.AppBeans;
+import com.haulmont.cuba.core.global.Configuration;
 import org.apache.commons.lang3.StringUtils;
 
 @MetaClass(name = "gcsplatform_Trade")
@@ -56,8 +60,8 @@ public abstract class Trade extends StandardEntity {
     @Column(name = "CPAIR3", length = 10)
     private String cpair3;
 
-    @Column(name = "CURRENCY", length = 5)
-    private String currency;
+    @Column(name = "BOND_CURRENCY", length = 5)
+    private String bondCurrency;
 
     @Column(name = "BUY_GBP_EQUIVALENT", precision = 10, scale = 4)
     private BigDecimal buyGbpEquivalent;
@@ -113,8 +117,8 @@ public abstract class Trade extends StandardEntity {
     @Column(name = "SUBS")
     private Boolean subs;
 
-    @Column(name = "TRADE_CURRENCY", length = 5)
-    private String tradeCurrency;
+    @Column(name = "REPO_CURRENCY", length = 5)
+    private String repoCurrency;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "TRADE_DATE")
@@ -134,15 +138,17 @@ public abstract class Trade extends StandardEntity {
     @Column(name = "VALUE_DATE")
     private Date valueDate;
 
-    @Column(name = "XRATE1", precision = 10, scale = 4)
+    @Column(name = "FX", precision = 10, scale = 4)
     @NumberFormat(pattern = "#,##0.0000")
-    private BigDecimal xrate1;
+    private BigDecimal fx;
 
-    @Column(name = "XRATE2", precision = 10, scale = 4)
-    private BigDecimal xrate2;
+    @Column(name = "FX_USD", precision = 10, scale = 4)
+    @NumberFormat(pattern = "#,##0.0000")
+    private BigDecimal fxUsd;
 
-    @Column(name = "XRATE3", precision = 10, scale = 4)
-    private BigDecimal xrate3;
+    @Column(name = "XRATE", precision = 10, scale = 4)
+    @NumberFormat(pattern = "#,##0.0000")
+    private BigDecimal xrate;
 
     @Column(name = "GM_SLA")
     private Boolean gmSla;
@@ -192,13 +198,17 @@ public abstract class Trade extends StandardEntity {
     @Column(name = "BROKERAGE_TYPE")
     private String brokerageType;
 
-    public BrokerageType getBrokerageType() {
-        return brokerageType == null ? null : BrokerageType.fromId(brokerageType);
-    }
+    @Column(name = "BUY_COMMISSION_OVERRIDE")
+    private Boolean buyCommissionOverride;
 
-    public void setBrokerageType(BrokerageType brokerageType) {
-        this.brokerageType = brokerageType == null ? null : brokerageType.getId();
-    }
+    @Column(name = "SELL_COMISSION_OVERRIDE")
+    private Boolean sellCommissionOverride;
+
+    @Column(name = "BUY_PUT_ON_INVOICE")
+    private Boolean buyPutOnInvoice = true;
+
+    @Column(name = "SELL_PUT_ON_INVOICE")
+    private Boolean sellPutOnInvoice = true;
 
     @Nullable
     @Transient
@@ -208,6 +218,91 @@ public abstract class Trade extends StandardEntity {
             return String.format("%s/%s", buybroker, sellbroker);
         }
         return null;
+    }
+
+    @Nullable
+    @Transient
+    @MetaProperty(related = {"repoCurrency", "bondCurrency"})
+    public String getCurrency() {
+        CurrencyConfig currencyConfig = AppBeans.get(Configuration.class).getConfig(CurrencyConfig.class);
+        List<String> defaultCurrencies = currencyConfig.getDefaultCurrencies();
+        if (defaultCurrencies.contains(bondCurrency)) {
+            return bondCurrency;
+        } else {
+            return repoCurrency;
+        }
+    }
+
+    public Boolean getSellPutOnInvoice() {
+        return sellPutOnInvoice;
+    }
+
+    public void setSellPutOnInvoice(Boolean sellPutOnInvoice) {
+        this.sellPutOnInvoice = sellPutOnInvoice;
+    }
+
+    public Boolean getBuyPutOnInvoice() {
+        return buyPutOnInvoice;
+    }
+
+    public void setBuyPutOnInvoice(Boolean buyPutOnInvoice) {
+        this.buyPutOnInvoice = buyPutOnInvoice;
+    }
+
+    public Boolean getSellCommissionOverride() {
+        return sellCommissionOverride;
+    }
+
+    public void setSellCommissionOverride(Boolean sellCommissionOverride) {
+        this.sellCommissionOverride = sellCommissionOverride;
+    }
+
+    public Boolean getBuyCommissionOverride() {
+        return buyCommissionOverride;
+    }
+
+    public void setBuyCommissionOverride(Boolean buyCommissionOverride) {
+        this.buyCommissionOverride = buyCommissionOverride;
+    }
+
+    public BrokerageType getBrokerageType() {
+        return brokerageType == null ? null : BrokerageType.fromId(brokerageType);
+    }
+
+    public void setBrokerageType(BrokerageType brokerageType) {
+        this.brokerageType = brokerageType == null ? null : brokerageType.getId();
+    }
+
+    public boolean getCommissionOverride(TradeSide side) {
+        if (side == TradeSide.BUY) {
+            return Boolean.TRUE.equals(buyCommissionOverride);
+        } else {
+            return Boolean.TRUE.equals(sellCommissionOverride);
+        }
+    }
+
+    public void setCommissionOverride(Boolean commissionOverride, TradeSide side) {
+        if (side == TradeSide.BUY) {
+            setBuyCommissionOverride(commissionOverride);
+        } else {
+            setSellCommissionOverride(commissionOverride);
+        }
+    }
+
+    public boolean getPutOnInvoice(TradeSide side) {
+        if (side == TradeSide.BUY) {
+            return Boolean.TRUE.equals(buyPutOnInvoice);
+        } else {
+            return Boolean.TRUE.equals(sellPutOnInvoice);
+        }
+    }
+
+    public void setPutOnInvoice(Boolean putOnInvoice, TradeSide side) {
+        if (side == TradeSide.BUY) {
+            setBuyPutOnInvoice(putOnInvoice);
+        } else {
+            setSellPutOnInvoice(putOnInvoice);
+        }
     }
 
     public String getBroker(TradeSide side) {
@@ -274,19 +369,19 @@ public abstract class Trade extends StandardEntity {
         }
     }
 
-    public Boolean getCash(TradeSide side) {
+    public boolean getCash(TradeSide side) {
         if (side == TradeSide.BUY) {
-            return buyerCash;
+            return Boolean.TRUE.equals(buyerCash);
         } else {
-            return sellerCash;
+            return Boolean.TRUE.equals(sellerCash);
         }
     }
 
-    public Boolean getSplit(TradeSide side) {
+    public boolean getSplit(TradeSide side) {
         if (side == TradeSide.BUY) {
-            return buySplit;
+            return Boolean.TRUE.equals(buySplit);
         } else {
-            return sellSplit;
+            return Boolean.TRUE.equals(sellSplit);
         }
     }
 
@@ -514,28 +609,28 @@ public abstract class Trade extends StandardEntity {
         this.gmSla = gmSla;
     }
 
-    public BigDecimal getXrate3() {
-        return xrate3;
+    public BigDecimal getFxUsd() {
+        return fxUsd;
     }
 
-    public void setXrate3(BigDecimal xrate3) {
-        this.xrate3 = xrate3;
+    public void setFxUsd(BigDecimal fxUsd) {
+        this.fxUsd = fxUsd;
     }
 
-    public BigDecimal getXrate2() {
-        return xrate2;
+    public BigDecimal getXrate() {
+        return xrate;
     }
 
-    public void setXrate2(BigDecimal xrate2) {
-        this.xrate2 = xrate2;
+    public void setXrate(BigDecimal xrate) {
+        this.xrate = xrate;
     }
 
-    public BigDecimal getXrate1() {
-        return xrate1;
+    public BigDecimal getFx() {
+        return fx;
     }
 
-    public void setXrate1(BigDecimal xrate1) {
-        this.xrate1 = xrate1;
+    public void setFx(BigDecimal fx) {
+        this.fx = fx;
     }
 
     public String getUti() {
@@ -554,12 +649,12 @@ public abstract class Trade extends StandardEntity {
         this.traderef = traderef;
     }
 
-    public String getTradeCurrency() {
-        return tradeCurrency;
+    public String getRepoCurrency() {
+        return repoCurrency;
     }
 
-    public void setTradeCurrency(String tradeCurrency) {
-        this.tradeCurrency = tradeCurrency;
+    public void setRepoCurrency(String repoCurrency) {
+        this.repoCurrency = repoCurrency;
     }
 
     public Boolean getSubs() {
@@ -674,12 +769,12 @@ public abstract class Trade extends StandardEntity {
         this.buyGbpEquivalent = buyGbpEquivalent;
     }
 
-    public String getCurrency() {
-        return currency;
+    public String getBondCurrency() {
+        return bondCurrency;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
+    public void setBondCurrency(String bondCurrency) {
+        this.bondCurrency = bondCurrency;
     }
 
     public String getCpair3() {

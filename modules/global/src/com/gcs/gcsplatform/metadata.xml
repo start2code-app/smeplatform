@@ -5,6 +5,7 @@
         <class>com.gcs.gcsplatform.entity.pnl.chart.CategoryCount</class>
         <class>com.gcs.gcsplatform.entity.pnl.chart.TotalPnl</class>
         <class>com.gcs.gcsplatform.entity.pnl.chart.BrokerageTypeCount</class>
+        <class>com.gcs.gcsplatform.entity.fx.Equivalent</class>
     </metadata-model>
 
 </metadata>

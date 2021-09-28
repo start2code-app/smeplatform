@@ -121,7 +121,7 @@
                                 <column id="broker"/>
                             </group>
                             <column id="counterparty"/>
-                            <column id="tradeCurrency"/>
+                            <column id="currency"/>
                             <column id="pnl"/>
                         </columns>
                         <rows/>
@@ -138,7 +138,7 @@
                                 width="100%">
                         <columns>
                             <column id="counterparty"/>
-                            <column id="tradeCurrency"/>
+                            <column id="currency"/>
                             <column id="pnl"/>
                         </columns>
                         <rows/>

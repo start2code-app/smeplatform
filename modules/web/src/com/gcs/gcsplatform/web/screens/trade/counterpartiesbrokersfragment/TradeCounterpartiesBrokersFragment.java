@@ -136,19 +136,11 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
 
     protected void updateBuyerFields(Counterparty counterparty) {
         Trade trade = tradeDc.getItem();
-
-        Boolean buyerCash = counterparty != null ? counterparty.getCash() : null;
-        trade.setBuyerCash(buyerCash);
-
-        String buyerLocation = counterparty != null ? counterparty.getBillingCountry() : null;
-        trade.setBuyerLocation(buyerLocation);
-
-        String buyerCode = counterparty != null ? counterparty.getBillingInfo1() : null;
-        trade.setBuyerCode(buyerCode);
-
-        String buyerInvoiceCode = counterparty != null ? counterparty.getBillingInfo3() : null;
-        trade.setBuyerInvoiceCode(buyerInvoiceCode);
-
+        trade.setBuyerCash(counterparty != null ? counterparty.getCash() : null);
+        trade.setBuyerLocation(counterparty != null ? counterparty.getBillingCountry() : null);
+        trade.setBuyerCode(counterparty != null ? counterparty.getBillingInfo1() : null);
+        trade.setBuyerInvoiceCode(counterparty != null ? counterparty.getBillingInfo3() : null);
+        trade.setBuyCommissionOverride(counterparty != null ? counterparty.getCommissionOverride() : null);
         brokerageBean.updateBrokerage(trade);
     }
 
@@ -178,19 +170,11 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
 
     protected void updateSellerFields(Counterparty counterparty) {
         Trade trade = tradeDc.getItem();
-
-        Boolean sellerCash = counterparty != null ? counterparty.getCash() : null;
-        trade.setSellerCash(sellerCash);
-
-        String sellerLocation = counterparty != null ? counterparty.getBillingCountry() : null;
-        trade.setSellerLocation(sellerLocation);
-
-        String sellerCode = counterparty != null ? counterparty.getBillingInfo1() : null;
-        trade.setSellerCode(sellerCode);
-
-        String sellerInvoiceCode = counterparty != null ? counterparty.getBillingInfo3() : null;
-        trade.setSellerInvoiceCode(sellerInvoiceCode);
-
+        trade.setSellerCash(counterparty != null ? counterparty.getCash() : null);
+        trade.setSellerLocation(counterparty != null ? counterparty.getBillingCountry() : null);
+        trade.setSellerCode(counterparty != null ? counterparty.getBillingInfo1() : null);
+        trade.setSellerInvoiceCode(counterparty != null ? counterparty.getBillingInfo3() : null);
+        trade.setSellCommissionOverride(counterparty != null ? counterparty.getCommissionOverride() : null);
         brokerageBean.updateBrokerage(trade);
     }
 

@@ -19,7 +19,7 @@ public interface InvoiceSnapshotService {
     /**
      * Checks whether a snapshot for previous month was taken already.
      *
-     * @return true if invoice lines or invoices exist for previous month
+     * @return true if invoice lines exist for previous month
      */
     boolean snapshotIsTaken();
 

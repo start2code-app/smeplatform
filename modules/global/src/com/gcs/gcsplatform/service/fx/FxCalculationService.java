@@ -2,6 +2,8 @@ package com.gcs.gcsplatform.service.fx;
 
 import java.math.BigDecimal;
 
+import com.gcs.gcsplatform.entity.trade.Trade;
+
 public interface FxCalculationService {
 
     String NAME = "gcsplatform_FxCalculationService";
@@ -12,31 +14,48 @@ public interface FxCalculationService {
      * <p>
      * Returns zero if any of arguments is zero.
      *
-     * @param amount  Amount in foreign currency
-     * @param fxValue GBP to foreign currency exchange rate
+     * @param amount Amount in foreign currency
+     * @param fx     GBP to foreign currency exchange rate
      * @return GBP equivalent
      */
-    BigDecimal calculateGbpEquivalent(BigDecimal amount, BigDecimal fxValue);
+    BigDecimal calculateGbpEquivalent(BigDecimal amount, BigDecimal fx);
 
     /**
-     * Calculates USD equivalent multiplying specified amount in GBP by specified GBP exchange rate against USD.
+     * Calculates equivalent via cross rate.
      * <p>
      * Returns zero if any of arguments is zero.
      *
-     * @param gbpAmount  GBP amount
-     * @param usdFxValue GBP to USD exchange rate
-     * @return USD equivalent
+     * @param amount   Amount in foreign currency
+     * @param baseFx   GBP to amount currency exchange rate
+     * @param targetFx GBP to target currency exchange rate
+     * @return Equivalent
      */
-    BigDecimal calculateUsdEquivalent(BigDecimal gbpAmount, BigDecimal usdFxValue);
+    BigDecimal calculateEquivalent(BigDecimal amount, BigDecimal baseFx, BigDecimal targetFx);
 
     /**
-     * Calculates reversed USD fx by dividing 1 to fx and multiplying it by usd fx.
+     * Calculates cross rate for specified trade.
+     * <p>
+     * If bond currency = repo currency, returns 1.
+     * <p>
+     * If bond currency is one of USD/EUR/GBP, returns 1.
+     * <p>
+     * If bond currency is other than USD/EUR/GBP, returns cross rate between bond currency and repo currency.
+     * <p>
+     * If bond currency or repo currency is null, returns 0.
      *
+     * @param trade Trade
+     * @return Cross rate
+     */
+    BigDecimal calculateCrossRate(Trade trade);
+
+    /**
+     * Calculates cross rate between two currencies.
+     * <p>
      * Returns zero if any of arguments is zero.
      *
-     * @param fx    GBP to foreign currency exchange rate
-     * @param fxUsd GBP to USD exchange rate
-     * @return foreign currency against USD exchange rate
+     * @param baseFx   Base currency FX
+     * @param targetFx Target currency FX
+     * @return Cross rate
      */
-    BigDecimal calculateFxAgainstUsd(BigDecimal fx, BigDecimal fxUsd);
+    BigDecimal calculateCrossRate(BigDecimal baseFx, BigDecimal targetFx);
 }

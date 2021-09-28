@@ -1,0 +1,1 @@
+alter table GCSPLATFORM_COUNTERPARTY add column COMMISSION_OVERRIDE boolean ;

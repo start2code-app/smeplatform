@@ -7,7 +7,12 @@
     <data readOnly="true">
         <collection id="invoiceLinesDc"
                     class="com.gcs.gcsplatform.entity.invoice.InvoiceLine">
-            <view extends="_local"/>
+            <view extends="_local">
+                <property name="trade" view="_minimal">
+                    <property name="buyPutOnInvoice"/>
+                    <property name="sellPutOnInvoice"/>
+                </property>
+            </view>
             <loader id="invoiceLinesDl">
                 <query>
                     <![CDATA[select e from gcsplatform_InvoiceLine e order by e.contractNumber]]>

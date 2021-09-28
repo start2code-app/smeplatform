@@ -65,8 +65,19 @@ public class Counterparty extends StandardEntity {
     @Column(name = "CASH")
     private Boolean cash;
 
+    @Column(name = "COMMISSION_OVERRIDE")
+    private Boolean commissionOverride;
+
     @Column(name = "ACTIVE")
     private Boolean active = true;
+
+    public Boolean getCommissionOverride() {
+        return commissionOverride;
+    }
+
+    public void setCommissionOverride(Boolean commissionOverride) {
+        this.commissionOverride = commissionOverride;
+    }
 
     public Boolean getActive() {
         return active;

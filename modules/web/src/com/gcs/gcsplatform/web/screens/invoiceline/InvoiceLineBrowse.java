@@ -10,6 +10,7 @@ import com.gcs.gcsplatform.entity.trade.ClosedTrade;
 import com.gcs.gcsplatform.service.invoice.InvoiceSnapshotService;
 import com.gcs.gcsplatform.service.trade.TradeService;
 import com.gcs.gcsplatform.util.DateUtils;
+import com.gcs.gcsplatform.web.components.invoice.InvoiceBackportBean;
 import com.gcs.gcsplatform.web.components.invoice.InvoiceCalculationBean;
 import com.gcs.gcsplatform.web.events.InvoiceLineUpdatedEvent;
 import com.haulmont.cuba.core.global.Events;
@@ -50,6 +51,8 @@ public class InvoiceLineBrowse extends StandardLookup<InvoiceLine> {
     protected TradeService tradeService;
     @Inject
     protected InvoiceCalculationBean invoiceCalculationBean;
+    @Inject
+    protected InvoiceBackportBean invoiceBackportBean;
     @Inject
     protected InvoiceSnapshotService invoiceSnapshotService;
     @Inject
@@ -102,6 +105,7 @@ public class InvoiceLineBrowse extends StandardLookup<InvoiceLine> {
             RemoveOperation.AfterActionPerformedEvent<InvoiceLine> afterActionPerformedEvent) {
         InvoiceLine invoiceLine = afterActionPerformedEvent.getItems().get(0);
         invoiceCalculationBean.recalculateInvoice(invoiceLine);
+        invoiceBackportBean.backportPutOnInvoice(invoiceLine);
     }
 
     protected class SnapshotTask extends BackgroundTask<Integer, Void> {
