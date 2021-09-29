@@ -6,8 +6,8 @@ import javax.inject.Inject;
 import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.entity.trade.TradeSide;
-import com.gcs.gcsplatform.service.fx.FxService;
 import com.gcs.gcsplatform.service.fx.FxCalculationService;
+import com.gcs.gcsplatform.service.fx.FxService;
 import com.gcs.gcsplatform.service.pnl.PnlCalculationService;
 import org.springframework.stereotype.Component;
 
@@ -27,7 +27,7 @@ public class PnlCalculationBean {
 
     /**
      * Updates numdays, PNL value, its GBP equivalent of specified invoice line.
-     *
+     * <p>
      * FX is being taken from invoice line itself since it can be manually filled by a user.
      *
      * @param invoiceLine Invoice line
@@ -41,13 +41,15 @@ public class PnlCalculationBean {
     }
 
     /**
-     * Updates numdays, PNL value and its GBP equivalent and FX of specified trade.
+     * Updates numdays, PNL, GBP equivalent, FX and cross rate of specified trade.
      *
      * @param trade Trade
      */
     public void updatePnl(Trade trade) {
         trade.setNumdays(getDaysBetweenDates(trade.getMaturityDate(), trade.getValueDate()));
-        trade.setXrate1(fxService.findFxValue(trade.getTradeCurrency(), trade.getInvoiceDate()));
+        trade.setFx(fxService.findFxValue(trade.getCurrency(), trade.getInvoiceDate()));
+        trade.setFxUsd(fxService.findUsdFxValue(trade.getInvoiceDate()));
+        trade.setXrate(fxCalculationService.calculateCrossRate(trade));
         updatePnl(trade, TradeSide.BUY);
         updatePnl(trade, TradeSide.SELL);
     }
@@ -55,7 +57,7 @@ public class PnlCalculationBean {
     private void updatePnl(Trade trade, TradeSide side) {
         BigDecimal pnl = pnlCalculationService.calculatePnl(trade, side);
         trade.setPnl(pnl, side);
-        BigDecimal gbpEquivalent = fxCalculationService.calculateGbpEquivalent(pnl, trade.getXrate1());
+        BigDecimal gbpEquivalent = fxCalculationService.calculateGbpEquivalent(pnl, trade.getFx());
         trade.setGbpEquivalent(gbpEquivalent, side);
     }
 }

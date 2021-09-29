@@ -47,19 +47,7 @@ public class InvoiceSnapshotServiceBean implements InvoiceSnapshotService {
 
     @Override
     public boolean snapshotIsTaken() {
-        return invoiceLinePresent() || invoicePresent();
-    }
-
-    private boolean invoiceLinePresent() {
         return dataManager.loadValue("select 1 from gcsplatform_InvoiceLine e "
-                + "where e.startDate = :startDate", Integer.class)
-                .parameter("startDate", getPreviousMonth())
-                .optional()
-                .isPresent();
-    }
-
-    private boolean invoicePresent() {
-        return dataManager.loadValue("select 1 from gcsplatform_Invoice e "
                 + "where e.startDate = :startDate", Integer.class)
                 .parameter("startDate", getPreviousMonth())
                 .optional()

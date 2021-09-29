@@ -36,23 +36,22 @@ public abstract class TradeEdit<T extends Trade> extends StandardEditor<T> {
     protected Notifications notifications;
 
     @Inject
-    protected LookupPickerField<Currency> currencyLookupPickerField;
+    protected LookupPickerField<Currency> bondCurrencyLookupPickerField;
     @Inject
-    protected LookupPickerField<Currency> tradeCurrencyLookupPickerField;
+    protected LookupPickerField<Currency> repoCurrencyLookupPickerField;
 
     @Inject
     protected InstanceContainer<T> tradeDc;
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        initFieldValueToStringPropertyMapping(currencyLookupPickerField, tradeDc, "currency", "currency");
-        initFieldValueToStringPropertyMapping(tradeCurrencyLookupPickerField, tradeDc, "currency", "tradeCurrency");
+        initFieldValueToStringPropertyMapping(bondCurrencyLookupPickerField, tradeDc, "currency", "bondCurrency");
+        initFieldValueToStringPropertyMapping(repoCurrencyLookupPickerField, tradeDc, "currency", "repoCurrency");
 
         /*
          * Subscribe manually to preserve listeners execution order. First listener maps field value to entity.
          */
-        currencyLookupPickerField.addValueChangeListener(this::onCurrencyLookupPickerFieldValueChange);
-
+        bondCurrencyLookupPickerField.addValueChangeListener(this::onBondCurrencyLookupPickerFieldValueChange);
 
         initialWindowCaption = getWindow().getCaption();
         isNew = PersistenceHelper.isNew(getEditedEntity());
@@ -61,9 +60,9 @@ public abstract class TradeEdit<T extends Trade> extends StandardEditor<T> {
         }
     }
 
-    protected void onCurrencyLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Currency> event) {
+    protected void onBondCurrencyLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Currency> event) {
         if (event.isUserOriginated()) {
-            tradeCurrencyLookupPickerField.setValue(event.getValue());
+            repoCurrencyLookupPickerField.setValue(event.getValue());
         }
     }
 

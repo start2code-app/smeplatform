@@ -40,31 +40,31 @@ public class ClosedTradeEdit extends TradeEdit<ClosedTrade> {
     @Override
     protected void onAfterShow(AfterShowEvent event) {
         super.onAfterShow(event);
-        tradeCurrencyLookupPickerField.addValueChangeListener(this::onTradeCurrencyLookupPickerFieldValueChange);
+        repoCurrencyLookupPickerField.addValueChangeListener(this::onRepoCurrencyLookupPickerFieldValueChange);
         updatePnlCurrencySign();
         maturityDateField.setEditable(true);
     }
 
-    protected void onTradeCurrencyLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Currency> event) {
+    protected void onRepoCurrencyLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Currency> event) {
         if (event.isUserOriginated()) {
             updatePnlCurrencySign();
         }
     }
 
     @Override
-    protected void onCurrencyLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Currency> event) {
-        super.onCurrencyLookupPickerFieldValueChange(event);
+    protected void onBondCurrencyLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Currency> event) {
+        super.onBondCurrencyLookupPickerFieldValueChange(event);
         if (event.isUserOriginated()) {
             updatePnlCurrencySign();
         }
     }
 
     protected void updatePnlCurrencySign() {
-        String tradeCurrency = tradeDc.getItem().getTradeCurrency();
-        boolean currencyIsNotBlank = StringUtils.isNotBlank(tradeCurrency);
+        String currency = tradeDc.getItem().getCurrency();
+        boolean currencyIsNotBlank = StringUtils.isNotBlank(currency);
         if (currencyIsNotBlank) {
-            buyPnlField.setCurrency(tradeCurrency);
-            sellPnlField.setCurrency(tradeCurrency);
+            buyPnlField.setCurrency(currency);
+            sellPnlField.setCurrency(currency);
         }
         buyPnlField.setShowCurrencyLabel(currencyIsNotBlank);
         sellPnlField.setShowCurrencyLabel(currencyIsNotBlank);
@@ -77,9 +77,12 @@ public class ClosedTradeEdit extends TradeEdit<ClosedTrade> {
                 || property.equals("startPrice")
                 || property.equals("invoiceDate")
                 || property.equals("numdays")
-                || property.equals("tradeCurrency")
+                || property.equals("repoCurrency")
+                || property.equals("bondCurrency")
                 || property.equals("buybrokerage")
-                || property.equals("sellbrokerage")) {
+                || property.equals("sellbrokerage")
+                || property.equals("buyCommissionOverride")
+                || property.equals("sellCommissionOverride")) {
             pnlCalculationBean.updatePnl(tradeDc.getItem());
         }
     }

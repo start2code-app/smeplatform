@@ -63,7 +63,7 @@ public class InvoiceServiceBean implements InvoiceService {
         invoice.setFx(invoiceLine.getFx());
         invoice.setAmount(invoiceLine.getPnl());
         invoice.setGbpAmount(invoiceLine.getGbpEquivalent());
-        invoice.setUsdAmount(fxCalculationService.calculateUsdEquivalent(invoice.getGbpAmount(), invoice.getFxUsd()));
+        invoice.setUsdAmount(fxCalculationService.calculateEquivalent(invoice.getAmount(), invoice.getFx(), invoice.getFxUsd()));
         return invoice;
     }
 
@@ -84,7 +84,7 @@ public class InvoiceServiceBean implements InvoiceService {
                 .one();
         invoice.setAmount(getNumberOrNull(keyValue.getValue("amount")));
         invoice.setGbpAmount(getNumberOrNull(keyValue.getValue("gbpAmount")));
-        invoice.setUsdAmount(fxCalculationService.calculateUsdEquivalent(invoice.getGbpAmount(), invoice.getFxUsd()));
+        invoice.setUsdAmount(fxCalculationService.calculateEquivalent(invoice.getAmount(), invoice.getFx(), invoice.getFxUsd()));
         if (Boolean.TRUE.equals(invoice.getPrinted())) {
             invoice.setIssue(invoice.getIssue() + 1);
             invoice.setPrinted(false);

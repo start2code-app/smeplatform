@@ -31,12 +31,15 @@ public class PnlBulkCalculationServiceBean implements PnlBulkCalculationService 
     public void bulkCalculatePnl(Collection<? extends Trade> trades) {
         trades.stream()
                 .filter(trade -> Objects.nonNull(trade.getInvoiceDate()))
-                .filter(trade -> Objects.nonNull(trade.getTradeCurrency()))
+                .filter(trade -> Objects.nonNull(trade.getRepoCurrency()))
+                .filter(trade -> Objects.nonNull(trade.getBondCurrency()))
                 .collect(groupingBy(this::createTradeGroup, toList()))
                 .forEach((group, ts) -> {
-                    BigDecimal fxValue = fxService.findFxValue(group.getCurrency(), group.getInvoiceDate());
+                    BigDecimal fx = fxService.findFxValue(group.getCurrency(), group.getInvoiceDate());
+                    BigDecimal fxUsd = fxService.findUsdFxValue(group.getInvoiceDate());
                     for (Trade t : ts) {
-                        t.setXrate1(fxValue);
+                        t.setFx(fx);
+                        t.setFxUsd(fxUsd);
                         updatePnl(t);
                     }
                 });
@@ -44,11 +47,12 @@ public class PnlBulkCalculationServiceBean implements PnlBulkCalculationService 
 
     private TradeGroup createTradeGroup(Trade trade) {
         Date invoiceDate = DateUtils.truncate(trade.getInvoiceDate(), Calendar.MONTH);
-        String tradeCurrency = trade.getTradeCurrency();
-        return new TradeGroup(invoiceDate, tradeCurrency);
+        String currency = trade.getCurrency();
+        return new TradeGroup(invoiceDate, currency);
     }
 
     private void updatePnl(Trade trade) {
+        trade.setXrate(fxCalculationService.calculateCrossRate(trade));
         updatePnl(trade, TradeSide.BUY);
         updatePnl(trade, TradeSide.SELL);
     }
@@ -56,7 +60,7 @@ public class PnlBulkCalculationServiceBean implements PnlBulkCalculationService 
     private void updatePnl(Trade trade, TradeSide side) {
         BigDecimal pnl = pnlCalculationService.calculatePnl(trade, side);
         trade.setPnl(pnl, side);
-        BigDecimal gbpEquivalent = fxCalculationService.calculateGbpEquivalent(pnl, trade.getXrate1());
+        BigDecimal gbpEquivalent = fxCalculationService.calculateGbpEquivalent(pnl, trade.getFx());
         trade.setGbpEquivalent(gbpEquivalent, side);
     }
 

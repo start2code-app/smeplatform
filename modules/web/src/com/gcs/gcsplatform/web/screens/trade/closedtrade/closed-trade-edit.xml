@@ -24,7 +24,10 @@
                                        property="buyGbpEquivalent"
                                        editable="false"/>
                         <textField id="fxRateField"
-                                   property="xrate1"
+                                   property="fx"
+                                   editable="false"/>
+                        <textField id="xrateField"
+                                   property="xrate"
                                    editable="false"/>
                     </column>
                     <column width="250px">

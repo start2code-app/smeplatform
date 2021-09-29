@@ -3,21 +3,39 @@ package com.gcs.gcsplatform.service.pnl;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import javax.inject.Inject;
+
+import com.gcs.gcsplatform.config.TradeConfig;
 import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.entity.trade.TradeSide;
+import com.gcs.gcsplatform.service.fx.FxCalculationService;
 import org.springframework.stereotype.Service;
 
 import static com.gcs.gcsplatform.util.BigDecimalUtils.isAnyNullOrZero;
+import static com.gcs.gcsplatform.util.BigDecimalUtils.isNotNullOrZero;
 import static com.gcs.gcsplatform.util.BigDecimalUtils.isNullOrZero;
 
 @Service(PnlCalculationService.NAME)
 public class PnlCalculationServiceBean implements PnlCalculationService {
 
+    @Inject
+    private TradeConfig tradeConfig;
+    @Inject
+    private FxCalculationService fxCalculationService;
+
     @Override
     public BigDecimal calculatePnl(Trade trade, TradeSide side) {
-        return calculatePnl(trade.getNumdays(), trade.getNominal(), trade.getBrokerage(side), trade.getXrate2(),
+        BigDecimal pnl = calculatePnl(trade.getNumdays(), trade.getNominal(), trade.getBrokerage(side), trade.getXrate(),
                 trade.getStartPrice(), trade.getCash(side));
+        if (isNotNullOrZero(pnl) && trade.getCommissionOverride(side)) {
+            BigDecimal usdMinimalCommission = tradeConfig.getUsdMinimalCommission();
+            BigDecimal usdEquivalent = fxCalculationService.calculateEquivalent(pnl, trade.getFx(), trade.getFxUsd());
+            if (usdEquivalent.compareTo(usdMinimalCommission) < 0) {
+                return fxCalculationService.calculateEquivalent(usdMinimalCommission, trade.getFxUsd(), trade.getFx());
+            }
+        }
+        return pnl;
     }
 
     @Override

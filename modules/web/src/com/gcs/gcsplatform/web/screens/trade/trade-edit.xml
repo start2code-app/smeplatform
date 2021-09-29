@@ -36,8 +36,8 @@
                                property="bondDescription"/>
                     <textField id="isinField"
                                property="isin"/>
-                    <lookupPickerField id="currencyLookupPickerField"
-                                       caption="msg://com.gcs.gcsplatform.entity.trade/Trade.currency"
+                    <lookupPickerField id="bondCurrencyLookupPickerField"
+                                       caption="msg://com.gcs.gcsplatform.entity.trade/Trade.bondCurrency"
                                        optionsContainer="currencyDc">
                         <actions>
                             <action id="lookup"
@@ -46,8 +46,8 @@
                                     type="picker_clear"/>
                         </actions>
                     </lookupPickerField>
-                    <lookupPickerField id="tradeCurrencyLookupPickerField"
-                                       caption="msg://com.gcs.gcsplatform.entity.trade/Trade.tradeCurrency"
+                    <lookupPickerField id="repoCurrencyLookupPickerField"
+                                       caption="msg://com.gcs.gcsplatform.entity.trade/Trade.repoCurrency"
                                        optionsContainer="currencyDc">
                         <actions>
                             <action id="lookup"

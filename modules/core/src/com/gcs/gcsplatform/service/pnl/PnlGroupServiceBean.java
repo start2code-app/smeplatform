@@ -35,8 +35,10 @@ public class PnlGroupServiceBean implements PnlGroupService {
     }
 
     private void sumPnlByCounterparty(Map<PnlGroup, Pnl> pnlMap, Trade trade, TradeSide side) {
-        sumPnl(pnlMap, trade.getTradeCurrency(), null, trade.getCounterparty(side), trade.getPnl(side),
-                trade.getGbpEquivalent(side));
+        if (trade.getPutOnInvoice(side)) {
+            sumPnl(pnlMap, trade.getCurrency(), null, trade.getCounterparty(side), trade.getPnl(side),
+                    trade.getGbpEquivalent(side));
+        }
     }
 
     @Override
@@ -50,32 +52,31 @@ public class PnlGroupServiceBean implements PnlGroupService {
     }
 
     private void sumPnlByBroker(Map<PnlGroup, Pnl> pnlMap, Trade trade, TradeSide side) {
-        boolean isSplit = Boolean.TRUE.equals(trade.getSplit(side)) && StringUtils.isNotBlank(
-                trade.getSplitBroker(side));
+        boolean isSplit = trade.getSplit(side) && StringUtils.isNotBlank(trade.getSplitBroker(side));
         if (isSplit) {
-            sumSplitPnl(pnlMap, trade.getTradeCurrency(), trade.getBroker(side), trade.getSplitBroker(side),
+            sumSplitPnl(pnlMap, trade.getCurrency(), trade.getBroker(side), trade.getSplitBroker(side),
                     trade.getCounterparty(side), trade.getPnl(side), trade.getGbpEquivalent(side));
         } else {
-            sumPnl(pnlMap, trade.getTradeCurrency(), trade.getBroker(side), trade.getCounterparty(side),
+            sumPnl(pnlMap, trade.getCurrency(), trade.getBroker(side), trade.getCounterparty(side),
                     trade.getPnl(side), trade.getGbpEquivalent(side));
         }
     }
 
-    private void sumSplitPnl(Map<PnlGroup, Pnl> pnlMap, String tradeCurrency, String broker, String splitBroker,
+    private void sumSplitPnl(Map<PnlGroup, Pnl> pnlMap, String currency, String broker, String splitBroker,
             String counterparty, BigDecimal pnlValue, BigDecimal gbpEquivalent) {
         BigDecimal splitPnl = pnlValue.divide(BigDecimal.valueOf(2), RoundingMode.HALF_EVEN);
         BigDecimal splitGbpEquivalent = gbpEquivalent.divide(BigDecimal.valueOf(2),
                 RoundingMode.HALF_EVEN);
-        sumPnl(pnlMap, tradeCurrency, broker, counterparty, splitPnl, splitGbpEquivalent);
-        sumPnl(pnlMap, tradeCurrency, splitBroker, counterparty, splitPnl, splitGbpEquivalent);
+        sumPnl(pnlMap, currency, broker, counterparty, splitPnl, splitGbpEquivalent);
+        sumPnl(pnlMap, currency, splitBroker, counterparty, splitPnl, splitGbpEquivalent);
     }
 
-    private void sumPnl(Map<PnlGroup, Pnl> pnlMap, String tradeCurrency, String broker, String counterparty,
+    private void sumPnl(Map<PnlGroup, Pnl> pnlMap, String currency, String broker, String counterparty,
             BigDecimal pnlValue, BigDecimal gbpEquivalent) {
         if (isNullOrZero(pnlValue) || isNullOrZero(gbpEquivalent)) {
             return;
         }
-        PnlGroup pnlGroup = new PnlGroup(broker, counterparty, tradeCurrency);
+        PnlGroup pnlGroup = new PnlGroup(broker, counterparty, currency);
         if (pnlMap.containsKey(pnlGroup)) {
             Pnl pnlEntity = pnlMap.get(pnlGroup);
 
@@ -85,17 +86,17 @@ public class PnlGroupServiceBean implements PnlGroupService {
             BigDecimal sumGbpEquivalent = gbpEquivalent.add(pnlEntity.getGbpEquivalent());
             pnlEntity.setGbpEquivalent(sumGbpEquivalent);
         } else {
-            Pnl pnlEntity = createPnlEntity(broker, counterparty, tradeCurrency, pnlValue, gbpEquivalent);
+            Pnl pnlEntity = createPnlEntity(broker, counterparty, currency, pnlValue, gbpEquivalent);
             pnlMap.put(pnlGroup, pnlEntity);
         }
     }
 
-    private Pnl createPnlEntity(String broker, String counterparty, String tradeCurrency, BigDecimal pnl,
+    private Pnl createPnlEntity(String broker, String counterparty, String currency, BigDecimal pnl,
             BigDecimal gbpEquivalent) {
         Pnl pnlEntity = metadata.create(Pnl.class);
         pnlEntity.setBroker(broker);
         pnlEntity.setCounterparty(counterparty);
-        pnlEntity.setTradeCurrency(tradeCurrency);
+        pnlEntity.setCurrency(currency);
         pnlEntity.setPnl(pnl);
         pnlEntity.setGbpEquivalent(gbpEquivalent);
         return pnlEntity;
@@ -105,12 +106,12 @@ public class PnlGroupServiceBean implements PnlGroupService {
 
         private final String broker;
         private final String counterparty;
-        private final String tradeCurrency;
+        private final String currency;
 
-        public PnlGroup(String broker, String counterparty, String tradeCurrency) {
+        public PnlGroup(String broker, String counterparty, String currency) {
             this.broker = broker;
             this.counterparty = counterparty;
-            this.tradeCurrency = tradeCurrency;
+            this.currency = currency;
         }
 
         @Override
@@ -123,12 +124,12 @@ public class PnlGroupServiceBean implements PnlGroupService {
             }
             PnlGroup pnlGroup = (PnlGroup) o;
             return Objects.equals(broker, pnlGroup.broker) && Objects.equals(counterparty,
-                    pnlGroup.counterparty) && Objects.equals(tradeCurrency, pnlGroup.tradeCurrency);
+                    pnlGroup.counterparty) && Objects.equals(currency, pnlGroup.currency);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(broker, counterparty, tradeCurrency);
+            return Objects.hash(broker, counterparty, currency);
         }
     }
 }

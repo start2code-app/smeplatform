@@ -44,7 +44,8 @@ public class TradeServiceBean implements TradeService {
 
         condition.add(new JpqlCondition("e.buyer is not null"));
         condition.add(new JpqlCondition("e.buybroker is not null"));
-        condition.add(new JpqlCondition("e.tradeCurrency is not null"));
+        condition.add(new JpqlCondition("e.repoCurrency is not null"));
+        condition.add(new JpqlCondition("e.bondCurrency is not null"));
         condition.add(new JpqlCondition("e.seller is not null"));
         condition.add(new JpqlCondition("e.sellbroker is not null"));
         condition.add(new JpqlCondition("e.category is not null"));
@@ -62,23 +63,15 @@ public class TradeServiceBean implements TradeService {
     public <T extends Trade> Collection<T> getTradesByCurrency(Class<T> tradeClass, String currency,
             @Nullable Date startDate, @Nullable Date endDate, View view) {
         LogicalCondition condition = LogicalCondition.and();
+        LogicalCondition or = LogicalCondition.or();
 
-        condition.add(new JpqlCondition("e.tradeCurrency = :currency"));
+        or.add(new JpqlCondition("e.repoCurrency = :currency"));
+        or.add(new JpqlCondition("e.bondCurrency = :currency"));
+
+        condition.add(or);
 
         return getTrades(tradeClass, startDate, startDate, condition, view)
                 .parameter("currency", currency)
-                .list();
-    }
-
-    @Override
-    public <T extends Trade> Collection<T> getTradesByCounterparty(Class<T> tradeClass, String counterparty,
-            @Nullable Date startDate, @Nullable Date endDate, View view) {
-        LogicalCondition condition = LogicalCondition.and();
-
-        condition.add(new JpqlCondition("e.buyer = :counterparty or e.seller = :counterparty"));
-
-        return getTrades(tradeClass, startDate, endDate, condition, view)
-                .parameter("counterparty", counterparty)
                 .list();
     }
 

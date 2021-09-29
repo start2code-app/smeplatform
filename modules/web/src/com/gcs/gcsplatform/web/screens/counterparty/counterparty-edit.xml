@@ -62,6 +62,8 @@
                                    property="billingCountry"/>
                         <checkBox id="cashField"
                                   property="cash"/>
+                        <checkBox id="commissionOverrideField"
+                                  property="commissionOverride"/>
                         <checkBox id="activeField"
                                   property="active"/>
                     </column>

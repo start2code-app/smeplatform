@@ -53,6 +53,7 @@
                 <column id="email1"/>
                 <column id="email2"/>
                 <column id="cash"/>
+                <column id="commissionOverride"/>
                 <column id="active"/>
             </columns>
             <rowsCount/>

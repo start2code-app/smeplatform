@@ -73,6 +73,9 @@
                                         type="picker_clear"/>
                             </actions>
                         </lookupPickerField>
+                        <checkBox id="buyPutOnInvoice"
+                                  property="buyPutOnInvoice"
+                                  dataContainer="tradeDc"/>
                     </column>
                     <column width="250px">
                         <checkBox id="buySplitCheckBox"
@@ -127,6 +130,9 @@
                                         type="picker_clear"/>
                             </actions>
                         </lookupPickerField>
+                        <checkBox id="sellPutOnInvoice"
+                                  property="sellPutOnInvoice"
+                                  dataContainer="tradeDc"/>
                     </column>
                     <column width="250px">
                         <checkBox id="sellSplitCheckBox"
