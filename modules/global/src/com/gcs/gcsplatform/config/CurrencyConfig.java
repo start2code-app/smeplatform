@@ -26,6 +26,15 @@ public interface CurrencyConfig extends Config {
     Currency getUsdCurrency();
 
     /**
+     * GBP currency.
+     *
+     * @return GBP currency entity
+     */
+    @Property("currency.gbp")
+    @Default("gcsplatform_Currency-8f880596-a81f-2b08-3373-2562af22b4ea")
+    Currency getGbpCurrency();
+
+    /**
      * Default currencies list.
      *
      * @return List of currencies
