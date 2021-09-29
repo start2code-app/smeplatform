@@ -1,29 +1,29 @@
-alter table GCSPLATFORM_OPENED_TRADE rename column CURRENCY to BOND_CURRENCY;
-alter table GCSPLATFORM_OPENED_TRADE rename column TRADE_CURRENCY to REPO_CURRENCY;
-alter table GCSPLATFORM_OPENED_TRADE rename column XRATE1 to FX;
-alter table GCSPLATFORM_OPENED_TRADE rename column XRATE2 to XRATE;
-alter table GCSPLATFORM_OPENED_TRADE rename column XRATE3 to FX_USD;
+alter table GCSPLATFORM_OPENED_TRADE change column CURRENCY BOND_CURRENCY varchar(5);
+alter table GCSPLATFORM_OPENED_TRADE change column TRADE_CURRENCY REPO_CURRENCY varchar(5);
+alter table GCSPLATFORM_OPENED_TRADE change column XRATE1 FX decimal(10, 4);
+alter table GCSPLATFORM_OPENED_TRADE change column XRATE2 XRATE decimal(10, 4);
+alter table GCSPLATFORM_OPENED_TRADE change column XRATE3 FX_USD decimal(10, 4);
 
-alter table GCSPLATFORM_CLOSED_TRADE rename column CURRENCY to BOND_CURRENCY;
-alter table GCSPLATFORM_CLOSED_TRADE rename column TRADE_CURRENCY to REPO_CURRENCY;
-alter table GCSPLATFORM_CLOSED_TRADE rename column XRATE1 to FX;
-alter table GCSPLATFORM_CLOSED_TRADE rename column XRATE2 to XRATE;
-alter table GCSPLATFORM_CLOSED_TRADE rename column XRATE3 to FX_USD;
+alter table GCSPLATFORM_CLOSED_TRADE change column CURRENCY BOND_CURRENCY varchar(5);
+alter table GCSPLATFORM_CLOSED_TRADE change column TRADE_CURRENCY REPO_CURRENCY varchar(5);
+alter table GCSPLATFORM_CLOSED_TRADE change column XRATE1 FX decimal(10, 4);
+alter table GCSPLATFORM_CLOSED_TRADE change column XRATE2 XRATE decimal(10, 4);
+alter table GCSPLATFORM_CLOSED_TRADE change column XRATE3 FX_USD decimal(10, 4);
 
-alter table GCSPLATFORM_CLOSED_LIVE_TRADE rename column CURRENCY to BOND_CURRENCY;
-alter table GCSPLATFORM_CLOSED_LIVE_TRADE rename column TRADE_CURRENCY to REPO_CURRENCY;
-alter table GCSPLATFORM_CLOSED_LIVE_TRADE rename column XRATE1 to FX;
-alter table GCSPLATFORM_CLOSED_LIVE_TRADE rename column XRATE2 to XRATE;
-alter table GCSPLATFORM_CLOSED_LIVE_TRADE rename column XRATE3 to FX_USD;
+alter table GCSPLATFORM_CLOSED_LIVE_TRADE change column CURRENCY BOND_CURRENCY varchar(5);
+alter table GCSPLATFORM_CLOSED_LIVE_TRADE change column TRADE_CURRENCY REPO_CURRENCY varchar(5);
+alter table GCSPLATFORM_CLOSED_LIVE_TRADE change column XRATE1 FX decimal(10, 4);
+alter table GCSPLATFORM_CLOSED_LIVE_TRADE change column XRATE2 XRATE decimal(10, 4);
+alter table GCSPLATFORM_CLOSED_LIVE_TRADE change column XRATE3 FX_USD decimal(10, 4);
 
-alter table GCSPLATFORM_CALL_OPTION_TRADE rename column CURRENCY to BOND_CURRENCY;
-alter table GCSPLATFORM_CALL_OPTION_TRADE rename column TRADE_CURRENCY to REPO_CURRENCY;
-alter table GCSPLATFORM_CALL_OPTION_TRADE rename column XRATE1 to FX;
-alter table GCSPLATFORM_CALL_OPTION_TRADE rename column XRATE2 to XRATE;
-alter table GCSPLATFORM_CALL_OPTION_TRADE rename column XRATE3 to FX_USD;
+alter table GCSPLATFORM_CALL_OPTION_TRADE change column CURRENCY BOND_CURRENCY varchar(5);
+alter table GCSPLATFORM_CALL_OPTION_TRADE change column TRADE_CURRENCY REPO_CURRENCY varchar(5);
+alter table GCSPLATFORM_CALL_OPTION_TRADE change column XRATE1 FX decimal(10, 4);
+alter table GCSPLATFORM_CALL_OPTION_TRADE change column XRATE2 XRATE decimal(10, 4);
+alter table GCSPLATFORM_CALL_OPTION_TRADE change column XRATE3 FX_USD decimal(10, 4);
 
-alter table GCSPLATFORM_LIVE_TRADE rename column CURRENCY to BOND_CURRENCY;
-alter table GCSPLATFORM_LIVE_TRADE rename column TRADE_CURRENCY to REPO_CURRENCY;
-alter table GCSPLATFORM_LIVE_TRADE rename column XRATE1 to FX;
-alter table GCSPLATFORM_LIVE_TRADE rename column XRATE2 to XRATE;
-alter table GCSPLATFORM_LIVE_TRADE rename column XRATE3 to FX_USD;
+alter table GCSPLATFORM_LIVE_TRADE change column CURRENCY BOND_CURRENCY varchar(5);
+alter table GCSPLATFORM_LIVE_TRADE change column TRADE_CURRENCY REPO_CURRENCY varchar(5);
+alter table GCSPLATFORM_LIVE_TRADE change column XRATE1 FX decimal(10, 4);
+alter table GCSPLATFORM_LIVE_TRADE change column XRATE2 XRATE decimal(10, 4);
+alter table GCSPLATFORM_LIVE_TRADE change column XRATE3 FX_USD decimal(10, 4);
