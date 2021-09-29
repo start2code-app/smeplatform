@@ -25,7 +25,11 @@ public class AlphaVantageFxProvider implements FxProviderAPI {
 
     @Override
     public BigDecimal getFx(String fromCurrency, String toCurrency) {
-        String jsonString = getJsonString(fromCurrency, toCurrency);
+        String apiKey = fxConfig.getAlphaVantageApiKey();
+        if (apiKey == null) {
+            throw new FxProviderException("Alpha Vantage API key property is not set");
+        }
+        String jsonString = getJsonString(fromCurrency, toCurrency, apiKey);
         try {
             JsonObject jsonObject = new Gson().fromJson(jsonString, JsonObject.class);
             JsonObject root = jsonObject.getAsJsonObject("Realtime Currency Exchange Rate");
@@ -35,10 +39,10 @@ public class AlphaVantageFxProvider implements FxProviderAPI {
         }
     }
 
-    private String getJsonString(String fromCurrency, String toCurrency) {
+    private String getJsonString(String fromCurrency, String toCurrency, String apiKey) {
         String json;
         CloseableHttpClient httpClient = HttpClients.createDefault();
-        HttpGet httpGet = new HttpGet(String.format(API_METHOD_URI, fromCurrency, toCurrency, fxConfig.getAlphaVantageApiKey()));
+        HttpGet httpGet = new HttpGet(String.format(API_METHOD_URI, fromCurrency, toCurrency, apiKey));
         try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
             json = EntityUtils.toString(response.getEntity());
         } catch (IOException e) {
