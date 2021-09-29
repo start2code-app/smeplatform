@@ -13,6 +13,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 
+/**
+ * Invokes PNL recalculation on closed trades after updating FX.
+ */
 @Component("gcsplatform_FxChangedListener")
 public class FxChangedListener {
 

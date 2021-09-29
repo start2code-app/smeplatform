@@ -10,7 +10,7 @@ public interface CategoryService {
     String NAME = "gcsplatform_CategoryService";
 
     /**
-     * Gets all the categories.
+     * Gets all categories.
      *
      * @param view View
      * @return List of categories

@@ -57,6 +57,10 @@
                        value="com.gcs.gcsplatform.service.BankService"/>
                 <entry key="gcsplatform_CounterpartyService"
                        value="com.gcs.gcsplatform.service.CounterpartyService"/>
+                <entry key="gcsplatform_FxScheduledUpdateService"
+                       value="com.gcs.gcsplatform.service.fx.FxScheduledUpdateService"/>
+                <entry key="gcsplatform_CurrencyService"
+                       value="com.gcs.gcsplatform.service.CurrencyService"/>
             </map>
         </property>
     </bean>

@@ -6,6 +6,8 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import com.gcs.gcsplatform.config.CurrencyConfig;
+import com.gcs.gcsplatform.entity.masterdata.Currency;
+import com.gcs.gcsplatform.entity.masterdata.Fx;
 import com.haulmont.cuba.core.global.DataManager;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,19 @@ public class FxServiceBean implements FxService {
     private DataManager dataManager;
     @Inject
     private CurrencyConfig currencyConfig;
+
+    @Nullable
+    @Override
+    public Fx findFx(Currency currency, Date billingDate) {
+        return dataManager.load(Fx.class)
+                .query("select e from gcsplatform_Fx e "
+                        + "where e.currency = :currency "
+                        + "and e.billingDate = :billingDate")
+                .parameter("currency", currency)
+                .parameter("billingDate", getFirstDayOfMonth(billingDate))
+                .optional()
+                .orElse(null);
+    }
 
     @Nullable
     @Override
