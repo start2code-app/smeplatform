@@ -37,6 +37,8 @@ public class InvoiceCalculationBean {
     public void recalculateInvoice(InvoiceLine invoiceLine) {
         Invoice invoice = invoiceService.findInvoice(invoiceLine, ViewBuilder.of(Invoice.class)
                 .addView(View.LOCAL)
+                .add("pdfFile", View.MINIMAL)
+                .add("xlsxFile", View.MINIMAL)
                 .build());
         if (invoice != null) {
             invoice = invoiceService.calculateAmount(invoice);

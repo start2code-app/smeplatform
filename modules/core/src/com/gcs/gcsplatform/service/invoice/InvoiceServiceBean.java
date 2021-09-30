@@ -85,10 +85,14 @@ public class InvoiceServiceBean implements InvoiceService {
         invoice.setAmount(getNumberOrNull(keyValue.getValue("amount")));
         invoice.setGbpAmount(getNumberOrNull(keyValue.getValue("gbpAmount")));
         invoice.setUsdAmount(fxCalculationService.calculateEquivalent(invoice.getAmount(), invoice.getFx(), invoice.getFxUsd()));
-        if (Boolean.TRUE.equals(invoice.getPrinted())) {
+        if (invoice.getPrinted()) {
+            invoice.setXlsxFile(null);
+            invoice.setPdfFile(null);
+        }
+        if (invoice.getPosted()) {
             invoice.setIssue(invoice.getIssue() + 1);
-            invoice.setPrinted(false);
-            invoice.setPosted(false);
+            invoice.setPostedToQB(false);
+            invoice.setPostedToWorkDocs(false);
         }
         return invoice;
     }

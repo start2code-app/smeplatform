@@ -3,10 +3,20 @@ package com.gcs.gcsplatform.web.util;
 import java.util.Objects;
 
 import com.haulmont.cuba.core.entity.Entity;
+import com.haulmont.cuba.core.entity.FileDescriptor;
+import com.haulmont.cuba.core.global.AppBeans;
+import com.haulmont.cuba.core.global.PersistenceHelper;
+import com.haulmont.cuba.gui.UiComponents;
+import com.haulmont.cuba.gui.components.AbstractAction;
+import com.haulmont.cuba.gui.components.Button;
+import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.components.HasValue;
+import com.haulmont.cuba.gui.components.Label;
 import com.haulmont.cuba.gui.components.OptionsField;
 import com.haulmont.cuba.gui.components.data.Options;
+import com.haulmont.cuba.gui.export.ExportDisplay;
 import com.haulmont.cuba.gui.model.InstanceContainer;
+import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
 
 public class ScreenUtil {
 
@@ -50,5 +60,36 @@ public class ScreenUtil {
                 .findFirst()
                 .orElse(null);
         field.setValue(defaultFieldValue);
+    }
+
+    public static Component generateDownloadLinkCell(Entity entity, String fileProperty) {
+        UiComponents uiComponents = AppBeans.get(UiComponents.NAME);
+        ExportDisplay exportDisplay = AppBeans.get(ExportDisplay.NAME);
+
+        final FileDescriptor fd = entity.getValueEx(fileProperty);
+        if (fd == null) {
+            return uiComponents.create(Label.class);
+        }
+
+        if (PersistenceHelper.isNew(fd)) {
+            Label label = uiComponents.create(Label.class);
+            label.setValue(fd.getName());
+            return label;
+        } else {
+            Button button = uiComponents.create(Button.class);
+            button.setStyleName("link");
+            button.setAction(new AbstractAction("download") {
+                @Override
+                public void actionPerform(Component component) {
+                    exportDisplay.show(fd);
+                }
+
+                @Override
+                public String getCaption() {
+                    return fd.getName();
+                }
+            });
+            return button;
+        }
     }
 }

@@ -17,6 +17,7 @@ import com.haulmont.cuba.core.global.Events;
 import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;
 import com.haulmont.cuba.gui.Dialogs;
+import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.RemoveOperation;
 import com.haulmont.cuba.gui.backgroundwork.BackgroundWorkWindow;
 import com.haulmont.cuba.gui.components.Action;
@@ -61,6 +62,8 @@ public class InvoiceLineBrowse extends StandardLookup<InvoiceLine> {
     protected Events events;
     @Inject
     protected Dialogs dialogs;
+    @Inject
+    protected Notifications notifications;
 
     @Inject
     protected CollectionLoader<InvoiceLine> invoiceLinesDl;
@@ -86,6 +89,12 @@ public class InvoiceLineBrowse extends StandardLookup<InvoiceLine> {
 
     protected void runSnapshot() {
         Collection<ClosedTrade> trades = selectPreviousMonthTrades();
+        if (trades.isEmpty()) {
+            notifications.create(Notifications.NotificationType.TRAY)
+                    .withDescription(messageBundle.getMessage("snapshot.noData"))
+                    .show();
+            return;
+        }
         BackgroundTask<Integer, Void> task = new SnapshotTask(trades);
         BackgroundWorkWindow.show(task, messageBundle.getMessage("snapshotTask.caption"),
                 messageBundle.getMessage("snapshotTask.description"), false);
