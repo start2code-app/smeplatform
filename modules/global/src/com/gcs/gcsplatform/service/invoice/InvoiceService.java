@@ -22,8 +22,11 @@ public interface InvoiceService {
 
     /**
      * Calculates invoice amount and gbp equivalent by existing invoice lines.
-     *
-     * Increments issue number if specified invoice was printed already and marks the invoice as not printed.
+     * <p>
+     * Increments issue number if the invoice was posted to WorkDocs/Quickbooks already and marks the invoice as not
+     * posted.
+     * <p>
+     * Unlinks the invoice from printed PDF/XLSX files.
      *
      * @param invoice Invoice
      * @return Recalculated invoice

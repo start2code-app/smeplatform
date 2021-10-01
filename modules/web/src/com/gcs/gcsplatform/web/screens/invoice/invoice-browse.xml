@@ -7,7 +7,12 @@
     <data readOnly="true">
         <collection id="invoicesDc"
                     class="com.gcs.gcsplatform.entity.invoice.Invoice">
-            <view extends="_local"/>
+            <view extends="_local">
+                <property name="pdfFile"
+                          view="_minimal"/>
+                <property name="xlsxFile"
+                          view="_minimal"/>
+            </view>
             <loader id="invoicesDl">
                 <query>
                     <![CDATA[select e from gcsplatform_Invoice e order by e.updateTs desc]]>
@@ -26,12 +31,19 @@
         </filter>
         <groupTable id="invoicesTable"
                     width="100%"
-                    dataContainer="invoicesDc">
+                    dataContainer="invoicesDc"
+                    multiselect="true">
             <actions>
                 <action id="excel"
                         type="excel"/>
+                <action id="print"
+                        trackSelection="true"/>
+                <action id="workDocs"
+                        trackSelection="true"/>
             </actions>
             <columns>
+                <column id="xlsxFile"/>
+                <column id="pdfFile"/>
                 <column id="issue"/>
                 <column id="currency"/>
                 <column id="counterpartyCode"/>
@@ -43,14 +55,22 @@
                 <column id="fxUsd"/>
                 <column id="gbpAmount"/>
                 <column id="usdAmount"/>
-                <column id="printed"/>
-                <column id="posted"/>
+                <column id="postedToWorkDocs"/>
+                <column id="postedToQB"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
                 <button id="excelBtn"
                         action="invoicesTable.excel"/>
+                <button id="printBtn"
+                        caption="msg://printAction"
+                        action="invoicesTable.print"
+                        stylename="primary"/>
+                <button id="workDocsBtn"
+                        caption="msg://workDocsAction"
+                        action="invoicesTable.workDocs"
+                        stylename="friendly"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions"

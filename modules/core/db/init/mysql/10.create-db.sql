@@ -474,6 +474,8 @@ create table GCSPLATFORM_INVOICE (
     DELETE_TS datetime(3),
     DELETED_BY varchar(50),
     --
+    XLSX_FILE_ID varchar(32),
+    PDF_FILE_ID varchar(32),
     ISSUE integer,
     CURRENCY varchar(10),
     COUNTERPARTY_CODE varchar(10),
@@ -485,8 +487,8 @@ create table GCSPLATFORM_INVOICE (
     FX_USD decimal(10, 4),
     GBP_AMOUNT decimal(10, 4),
     USD_AMOUNT decimal(10, 4),
-    POSTED boolean,
-    PRINTED boolean,
+    POSTED_TO_WORK_DOCS boolean,
+    POSTED_TO_QB boolean,
     --
     primary key (ID)
 )^

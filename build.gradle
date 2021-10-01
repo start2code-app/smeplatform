@@ -60,6 +60,7 @@ configure([globalModule, coreModule, webModule]) {
     apply(plugin: 'cuba')
 
     dependencies {
+            compile('software.amazon.awssdk:workdocs:2.17.46')
             testCompile('org.junit.jupiter:junit-jupiter-api:5.5.2')
             testCompile('org.junit.jupiter:junit-jupiter-engine:5.5.2')
             testCompile('org.junit.vintage:junit-vintage-engine:5.5.2')  

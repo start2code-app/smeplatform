@@ -5,13 +5,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import com.haulmont.chile.core.annotations.MetaProperty;
 import com.haulmont.chile.core.annotations.NumberFormat;
+import com.haulmont.cuba.core.entity.FileDescriptor;
 import com.haulmont.cuba.core.entity.StandardEntity;
 
 @Table(name = "GCSPLATFORM_INVOICE")
@@ -19,6 +22,14 @@ import com.haulmont.cuba.core.entity.StandardEntity;
 public class Invoice extends StandardEntity {
 
     private static final long serialVersionUID = -38073166780749348L;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "XLSX_FILE_ID")
+    private FileDescriptor xlsxFile;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PDF_FILE_ID")
+    private FileDescriptor pdfFile;
 
     @Column(name = "ISSUE")
     private Integer issue = 1;
@@ -57,17 +68,42 @@ public class Invoice extends StandardEntity {
     @Column(name = "USD_AMOUNT", precision = 10, scale = 4)
     private BigDecimal usdAmount;
 
-    @Column(name = "POSTED")
-    private Boolean posted;
+    @Column(name = "POSTED_TO_WORK_DOCS")
+    private Boolean postedToWorkDocs;
 
-    @Column(name = "PRINTED")
-    private Boolean printed;
+    @Column(name = "POSTED_TO_QB")
+    private Boolean postedToQB;
 
-    @Transient
+    @MetaProperty(related = {"pdfFile", "xlsxFile"})
+    public Boolean getPrinted() {
+        return pdfFile != null && xlsxFile != null;
+    }
+
+    @MetaProperty(related = {"postedToWorkDocs", "postedToQB"})
+    public Boolean getPosted() {
+        return Boolean.TRUE.equals(postedToWorkDocs) || Boolean.TRUE.equals(postedToQB);
+    }
+
     @MetaProperty(related = {"issue", "counterpartyCode", "currency", "startDate"})
     public String getInvoiceNumber() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMyy");
         return String.format("%s%s%s-V%s", counterpartyCode, dateFormat.format(startDate), currency, issue);
+    }
+
+    public FileDescriptor getPdfFile() {
+        return pdfFile;
+    }
+
+    public void setPdfFile(FileDescriptor pdfFile) {
+        this.pdfFile = pdfFile;
+    }
+
+    public FileDescriptor getXlsxFile() {
+        return xlsxFile;
+    }
+
+    public void setXlsxFile(FileDescriptor xlsxFile) {
+        this.xlsxFile = xlsxFile;
     }
 
     public BigDecimal getUsdAmount() {
@@ -118,20 +154,20 @@ public class Invoice extends StandardEntity {
         this.issue = issue;
     }
 
-    public Boolean getPrinted() {
-        return printed;
+    public Boolean getPostedToQB() {
+        return postedToQB;
     }
 
-    public void setPrinted(Boolean printed) {
-        this.printed = printed;
+    public void setPostedToQB(Boolean postedToQB) {
+        this.postedToQB = postedToQB;
     }
 
-    public Boolean getPosted() {
-        return posted;
+    public Boolean getPostedToWorkDocs() {
+        return postedToWorkDocs;
     }
 
-    public void setPosted(Boolean posted) {
-        this.posted = posted;
+    public void setPostedToWorkDocs(Boolean postedToWorkDocs) {
+        this.postedToWorkDocs = postedToWorkDocs;
     }
 
     public Date getEndDate() {
