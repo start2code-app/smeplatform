@@ -74,6 +74,19 @@ public interface TradeService {
             @Nullable Date startDate, @Nullable Date endDate, View view);
 
     /**
+     * Gets list of closed trades with specified counterparty and month.
+     *
+     * @param tradeClass Trade class
+     * @param currency   Trade currency
+     * @param startDate  Trade date from
+     * @param endDate    Trade date to
+     * @param view       View
+     * @return List of trades
+     */
+    <T extends Trade> Collection<T> getTradesByCounterparty(Class<T> tradeClass, String currency,
+            @Nullable Date startDate, @Nullable Date endDate, View view);
+
+    /**
      * Searches for a trade with specified class and contract number.
      *
      * @param tradeClass Trade class

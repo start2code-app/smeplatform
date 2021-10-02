@@ -68,6 +68,12 @@ public class Invoice extends StandardEntity {
     @Column(name = "USD_AMOUNT", precision = 10, scale = 4)
     private BigDecimal usdAmount;
 
+    @Column(name = "USD_CROSS_RATE", precision = 10, scale = 4)
+    private BigDecimal usdCrossRate;
+
+    @Column(name = "SHOW_TOTAL_USD")
+    private Boolean showTotalUsd;
+
     @Column(name = "POSTED_TO_WORK_DOCS")
     private Boolean postedToWorkDocs;
 
@@ -88,6 +94,28 @@ public class Invoice extends StandardEntity {
     public String getInvoiceNumber() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMyy");
         return String.format("%s%s%s-V%s", counterpartyCode, dateFormat.format(startDate), currency, issue);
+    }
+
+    @MetaProperty(related = {"counterpartyCode", "currency", "startDate"})
+    public String getInvoiceNumberWithoutVersion() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMyy");
+        return String.format("%s%s%s", counterpartyCode, dateFormat.format(startDate), currency);
+    }
+
+    public Boolean getShowTotalUsd() {
+        return showTotalUsd;
+    }
+
+    public void setShowTotalUsd(Boolean showTotalUsd) {
+        this.showTotalUsd = showTotalUsd;
+    }
+
+    public BigDecimal getUsdCrossRate() {
+        return usdCrossRate;
+    }
+
+    public void setUsdCrossRate(BigDecimal usdCrossRate) {
+        this.usdCrossRate = usdCrossRate;
     }
 
     public FileDescriptor getPdfFile() {

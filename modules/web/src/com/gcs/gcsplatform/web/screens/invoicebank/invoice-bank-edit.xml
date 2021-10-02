@@ -7,6 +7,8 @@
         <instance id="invoiceBankDc"
                   class="com.gcs.gcsplatform.entity.masterdata.InvoiceBank">
             <view extends="_local">
+                <property name="location"
+                          view="_minimal"/>
                 <property name="currency"
                           view="_minimal"/>
                 <property name="bank"
@@ -24,8 +26,15 @@
         <form id="form"
               dataContainer="invoiceBankDc">
             <column width="250px">
-                <textField id="locationField"
-                           property="location"/>
+                <pickerField id="locationField"
+                             property="location">
+                    <actions>
+                        <action id="lookup"
+                                type="picker_lookup"/>
+                        <action id="clear"
+                                type="picker_clear"/>
+                    </actions>
+                </pickerField>
                 <pickerField id="currencyField"
                              property="currency">
                     <actions>

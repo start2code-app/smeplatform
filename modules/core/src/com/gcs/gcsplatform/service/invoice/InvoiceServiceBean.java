@@ -11,6 +11,7 @@ import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.invoice.Invoice;
 import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
+import com.gcs.gcsplatform.service.BankService;
 import com.gcs.gcsplatform.service.fx.FxCalculationService;
 import com.gcs.gcsplatform.service.fx.FxService;
 import com.haulmont.cuba.core.entity.KeyValueEntity;
@@ -19,6 +20,7 @@ import com.haulmont.cuba.core.global.View;
 import org.springframework.stereotype.Service;
 
 import static com.gcs.gcsplatform.util.BigDecimalUtils.getNumberOrNull;
+import static com.gcs.gcsplatform.util.BigDecimalUtils.isNotNullOrZero;
 
 @Service(InvoiceService.NAME)
 public class InvoiceServiceBean implements InvoiceService {
@@ -29,6 +31,8 @@ public class InvoiceServiceBean implements InvoiceService {
     private FxService fxService;
     @Inject
     private FxCalculationService fxCalculationService;
+    @Inject
+    private BankService bankService;
 
     @Override
     public Collection<Invoice> createInvoices(Collection<InvoiceLine> invoiceLines) {
@@ -49,6 +53,7 @@ public class InvoiceServiceBean implements InvoiceService {
             Invoice invoice = invoiceMap.get(invoiceGroup);
             invoice.setAmount(invoice.getAmount().add(invoiceLine.getPnl()));
             invoice.setGbpAmount(invoice.getGbpAmount().add(invoiceLine.getGbpEquivalent()));
+            calculateUsdAmount(invoice);
         }
     }
 
@@ -61,14 +66,16 @@ public class InvoiceServiceBean implements InvoiceService {
         invoice.setEndDate(invoiceLine.getEndDate());
         invoice.setFxUsd(fxService.findUsdFxValue(invoiceLine.getStartDate()));
         invoice.setFx(invoiceLine.getFx());
+        invoice.setUsdCrossRate(fxCalculationService.calculateCrossRate(invoice.getFx(), invoice.getFxUsd()));
         invoice.setAmount(invoiceLine.getPnl());
         invoice.setGbpAmount(invoiceLine.getGbpEquivalent());
-        invoice.setUsdAmount(fxCalculationService.calculateEquivalent(invoice.getAmount(), invoice.getFx(), invoice.getFxUsd()));
+        invoice.setShowTotalUsd(!bankService.bankExists(invoice.getLocation(), invoice.getCurrency()));
+        calculateUsdAmount(invoice);
         return invoice;
     }
 
     @Override
-    public Invoice calculateAmount(Invoice invoice) {
+    public void calculateAmount(Invoice invoice) {
         KeyValueEntity keyValue = dataManager.loadValues(
                 "select sum(e.pnl) as amount, sum(e.gbpEquivalent) as gbpAmount "
                         + "from gcsplatform_InvoiceLine e "
@@ -84,17 +91,28 @@ public class InvoiceServiceBean implements InvoiceService {
                 .one();
         invoice.setAmount(getNumberOrNull(keyValue.getValue("amount")));
         invoice.setGbpAmount(getNumberOrNull(keyValue.getValue("gbpAmount")));
-        invoice.setUsdAmount(fxCalculationService.calculateEquivalent(invoice.getAmount(), invoice.getFx(), invoice.getFxUsd()));
+        calculateUsdAmount(invoice);
+
         if (invoice.getPrinted()) {
             invoice.setXlsxFile(null);
             invoice.setPdfFile(null);
         }
+
         if (invoice.getPosted()) {
             invoice.setIssue(invoice.getIssue() + 1);
             invoice.setPostedToQB(false);
             invoice.setPostedToWorkDocs(false);
         }
-        return invoice;
+
+        if (isNotNullOrZero(invoice.getAmount())) {
+            dataManager.commit(invoice);
+        } else {
+            dataManager.remove(invoice);
+        }
+    }
+
+    private void calculateUsdAmount(Invoice invoice) {
+        invoice.setUsdAmount(fxCalculationService.calculateEquivalent(invoice.getAmount(), invoice.getFx(), invoice.getFxUsd()));
     }
 
     @Nullable

@@ -19,7 +19,7 @@ public class CounterpartyServiceBean implements CounterpartyService {
     public Counterparty findCounterparty(String counterpartyCode, View view) {
         return dataManager.load(Counterparty.class)
                 .query("select e from gcsplatform_Counterparty e "
-                        + "where e.billingInfo1 = :counterpartyCode")
+                        + "where e.code = :counterpartyCode")
                 .parameter("counterpartyCode", counterpartyCode)
                 .view(view)
                 .optional()

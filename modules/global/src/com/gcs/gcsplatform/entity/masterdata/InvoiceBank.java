@@ -1,6 +1,5 @@
 package com.gcs.gcsplatform.entity.masterdata;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Index;
@@ -12,16 +11,17 @@ import javax.validation.constraints.NotNull;
 import com.haulmont.cuba.core.entity.StandardEntity;
 
 @Table(name = "GCSPLATFORM_INVOICE_BANK", indexes = {
-        @Index(name = "IDX_GCSPLATFORM_INVOICE_BANK_UNQ", columnList = "CURRENCY_ID, LOCATION", unique = true)
+        @Index(name = "IDX_GCSPLATFORM_INVOICE_BANK_UNQ", columnList = "CURRENCY_ID, LOCATION_ID", unique = true)
 })
 @Entity(name = "gcsplatform_InvoiceBank")
 public class InvoiceBank extends StandardEntity {
 
     private static final long serialVersionUID = -1563996886407064776L;
 
-    @Column(name = "LOCATION", nullable = false, length = 5)
     @NotNull
-    private String location;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "LOCATION_ID")
+    private Location location;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -32,6 +32,14 @@ public class InvoiceBank extends StandardEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "BANK_ID")
     private Bank bank;
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
 
     public Bank getBank() {
         return bank;
@@ -49,11 +57,4 @@ public class InvoiceBank extends StandardEntity {
         this.currency = currency;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
 }

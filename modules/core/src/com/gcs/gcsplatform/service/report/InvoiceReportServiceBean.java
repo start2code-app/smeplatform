@@ -1,6 +1,5 @@
 package com.gcs.gcsplatform.service.report;
 
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Collections;
@@ -12,13 +11,12 @@ import javax.inject.Inject;
 import com.gcs.gcsplatform.config.CurrencyConfig;
 import com.gcs.gcsplatform.entity.invoice.Invoice;
 import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
-import com.gcs.gcsplatform.entity.masterdata.Company;
 import com.gcs.gcsplatform.entity.masterdata.Counterparty;
 import com.gcs.gcsplatform.entity.masterdata.InvoiceBank;
+import com.gcs.gcsplatform.entity.masterdata.InvoiceCompany;
 import com.gcs.gcsplatform.service.BankService;
 import com.gcs.gcsplatform.service.CompanyService;
 import com.gcs.gcsplatform.service.CounterpartyService;
-import com.gcs.gcsplatform.service.fx.FxCalculationService;
 import com.gcs.gcsplatform.service.invoice.InvoiceLineService;
 import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;
@@ -29,8 +27,6 @@ import static com.gcs.gcsplatform.util.DateUtils.getCurrentDate;
 @Service(InvoiceReportService.NAME)
 public class InvoiceReportServiceBean implements InvoiceReportService {
 
-    @Inject
-    private FxCalculationService fxCalculationService;
     @Inject
     private CurrencyConfig currencyConfig;
     @Inject
@@ -63,35 +59,39 @@ public class InvoiceReportServiceBean implements InvoiceReportService {
 
     private Map<String, Object> getBank(Invoice invoice) {
         View view = ViewBuilder.of(InvoiceBank.class)
-                .addView(View.LOCAL)
                 .add("bank", View.LOCAL)
                 .build();
-        InvoiceBank invoiceBank = bankService.findInvoiceBank(invoice.getLocation(), invoice.getCurrency(), view);
-        if (invoiceBank == null) {
-            String usdCurrency = currencyConfig.getUsdCurrency().getCurrency();
-            InvoiceBank usdBank = bankService.findInvoiceBank(invoice.getLocation(), usdCurrency, view);
-            if (usdBank == null) {
-                return Collections.emptyMap();
-            }
-            Map<String, Object> bankMap = reportDataConversionService.entityToMap(usdBank.getBank());
-            BigDecimal crossRate = fxCalculationService.calculateCrossRate(invoice.getFx(), invoice.getFxUsd());
-            bankMap.put("totalDueUsd", String.format("Total Due USD: %.2f , FX : %.4f", invoice.getUsdAmount(),
-                    crossRate));
-            bankMap.put("bankCurrency", usdCurrency);
-            return bankMap;
+        String currency;
+        boolean showTotalUsd = Boolean.TRUE.equals(invoice.getShowTotalUsd());
+        if (showTotalUsd) {
+            currency = currencyConfig.getUsdCurrency().getCurrency();
         } else {
-            Map<String, Object> bankMap = reportDataConversionService.entityToMap(invoiceBank.getBank());
-            bankMap.put("bankCurrency", invoice.getCurrency());
-            return bankMap;
+            currency = invoice.getCurrency();
         }
+
+        InvoiceBank invoiceBank = bankService.findInvoiceBank(invoice.getLocation(), currency, view);
+        if (invoiceBank == null) {
+            return Collections.emptyMap();
+        }
+
+        Map<String, Object> bankMap = reportDataConversionService.entityToMap(invoiceBank.getBank());
+        bankMap.put("bankCurrency", currency);
+        if (showTotalUsd) {
+            bankMap.put("totalDueUsd", String.format("Total Due USD: %.2f , FX : %.4f", invoice.getUsdAmount(),
+                    invoice.getUsdCrossRate()));
+        }
+        return bankMap;
     }
 
     private Map<String, Object> getCompany(Invoice invoice) {
-        Company company = companyService.findCompany(invoice.getLocation(),
-                ViewBuilder.of(Company.class)
-                        .addView(View.LOCAL)
+        InvoiceCompany invoiceCompany = companyService.findInvoiceCompany(invoice.getLocation(),
+                ViewBuilder.of(InvoiceCompany.class)
+                        .add("company", View.LOCAL)
                         .build());
-        return reportDataConversionService.entityToMap(company);
+        if (invoiceCompany != null) {
+            return reportDataConversionService.entityToMap(invoiceCompany.getCompany());
+        }
+        return Collections.emptyMap();
     }
 
     @Override

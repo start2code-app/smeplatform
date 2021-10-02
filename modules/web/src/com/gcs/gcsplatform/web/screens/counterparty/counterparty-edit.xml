@@ -6,7 +6,10 @@
     <data>
         <instance id="counterpartyDc"
                   class="com.gcs.gcsplatform.entity.masterdata.Counterparty">
-            <view extends="_local"/>
+            <view extends="_local">
+                <property name="location"
+                          view="_minimal"/>
+            </view>
             <loader/>
         </instance>
         <collection id="brokeragesDc"
@@ -60,6 +63,8 @@
                                    property="billingCompanyName"/>
                         <textField id="billingCountryField"
                                    property="billingCountry"/>
+                        <textField id="billingInfoField"
+                                   property="billingInfo"/>
                         <checkBox id="cashField"
                                   property="cash"/>
                         <checkBox id="commissionOverrideField"
@@ -68,6 +73,17 @@
                                   property="active"/>
                     </column>
                     <column width="250px">
+                        <textField id="codeField"
+                                   property="code"/>
+                        <pickerField id="locationField"
+                                     property="location">
+                            <actions>
+                                <action id="lookup"
+                                        type="picker_lookup"/>
+                                <action id="clear"
+                                        type="picker_clear"/>
+                            </actions>
+                        </pickerField>
                         <textField id="emailField"
                                    property="email"/>
                         <textField id="email1Field"
@@ -82,12 +98,6 @@
                                    property="address3"/>
                         <textField id="address4Field"
                                    property="address4"/>
-                        <textField id="billingInfo1Field"
-                                   property="billingInfo1"/>
-                        <textField id="billingInfo2Field"
-                                   property="billingInfo2"/>
-                        <textField id="billingInfo3Field"
-                                   property="billingInfo3"/>
                     </column>
                 </form>
             </tab>

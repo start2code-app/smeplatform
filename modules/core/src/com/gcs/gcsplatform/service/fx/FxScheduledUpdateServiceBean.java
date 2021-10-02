@@ -7,16 +7,16 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 import com.gcs.gcsplatform.config.CurrencyConfig;
-import com.gcs.gcsplatform.config.FxConfig;
+import com.gcs.gcsplatform.config.FxProviderConfig;
+import com.gcs.gcsplatform.core.fxprovider.FxProviderAPI;
 import com.gcs.gcsplatform.entity.masterdata.Currency;
 import com.gcs.gcsplatform.entity.masterdata.Fx;
 import com.gcs.gcsplatform.service.CurrencyService;
-import com.gcs.gcsplatform.service.fxprovider.FxProviderAPI;
 import com.haulmont.cuba.core.global.DataManager;
-import com.haulmont.cuba.core.global.Security;
 import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;
 import com.haulmont.cuba.security.app.Authentication;
@@ -30,7 +30,7 @@ import static com.gcs.gcsplatform.util.DateUtils.getFirstDayOfMonth;
 public class FxScheduledUpdateServiceBean implements FxScheduledUpdateService {
 
     @Inject
-    private FxConfig fxConfig;
+    private FxProviderConfig fxProviderConfig;
     @Inject
     private CurrencyConfig currencyConfig;
     @Inject
@@ -51,7 +51,11 @@ public class FxScheduledUpdateServiceBean implements FxScheduledUpdateService {
         Currency gbpCurrency = currencyConfig.getGbpCurrency();
         List<Currency> currencies = currencyService.getCurrencies(ViewBuilder.of(Currency.class)
                 .addView(View.MINIMAL)
-                .build());
+                .build())
+                .stream()
+                .filter(currency -> !gbpCurrency.equals(currency))
+                .collect(Collectors.toList());
+        updateFx(gbpCurrency, BigDecimal.ONE);
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(new Runnable() {
             private final Iterator<Currency> iterator = currencies.iterator();
@@ -62,10 +66,7 @@ public class FxScheduledUpdateServiceBean implements FxScheduledUpdateService {
                     authentication.begin();
                     if (iterator.hasNext()) {
                         Currency nextCurrency = iterator.next();
-                        BigDecimal updatedFx = BigDecimal.ONE;
-                        if (!gbpCurrency.equals(nextCurrency)) {
-                            updatedFx = fxProviderAPI.getFx(gbpCurrency.getCurrency(), nextCurrency.getCurrency());
-                        }
+                        BigDecimal updatedFx = fxProviderAPI.getFx(gbpCurrency.getCurrency(), nextCurrency.getCurrency());
                         updateFx(nextCurrency, updatedFx);
                     } else {
                         scheduler.shutdown();
@@ -77,7 +78,7 @@ public class FxScheduledUpdateServiceBean implements FxScheduledUpdateService {
                     authentication.end();
                 }
             }
-        }, 0, fxConfig.getDelay(), TimeUnit.SECONDS);
+        }, 0, fxProviderConfig.getDelay(), TimeUnit.SECONDS);
     }
 
     private void updateFx(Currency currency, BigDecimal updatedFx) {

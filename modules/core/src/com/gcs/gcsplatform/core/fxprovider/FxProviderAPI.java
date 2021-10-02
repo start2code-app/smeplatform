@@ -1,4 +1,4 @@
-package com.gcs.gcsplatform.service.fxprovider;
+package com.gcs.gcsplatform.core.fxprovider;
 
 import java.math.BigDecimal;
 

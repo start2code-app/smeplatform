@@ -13,32 +13,20 @@ public interface AmazonWorkDocsConfig extends Config {
     /**
      * @return Amazon WorkDocs access key.
      */
-    @Property("amazon.workDocs.accessKey")
+    @Property("workDocs.accessKey")
     String getAccessKey();
 
     /**
      * @return Amazon WorkDocs secret access key.
      */
     @Secret
-    @Property("amazon.workDocs.secretAccessKey")
+    @Property("workDocs.secretAccessKey")
     String getSecretAccessKey();
 
     /**
      * @return Amazon WorkDocs region.
      */
-    @Property("amazon.workDocs.region")
+    @Property("workDocs.region")
     @DefaultString("eu-west-1")
     String getRegion();
-
-    /**
-     * @return Amazon WorkDocs folder id for London invoices
-     */
-    @Property("amazon.workDocs.folder.lon")
-    String getLonInvoiceFolder();
-
-    /**
-     * @return Amazon WorkDocs folder id for Hong Kong invoices
-     */
-    @Property("amazon.workDocs.folder.hk")
-    String getHkInvoiceFolder();
 }

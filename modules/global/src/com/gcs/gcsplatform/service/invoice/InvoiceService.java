@@ -23,15 +23,16 @@ public interface InvoiceService {
     /**
      * Calculates invoice amount and gbp equivalent by existing invoice lines.
      * <p>
+     * If invoice amount is zero, removes it.
+     * <p>
      * Increments issue number if the invoice was posted to WorkDocs/Quickbooks already and marks the invoice as not
      * posted.
      * <p>
      * Unlinks the invoice from printed PDF/XLSX files.
      *
      * @param invoice Invoice
-     * @return Recalculated invoice
      */
-    Invoice calculateAmount(Invoice invoice);
+    void calculateAmount(Invoice invoice);
 
     /**
      * Searches for a corresponding invoice by currency, location, counterparty code, start date.

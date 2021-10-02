@@ -37,7 +37,6 @@
             </actions>
             <columns>
                 <column id="companyName"/>
-                <column id="location"/>
                 <column id="companyAddress1"/>
                 <column id="companyAddress2"/>
                 <column id="tel"/>

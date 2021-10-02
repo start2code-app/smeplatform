@@ -1,5 +1,6 @@
 package com.gcs.gcsplatform.service.report;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,9 +11,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
 
-import com.gcs.gcsplatform.config.DateFormatConfig;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.EntityStates;
+import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.core.global.MetadataTools;
 import org.springframework.stereotype.Service;
 
@@ -22,15 +23,15 @@ public class ReportDataConversionServiceBean implements ReportDataConversionServ
     @Inject
     private EntityStates entityStates;
     @Inject
-    private DateFormatConfig dateFormatConfig;
-    @Inject
     private MetadataTools metadataTools;
+    @Inject
+    protected Messages messages;
 
     @Override
     public <V extends Entity<T>, T> Map<String, Object> entityToMap(V entity) {
         Map<String, Object> metaPropertiesMap = new HashMap<>();
         if (entity != null) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatConfig.getDefaultDateFormat());
+            DateFormat dateFormat = new SimpleDateFormat(messages.getMainMessage("dateFormat"));
             entity.getMetaClass().getProperties()
                     .forEach(metaProperty -> {
                         String propertyName = metaProperty.getName();

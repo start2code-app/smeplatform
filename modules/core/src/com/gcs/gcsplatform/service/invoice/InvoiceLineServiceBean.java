@@ -14,6 +14,7 @@ import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.View;
 import org.springframework.stereotype.Service;
 
+import static com.gcs.gcsplatform.util.BigDecimalUtils.isNotNullOrZero;
 import static com.gcs.gcsplatform.util.DateUtils.getFirstDayOfMonth;
 import static com.gcs.gcsplatform.util.DateUtils.getLastDayOfMonth;
 
@@ -32,7 +33,7 @@ public class InvoiceLineServiceBean implements InvoiceLineService {
     }
 
     private void splitTrade(List<InvoiceLine> invoiceLines, ClosedTrade trade, TradeSide side) {
-        if (trade.getPutOnInvoice(side)) {
+        if (trade.getPutOnInvoice(side) && isNotNullOrZero(trade.getPnl(side))) {
             invoiceLines.add(splitTrade(trade, side));
         }
     }
@@ -48,7 +49,7 @@ public class InvoiceLineServiceBean implements InvoiceLineService {
         invoiceLine.setXrate(trade.getXrate());
         invoiceLine.setValueDate(trade.getValueDate());
         invoiceLine.setMaturityDate(trade.getMaturityDate());
-        invoiceLine.setLocation(trade.getInvoiceCode(side));
+        invoiceLine.setLocation(trade.getLocation(side));
         invoiceLine.setNominal(trade.getNominal());
         invoiceLine.setTradeDate(trade.getTradeDate());
         invoiceLine.setCounterpartyCode(trade.getCounterpartyCode(side));

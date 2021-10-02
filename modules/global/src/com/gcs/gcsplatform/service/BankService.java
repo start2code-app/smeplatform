@@ -19,4 +19,6 @@ public interface BankService {
      */
     @Nullable
     InvoiceBank findInvoiceBank(String location, String currency, View view);
+
+    boolean bankExists(String location, String currency);
 }

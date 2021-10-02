@@ -19,12 +19,18 @@ public class BankServiceBean implements BankService {
     public InvoiceBank findInvoiceBank(String location, String currency, View view) {
         return dataManager.load(InvoiceBank.class)
                 .query("select e from gcsplatform_InvoiceBank e "
-                        + "where e.location = :location "
+                        + "where e.location.name = :location "
                         + "and e.currency.currency = :currency")
                 .parameter("location", location)
                 .parameter("currency", currency)
+                .cacheable(true)
                 .view(view)
                 .optional()
                 .orElse(null);
+    }
+
+    @Override
+    public boolean bankExists(String location, String currency) {
+        return findInvoiceBank(location, currency, new View(InvoiceBank.class, View.MINIMAL)) != null;
     }
 }

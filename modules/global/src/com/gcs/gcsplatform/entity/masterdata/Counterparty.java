@@ -2,11 +2,17 @@ package com.gcs.gcsplatform.entity.masterdata;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
+import com.haulmont.cuba.core.entity.annotation.PublishEntityChangedEvents;
 
+@PublishEntityChangedEvents
 @NamePattern("%s|counterparty")
 @Table(name = "GCSPLATFORM_COUNTERPARTY")
 @Entity(name = "gcsplatform_Counterparty")
@@ -38,14 +44,16 @@ public class Counterparty extends StandardEntity {
     @Column(name = "BILLING_COUNTRY", length = 5)
     private String billingCountry;
 
-    @Column(name = "BILLING_INFO1", length = 50)
-    private String billingInfo1;
+    @Column(name = "BILLING_INFO", length = 50)
+    private String billingInfo;
 
-    @Column(name = "BILLING_INFO2", length = 50)
-    private String billingInfo2;
+    @Column(name = "CODE", length = 10)
+    private String code;
 
-    @Column(name = "BILLING_INFO3", length = 50)
-    private String billingInfo3;
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "LOCATION_ID")
+    private Location location;
 
     @Column(name = "CONTACT_NAME", length = 50)
     private String contactName;
@@ -70,6 +78,30 @@ public class Counterparty extends StandardEntity {
 
     @Column(name = "ACTIVE")
     private Boolean active = true;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getBillingInfo() {
+        return billingInfo;
+    }
+
+    public void setBillingInfo(String billingInfo) {
+        this.billingInfo = billingInfo;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 
     public Boolean getCommissionOverride() {
         return commissionOverride;
@@ -133,30 +165,6 @@ public class Counterparty extends StandardEntity {
 
     public void setContactName(String contactName) {
         this.contactName = contactName;
-    }
-
-    public String getBillingInfo3() {
-        return billingInfo3;
-    }
-
-    public void setBillingInfo3(String billingInfo3) {
-        this.billingInfo3 = billingInfo3;
-    }
-
-    public String getBillingInfo2() {
-        return billingInfo2;
-    }
-
-    public void setBillingInfo2(String billingInfo2) {
-        this.billingInfo2 = billingInfo2;
-    }
-
-    public String getBillingInfo1() {
-        return billingInfo1;
-    }
-
-    public void setBillingInfo1(String billingInfo1) {
-        this.billingInfo1 = billingInfo1;
     }
 
     public String getBillingCountry() {

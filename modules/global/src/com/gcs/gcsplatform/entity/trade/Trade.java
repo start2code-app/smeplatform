@@ -189,12 +189,6 @@ public abstract class Trade extends StandardEntity {
     @Column(name = "SELLER_CODE", length = 50)
     private String sellerCode;
 
-    @Column(name = "BUYER_INVOICE_CODE", length = 50)
-    private String buyerInvoiceCode;
-
-    @Column(name = "SELLER_INVOICE_CODE", length = 50)
-    private String sellerInvoiceCode;
-
     @Column(name = "BROKERAGE_TYPE")
     private String brokerageType;
 
@@ -231,6 +225,22 @@ public abstract class Trade extends StandardEntity {
         } else {
             return repoCurrency;
         }
+    }
+
+    public String getBuyerLocation() {
+        return buyerLocation;
+    }
+
+    public void setBuyerLocation(String buyerLocation) {
+        this.buyerLocation = buyerLocation;
+    }
+
+    public String getSellerLocation() {
+        return sellerLocation;
+    }
+
+    public void setSellerLocation(String sellerLocation) {
+        this.sellerLocation = sellerLocation;
     }
 
     public Boolean getSellPutOnInvoice() {
@@ -337,19 +347,19 @@ public abstract class Trade extends StandardEntity {
         }
     }
 
-    public String getInvoiceCode(TradeSide side) {
+    public String getLocation(TradeSide side) {
         if (side == TradeSide.BUY) {
-            return buyerInvoiceCode;
+            return buyerLocation;
         } else {
-            return sellerInvoiceCode;
+            return sellerLocation;
         }
     }
 
-    public void setInvoiceCode(String invoiceCode, TradeSide side) {
+    public void setLocation(String location, TradeSide side) {
         if (side == TradeSide.BUY) {
-            setBuyerInvoiceCode(invoiceCode);
+            setBuyerLocation(location);
         } else {
-            setSellerInvoiceCode(invoiceCode);
+            setSellerLocation(location);
         }
     }
 
@@ -374,6 +384,14 @@ public abstract class Trade extends StandardEntity {
             return Boolean.TRUE.equals(buyerCash);
         } else {
             return Boolean.TRUE.equals(sellerCash);
+        }
+    }
+
+    public void setCash(Boolean cash, TradeSide side) {
+        if (side == TradeSide.BUY) {
+            setBuyerCash(cash);
+        } else {
+            setSellerCash(cash);
         }
     }
 
@@ -447,22 +465,6 @@ public abstract class Trade extends StandardEntity {
 
     public void setInvoiceDate(Date invoiceDate) {
         this.invoiceDate = invoiceDate;
-    }
-
-    public String getSellerInvoiceCode() {
-        return sellerInvoiceCode;
-    }
-
-    public void setSellerInvoiceCode(String sellerInvoiceCode) {
-        this.sellerInvoiceCode = sellerInvoiceCode;
-    }
-
-    public String getBuyerInvoiceCode() {
-        return buyerInvoiceCode;
-    }
-
-    public void setBuyerInvoiceCode(String buyerInvoiceCode) {
-        this.buyerInvoiceCode = buyerInvoiceCode;
     }
 
     public String getSellerCode() {
@@ -583,22 +585,6 @@ public abstract class Trade extends StandardEntity {
 
     public void setBuySplit(Boolean buySplit) {
         this.buySplit = buySplit;
-    }
-
-    public String getSellerLocation() {
-        return sellerLocation;
-    }
-
-    public void setSellerLocation(String sellerLocation) {
-        this.sellerLocation = sellerLocation;
-    }
-
-    public String getBuyerLocation() {
-        return buyerLocation;
-    }
-
-    public void setBuyerLocation(String buyerLocation) {
-        this.buyerLocation = buyerLocation;
     }
 
     public Boolean getGmSla() {

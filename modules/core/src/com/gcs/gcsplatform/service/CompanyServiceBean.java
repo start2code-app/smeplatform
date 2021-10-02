@@ -3,7 +3,7 @@ package com.gcs.gcsplatform.service;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
-import com.gcs.gcsplatform.entity.masterdata.Company;
+import com.gcs.gcsplatform.entity.masterdata.InvoiceCompany;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.View;
 import org.springframework.stereotype.Service;
@@ -16,11 +16,12 @@ public class CompanyServiceBean implements CompanyService {
 
     @Nullable
     @Override
-    public Company findCompany(String location, View view) {
-        return dataManager.load(Company.class)
-                .query("select e from gcsplatform_Company e "
-                        + "where e.location = :location")
+    public InvoiceCompany findInvoiceCompany(String location, View view) {
+        return dataManager.load(InvoiceCompany.class)
+                .query("select e from gcsplatform_InvoiceCompany e "
+                        + "where e.location.name = :location")
                 .parameter("location", location)
+                .cacheable(true)
                 .view(view)
                 .optional()
                 .orElse(null);

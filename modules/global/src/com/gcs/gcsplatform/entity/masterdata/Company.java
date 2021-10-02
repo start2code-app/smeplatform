@@ -19,10 +19,6 @@ public class Company extends StandardEntity {
     @NotNull
     private String companyName;
 
-    @Column(name = "LOCATION", nullable = false, unique = true, length = 5)
-    @NotNull
-    private String location;
-
     @Column(name = "ADDRESS1", length = 50)
     private String companyAddress1;
 
@@ -41,14 +37,6 @@ public class Company extends StandardEntity {
 
     public void setAdditionalCompanyNameLine(String additionalCompanyNameLine) {
         this.additionalCompanyNameLine = additionalCompanyNameLine;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
     }
 
     public String getTel() {

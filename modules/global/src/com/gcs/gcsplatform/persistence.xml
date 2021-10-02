@@ -20,5 +20,9 @@
         <class>com.gcs.gcsplatform.entity.masterdata.Bank</class>
         <class>com.gcs.gcsplatform.entity.masterdata.Company</class>
         <class>com.gcs.gcsplatform.entity.masterdata.InvoiceBank</class>
+        <class>com.gcs.gcsplatform.entity.qb.QuickBooksToken</class>
+        <class>com.gcs.gcsplatform.entity.qb.QuickBooksCsrf</class>
+        <class>com.gcs.gcsplatform.entity.masterdata.InvoiceCompany</class>
+        <class>com.gcs.gcsplatform.entity.masterdata.Location</class>
     </persistence-unit>
 </persistence>

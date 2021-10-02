@@ -7,7 +7,10 @@
     <data readOnly="true">
         <collection id="counterpartiesDc"
                     class="com.gcs.gcsplatform.entity.masterdata.Counterparty">
-            <view extends="_local"/>
+            <view extends="_local">
+                <property name="location"
+                          view="_minimal"/>
+            </view>
             <loader id="counterpartiesDl">
                 <query>
                     <![CDATA[select e from gcsplatform_Counterparty e order by e.counterparty]]>
@@ -44,9 +47,9 @@
                 <column id="billingName"/>
                 <column id="billingCompanyName"/>
                 <column id="billingCountry"/>
-                <column id="billingInfo1"/>
-                <column id="billingInfo2"/>
-                <column id="billingInfo3"/>
+                <column id="billingInfo"/>
+                <column id="code"/>
+                <column id="location"/>
                 <column id="contactName"/>
                 <column id="description"/>
                 <column id="email"/>

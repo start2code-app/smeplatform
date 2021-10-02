@@ -38,8 +38,8 @@
               caption="mainMsg://menu_config.gcsplatform_Broker.browse"/>
         <item screen="gcsplatform_Category.browse"
               caption="mainMsg://menu_config.gcsplatform_Category.browse"/>
-        <item screen="gcsplatform_CounterpartyBrokerage.browse"
-              caption="mainMsg://menu_config.gcsplatform_CounterpartyBrokerage.browse"/>
+        <item screen="gcsplatform_CounterpartyBrokerageScreen"
+              caption="mainMsg://menu_config.gcsplatform_CounterpartyBrokerageScreen"/>
         <item screen="gcsplatform_Currency.browse"
               caption="mainMsg://menu_config.gcsplatform_Currency.browse"/>
         <item screen="gcsplatform_Fx.browse"
@@ -50,9 +50,17 @@
               caption="mainMsg://menu_config.gcsplatform_InvoiceBank.browse"/>
         <item screen="gcsplatform_Company.browse"
               caption="mainMsg://menu_config.gcsplatform_Company.browse"/>
+        <item screen="gcsplatform_InvoiceCompany.browse"
+              caption="mainMsg://menu_config.gcsplatform_InvoiceCompany.browse"/>
+        <item screen="gcsplatform_Location.browse"
+              caption="mainMsg://menu_config.gcsplatform_Location.browse"/>
     </menu>
     <menu id="administration"
           icon="COG">
+        <item bean="gcsplatform_QuickBooksConnectorBean"
+              beanMethod="openOAuth2Page"
+              caption="mainMsg://menu_config.quickBooksAuth"/>
+        <separator/>
         <item id="sec$User.browse"/>
         <item id="sec$Group.browse"/>
         <item id="sec$Role.browse"/>

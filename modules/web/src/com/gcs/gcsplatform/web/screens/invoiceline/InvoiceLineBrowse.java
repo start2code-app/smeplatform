@@ -12,7 +12,7 @@ import com.gcs.gcsplatform.service.trade.TradeService;
 import com.gcs.gcsplatform.util.DateUtils;
 import com.gcs.gcsplatform.web.components.invoice.InvoiceBackportBean;
 import com.gcs.gcsplatform.web.components.invoice.InvoiceCalculationBean;
-import com.gcs.gcsplatform.web.events.InvoiceLineUpdatedEvent;
+import com.gcs.gcsplatform.web.events.InvoiceUpdatedEvent;
 import com.haulmont.cuba.core.global.Events;
 import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;
@@ -96,8 +96,7 @@ public class InvoiceLineBrowse extends StandardLookup<InvoiceLine> {
             return;
         }
         BackgroundTask<Integer, Void> task = new SnapshotTask(trades);
-        BackgroundWorkWindow.show(task, messageBundle.getMessage("snapshotTask.caption"),
-                messageBundle.getMessage("snapshotTask.description"), false);
+        BackgroundWorkWindow.show(task, messageBundle.getMessage("snapshotTask.caption"), null, false);
     }
 
     protected Collection<ClosedTrade> selectPreviousMonthTrades() {
@@ -134,7 +133,7 @@ public class InvoiceLineBrowse extends StandardLookup<InvoiceLine> {
 
         @Override
         public void done(Void result) {
-            events.publish(new InvoiceLineUpdatedEvent(this));
+            events.publish(new InvoiceUpdatedEvent(this));
             invoiceLinesDl.load();
         }
     }
