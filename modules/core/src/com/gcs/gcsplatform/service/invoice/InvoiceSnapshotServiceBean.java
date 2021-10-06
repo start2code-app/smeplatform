@@ -1,6 +1,7 @@
 package com.gcs.gcsplatform.service.invoice;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
@@ -16,6 +17,7 @@ import com.haulmont.cuba.core.global.UserSessionSource;
 import org.springframework.stereotype.Service;
 
 import static com.gcs.gcsplatform.util.DateUtils.getCurrentDate;
+import static com.gcs.gcsplatform.util.DateUtils.getFirstDayOfMonth;
 import static com.gcs.gcsplatform.util.DateUtils.getPreviousMonth;
 
 @Service(InvoiceSnapshotService.NAME)
@@ -46,16 +48,16 @@ public class InvoiceSnapshotServiceBean implements InvoiceSnapshotService {
     }
 
     @Override
-    public boolean snapshotIsTaken() {
+    public boolean snapshotIsTaken(Date month) {
         return dataManager.loadValue("select 1 from gcsplatform_InvoiceLine e "
                 + "where e.startDate = :startDate", Integer.class)
-                .parameter("startDate", getPreviousMonth())
+                .parameter("startDate", getFirstDayOfMonth(month))
                 .optional()
                 .isPresent();
     }
 
     @Override
-    public void clearSnapshot() {
+    public void clearSnapshot(Date month) {
         Transaction tx = persistence.createTransaction();
         try {
             EntityManager em = persistence.getEntityManager();
@@ -63,14 +65,14 @@ public class InvoiceSnapshotServiceBean implements InvoiceSnapshotService {
             em.createQuery("update gcsplatform_Invoice e "
                     + "set e.deleteTs = :deleteTs, e.deletedBy = :deletedBy "
                     + "where e.startDate = :startDate")
-                    .setParameter("startDate", getPreviousMonth())
+                    .setParameter("startDate", getFirstDayOfMonth(month))
                     .setParameter("deleteTs", getCurrentDate())
                     .setParameter("deletedBy", userLogin)
                     .executeUpdate();
             em.createQuery("update gcsplatform_InvoiceLine e "
                     + "set e.deleteTs = :deleteTs, e.deletedBy = :deletedBy "
                     + "where e.startDate = :startDate")
-                    .setParameter("startDate", getPreviousMonth())
+                    .setParameter("startDate", getFirstDayOfMonth(month))
                     .setParameter("deleteTs", getCurrentDate())
                     .setParameter("deletedBy", userLogin)
                     .executeUpdate();
