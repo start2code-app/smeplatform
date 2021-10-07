@@ -69,17 +69,18 @@ public class AmazonWorkDocsUploader {
     /**
      * Uploads a file to Amazon WorkDocs.
      *
-     * @param fileName Target file name
-     * @param folderId WorkDocs folder id
-     * @param content  File content
+     * @param fileName    Target file name
+     * @param folderId    WorkDocs folder id
+     * @param content     File content
+     * @param contentType File content type
      */
-    public void uploadFile(String fileName, String folderId, byte[] content) {
-        InitiateDocumentVersionUploadResponse response = initiateUpload(fileName, folderId);
+    public void uploadFile(String fileName, String folderId, byte[] content, String contentType) {
+        InitiateDocumentVersionUploadResponse response = initiateUpload(fileName, folderId, contentType);
         UploadMetadata metadata = response.uploadMetadata();
         String uploadUrl = metadata.uploadUrl();
 
         try {
-            int httpCode = uploadContent(uploadUrl, content);
+            int httpCode = uploadContent(uploadUrl, content, contentType);
             if (httpCode != HTTP_OK) {
                 throw new WorkDocsException("Connection to WorkDocs failed with HTTP code " + httpCode);
             }
@@ -92,21 +93,21 @@ public class AmazonWorkDocsUploader {
         updateDocVersion(docId, versionId);
     }
 
-    private InitiateDocumentVersionUploadResponse initiateUpload(String fileName, String folderId) {
+    private InitiateDocumentVersionUploadResponse initiateUpload(String fileName, String folderId, String contentType) {
         InitiateDocumentVersionUploadRequest request = InitiateDocumentVersionUploadRequest.builder()
                 .parentFolderId(folderId)
                 .name(fileName)
-                .contentType("application/octet-stream")
+                .contentType(contentType)
                 .build();
         return workDocsClient.initiateDocumentVersionUpload(request);
     }
 
-    private int uploadContent(String uploadUrl, byte[] content) throws IOException {
+    private int uploadContent(String uploadUrl, byte[] content, String contentType) throws IOException {
         URL url = new URL(uploadUrl);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setDoOutput(true);
         connection.setRequestMethod("PUT");
-        connection.setRequestProperty("Content-Type", "application/octet-stream");
+        connection.setRequestProperty("Content-Type", contentType);
         connection.setRequestProperty("x-amz-server-side-encryption", "AES256");
 
         try (OutputStream outputStream = connection.getOutputStream()) {

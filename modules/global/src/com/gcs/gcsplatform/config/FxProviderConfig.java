@@ -7,14 +7,14 @@ import com.haulmont.cuba.core.config.SourceType;
 import com.haulmont.cuba.core.config.defaults.DefaultLong;
 
 @Source(type = SourceType.DATABASE)
-public interface FxConfig extends Config {
+public interface FxProviderConfig extends Config {
 
     /**
-     * Alpha Vantage servoce api key.
+     * Alpha Vantage service api key.
      *
      * @return Api key
      */
-    @Property(value = "fx.alphaVantage.apiKey")
+    @Property(value = "fxProvider.alphaVantage.apiKey")
     String getAlphaVantageApiKey();
 
     /**
@@ -22,7 +22,7 @@ public interface FxConfig extends Config {
      *
      * @return delay
      */
-    @Property(value = "fx.delay")
+    @Property(value = "fxProvider.delay")
     @DefaultLong(value = 20)
     long getDelay();
 }

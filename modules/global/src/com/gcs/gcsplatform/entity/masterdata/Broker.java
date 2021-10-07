@@ -24,7 +24,7 @@ public class Broker extends StandardEntity {
 
     @NotNull
     @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "USER_ID", unique = true)
     private User user;
 
     public User getUser() {

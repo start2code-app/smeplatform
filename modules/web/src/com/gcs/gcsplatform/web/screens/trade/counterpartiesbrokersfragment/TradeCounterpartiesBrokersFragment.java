@@ -66,7 +66,6 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
     protected void onInit(InitEvent event) {
         counterpartiesDl.load();
         brokersDl.load();
-        tradersDl.load();
     }
 
     @Subscribe(target = Target.PARENT_CONTROLLER)
@@ -137,9 +136,8 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
     protected void updateBuyerFields(Counterparty counterparty) {
         Trade trade = tradeDc.getItem();
         trade.setBuyerCash(counterparty != null ? counterparty.getCash() : null);
-        trade.setBuyerLocation(counterparty != null ? counterparty.getBillingCountry() : null);
-        trade.setBuyerCode(counterparty != null ? counterparty.getBillingInfo1() : null);
-        trade.setBuyerInvoiceCode(counterparty != null ? counterparty.getBillingInfo3() : null);
+        trade.setBuyerCode(counterparty != null ? counterparty.getCode() : null);
+        trade.setBuyerLocation(counterparty != null ? counterparty.getLocation().getName() : null);
         trade.setBuyCommissionOverride(counterparty != null ? counterparty.getCommissionOverride() : null);
         brokerageBean.updateBrokerage(trade);
     }
@@ -171,9 +169,8 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
     protected void updateSellerFields(Counterparty counterparty) {
         Trade trade = tradeDc.getItem();
         trade.setSellerCash(counterparty != null ? counterparty.getCash() : null);
-        trade.setSellerLocation(counterparty != null ? counterparty.getBillingCountry() : null);
-        trade.setSellerCode(counterparty != null ? counterparty.getBillingInfo1() : null);
-        trade.setSellerInvoiceCode(counterparty != null ? counterparty.getBillingInfo3() : null);
+        trade.setSellerCode(counterparty != null ? counterparty.getCode() : null);
+        trade.setSellerLocation(counterparty != null ? counterparty.getLocation().getName() : null);
         trade.setSellCommissionOverride(counterparty != null ? counterparty.getCommissionOverride() : null);
         brokerageBean.updateBrokerage(trade);
     }
@@ -181,11 +178,17 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
     protected void initTraders(LookupPickerField<Counterparty> counterpartyField,
             LookupPickerField<Trader> traderField) {
         Counterparty counterparty = counterpartyField.getValue();
-        List<Trader> traders = traderService.getTraders(counterparty, ViewBuilder.of(Trader.class)
-                .add("counterparty", View.LOCAL)
-                .addView(View.MINIMAL)
-                .build());
-        traderField.setOptionsList(traders);
+        if (counterparty != null) {
+            List<Trader> traders = traderService.getTraders(counterparty, ViewBuilder.of(Trader.class)
+                    .add("counterparty", viewBuilder -> viewBuilder
+                            .addView(View.MINIMAL)
+                            .add("location", View.MINIMAL))
+                    .addView(View.MINIMAL)
+                    .build());
+            traderField.setOptionsList(traders);
+        } else {
+            tradersDl.load();
+        }
     }
 
     @Install(to = "buyerTraderLookupPickerField.lookup", subject = "screenConfigurer")

@@ -1,0 +1,1 @@
+alter table GCSPLATFORM_INVOICE_BANK change column LOCATION LOCATION_ID varchar(32) not null ;

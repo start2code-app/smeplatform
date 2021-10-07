@@ -34,6 +34,10 @@ public class DateUtils {
         return cal.getTime();
     }
 
+    public static Date getLastDayOfPreviousMonth() {
+        return getLastDayOfMonth(getPreviousMonth());
+    }
+
     public static Date getNextWorkingDay() {
         Date nextDay = org.apache.commons.lang3.time.DateUtils.addDays(getCurrentDate(), 1);
         while (isWeekend(nextDay)) {

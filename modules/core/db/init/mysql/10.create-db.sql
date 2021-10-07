@@ -1,3 +1,19 @@
+-- begin GCSPLATFORM_LOCATION
+create table GCSPLATFORM_LOCATION (
+    ID varchar(32),
+    VERSION integer not null,
+    CREATE_TS datetime(3),
+    CREATED_BY varchar(50),
+    UPDATE_TS datetime(3),
+    UPDATED_BY varchar(50),
+    DELETE_TS datetime(3),
+    DELETED_BY varchar(50),
+    --
+    NAME varchar(5) not null,
+    --
+    primary key (ID)
+)^
+-- end GCSPLATFORM_LOCATION
 -- begin GCSPLATFORM_COUNTERPARTY
 create table GCSPLATFORM_COUNTERPARTY (
     ID varchar(32),
@@ -17,9 +33,9 @@ create table GCSPLATFORM_COUNTERPARTY (
     BILLING_NAME varchar(50),
     BILLING_COMPANY_NAME varchar(50),
     BILLING_COUNTRY varchar(5),
-    BILLING_INFO1 varchar(50),
-    BILLING_INFO2 varchar(50),
-    BILLING_INFO3 varchar(50),
+    BILLING_INFO varchar(50),
+    CODE varchar(10),
+    LOCATION_ID varchar(32) not null,
     CONTACT_NAME varchar(50),
     DESCRIPTION varchar(50),
     EMAIL varchar(50),
@@ -130,8 +146,6 @@ create table GCSPLATFORM_LIVE_TRADE (
     SELLER_CASH boolean,
     BUYER_CODE varchar(50),
     SELLER_CODE varchar(50),
-    BUYER_INVOICE_CODE varchar(50),
-    SELLER_INVOICE_CODE varchar(50),
     BROKERAGE_TYPE varchar(50),
     BUY_COMMISSION_OVERRIDE boolean,
     SELL_COMISSION_OVERRIDE boolean,
@@ -202,8 +216,6 @@ create table GCSPLATFORM_CALL_OPTION_TRADE (
     SELLER_CASH boolean,
     BUYER_CODE varchar(50),
     SELLER_CODE varchar(50),
-    BUYER_INVOICE_CODE varchar(50),
-    SELLER_INVOICE_CODE varchar(50),
     BROKERAGE_TYPE varchar(50),
     BUY_COMMISSION_OVERRIDE boolean,
     SELL_COMISSION_OVERRIDE boolean,
@@ -274,8 +286,6 @@ create table GCSPLATFORM_CLOSED_TRADE (
     SELLER_CASH boolean,
     BUYER_CODE varchar(50),
     SELLER_CODE varchar(50),
-    BUYER_INVOICE_CODE varchar(50),
-    SELLER_INVOICE_CODE varchar(50),
     BROKERAGE_TYPE varchar(50),
     BUY_COMMISSION_OVERRIDE boolean,
     SELL_COMISSION_OVERRIDE boolean,
@@ -346,8 +356,6 @@ create table GCSPLATFORM_OPENED_TRADE (
     SELLER_CASH boolean,
     BUYER_CODE varchar(50),
     SELLER_CODE varchar(50),
-    BUYER_INVOICE_CODE varchar(50),
-    SELLER_INVOICE_CODE varchar(50),
     BROKERAGE_TYPE varchar(50),
     BUY_COMMISSION_OVERRIDE boolean,
     SELL_COMISSION_OVERRIDE boolean,
@@ -418,8 +426,6 @@ create table GCSPLATFORM_CLOSED_LIVE_TRADE (
     SELLER_CASH boolean,
     BUYER_CODE varchar(50),
     SELLER_CODE varchar(50),
-    BUYER_INVOICE_CODE varchar(50),
-    SELLER_INVOICE_CODE varchar(50),
     BROKERAGE_TYPE varchar(50),
     BUY_COMMISSION_OVERRIDE boolean,
     SELL_COMISSION_OVERRIDE boolean,
@@ -487,6 +493,8 @@ create table GCSPLATFORM_INVOICE (
     FX_USD decimal(10, 4),
     GBP_AMOUNT decimal(10, 4),
     USD_AMOUNT decimal(10, 4),
+    USD_CROSS_RATE decimal(10, 4),
+    SHOW_TOTAL_USD boolean,
     POSTED_TO_WORK_DOCS boolean,
     POSTED_TO_QB boolean,
     --
@@ -551,7 +559,6 @@ create table GCSPLATFORM_COMPANY (
     DELETED_BY varchar(50),
     --
     NAME varchar(50) not null,
-    LOCATION varchar(5) not null,
     ADDRESS1 varchar(50),
     ADDRESS2 varchar(50),
     TEL varchar(50),
@@ -571,7 +578,7 @@ create table GCSPLATFORM_INVOICE_BANK (
     DELETE_TS datetime(3),
     DELETED_BY varchar(50),
     --
-    LOCATION varchar(5) not null,
+    LOCATION_ID varchar(32) not null,
     CURRENCY_ID varchar(32) not null,
     BANK_ID varchar(32) not null,
     --
@@ -639,3 +646,58 @@ create table GCSPLATFORM_TRADER (
     primary key (ID)
 )^
 -- end GCSPLATFORM_TRADER
+-- begin GCSPLATFORM_QUICK_BOOKS_TOKEN
+create table GCSPLATFORM_QUICK_BOOKS_TOKEN (
+    ID varchar(32),
+    VERSION integer not null,
+    CREATE_TS datetime(3),
+    CREATED_BY varchar(50),
+    UPDATE_TS datetime(3),
+    UPDATED_BY varchar(50),
+    DELETE_TS datetime(3),
+    DELETED_BY varchar(50),
+    --
+    ACCESS_TOKEN varchar(1000) not null,
+    REFRESH_TOKEN varchar(1000) not null,
+    REALM_ID varchar(255) not null,
+    EXPIRE_TS datetime(3) not null,
+    REFRESH_TOKEN_EXPIRE_TS datetime(3) not null,
+    --
+    primary key (ID)
+)^
+-- end GCSPLATFORM_QUICK_BOOKS_TOKEN
+-- begin GCSPLATFORM_QUICK_BOOKS_CSRF
+create table GCSPLATFORM_QUICK_BOOKS_CSRF (
+    ID varchar(32),
+    VERSION integer not null,
+    CREATE_TS datetime(3),
+    CREATED_BY varchar(50),
+    UPDATE_TS datetime(3),
+    UPDATED_BY varchar(50),
+    DELETE_TS datetime(3),
+    DELETED_BY varchar(50),
+    --
+    CSRF varchar(255) not null,
+    --
+    primary key (ID)
+)^
+-- end GCSPLATFORM_QUICK_BOOKS_CSRF
+-- begin GCSPLATFORM_INVOICE_COMPANY
+create table GCSPLATFORM_INVOICE_COMPANY (
+    ID varchar(32),
+    VERSION integer not null,
+    CREATE_TS datetime(3),
+    CREATED_BY varchar(50),
+    UPDATE_TS datetime(3),
+    UPDATED_BY varchar(50),
+    DELETE_TS datetime(3),
+    DELETED_BY varchar(50),
+    --
+    LOCATION_ID varchar(32) not null,
+    COMPANY_ID varchar(32) not null,
+    WORK_DOCS_FOLDER_ID varchar(255),
+    QB_REALM_ID varchar(255),
+    --
+    primary key (ID)
+)^
+-- end GCSPLATFORM_INVOICE_COMPANY

@@ -1,8 +1,9 @@
 package com.gcs.gcsplatform.service;
 
+import java.util.Collection;
 import javax.annotation.Nullable;
 
-import com.gcs.gcsplatform.entity.masterdata.Company;
+import com.gcs.gcsplatform.entity.masterdata.InvoiceCompany;
 import com.haulmont.cuba.core.global.View;
 
 public interface CompanyService {
@@ -17,5 +18,5 @@ public interface CompanyService {
      * @return Company or null
      */
     @Nullable
-    Company findCompany(String location, View view);
+    InvoiceCompany findInvoiceCompany(String location, View view);
 }

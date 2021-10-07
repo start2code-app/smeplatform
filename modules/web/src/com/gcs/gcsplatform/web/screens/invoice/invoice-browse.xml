@@ -19,60 +19,91 @@
                 </query>
             </loader>
         </collection>
+        <collection id="publishErrorsDc"
+                    class="com.gcs.gcsplatform.entity.invoice.publisherror.InvoicePublishError"/>
     </data>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="invoicesTable"
+    <layout expand="invoicesSplit"
             spacing="true">
         <filter id="filter"
                 applyTo="invoicesTable"
                 dataLoader="invoicesDl">
             <properties include=".*"/>
         </filter>
-        <groupTable id="invoicesTable"
-                    width="100%"
-                    dataContainer="invoicesDc"
-                    multiselect="true">
-            <actions>
-                <action id="excel"
-                        type="excel"/>
-                <action id="print"
-                        trackSelection="true"/>
-                <action id="workDocs"
-                        trackSelection="true"/>
-            </actions>
-            <columns>
-                <column id="xlsxFile"/>
-                <column id="pdfFile"/>
-                <column id="issue"/>
-                <column id="currency"/>
-                <column id="counterpartyCode"/>
-                <column id="location"/>
-                <column id="startDate"/>
-                <column id="endDate"/>
-                <column id="amount"/>
-                <column id="fx"/>
-                <column id="fxUsd"/>
-                <column id="gbpAmount"/>
-                <column id="usdAmount"/>
-                <column id="postedToWorkDocs"/>
-                <column id="postedToQB"/>
-            </columns>
-            <rowsCount/>
-            <buttonsPanel id="buttonsPanel"
-                          alwaysVisible="true">
-                <button id="excelBtn"
-                        action="invoicesTable.excel"/>
-                <button id="printBtn"
-                        caption="msg://printAction"
-                        action="invoicesTable.print"
-                        stylename="primary"/>
-                <button id="workDocsBtn"
-                        caption="msg://workDocsAction"
-                        action="invoicesTable.workDocs"
-                        stylename="friendly"/>
-            </buttonsPanel>
-        </groupTable>
+        <split id="invoicesSplit"
+               orientation="horizontal"
+               dockable="true"
+               dockMode="RIGHT"
+               settingsEnabled="false"
+               pos="100">
+            <vbox margin="true"
+                  spacing="true"
+                  height="100%"
+                  expand="invoicesTable">
+                <groupTable id="invoicesTable"
+                            width="100%"
+                            dataContainer="invoicesDc"
+                            multiselect="true">
+                    <actions>
+                        <action id="excel"
+                                type="excel"/>
+                        <action id="print"
+                                trackSelection="true"/>
+                        <action id="workDocs"
+                                trackSelection="true"/>
+                        <action id="quickBooks"
+                                trackSelection="true"/>
+                    </actions>
+                    <columns>
+                        <column id="xlsxFile"/>
+                        <column id="pdfFile"/>
+                        <column id="issue"/>
+                        <column id="currency"/>
+                        <column id="counterpartyCode"/>
+                        <column id="location"/>
+                        <column id="startDate"/>
+                        <column id="endDate"/>
+                        <column id="amount"/>
+                        <column id="fx"/>
+                        <column id="fxUsd"/>
+                        <column id="gbpAmount"/>
+                        <column id="usdAmount"/>
+                        <column id="usdCrossRate"/>
+                        <column id="showTotalUsd"/>
+                        <column id="postedToWorkDocs"/>
+                        <column id="postedToQB"/>
+                    </columns>
+                    <rowsCount/>
+                    <buttonsPanel id="buttonsPanel"
+                                  alwaysVisible="true">
+                        <button id="excelBtn"
+                                action="invoicesTable.excel"/>
+                        <button id="printBtn"
+                                icon="font-icon:PRINT"
+                                caption="msg://printAction"
+                                action="invoicesTable.print"/>
+                        <button id="workDocsBtn"
+                                icon="font-icon:AMAZON"
+                                caption="msg://workDocsAction"
+                                action="invoicesTable.workDocs"
+                                stylename="warning"/>
+                        <button id="quickBooksBtn"
+                                icon="font-icon:BOOK"
+                                caption="msg://quickBooksAction"
+                                action="invoicesTable.quickBooks"
+                                stylename="friendly"/>
+                    </buttonsPanel>
+                </groupTable>
+            </vbox>
+            <vbox margin="true"
+                  spacing="true"
+                  height="100%"
+                  expand="publishErrorFragment">
+                <fragment id="publishErrorFragment"
+                          screen="gcsplatform_PublishErrorFragment"/>
+            </vbox>
+        </split>
         <hbox id="lookupActions"
               spacing="true"
               visible="false">

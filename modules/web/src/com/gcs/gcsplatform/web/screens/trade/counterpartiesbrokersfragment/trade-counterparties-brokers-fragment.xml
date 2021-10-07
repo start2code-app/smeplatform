@@ -6,7 +6,10 @@
                   provided="true"/>
         <collection id="counterpartiesDc"
                     class="com.gcs.gcsplatform.entity.masterdata.Counterparty">
-            <view extends="_local"/>
+            <view extends="_local">
+                <property name="location"
+                          view="_minimal"/>
+            </view>
             <loader id="counterpartiesDl">
                 <query><![CDATA[select e from gcsplatform_Counterparty e
                     where e.active = true
@@ -25,7 +28,10 @@
                     class="com.gcs.gcsplatform.entity.masterdata.Trader">
             <view extends="_minimal">
                 <property name="counterparty"
-                          view="_local"/>
+                          view="_local">
+                    <property name="location"
+                              view="_minimal"/>
+                </property>
             </view>
             <loader id="tradersDl">
                 <query>select e from gcsplatform_Trader e order by e.name</query>

@@ -22,9 +22,9 @@ import com.haulmont.cuba.gui.screen.Target;
 import com.haulmont.cuba.gui.screen.UiController;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
 
-@UiController("gcsplatform_CounterpartyBrokerage.browse")
-@UiDescriptor("counterparty-brokerage-browse.xml")
-public class CounterpartyBrokerageBrowse extends Screen {
+@UiController("gcsplatform_CounterpartyBrokerageScreen")
+@UiDescriptor("counterparty-brokerage-screen.xml")
+public class CounterpartyBrokerageScreen extends Screen {
 
     protected List<Category> categories;
 

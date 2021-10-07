@@ -1,10 +1,10 @@
-package com.gcs.gcsplatform.service.fxprovider;
+package com.gcs.gcsplatform.core.fxprovider;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import javax.inject.Inject;
 
-import com.gcs.gcsplatform.config.FxConfig;
+import com.gcs.gcsplatform.config.FxProviderConfig;
 import com.gcs.gcsplatform.exception.FxProviderException;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -21,11 +21,11 @@ public class AlphaVantageFxProvider implements FxProviderAPI {
     private static final String API_METHOD_URI = "https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=%s&to_currency=%s&apikey=%s";
 
     @Inject
-    private FxConfig fxConfig;
+    private FxProviderConfig fxProviderConfig;
 
     @Override
     public BigDecimal getFx(String fromCurrency, String toCurrency) {
-        String apiKey = fxConfig.getAlphaVantageApiKey();
+        String apiKey = fxProviderConfig.getAlphaVantageApiKey();
         if (apiKey == null) {
             throw new FxProviderException("Alpha Vantage API key property is not set");
         }

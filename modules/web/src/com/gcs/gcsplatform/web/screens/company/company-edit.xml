@@ -21,8 +21,6 @@
             <column width="250px">
                 <textField id="companyNameField"
                            property="companyName"/>
-                <textField id="locationField"
-                           property="location"/>
                 <textField id="companyAddress1Field"
                            property="companyAddress1"/>
                 <textField id="companyAddress2Field"

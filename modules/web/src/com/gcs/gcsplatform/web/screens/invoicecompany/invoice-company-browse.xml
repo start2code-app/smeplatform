@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://invoiceCompanyBrowse.caption"
+        focusComponent="invoiceCompaniesTable"
+        messagesPack="com.gcs.gcsplatform.web.screens.invoicecompany">
+    <data readOnly="true">
+        <collection id="invoiceCompaniesDc"
+                    class="com.gcs.gcsplatform.entity.masterdata.InvoiceCompany">
+            <view extends="_local">
+                <property name="location"
+                          view="_minimal"/>
+                <property name="company"
+                          view="_minimal"/>
+            </view>
+            <loader id="invoiceCompaniesDl">
+                <query>
+                    <![CDATA[select e from gcsplatform_InvoiceCompany e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="invoiceCompaniesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="invoiceCompaniesTable"
+                dataLoader="invoiceCompaniesDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="invoiceCompaniesTable"
+                    width="100%"
+                    dataContainer="invoiceCompaniesDc">
+            <actions>
+                <action id="create"
+                        type="create"/>
+                <action id="edit"
+                        type="edit"/>
+                <action id="remove"
+                        type="remove"/>
+            </actions>
+            <columns>
+                <column id="location"/>
+                <column id="company"/>
+                <column id="workDocsFolderId"/>
+                <column id="qbRealmId"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="invoiceCompaniesTable.create"/>
+                <button id="editBtn"
+                        action="invoiceCompaniesTable.edit"/>
+                <button id="removeBtn"
+                        action="invoiceCompaniesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions"
+              spacing="true"
+              visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

@@ -8,6 +8,8 @@
         <collection id="invoiceBanksDc"
                     class="com.gcs.gcsplatform.entity.masterdata.InvoiceBank">
             <view extends="_local">
+                <property name="location"
+                          view="_minimal"/>
                 <property name="currency"
                           view="_minimal"/>
                 <property name="bank"

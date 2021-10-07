@@ -1,15 +1,15 @@
 package com.gcs.gcsplatform.web.screens.trade.btnpnlchartdialogfragment;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
-
 import javax.inject.Inject;
 
-import com.gcs.gcsplatform.config.DateFormatConfig;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.service.trade.TradeService;
 import com.gcs.gcsplatform.web.components.pnl.PnlChartBean;
+import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;
 import com.haulmont.cuba.gui.Dialogs;
@@ -42,8 +42,7 @@ public class BtnPnlChartDialogFragment extends ScreenFragment {
     @Inject
     protected MessageBundle messageBundle;
     @Inject
-    protected DateFormatConfig dateFormatConfig;
-
+    protected Messages messages;
     @Inject
     protected PnlChartBean pnlChartBean;
 
@@ -86,7 +85,7 @@ public class BtnPnlChartDialogFragment extends ScreenFragment {
                                         .addView(View.LOCAL)
                                         .build()
                         );
-                        SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatConfig.getDefaultDateFormat());
+                        DateFormat dateFormat = new SimpleDateFormat(messages.getMainMessage("dateFormat"));
                         String heading = String.format("%s-%s", dateFormat.format(startDate),
                                 dateFormat.format(endDate));
                         pnlChartBean.showPnlChartScreen(this, trades, caption, heading);

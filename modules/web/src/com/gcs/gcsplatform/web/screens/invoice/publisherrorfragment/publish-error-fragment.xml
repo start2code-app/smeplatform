@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fragment xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd">
+    <data>
+        <collection id="publishErrorsDc"
+                    class="com.gcs.gcsplatform.entity.invoice.publisherror.InvoicePublishError"
+                    provided="true"/>
+    </data>
+    <layout height="100%"
+            expand="errorBox">
+        <hbox id="successBox"
+              width="100%"
+              height="100%">
+            <label stylename="h2 bold"
+                   align="MIDDLE_CENTER"
+                   value="msg://noPublishingErrors"/>
+        </hbox>
+        <vbox id="errorBox"
+              visible="false"
+              spacing="true"
+              margin="true"
+              expand="publishErrorsTable"
+              width="100%">
+            <label id="publishErrorsLabel"
+                   stylename="h2 bold"
+                   value="msg://listOfPublishingErrors"/>
+            <groupTable id="publishErrorsTable"
+                        dataContainer="publishErrorsDc"
+                        width="100%">
+                <columns>
+                    <column id="invoice"/>
+                    <column id="errorType"/>
+                </columns>
+                <rows/>
+            </groupTable>
+        </vbox>
+    </layout>
+</fragment>

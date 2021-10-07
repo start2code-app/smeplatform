@@ -62,16 +62,26 @@ public class TradeServiceBean implements TradeService {
     @Override
     public <T extends Trade> Collection<T> getTradesByCurrency(Class<T> tradeClass, String currency,
             @Nullable Date startDate, @Nullable Date endDate, View view) {
-        LogicalCondition condition = LogicalCondition.and();
-        LogicalCondition or = LogicalCondition.or();
+        LogicalCondition condition = LogicalCondition.or();
 
-        or.add(new JpqlCondition("e.repoCurrency = :currency"));
-        or.add(new JpqlCondition("e.bondCurrency = :currency"));
+        condition.add(new JpqlCondition("e.repoCurrency = :currency"));
+        condition.add(new JpqlCondition("e.bondCurrency = :currency"));
 
-        condition.add(or);
-
-        return getTrades(tradeClass, startDate, startDate, condition, view)
+        return getTrades(tradeClass, startDate, endDate, condition, view)
                 .parameter("currency", currency)
+                .list();
+    }
+
+    @Override
+    public <T extends Trade> Collection<T> getTradesByCounterparty(Class<T> tradeClass, String counterparty,
+            @Nullable Date startDate, @Nullable Date endDate, View view) {
+        LogicalCondition condition = LogicalCondition.or();
+
+        condition.add(new JpqlCondition("e.buyer = :counterparty"));
+        condition.add(new JpqlCondition("e.seller = :counterparty"));
+
+        return getTrades(tradeClass, startDate, endDate, condition, view)
+                .parameter("counterparty", counterparty)
                 .list();
     }
 

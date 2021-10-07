@@ -5,6 +5,7 @@ import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
 import com.gcs.gcsplatform.entity.masterdata.Bank;
 import com.gcs.gcsplatform.entity.masterdata.Company;
 import com.gcs.gcsplatform.entity.masterdata.InvoiceBank;
+import com.gcs.gcsplatform.entity.masterdata.InvoiceCompany;
 import com.gcs.gcsplatform.entity.masterdata.Trader;
 import com.gcs.gcsplatform.entity.masterdata.Category;
 import com.gcs.gcsplatform.entity.masterdata.Counterparty;
@@ -12,11 +13,14 @@ import com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerage;
 import com.gcs.gcsplatform.entity.masterdata.Currency;
 import com.gcs.gcsplatform.entity.masterdata.Broker;
 import com.gcs.gcsplatform.entity.masterdata.Fx;
+import com.gcs.gcsplatform.entity.qb.QuickBooksCsrf;
+import com.gcs.gcsplatform.entity.qb.QuickBooksToken;
 import com.gcs.gcsplatform.entity.trade.CallOptionTrade;
 import com.gcs.gcsplatform.entity.trade.ClosedLiveTrade;
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;
 import com.gcs.gcsplatform.entity.trade.LiveTrade;
 import com.gcs.gcsplatform.entity.trade.OpenedTrade;
+import com.haulmont.cuba.core.entity.FileDescriptor;
 import com.haulmont.cuba.security.app.role.AnnotatedRoleDefinition;
 import com.haulmont.cuba.security.app.role.annotation.EntityAccess;
 import com.haulmont.cuba.security.app.role.annotation.EntityAttributeAccess;
@@ -68,6 +72,8 @@ public class BackOfficeRole extends AnnotatedRoleDefinition {
             "gcsplatform_InvoiceBank.edit",
             "gcsplatform_Company.browse",
             "gcsplatform_Company.edit",
+            "gcsplatform_InvoiceCompany.browse",
+            "gcsplatform_InvoiceCompany.edit",
             "help",
             "aboutWindow",
             "settings"})
@@ -93,6 +99,10 @@ public class BackOfficeRole extends AnnotatedRoleDefinition {
     @EntityAccess(entityClass = Bank.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
     @EntityAccess(entityClass = InvoiceBank.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
     @EntityAccess(entityClass = Company.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
+    @EntityAccess(entityClass = InvoiceCompany.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
+    @EntityAccess(entityClass = FileDescriptor.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
+    @EntityAccess(entityClass = QuickBooksCsrf.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
+    @EntityAccess(entityClass = QuickBooksToken.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
     @Override
     public EntityPermissionsContainer entityPermissions() {
         return super.entityPermissions();

@@ -61,12 +61,16 @@
                        value="com.gcs.gcsplatform.service.fx.FxScheduledUpdateService"/>
                 <entry key="gcsplatform_CurrencyService"
                        value="com.gcs.gcsplatform.service.CurrencyService"/>
-                <entry key="gcsplatform_WorkDocsUploadService"
-                       value="com.gcs.gcsplatform.service.WorkDocsUploadService"/>
-                <entry key="gcsplatform_InvoicePublishService"
-                       value="com.gcs.gcsplatform.service.invoice.InvoicePublishService"/>
+                <entry key="gcsplatform_InvoiceWorkDocsPublishService"
+                       value="com.gcs.gcsplatform.service.invoice.InvoiceWorkDocsPublishService"/>
                 <entry key="gcsplatform_InvoicePrintService"
                        value="com.gcs.gcsplatform.service.invoice.InvoicePrintService"/>
+                <entry key="gcsplatform_QuickBooksConnectorService"
+                       value="com.gcs.gcsplatform.service.qb.QuickBooksConnectorService"/>
+                <entry key="gcsplatform_QuickBooksTokenService"
+                       value="com.gcs.gcsplatform.service.qb.QuickBooksTokenService"/>
+                <entry key="gcsplatform_InvoiceQuickBooksPublishService"
+                       value="com.gcs.gcsplatform.service.invoice.InvoiceQuickBooksPublishService"/>
             </map>
         </property>
     </bean>
