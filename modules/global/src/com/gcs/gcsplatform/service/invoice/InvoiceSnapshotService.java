@@ -1,8 +1,8 @@
 package com.gcs.gcsplatform.service.invoice;
 
 import java.util.Collection;
+import java.util.Date;
 
-import com.gcs.gcsplatform.entity.masterdata.Counterparty;
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;
 
 public interface InvoiceSnapshotService {
@@ -19,12 +19,15 @@ public interface InvoiceSnapshotService {
     /**
      * Checks whether a snapshot for previous month was taken already.
      *
+     * @param month Snapshot month
      * @return true if invoice lines exist for previous month
      */
-    boolean snapshotIsTaken();
+    boolean snapshotIsTaken(Date month);
 
     /**
      * Removes invoices and invoice lines created for previous month.
+     *
+     * @param month Snapshot month
      */
-    void clearSnapshot();
+    void clearSnapshot(Date month);
 }

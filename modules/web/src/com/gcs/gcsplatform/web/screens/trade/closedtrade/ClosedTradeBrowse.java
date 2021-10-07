@@ -14,6 +14,7 @@ import com.haulmont.cuba.gui.screen.Subscribe;
 import com.haulmont.cuba.gui.screen.UiController;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
 
+import static com.gcs.gcsplatform.util.DateUtils.getPreviousMonth;
 import static com.gcs.gcsplatform.util.DateUtils.isDateInCurrentMonth;
 
 @UiController("gcsplatform_ClosedTrade.browse")
@@ -43,6 +44,6 @@ public class ClosedTradeBrowse extends TradeBrowse<ClosedTrade> {
         ClosedTrade trade = tradesTable.getSingleSelected();
         return isDateInCurrentMonth(trade.getInvoiceDate())
                 || security.isSpecificPermitted("app.editClosedTradesWhenSnapshotTaken")
-                || !invoiceSnapshotService.snapshotIsTaken();
+                || !invoiceSnapshotService.snapshotIsTaken(getPreviousMonth());
     }
 }

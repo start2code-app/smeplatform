@@ -251,12 +251,11 @@ task buildUberJar(type: CubaUberJarBuilding) {
     logbackConfigurationFile = 'etc/uber-jar-logback.xml'
     singleJar = true
     appProperties = ['cuba.automaticDatabaseUpdate'    : true,
-                     'cuba.dataSource.username'        : 'cuba_uat',
-                     'cuba.dataSource.password'        : 'haulmont',
-                     'cuba.dataSource.dbName'          : 'uat_gcstrade',
-                     'cuba.dataSource.host'            : 'gcs-ch.com',
-                     'cuba.dataSource.port'            : '',
-                     'cuba.dataSource.connectionParams': '?useSSL=false&allowMultiQueries=true&serverTimezone=UTC',
+                     'cuba.dataSource.username'        : 'cuba',
+                     'cuba.dataSource.password'        : 'cuba',
+                     'cuba.dataSource.dbName'          : 'gcsplatform',
+                     'cuba.dataSource.host'            : 'localhost',
+                     'cuba.dataSource.connectionParams': '?useSSL=false&allowMultiQueries=true',
                      'cuba.dataSourceProvider'         : 'application']
 }
 
