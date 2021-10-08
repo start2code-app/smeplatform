@@ -82,7 +82,9 @@ public class ClosedTradeEdit extends TradeEdit<ClosedTrade> {
                 || property.equals("buybrokerage")
                 || property.equals("sellbrokerage")
                 || property.equals("buyCommissionOverride")
-                || property.equals("sellCommissionOverride")) {
+                || property.equals("sellCommissionOverride")
+                || property.equals("buyerCash")
+                || property.equals("sellerCash")) {
             pnlCalculationBean.updatePnl(tradeDc.getItem());
         }
     }
