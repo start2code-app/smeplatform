@@ -10,16 +10,17 @@ import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;
 import com.gcs.gcsplatform.service.invoice.InvoiceSnapshotService;
 import com.gcs.gcsplatform.service.trade.TradeService;
-import com.gcs.gcsplatform.util.DateUtils;
 import com.gcs.gcsplatform.web.components.invoice.InvoiceBackportBean;
 import com.gcs.gcsplatform.web.components.invoice.InvoiceCalculationBean;
 import com.gcs.gcsplatform.web.events.InvoiceUpdatedEvent;
+import com.gcs.gcsplatform.web.util.ScreenUtil;
 import com.haulmont.cuba.core.global.Events;
 import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;
 import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.RemoveOperation;
+import com.haulmont.cuba.gui.app.core.inputdialog.DialogOutcome;
 import com.haulmont.cuba.gui.backgroundwork.BackgroundWorkWindow;
 import com.haulmont.cuba.gui.components.Action;
 import com.haulmont.cuba.gui.components.Button;
@@ -37,8 +38,8 @@ import com.haulmont.cuba.gui.screen.Subscribe;
 import com.haulmont.cuba.gui.screen.UiController;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
 
-import static com.gcs.gcsplatform.util.DateUtils.getFirstDayOfMonth;
-import static com.gcs.gcsplatform.util.DateUtils.getLastDayOfMonth;
+import static com.gcs.gcsplatform.util.DateUtils.getLastDayOfPreviousMonth;
+import static com.gcs.gcsplatform.util.DateUtils.getPreviousMonth;
 
 @UiController("gcsplatform_InvoiceLine.browse")
 @UiDescriptor("invoice-line-browse.xml")
@@ -67,31 +68,51 @@ public class InvoiceLineBrowse extends StandardLookup<InvoiceLine> {
     protected Notifications notifications;
     @Inject
     protected SnapshotConfig snapshotConfig;
+
     @Inject
     protected CollectionLoader<InvoiceLine> invoiceLinesDl;
 
     @Subscribe("snapshotBtn")
     protected void onSnapshotBtnClick(Button.ClickEvent event) {
-        Date month = getSnapshotMonth();
-        if (invoiceSnapshotService.snapshotIsTaken(month)) {
+        Date defaultStartDate = getPreviousMonth();
+        Date defaultEndDate = getLastDayOfPreviousMonth();
+        if (Boolean.TRUE.equals(snapshotConfig.getDateIntervalSelection())) {
+            ScreenUtil.showDateIntervalSelectionDialog(this, messageBundle.getMessage("snapshotPeriodDialog.caption"),
+                    inputDialogCloseEvent -> {
+                        if (inputDialogCloseEvent.closedWith(DialogOutcome.OK)) {
+                            Date startDate = inputDialogCloseEvent.getValue("startDate");
+                            Date endDate = inputDialogCloseEvent.getValue("endDate");
+                            confirmAndRunSnapshot(startDate, endDate);
+                        }
+                    }, defaultStartDate, defaultEndDate);
+        } else {
+            confirmAndRunSnapshot(defaultStartDate, defaultEndDate);
+        }
+    }
+
+    protected void confirmAndRunSnapshot(Date startDate, Date endDate) {
+        if (invoiceSnapshotService.snapshotIsTaken(startDate, endDate)) {
             dialogs.createOptionDialog()
                     .withCaption(messageBundle.getMessage("snapshotConfirmation.caption"))
                     .withMessage(messageBundle.getMessage("snapshotConfirmation.message"))
                     .withActions(
                             new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withHandler(e -> {
-                                invoiceSnapshotService.clearSnapshot(month);
-                                runSnapshot();
+                                invoiceSnapshotService.clearSnapshot(startDate, endDate);
+                                runSnapshot(startDate, endDate);
                             }),
                             new DialogAction(DialogAction.Type.NO)
                     )
                     .show();
         } else {
-            runSnapshot();
+            runSnapshot(startDate, endDate);
         }
     }
 
-    protected void runSnapshot() {
-        Collection<ClosedTrade> trades = selectTrades();
+    protected void runSnapshot(Date startDate, Date endDate) {
+        Collection<ClosedTrade> trades = tradeService.getTrades(ClosedTrade.class, startDate, endDate,
+                ViewBuilder.of(ClosedTrade.class)
+                        .addView(View.LOCAL)
+                        .build());
         if (trades.isEmpty()) {
             notifications.create(Notifications.NotificationType.TRAY)
                     .withDescription(messageBundle.getMessage("snapshot.noData"))
@@ -100,24 +121,6 @@ public class InvoiceLineBrowse extends StandardLookup<InvoiceLine> {
         }
         BackgroundTask<Integer, Void> task = new SnapshotTask(trades);
         BackgroundWorkWindow.show(task, messageBundle.getMessage("snapshotTask.caption"), null, false);
-    }
-
-    protected Collection<ClosedTrade> selectTrades() {
-        Date month = getSnapshotMonth();
-        return tradeService.getTrades(ClosedTrade.class, getFirstDayOfMonth(month),
-                getLastDayOfMonth(month), ViewBuilder.of(ClosedTrade.class)
-                        .addView(View.LOCAL)
-                        .build()
-        );
-    }
-
-    protected Date getSnapshotMonth() {
-        Date configuredMonth = snapshotConfig.getSnapshotMonth();
-        if (configuredMonth != null) {
-            return configuredMonth;
-        } else {
-            return DateUtils.getPreviousMonth();
-        }
     }
 
     @Install(to = "invoiceLinesTable.remove", subject = "afterActionPerformedHandler")

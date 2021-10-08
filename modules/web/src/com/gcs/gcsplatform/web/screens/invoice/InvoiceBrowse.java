@@ -83,6 +83,7 @@ public class InvoiceBrowse extends StandardLookup<Invoice> {
     protected void onInvoicesTableWorkDocs(Action.ActionPerformedEvent event) {
         Set<Invoice> selected = invoicesTable.getSelected();
         invoicesSplit.setSplitPosition(100);
+        publishErrorsDc.getMutableItems().clear();
         BackgroundTask<Integer, Collection<InvoicePublishError>> task = new InvoicePublishTask(selected,
                 workDocsPublishService::publishToWorkDocs, this);
         BackgroundWorkProgressWindow.show(task, messageBundle.getMessage("publishWorkDocs.caption"), null,
@@ -93,6 +94,7 @@ public class InvoiceBrowse extends StandardLookup<Invoice> {
     protected void onInvoicesTableQuickBooks(Action.ActionPerformedEvent event) {
         Set<Invoice> selected = invoicesTable.getSelected();
         invoicesSplit.setSplitPosition(100);
+        publishErrorsDc.getMutableItems().clear();
         BackgroundTask<Integer, Collection<InvoicePublishError>> task = new InvoicePublishTask(selected,
                 quickBooksPublishService::publishToQB, this);
         BackgroundWorkProgressWindow.show(task, messageBundle.getMessage("publishQuickBooks.caption"), null,

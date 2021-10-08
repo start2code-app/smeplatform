@@ -9,15 +9,12 @@ import javax.inject.Inject;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.service.trade.TradeService;
 import com.gcs.gcsplatform.web.components.pnl.PnlChartBean;
+import com.gcs.gcsplatform.web.util.ScreenUtil;
 import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;
-import com.haulmont.cuba.gui.Dialogs;
-import com.haulmont.cuba.gui.app.core.inputdialog.DialogActions;
 import com.haulmont.cuba.gui.app.core.inputdialog.DialogOutcome;
-import com.haulmont.cuba.gui.app.core.inputdialog.InputParameter;
 import com.haulmont.cuba.gui.components.Button;
-import com.haulmont.cuba.gui.components.ValidationErrors;
 import com.haulmont.cuba.gui.screen.MessageBundle;
 import com.haulmont.cuba.gui.screen.ScreenFragment;
 import com.haulmont.cuba.gui.screen.Subscribe;
@@ -38,8 +35,6 @@ public class BtnPnlChartDialogFragment extends ScreenFragment {
     @Inject
     protected TradeService tradeService;
     @Inject
-    protected Dialogs dialogs;
-    @Inject
     protected MessageBundle messageBundle;
     @Inject
     protected Messages messages;
@@ -57,40 +52,25 @@ public class BtnPnlChartDialogFragment extends ScreenFragment {
     @Subscribe("pnlChartDialogBtn")
     protected void onPnlChartDialogBtnClick(Button.ClickEvent event) {
         Date today = getCurrentDate();
-        dialogs.createInputDialog(this)
-                .withCaption(messageBundle.getMessage("buildPnlChartDialog.caption"))
-                .withParameter(InputParameter.dateParameter("startDate")
-                        .withCaption(messageBundle.getMessage("startDate"))
-                        .withDefaultValue(getFirstDayOfMonth(today)))
-                .withParameter(InputParameter.dateParameter("endDate")
-                        .withCaption(messageBundle.getMessage("endDate"))
-                        .withDefaultValue(getLastDayOfMonth(today)))
-                .withValidator(validationContext -> {
-                    Date startDate = validationContext.getValue("startDate");
-                    Date endDate = validationContext.getValue("endDate");
-                    ValidationErrors errors = new ValidationErrors();
-                    if (startDate != null && endDate != null && (startDate.after(endDate) || endDate.before(
-                            startDate))) {
-                        errors.add(messageBundle.getMessage("dateInterval.validationMsg"));
-                    }
-                    return errors;
-                })
-                .withActions(DialogActions.OK_CANCEL)
-                .withCloseListener(inputDialogCloseEvent -> {
+        ScreenUtil.showDateIntervalSelectionDialog(getHostScreen(),
+                messageBundle.getMessage("buildPnlChartDialog.caption"),
+                inputDialogCloseEvent -> {
                     if (inputDialogCloseEvent.closedWith(DialogOutcome.OK)) {
                         Date startDate = inputDialogCloseEvent.getValue("startDate");
                         Date endDate = inputDialogCloseEvent.getValue("endDate");
-                        Collection<? extends Trade> trades = tradeService.getEnrichedTradesForPnlChart(tradeClass,
-                                startDate, endDate, ViewBuilder.of(tradeClass)
-                                        .addView(View.LOCAL)
-                                        .build()
-                        );
-                        DateFormat dateFormat = new SimpleDateFormat(messages.getMainMessage("dateFormat"));
-                        String heading = String.format("%s-%s", dateFormat.format(startDate),
-                                dateFormat.format(endDate));
-                        pnlChartBean.showPnlChartScreen(this, trades, caption, heading);
+                        showPnlChartScreen(startDate, endDate);
                     }
-                })
-                .show();
+                }, getFirstDayOfMonth(today), getLastDayOfMonth(today));
+    }
+
+    protected void showPnlChartScreen(Date startDate, Date endDate) {
+        Collection<? extends Trade> trades = tradeService.getEnrichedTradesForPnlChart(tradeClass,
+                startDate, endDate, ViewBuilder.of(tradeClass)
+                        .addView(View.LOCAL)
+                        .build());
+        DateFormat dateFormat = new SimpleDateFormat(messages.getMainMessage("dateFormat"));
+        String heading = String.format("%s-%s", dateFormat.format(startDate),
+                dateFormat.format(endDate));
+        pnlChartBean.showPnlChartScreen(this, trades, caption, heading);
     }
 }

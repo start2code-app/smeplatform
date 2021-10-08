@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
+import javax.persistence.TemporalType;
 
 import com.gcs.gcsplatform.entity.invoice.InvoiceLine;
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;
@@ -17,8 +18,6 @@ import com.haulmont.cuba.core.global.UserSessionSource;
 import org.springframework.stereotype.Service;
 
 import static com.gcs.gcsplatform.util.DateUtils.getCurrentDate;
-import static com.gcs.gcsplatform.util.DateUtils.getFirstDayOfMonth;
-import static com.gcs.gcsplatform.util.DateUtils.getPreviousMonth;
 
 @Service(InvoiceSnapshotService.NAME)
 public class InvoiceSnapshotServiceBean implements InvoiceSnapshotService {
@@ -48,31 +47,37 @@ public class InvoiceSnapshotServiceBean implements InvoiceSnapshotService {
     }
 
     @Override
-    public boolean snapshotIsTaken(Date month) {
+    public boolean snapshotIsTaken(Date startDate, Date endDate) {
         return dataManager.loadValue("select 1 from gcsplatform_InvoiceLine e "
-                + "where e.startDate = :startDate", Integer.class)
-                .parameter("startDate", getFirstDayOfMonth(month))
+                + "where e.startDate >= :startDate "
+                + "and e.endDate <= :endDate", Integer.class)
+                .parameter("startDate", startDate, TemporalType.DATE)
+                .parameter("endDate", endDate, TemporalType.DATE)
                 .optional()
                 .isPresent();
     }
 
     @Override
-    public void clearSnapshot(Date month) {
+    public void clearSnapshot(Date startDate, Date endDate) {
         Transaction tx = persistence.createTransaction();
         try {
             EntityManager em = persistence.getEntityManager();
             String userLogin = userSessionSource.getUserSession().getUser().getLoginLowerCase();
             em.createQuery("update gcsplatform_Invoice e "
                     + "set e.deleteTs = :deleteTs, e.deletedBy = :deletedBy "
-                    + "where e.startDate = :startDate")
-                    .setParameter("startDate", getFirstDayOfMonth(month))
+                    + "where e.startDate >= :startDate "
+                    + "and e.endDate <= :endDate")
+                    .setParameter("startDate", startDate, TemporalType.DATE)
+                    .setParameter("endDate", endDate, TemporalType.DATE)
                     .setParameter("deleteTs", getCurrentDate())
                     .setParameter("deletedBy", userLogin)
                     .executeUpdate();
             em.createQuery("update gcsplatform_InvoiceLine e "
                     + "set e.deleteTs = :deleteTs, e.deletedBy = :deletedBy "
-                    + "where e.startDate = :startDate")
-                    .setParameter("startDate", getFirstDayOfMonth(month))
+                    + "where e.startDate >= :startDate "
+                    + "and e.endDate <= :endDate")
+                    .setParameter("startDate", startDate, TemporalType.DATE)
+                    .setParameter("endDate", endDate, TemporalType.DATE)
                     .setParameter("deleteTs", getCurrentDate())
                     .setParameter("deletedBy", userLogin)
                     .executeUpdate();

@@ -68,6 +68,7 @@ public class FxScheduledUpdateServiceBean implements FxScheduledUpdateService {
                         Currency nextCurrency = iterator.next();
                         BigDecimal updatedFx = fxProviderAPI.getFx(gbpCurrency.getCurrency(), nextCurrency.getCurrency());
                         updateFx(nextCurrency, updatedFx);
+                        log.info("Updated FX for currency {}", nextCurrency);
                     } else {
                         scheduler.shutdown();
                     }

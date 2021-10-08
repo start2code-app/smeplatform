@@ -1,5 +1,6 @@
 package com.gcs.gcsplatform.web.screens.trade.closedtrade;
 
+import java.util.Date;
 import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;
@@ -14,7 +15,8 @@ import com.haulmont.cuba.gui.screen.Subscribe;
 import com.haulmont.cuba.gui.screen.UiController;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
 
-import static com.gcs.gcsplatform.util.DateUtils.getPreviousMonth;
+import static com.gcs.gcsplatform.util.DateUtils.getFirstDayOfMonth;
+import static com.gcs.gcsplatform.util.DateUtils.getLastDayOfMonth;
 import static com.gcs.gcsplatform.util.DateUtils.isDateInCurrentMonth;
 
 @UiController("gcsplatform_ClosedTrade.browse")
@@ -42,8 +44,10 @@ public class ClosedTradeBrowse extends TradeBrowse<ClosedTrade> {
     @Install(to = "tradesTable.edit", subject = "enabledRule")
     protected boolean tradesTableEditEnabledRule() {
         ClosedTrade trade = tradesTable.getSingleSelected();
-        return isDateInCurrentMonth(trade.getInvoiceDate())
+        Date invoiceDate = trade.getInvoiceDate();
+        return invoiceDate == null
+                || isDateInCurrentMonth(invoiceDate)
                 || security.isSpecificPermitted("app.editClosedTradesWhenSnapshotTaken")
-                || !invoiceSnapshotService.snapshotIsTaken(getPreviousMonth());
+                || !invoiceSnapshotService.snapshotIsTaken(getFirstDayOfMonth(invoiceDate), getLastDayOfMonth(invoiceDate));
     }
 }

@@ -17,17 +17,19 @@ public interface InvoiceSnapshotService {
     void makeSnapshot(Collection<ClosedTrade> trades);
 
     /**
-     * Checks whether a snapshot for previous month was taken already.
+     * Checks whether a snapshot for specified interval was taken already.
      *
-     * @param month Snapshot month
+     * @param startDate Start date
+     * @param endDate End date
      * @return true if invoice lines exist for previous month
      */
-    boolean snapshotIsTaken(Date month);
+    boolean snapshotIsTaken(Date startDate, Date endDate);
 
     /**
-     * Removes invoices and invoice lines created for previous month.
+     * Removes invoices and invoice lines created for specified interval.
      *
-     * @param month Snapshot month
+     * @param startDate Start date
+     * @param endDate End date
      */
-    void clearSnapshot(Date month);
+    void clearSnapshot(Date startDate, Date endDate);
 }

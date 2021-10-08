@@ -1,22 +1,37 @@
 package com.gcs.gcsplatform.web.util;
 
+import java.util.Date;
 import java.util.Objects;
+import java.util.function.Consumer;
+
+import javax.annotation.Nullable;
 
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.entity.FileDescriptor;
 import com.haulmont.cuba.core.global.AppBeans;
+import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.core.global.PersistenceHelper;
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.UiComponents;
+import com.haulmont.cuba.gui.app.core.inputdialog.DialogActions;
+import com.haulmont.cuba.gui.app.core.inputdialog.InputDialog;
+import com.haulmont.cuba.gui.app.core.inputdialog.InputParameter;
 import com.haulmont.cuba.gui.components.AbstractAction;
 import com.haulmont.cuba.gui.components.Button;
 import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.Label;
 import com.haulmont.cuba.gui.components.OptionsField;
+import com.haulmont.cuba.gui.components.ValidationErrors;
 import com.haulmont.cuba.gui.components.data.Options;
 import com.haulmont.cuba.gui.export.ExportDisplay;
 import com.haulmont.cuba.gui.model.InstanceContainer;
+import com.haulmont.cuba.gui.screen.Screen;
 import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
+import com.haulmont.cuba.web.AppUI;
+
+import static com.gcs.gcsplatform.util.DateUtils.getFirstDayOfMonth;
+import static com.gcs.gcsplatform.util.DateUtils.getLastDayOfMonth;
 
 public class ScreenUtil {
 
@@ -91,5 +106,33 @@ public class ScreenUtil {
             });
             return button;
         }
+    }
+
+    public static void showDateIntervalSelectionDialog(Screen screen, String caption,
+            Consumer<InputDialog.InputDialogCloseEvent> closeListener, @Nullable Date defaultStartDate,
+            @Nullable Date defaultEndDate) {
+        Dialogs dialogs = AppUI.getCurrent().getDialogs();
+        Messages messages = AppBeans.get(Messages.class);
+        dialogs.createInputDialog(screen)
+                .withCaption(caption)
+                .withParameter(InputParameter.dateParameter("startDate")
+                        .withCaption(messages.getMainMessage("dateIntervalDialog.startDate"))
+                        .withDefaultValue(defaultStartDate))
+                .withParameter(InputParameter.dateParameter("endDate")
+                        .withCaption(messages.getMainMessage("dateIntervalDialog.endDate"))
+                        .withDefaultValue(defaultEndDate))
+                .withValidator(validationContext -> {
+                    Date startDate = validationContext.getValue("startDate");
+                    Date endDate = validationContext.getValue("endDate");
+                    ValidationErrors errors = new ValidationErrors();
+                    if (startDate != null && endDate != null && (startDate.after(endDate) || endDate.before(
+                            startDate))) {
+                        errors.add(messages.getMainMessage("dateIntervalDialog.validationMsg"));
+                    }
+                    return errors;
+                })
+                .withActions(DialogActions.OK_CANCEL)
+                .withCloseListener(closeListener)
+                .show();
     }
 }

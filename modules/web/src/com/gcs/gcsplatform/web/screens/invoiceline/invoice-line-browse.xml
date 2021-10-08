@@ -85,6 +85,7 @@
                 <button id="excelBtn"
                         action="invoiceLinesTable.excel"/>
                 <button id="snapshotBtn"
+                        icon="font-icon:SAVE"
                         caption="msg://snapshotBtn.caption"
                         stylename="friendly"/>
             </buttonsPanel>
