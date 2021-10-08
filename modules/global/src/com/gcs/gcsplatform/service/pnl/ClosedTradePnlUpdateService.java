@@ -1,6 +1,7 @@
 package com.gcs.gcsplatform.service.pnl;
 
 import java.util.Date;
+import javax.annotation.Nullable;
 
 import com.gcs.gcsplatform.entity.masterdata.Counterparty;
 
@@ -17,19 +18,20 @@ public interface ClosedTradePnlUpdateService {
     void updatePnl();
 
     /**
-     * Calculates pnl/gbp equivalent and FX for closed trades of specified month and currency.
+     * Calculates pnl/gbp equivalent for closed trades of specified date interval and currency.
      *
-     * @param currency    Trade currency
-     * @param billingDate FX billing month
+     * @param currency  Currency
+     * @param startDate Trade date from
+     * @param endDate   Trade date to
      */
-    void updatePnl(String currency, Date billingDate);
+    void updatePnl(String currency, @Nullable Date startDate, @Nullable Date endDate);
 
     /**
-     * Calculates pnl/gbp equivalent and FX for closed trades of specified counterparty.
-     * <p>
-     * Updates only trades within current month.
+     * Calculates pnl/gbp equivalent for closed trades of specified date interval and counterparty.
      *
      * @param counterparty Counterparty
+     * @param startDate    Trade date from
+     * @param endDate      Trade date to
      */
-    void updatePnl(Counterparty counterparty);
+    void updatePnl(Counterparty counterparty, @Nullable Date startDate, @Nullable Date endDate);
 }

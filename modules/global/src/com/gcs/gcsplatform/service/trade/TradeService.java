@@ -61,7 +61,7 @@ public interface TradeService {
     <T extends Trade> Collection<T> getEnrichedTradesForPnlChart(Class<T> tradeClass, View view);
 
     /**
-     * Gets list of closed trades with specified currency and month.
+     * Gets list of closed trades with specified currency and date interval.
      *
      * @param tradeClass Trade class
      * @param currency   Trade currency
@@ -74,7 +74,7 @@ public interface TradeService {
             @Nullable Date startDate, @Nullable Date endDate, View view);
 
     /**
-     * Gets list of closed trades with specified counterparty and month.
+     * Gets list of closed trades with specified counterparty and date interval.
      *
      * @param tradeClass Trade class
      * @param currency   Trade currency

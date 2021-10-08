@@ -3,6 +3,7 @@ package com.gcs.gcsplatform.service.pnl;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.masterdata.Counterparty;
@@ -16,10 +17,6 @@ import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;
 import org.springframework.stereotype.Service;
-
-import static com.gcs.gcsplatform.util.DateUtils.getCurrentDate;
-import static com.gcs.gcsplatform.util.DateUtils.getFirstDayOfMonth;
-import static com.gcs.gcsplatform.util.DateUtils.getLastDayOfMonth;
 
 @Service(ClosedTradePnlUpdateService.NAME)
 public class ClosedTradePnlUpdateServiceBean implements ClosedTradePnlUpdateService {
@@ -43,21 +40,21 @@ public class ClosedTradePnlUpdateServiceBean implements ClosedTradePnlUpdateServ
     }
 
     @Override
-    public void updatePnl(String currency, Date billingDate) {
+    public void updatePnl(String currency, @Nullable Date startDate, @Nullable Date endDate) {
+        Preconditions.checkNotNullArgument(currency);
         Collection<ClosedTrade> trades = tradeService.getTradesByCurrency(ClosedTrade.class, currency,
-                getFirstDayOfMonth(billingDate), getLastDayOfMonth(billingDate), ViewBuilder.of(ClosedTrade.class)
+                startDate, endDate, ViewBuilder.of(ClosedTrade.class)
                         .addView(View.LOCAL)
                         .build());
         calculatePnlAndSave(trades);
     }
 
     @Override
-    public void updatePnl(Counterparty counterparty) {
+    public void updatePnl(Counterparty counterparty, @Nullable Date startDate, @Nullable Date endDate) {
         Preconditions.checkNotNullArgument(counterparty);
-        Date currentDate = getCurrentDate();
         String counterpartyName = counterparty.getCounterparty();
         Collection<ClosedTrade> trades = tradeService.getTradesByCounterparty(ClosedTrade.class, counterpartyName,
-                getFirstDayOfMonth(currentDate), getLastDayOfMonth(currentDate), ViewBuilder.of(ClosedTrade.class)
+                startDate, endDate, ViewBuilder.of(ClosedTrade.class)
                         .addView(View.LOCAL)
                         .build());
         for (ClosedTrade trade : trades) {

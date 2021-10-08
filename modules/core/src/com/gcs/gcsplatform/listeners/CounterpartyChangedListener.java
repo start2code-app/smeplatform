@@ -1,5 +1,6 @@
 package com.gcs.gcsplatform.listeners;
 
+import java.util.Date;
 import java.util.UUID;
 import javax.inject.Inject;
 
@@ -13,8 +14,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 
+import static com.gcs.gcsplatform.util.DateUtils.getCurrentDate;
+import static com.gcs.gcsplatform.util.DateUtils.getFirstDayOfMonth;
+import static com.gcs.gcsplatform.util.DateUtils.getLastDayOfMonth;
+
 /**
- * Backports counterparty changes to related trades and invokes PNL recalculation.
+ * Backports counterparty changes to related trades of current month and invokes PNL recalculation.
  */
 @Component("gcsplatform_CounterpartyChangedListener")
 public class CounterpartyChangedListener {
@@ -33,6 +38,7 @@ public class CounterpartyChangedListener {
                         .addView(View.LOCAL)
                         .build())
                 .one();
-        closedTradePnlUpdateService.updatePnl(counterparty);
+        Date currentDate = getCurrentDate();
+        closedTradePnlUpdateService.updatePnl(counterparty, getFirstDayOfMonth(currentDate), getLastDayOfMonth(currentDate));
     }
 }

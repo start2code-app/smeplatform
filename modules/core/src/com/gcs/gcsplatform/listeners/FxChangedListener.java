@@ -1,5 +1,6 @@
 package com.gcs.gcsplatform.listeners;
 
+import java.util.Date;
 import java.util.UUID;
 import javax.inject.Inject;
 
@@ -12,6 +13,9 @@ import com.haulmont.cuba.core.global.ViewBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
+
+import static com.gcs.gcsplatform.util.DateUtils.getFirstDayOfMonth;
+import static com.gcs.gcsplatform.util.DateUtils.getLastDayOfMonth;
 
 /**
  * Invokes PNL recalculation on closed trades after updating FX.
@@ -33,6 +37,8 @@ public class FxChangedListener {
                         .addView(View.LOCAL)
                         .build())
                 .one();
-        closedTradePnlUpdateService.updatePnl(fx.getCurrency().getCurrency(), fx.getBillingDate());
+        Date billingDate = fx.getBillingDate();
+        String currency = fx.getCurrency().getCurrency();
+        closedTradePnlUpdateService.updatePnl(currency, getFirstDayOfMonth(billingDate), getLastDayOfMonth(billingDate));
     }
 }
