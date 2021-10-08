@@ -111,6 +111,7 @@
                 <form id="notesForm"
                       dataContainer="tradeDc">
                     <textArea id="notesField"
+                              property="notes"
                               caption="Notes"
                               cols="40"
                               rows="6"/>
