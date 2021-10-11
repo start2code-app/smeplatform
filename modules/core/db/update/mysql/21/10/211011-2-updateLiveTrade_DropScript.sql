@@ -1,0 +1,2 @@
+alter table GCSPLATFORM_LIVE_TRADE drop column BUYER_INVOICE_CODE__U11809 cascade ;
+alter table GCSPLATFORM_LIVE_TRADE drop column SELLER_INVOICE_CODE__U45483 cascade ;
