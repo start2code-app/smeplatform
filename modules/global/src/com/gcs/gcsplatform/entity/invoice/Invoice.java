@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import com.haulmont.chile.core.annotations.MetaProperty;
 import com.haulmont.chile.core.annotations.NumberFormat;
@@ -80,22 +81,26 @@ public class Invoice extends StandardEntity {
     @Column(name = "POSTED_TO_QB")
     private Boolean postedToQB;
 
+    @Transient
     @MetaProperty(related = {"pdfFile", "xlsxFile"})
     public Boolean getPrinted() {
         return pdfFile != null && xlsxFile != null;
     }
 
+    @Transient
     @MetaProperty(related = {"postedToWorkDocs", "postedToQB"})
     public Boolean getPosted() {
         return Boolean.TRUE.equals(postedToWorkDocs) || Boolean.TRUE.equals(postedToQB);
     }
 
+    @Transient
     @MetaProperty(related = {"issue", "counterpartyCode", "currency", "startDate"})
     public String getInvoiceNumber() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMyy");
         return String.format("%s%s%s-V%s", counterpartyCode, dateFormat.format(startDate), currency, issue);
     }
 
+    @Transient
     @MetaProperty(related = {"counterpartyCode", "currency", "startDate"})
     public String getInvoiceNumberWithoutVersion() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMyy");

@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import com.haulmont.chile.core.annotations.MetaProperty;
@@ -41,11 +42,13 @@ public class QuickBooksToken extends StandardEntity {
     @NotNull
     private Date refreshTokenExpireTs;
 
+    @Transient
     @MetaProperty(related = "refreshTokenExpireTs")
     public Boolean getRefreshTokenExpired() {
         return refreshTokenExpireTs.compareTo(getCurrentDate()) < 0;
     }
 
+    @Transient
     @MetaProperty(related = "expireTs")
     public Boolean getAccessTokenExpired() {
         return expireTs.compareTo(getCurrentDate()) < 0;

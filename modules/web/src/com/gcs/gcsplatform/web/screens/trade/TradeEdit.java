@@ -68,7 +68,10 @@ public abstract class TradeEdit<T extends Trade> extends StandardEditor<T> {
 
     public void updateWindowCaption() {
         String traderef = getEditedEntity().getTraderef();
-        if (StringUtils.isNotBlank(traderef)) {
+        String isin = getEditedEntity().getIsin();
+        if (StringUtils.isNotBlank(traderef) && StringUtils.isNotBlank(isin)) {
+            getWindow().setCaption(initialWindowCaption + " - " + traderef + " - " + isin);
+        } else if (StringUtils.isNotBlank(traderef)) {
             getWindow().setCaption(initialWindowCaption + " - " + traderef);
         }
     }
