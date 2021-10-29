@@ -66,6 +66,7 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
     protected void onInit(InitEvent event) {
         counterpartiesDl.load();
         brokersDl.load();
+        tradersDl.load();
     }
 
     @Subscribe(target = Target.PARENT_CONTROLLER)
@@ -181,7 +182,7 @@ public class TradeCounterpartiesBrokersFragment extends ScreenFragment {
         if (counterparty != null) {
             List<Trader> traders = traderService.getTraders(counterparty, ViewBuilder.of(Trader.class)
                     .add("counterparty", viewBuilder -> viewBuilder
-                            .addView(View.MINIMAL)
+                            .addView(View.LOCAL)
                             .add("location", View.MINIMAL))
                     .addView(View.MINIMAL)
                     .build());
