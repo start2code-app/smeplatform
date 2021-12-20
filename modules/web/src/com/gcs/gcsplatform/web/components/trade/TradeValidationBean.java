@@ -41,8 +41,6 @@ public class TradeValidationBean {
                 trade.getSeller(),
                 trade.getBuyerLocation(),
                 trade.getSellerLocation(),
-                trade.getBuyerTrader(),
-                trade.getSellerTrader(),
                 trade.getCategory());
 
         boolean isNumbersBlank = trade.getNominal() == null

@@ -1,5 +1,6 @@
 package com.gcs.gcsplatform.web.screens.trade;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.inject.Inject;
 
@@ -45,6 +46,9 @@ public abstract class TradeEdit<T extends Trade> extends StandardEditor<T> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
+        if (getEditedEntity().getHairCut() == null) {
+            getEditedEntity().setHairCut(BigDecimal.ZERO);
+        }
         initFieldValueToStringPropertyMapping(bondCurrencyLookupPickerField, tradeDc, "currency", "bondCurrency");
         initFieldValueToStringPropertyMapping(repoCurrencyLookupPickerField, tradeDc, "currency", "repoCurrency");
 
