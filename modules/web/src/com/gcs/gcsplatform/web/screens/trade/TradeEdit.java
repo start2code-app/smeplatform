@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.masterdata.Currency;
 import com.gcs.gcsplatform.entity.trade.Trade;
+import com.gcs.gcsplatform.web.components.trade.ContractNumberBean;
 import com.haulmont.cuba.core.global.PersistenceHelper;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.components.HasValue;
@@ -35,6 +36,8 @@ public abstract class TradeEdit<T extends Trade> extends StandardEditor<T> {
     protected MessageBundle messageBundle;
     @Inject
     protected Notifications notifications;
+    @Inject
+    protected ContractNumberBean contractNumberBean;
 
     @Inject
     protected LookupPickerField<Currency> bondCurrencyLookupPickerField;
@@ -46,8 +49,9 @@ public abstract class TradeEdit<T extends Trade> extends StandardEditor<T> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        if (getEditedEntity().getHairCut() == null) {
-            getEditedEntity().setHairCut(BigDecimal.ZERO);
+        T trade = getEditedEntity();
+        if (trade.getHairCut() == null) {
+            trade.setHairCut(BigDecimal.ZERO);
         }
         initFieldValueToStringPropertyMapping(bondCurrencyLookupPickerField, tradeDc, "currency", "bondCurrency");
         initFieldValueToStringPropertyMapping(repoCurrencyLookupPickerField, tradeDc, "currency", "repoCurrency");
@@ -58,9 +62,11 @@ public abstract class TradeEdit<T extends Trade> extends StandardEditor<T> {
         bondCurrencyLookupPickerField.addValueChangeListener(this::onBondCurrencyLookupPickerFieldValueChange);
 
         initialWindowCaption = getWindow().getCaption();
-        isNew = PersistenceHelper.isNew(getEditedEntity());
+        isNew = PersistenceHelper.isNew(trade);
         if (!isNew) {
             updateWindowCaption();
+        } else {
+            trade.setTraderef(contractNumberBean.getNextTradeRef());
         }
     }
 
