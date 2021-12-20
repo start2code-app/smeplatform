@@ -70,7 +70,7 @@ public abstract class Trade extends StandardEntity {
     private BigDecimal sellGbpEquivalent;
 
     @Column(name = "HAIR_CUT", precision = 10, scale = 4)
-    private BigDecimal hairCut;
+    private BigDecimal hairCut = BigDecimal.ZERO;
 
     @Column(name = "ISIN", length = 20)
     private String isin;
