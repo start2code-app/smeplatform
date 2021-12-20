@@ -27,7 +27,9 @@ public class ExtMainScreen extends MainScreen {
     protected void onBeforeShow(BeforeShowEvent event) {
         WebAppWorkArea webAppWorkArea = (WebAppWorkArea) workArea;
         CubaMainTabSheet tabSheet = (CubaMainTabSheet) webAppWorkArea.getTabbedWindowContainer();
-        tabSheet.addStyleName("tab-colored");
+        if (tabSheet != null) {
+            tabSheet.addStyleName("tab-colored");
+        }
     }
 
     @Override
