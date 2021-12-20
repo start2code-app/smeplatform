@@ -7,6 +7,10 @@ import com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerage;
 import com.gcs.gcsplatform.entity.masterdata.Currency;
 import com.gcs.gcsplatform.entity.masterdata.Fx;
 import com.gcs.gcsplatform.entity.masterdata.Trader;
+import com.gcs.gcsplatform.entity.pnl.Pnl;
+import com.gcs.gcsplatform.entity.pnl.chart.BrokerageTypeCount;
+import com.gcs.gcsplatform.entity.pnl.chart.CategoryCount;
+import com.gcs.gcsplatform.entity.pnl.chart.TotalPnl;
 import com.gcs.gcsplatform.entity.trade.CallOptionTrade;
 import com.gcs.gcsplatform.entity.trade.ClosedLiveTrade;
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;
@@ -45,6 +49,7 @@ public class BrokerAdminRole extends AnnotatedRoleDefinition {
             "gcsplatform_Counterparty.edit",
             "gcsplatform_Trader.browse",
             "gcsplatform_Trader.edit",
+            "gcsplatform_PnlChartScreen",
             "help",
             "aboutWindow",
             "settings"})
@@ -65,6 +70,10 @@ public class BrokerAdminRole extends AnnotatedRoleDefinition {
     @EntityAccess(entityClass = CounterpartyBrokerage.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
     @EntityAccess(entityClass = Currency.class, operations = {EntityOp.READ})
     @EntityAccess(entityClass = Fx.class, operations = {EntityOp.READ})
+    @EntityAccess(entityClass = Pnl.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
+    @EntityAccess(entityClass = BrokerageTypeCount.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
+    @EntityAccess(entityClass = CategoryCount.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
+    @EntityAccess(entityClass = TotalPnl.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
     @Override
     public EntityPermissionsContainer entityPermissions() {
         return super.entityPermissions();

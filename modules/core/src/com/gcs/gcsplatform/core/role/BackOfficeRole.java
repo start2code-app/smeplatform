@@ -13,6 +13,10 @@ import com.gcs.gcsplatform.entity.masterdata.CounterpartyBrokerage;
 import com.gcs.gcsplatform.entity.masterdata.Currency;
 import com.gcs.gcsplatform.entity.masterdata.Broker;
 import com.gcs.gcsplatform.entity.masterdata.Fx;
+import com.gcs.gcsplatform.entity.pnl.Pnl;
+import com.gcs.gcsplatform.entity.pnl.chart.BrokerageTypeCount;
+import com.gcs.gcsplatform.entity.pnl.chart.CategoryCount;
+import com.gcs.gcsplatform.entity.pnl.chart.TotalPnl;
 import com.gcs.gcsplatform.entity.qb.QuickBooksCsrf;
 import com.gcs.gcsplatform.entity.qb.QuickBooksToken;
 import com.gcs.gcsplatform.entity.trade.CallOptionTrade;
@@ -74,6 +78,7 @@ public class BackOfficeRole extends AnnotatedRoleDefinition {
             "gcsplatform_Company.edit",
             "gcsplatform_InvoiceCompany.browse",
             "gcsplatform_InvoiceCompany.edit",
+            "gcsplatform_PnlChartScreen",
             "help",
             "aboutWindow",
             "settings"})
@@ -103,6 +108,10 @@ public class BackOfficeRole extends AnnotatedRoleDefinition {
     @EntityAccess(entityClass = FileDescriptor.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
     @EntityAccess(entityClass = QuickBooksCsrf.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
     @EntityAccess(entityClass = QuickBooksToken.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
+    @EntityAccess(entityClass = Pnl.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
+    @EntityAccess(entityClass = BrokerageTypeCount.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
+    @EntityAccess(entityClass = CategoryCount.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
+    @EntityAccess(entityClass = TotalPnl.class, operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
     @Override
     public EntityPermissionsContainer entityPermissions() {
         return super.entityPermissions();

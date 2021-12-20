@@ -3,14 +3,12 @@ package com.gcs.gcsplatform.web.components.trade;
 import java.util.Date;
 import javax.inject.Inject;
 
-import com.gcs.gcsplatform.config.TradeConfig;
 import com.gcs.gcsplatform.entity.trade.ClosedLiveTrade;
 import com.gcs.gcsplatform.entity.trade.ClosedTrade;
 import com.gcs.gcsplatform.entity.trade.LiveTrade;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.web.components.pnl.PnlCalculationBean;
 import com.gcs.gcsplatform.web.events.TradeClosedEvent;
-import com.haulmont.cuba.core.app.UniqueNumbersService;
 import com.haulmont.cuba.core.global.Events;
 import com.haulmont.cuba.core.global.MetadataTools;
 import com.haulmont.cuba.gui.model.DataContext;
@@ -23,18 +21,14 @@ public class CloseTradeBean {
 
     public static final String NAME = "gcsplatform_CloseTradeBean";
 
-    private static final String TRADE_REF_SEQUENCE = "tradeRefSequence";
-
     @Inject
     private MetadataTools metadataTools;
     @Inject
-    private UniqueNumbersService uniqueNumbersService;
-    @Inject
     private Events events;
     @Inject
-    private TradeConfig tradeConfig;
-    @Inject
     private PnlCalculationBean pnlCalculationBean;
+    @Inject
+    private ContractNumberBean contractNumberBean;
 
     /**
      * Creates ClosedTrade/ClosedLiveTrade instance based on provided trade and then removes original trade.
@@ -67,7 +61,7 @@ public class CloseTradeBean {
         }
         trade.setValueDate(maturityDate);
         trade.setTradeDate(getCurrentDate());
-        trade.setTraderef(getNextTradeRef());
+        trade.setTraderef(contractNumberBean.getNextTradeRef());
         addPostCommitListener(dataContext);
         dataContext.commit();
     }
@@ -89,10 +83,5 @@ public class CloseTradeBean {
         dataContext.addPostCommitListener(postCommitEvent -> {
             events.publish(new TradeClosedEvent(this));
         });
-    }
-
-    private String getNextTradeRef() {
-        long nextRefNumber = uniqueNumbersService.getNextNumber(TRADE_REF_SEQUENCE);
-        return String.format(tradeConfig.getRefGenerationFormat(), nextRefNumber);
     }
 }
