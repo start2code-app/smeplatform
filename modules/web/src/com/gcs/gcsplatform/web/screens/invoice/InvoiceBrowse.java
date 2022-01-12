@@ -75,7 +75,10 @@ public class InvoiceBrowse extends StandardLookup<Invoice> {
 
     @Subscribe("invoicesTable.print")
     protected void onInvoicesTablePrint(Action.ActionPerformedEvent event) {
-        printService.print(invoicesTable.getSelected());
+        Set<Invoice> selected = invoicesTable.getSelected();
+        for (Invoice invoice : selected) {
+            printService.print(invoice);
+        }
         invoicesDl.load();
     }
 
