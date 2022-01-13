@@ -41,8 +41,11 @@ public class BtnCloseReopenTradeFragment extends ScreenFragment {
 
     @Subscribe(target = Target.PARENT_CONTROLLER)
     protected void onAfterShowHost(Screen.AfterShowEvent event) {
+
+
         if (getHostTradeScreen().isNew()) {
             closeReopenTradeBtn.setEnabled(false);
+
         }
     }
 

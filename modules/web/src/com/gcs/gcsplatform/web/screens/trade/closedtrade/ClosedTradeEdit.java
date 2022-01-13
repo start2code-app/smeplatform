@@ -34,7 +34,6 @@ public class ClosedTradeEdit extends TradeEdit<ClosedTrade> {
     protected CopyLiveTradeBean copyLiveTradeBean;
     @Inject
     protected TimeSource timeSource;
-
     @Inject
     protected DateField<Date> maturityDateField;
     @Inject

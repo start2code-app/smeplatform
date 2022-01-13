@@ -30,6 +30,15 @@ import static com.gcs.gcsplatform.util.DateUtils.getCurrentDate;
 public class DailyBlotterBrowse extends TradeBrowse<ClosedTrade> {
 
     @Inject
+    private Button cpySimplrBtn;
+
+    @Subscribe
+    public void onBeforeShow(BeforeShowEvent event) {
+        cpySimplrBtn.setVisible(false);
+
+    }
+
+    @Inject
     protected TradeService tradeService;
     @Inject
     protected PnlChartBean pnlChartBean;
