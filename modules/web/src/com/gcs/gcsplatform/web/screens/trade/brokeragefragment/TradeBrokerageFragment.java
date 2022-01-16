@@ -63,13 +63,6 @@ public class TradeBrokerageFragment extends ScreenFragment {
     @Subscribe(target = Target.PARENT_CONTROLLER)
     protected void onAfterShowHost(Screen.AfterShowEvent event) {
         initFieldValueToStringPropertyMapping(categoryLookupPickerField, tradeDc, "category", "category");
-
-        if ( getHostScreen().getId().equalsIgnoreCase("gcsplatform_LiveTrade.edit")) {
-            if ( PersistenceHelper.isNew(tradeDc.getItem()) )
-            {
-                subsCheckBox.setValue(true);
-            }
-        }
         /*
          * Subscribe manually to preserve listeners execution order. First listener maps field value to entity.
          */
@@ -135,6 +128,10 @@ public class TradeBrokerageFragment extends ScreenFragment {
     @EventListener
     protected void onTradeClosed(TradeClosedEvent event) {
         origtraderefField.setVisible(Boolean.TRUE.equals(tradeDc.getItem().getSubs()));
+    }
+
+    public CheckBox getSubsCheckBox() {
+        return subsCheckBox;
     }
 
     protected Trade getEditedEntity() {

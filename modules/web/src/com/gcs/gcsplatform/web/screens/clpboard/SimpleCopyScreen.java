@@ -29,14 +29,7 @@ public class SimpleCopyScreen extends Screen {
     @Inject
     private Screens screens;
 
-    @Subscribe
-    protected void onBeforeShow(BeforeShowEvent event) {
-
-
-        //clipboardField.setValue("Hello\nHello");
-    }
-
-    public void setSetlected(Set<Trade> selected)
+    public void setSelected(Set<Trade> selected)
     {
         if (selected.isEmpty()) {
 
@@ -62,13 +55,6 @@ public class SimpleCopyScreen extends Screen {
 
 
         }
-
-    }
-
-    @Subscribe("clipBtn")
-    public void onClipBtnClick(Button.ClickEvent event) {
-
-
 
     }
 

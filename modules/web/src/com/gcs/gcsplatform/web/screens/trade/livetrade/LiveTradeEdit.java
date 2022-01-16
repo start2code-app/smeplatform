@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import com.gcs.gcsplatform.entity.masterdata.Currency;
 import com.gcs.gcsplatform.entity.trade.LiveTrade;
 import com.gcs.gcsplatform.web.screens.trade.TradeEdit;
+import com.gcs.gcsplatform.web.screens.trade.brokeragefragment.TradeBrokerageFragment;
 import com.haulmont.cuba.core.global.PersistenceHelper;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.components.CheckBox;
@@ -25,10 +26,16 @@ public class LiveTradeEdit extends TradeEdit<LiveTrade> {
     private CheckBox gmSla;
     @Inject
     private CollectionContainer<Currency> currencyDc;
+    @Inject
+    private TradeBrokerageFragment brokerageFragment;
 
     @Subscribe
     public void onAfterShow1(AfterShowEvent event) {
 
+        if ( PersistenceHelper.isNew(tradeDc.getItem() ) )
+        {
+            brokerageFragment.getSubsCheckBox().setValue(true);
+        }
         maturityDateField.setEditable(true);
 
     }

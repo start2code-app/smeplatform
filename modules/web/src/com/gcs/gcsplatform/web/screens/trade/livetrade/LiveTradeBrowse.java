@@ -32,8 +32,8 @@ public class LiveTradeBrowse extends TradeBrowse<LiveTrade> {
         
     }
 
-    @Subscribe("cpySimplrBtn")
-    public void onCpySimplrBtnClick(Button.ClickEvent event) {
+    @Subscribe("cpySimpleBtn")
+    public void onCpySimpleBtnClick(Button.ClickEvent event) {
 
         Set<Trade> selected = tradesTable.getSelected();
         if (selected.isEmpty()) {
@@ -47,7 +47,7 @@ public class LiveTradeBrowse extends TradeBrowse<LiveTrade> {
 
 
         SimpleCopyScreen scs = screenBuilders.screen(this).withScreenClass(SimpleCopyScreen.class).withOpenMode(OpenMode.DIALOG).build();
-        scs.setSetlected(selected);
+        scs.setSelected(selected);
         scs.show();
 
     }

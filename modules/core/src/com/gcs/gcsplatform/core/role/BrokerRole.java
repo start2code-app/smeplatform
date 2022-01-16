@@ -89,7 +89,6 @@ public class BrokerRole extends AnnotatedRoleDefinition {
     @ScreenComponentAccess(screenId = "gcsplatform_ClosedLiveTrade.browse", deny = "tradesTable<excel>")
     @ScreenComponentAccess(screenId = "gcsplatform_Invoice.browse", deny = "invoicesTable<excel>")
     @ScreenComponentAccess(screenId = "gcsplatform_InvoiceLine.browse", deny = "invoiceLinesTable<excel>")
-    @ScreenComponentAccess(screenId = "gcsplatform_UtiScreen")
     @Override
     public ScreenComponentPermissionsContainer screenComponentPermissions() {
         return super.screenComponentPermissions();

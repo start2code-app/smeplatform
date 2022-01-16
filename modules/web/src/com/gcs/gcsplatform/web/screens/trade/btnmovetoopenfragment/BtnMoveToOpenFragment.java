@@ -39,13 +39,13 @@ public class BtnMoveToOpenFragment extends ScreenFragment {
     protected MessageBundle messageBundle;
 
     @Subscribe("MoveToOpenBtn")
-    protected void onCloseTradeBtnClick(Button.ClickEvent event) {
+    protected void onMoveToOpenBtnClick(Button.ClickEvent event) {
         dialogs.createInputDialog(this)
                 .withCaption(messageBundle.getMessage("MoveTradeDialog.caption"))
                 .withActions(DialogActions.OK_CANCEL)
                 .withCloseListener(inputDialogCloseEvent -> {
                     if (inputDialogCloseEvent.closedWith(DialogOutcome.OK)) {
-                        moveToOpenBean.movetoOpen(getEditedEntity(),getHostTradeScreen().getDataContext());
+                        moveToOpenBean.moveToOpen(getEditedEntity(),getHostTradeScreen().getDataContext());
 
                         getHostScreen().close(StandardOutcome.DISCARD);
 

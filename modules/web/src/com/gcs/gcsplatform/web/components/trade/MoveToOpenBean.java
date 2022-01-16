@@ -19,7 +19,6 @@ import com.haulmont.cuba.gui.model.DataContext;
 import org.springframework.stereotype.Component;
 
 
-
 @Component(MoveToOpenBean.NAME)
 public class MoveToOpenBean {
 
@@ -36,21 +35,20 @@ public class MoveToOpenBean {
     /**
      * Creates ClosedTrade/ClosedLiveTrade instance based on provided trade and then removes original trade.
      *
-     * @param trade        Original trade
-     * @param dataContext  Screen data context
+     * @param trade       Original trade
+     * @param dataContext Screen data context
      */
-    public void movetoOpen(Trade trade,DataContext dataContext) {
-        createOpenTrade(trade,dataContext);
+    public void moveToOpen(Trade trade, DataContext dataContext) {
+        createOpenTrade(trade, dataContext);
         addPostCommitListener(dataContext);
         dataContext.remove(trade);
         dataContext.commit();
 
 
-
     }
 
 
-    private void createOpenTrade(Trade trade,DataContext dataContext) {
+    private void createOpenTrade(Trade trade, DataContext dataContext) {
         Trade openTrade;
 
         openTrade = dataContext.create(OpenedTrade.class);
@@ -60,7 +58,9 @@ public class MoveToOpenBean {
 
     private void addPostCommitListener(DataContext dataContext) {
         dataContext.addPostCommitListener(postCommitEvent -> {
+            events.publish(new MoveToOpenEvent(this));
             events.publish(new TradeClosedEvent(this));
+
         });
     }
 }

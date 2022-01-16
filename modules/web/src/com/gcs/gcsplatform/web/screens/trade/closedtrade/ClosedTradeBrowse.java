@@ -38,11 +38,11 @@ public class ClosedTradeBrowse extends TradeBrowse<ClosedTrade> {
     @Inject
     protected InvoiceSnapshotService invoiceSnapshotService;
     @Inject
-    private Button cpySimplrBtn;
+    private Button cpySimpleBtn;
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
-        cpySimplrBtn.setVisible(false);
+        cpySimpleBtn.setVisible(false);
         btnPnlChartDialogFragment.setTradeClass(ClosedTrade.class);
         btnPnlChartDialogFragment.setCaption(messageBundle.getMessage("closedTradesPnl.caption"));
     }
