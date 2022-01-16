@@ -127,6 +127,9 @@
                     <button id="utiBtn"
                             stylename="warning"
                             caption="msg://uti"/>
+                    <button id="cpySimpleBtn"
+                            stylename="copy"
+                            caption="msg://simplecopy"/>
                 </hbox>
             </buttonsPanel>
         </groupTable>

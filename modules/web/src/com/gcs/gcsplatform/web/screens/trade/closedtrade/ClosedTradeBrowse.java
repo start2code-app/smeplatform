@@ -8,7 +8,10 @@ import com.gcs.gcsplatform.service.invoice.InvoiceSnapshotService;
 import com.gcs.gcsplatform.web.screens.trade.TradeBrowse;
 import com.gcs.gcsplatform.web.screens.trade.btnpnlchartdialogfragment.BtnPnlChartDialogFragment;
 import com.haulmont.cuba.core.global.Security;
+import com.haulmont.cuba.gui.Notifications;
+import com.haulmont.cuba.gui.components.Button;
 import com.haulmont.cuba.gui.components.GroupTable;
+import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.screen.Install;
 import com.haulmont.cuba.gui.screen.MessageBundle;
 import com.haulmont.cuba.gui.screen.Subscribe;
@@ -34,9 +37,12 @@ public class ClosedTradeBrowse extends TradeBrowse<ClosedTrade> {
     protected Security security;
     @Inject
     protected InvoiceSnapshotService invoiceSnapshotService;
+    @Inject
+    private Button cpySimpleBtn;
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
+        cpySimpleBtn.setVisible(false);
         btnPnlChartDialogFragment.setTradeClass(ClosedTrade.class);
         btnPnlChartDialogFragment.setCaption(messageBundle.getMessage("closedTradesPnl.caption"));
     }
@@ -50,4 +56,11 @@ public class ClosedTradeBrowse extends TradeBrowse<ClosedTrade> {
                 || security.isSpecificPermitted("app.editClosedTradesWhenSnapshotTaken")
                 || !invoiceSnapshotService.snapshotIsTaken(getFirstDayOfMonth(invoiceDate), getLastDayOfMonth(invoiceDate));
     }
+
+    @Install(to = "tradesTable.create", subject = "enabledRule")
+    protected boolean tradesTableCreateEnabledRule() {
+
+        return false;
+    }
+
 }

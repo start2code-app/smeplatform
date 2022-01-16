@@ -29,6 +29,16 @@ import static com.gcs.gcsplatform.util.DateUtils.getCurrentDate;
 @UiDescriptor("daily-blotter-browse.xml")
 public class DailyBlotterBrowse extends TradeBrowse<ClosedTrade> {
 
+
+
+    @Subscribe
+    public void onBeforeShow(BeforeShowEvent event) {
+        cpySimpleBtn.setVisible(false);
+
+    }
+
+    @Inject
+    private Button cpySimpleBtn;
     @Inject
     protected TradeService tradeService;
     @Inject

@@ -44,6 +44,8 @@ public class BrokerRole extends AnnotatedRoleDefinition {
             "gcsplatform_ClosedLiveTrade.browse",
             "gcsplatform_ClosedLiveTrade.edit",
             "gcsplatform_PnlChartScreen",
+            "gcsplatform_UtiScreen",
+            "gcsplatform_SimpleCopyScreen",
             "help",
             "aboutWindow",
             "settings"})

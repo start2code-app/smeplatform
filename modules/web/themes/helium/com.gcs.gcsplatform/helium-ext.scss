@@ -13,6 +13,37 @@
       background-color: #9bdfc6;
   }
 
+  // begin - copy button
+  .v-button-copy {
+      border-color: #2415FF;
+      background: #2415FF;
+      color: #fff;
+  }
+
+  .v-button-copy:hover:not(.v-disabled) {
+      border-color: #2415FF;
+      background: #2415FF;
+      color: #fff;
+  }
+
+  .v-button-copy:focus:not(.v-disabled) {
+      border-color: #1A0FBA;
+      color: #fff;
+  }
+
+  .v-button-copy:active:not(.v-disabled) {
+      border-color: #1A0FBA;
+      background: #1A0FBA;
+      color: #fff;
+  }
+
+  .v-button-copy.v-disabled {
+      border-color: #1A0FBA;
+      background: #1A0FBA;
+      color: #fff;
+  }
+  //end - warning button
+
   // begin - warning button
   .v-button-warning {
       border-color: #ffca3e;

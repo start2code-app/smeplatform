@@ -41,8 +41,10 @@ public class BtnCloseReopenTradeFragment extends ScreenFragment {
 
     @Subscribe(target = Target.PARENT_CONTROLLER)
     protected void onAfterShowHost(Screen.AfterShowEvent event) {
+
         if (getHostTradeScreen().isNew()) {
             closeReopenTradeBtn.setEnabled(false);
+
         }
     }
 
@@ -67,7 +69,8 @@ public class BtnCloseReopenTradeFragment extends ScreenFragment {
                 .withCloseListener(inputDialogCloseEvent -> {
                     if (inputDialogCloseEvent.closedWith(DialogOutcome.OK)) {
                         Date maturityDate = inputDialogCloseEvent.getValue("maturityDate");
-                        closeTradeBean.closeReopen(getEditedEntity(), maturityDate, getHostTradeScreen().getDataContext());
+                        closeTradeBean.closeReopen(getEditedEntity(), maturityDate,
+                                getHostTradeScreen().getDataContext());
                         getHostTradeScreen().updateWindowCaption();
                         notifications.create(Notifications.NotificationType.TRAY)
                                 .withDescription(messageBundle.getMessage("tradeClosedAndReopened"))

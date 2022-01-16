@@ -11,6 +11,7 @@ import com.haulmont.cuba.core.global.PersistenceHelper;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.LookupPickerField;
+import com.haulmont.cuba.gui.components.TextField;
 import com.haulmont.cuba.gui.model.DataContext;
 import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.EditedEntityContainer;
@@ -46,6 +47,8 @@ public abstract class TradeEdit<T extends Trade> extends StandardEditor<T> {
 
     @Inject
     protected InstanceContainer<T> tradeDc;
+    @Inject
+    private TextField<String> traderefField;
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
@@ -60,14 +63,14 @@ public abstract class TradeEdit<T extends Trade> extends StandardEditor<T> {
          * Subscribe manually to preserve listeners execution order. First listener maps field value to entity.
          */
         bondCurrencyLookupPickerField.addValueChangeListener(this::onBondCurrencyLookupPickerFieldValueChange);
-
+        traderefField.setEnabled(false);
         initialWindowCaption = getWindow().getCaption();
         isNew = PersistenceHelper.isNew(trade);
         if (!isNew) {
             updateWindowCaption();
-        } else {
-            trade.setTraderef(contractNumberBean.getNextTradeRef());
+
         }
+
     }
 
     protected void onBondCurrencyLookupPickerFieldValueChange(HasValue.ValueChangeEvent<Currency> event) {
@@ -132,6 +135,18 @@ public abstract class TradeEdit<T extends Trade> extends StandardEditor<T> {
         Trade trade = tradeDc.getItem();
         trade.setNumdays(getDaysBetweenDates(trade.getMaturityDate(), trade.getValueDate()));
     }
+
+    @Subscribe
+    public void onBeforeCommitChanges(BeforeCommitChangesEvent event) {
+        T trade = getEditedEntity();
+        isNew = PersistenceHelper.isNew(trade);
+        if (isNew) {
+            trade.setTraderef(contractNumberBean.getNextTradeRef());
+        }
+
+
+    }
+
 
     public boolean isNew() {
         return isNew;

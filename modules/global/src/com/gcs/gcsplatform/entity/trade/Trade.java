@@ -61,7 +61,7 @@ public abstract class Trade extends StandardEntity {
     private String cpair3;
 
     @Column(name = "BOND_CURRENCY", length = 5)
-    private String bondCurrency;
+    private String bondCurrency="USD";
 
     @Column(name = "BUY_GBP_EQUIVALENT", precision = 10, scale = 4)
     private BigDecimal buyGbpEquivalent;
@@ -118,11 +118,11 @@ public abstract class Trade extends StandardEntity {
     private Boolean subs;
 
     @Column(name = "REPO_CURRENCY", length = 5)
-    private String repoCurrency;
+    private String repoCurrency="USD";
 
     @Temporal(TemporalType.DATE)
     @Column(name = "TRADE_DATE")
-    private Date tradeDate;
+    private Date tradeDate=new Date();
 
     @Temporal(TemporalType.DATE)
     @Column(name = "INVOICE_DATE")
@@ -151,7 +151,7 @@ public abstract class Trade extends StandardEntity {
     private BigDecimal xrate;
 
     @Column(name = "GM_SLA")
-    private Boolean gmSla;
+    private Boolean gmSla=true;
 
     @Column(name = "BUYER_LOCATION", length = 5)
     private String buyerLocation;
