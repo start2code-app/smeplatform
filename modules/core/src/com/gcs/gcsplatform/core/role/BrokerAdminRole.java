@@ -50,6 +50,8 @@ public class BrokerAdminRole extends AnnotatedRoleDefinition {
             "gcsplatform_Trader.browse",
             "gcsplatform_Trader.edit",
             "gcsplatform_PnlChartScreen",
+            "gcsplatform_UtiScreen",
+            "gcsplatform_SimpleCopyScreen",
             "help",
             "aboutWindow",
             "settings"})
