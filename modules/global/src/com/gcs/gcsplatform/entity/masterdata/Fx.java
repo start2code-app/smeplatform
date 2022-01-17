@@ -13,16 +13,16 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import com.gcs.gcsplatform.entity.ExtStandardEntity;
 import com.haulmont.chile.core.annotations.NumberFormat;
-import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.cuba.core.entity.annotation.PublishEntityChangedEvents;
 
 @PublishEntityChangedEvents
 @Table(name = "GCSPLATFORM_FX", indexes = {
-        @Index(name = "IDX_GCSPLATFORM_FX_UNQ", columnList = "CURRENCY_ID, BILLING_DATE", unique = true)
+        @Index(name = "IDX_GCSPLATFORM_FX_UNQ", columnList = "CURRENCY_ID, BILLING_DATE, DELETE_TS_NN", unique = true)
 })
 @Entity(name = "gcsplatform_Fx")
-public class Fx extends StandardEntity {
+public class Fx extends ExtStandardEntity {
 
     private static final long serialVersionUID = 3579922802955412632L;
 

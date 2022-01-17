@@ -24,5 +24,6 @@
         <class>com.gcs.gcsplatform.entity.qb.QuickBooksCsrf</class>
         <class>com.gcs.gcsplatform.entity.masterdata.InvoiceCompany</class>
         <class>com.gcs.gcsplatform.entity.masterdata.Location</class>
+        <class>com.gcs.gcsplatform.entity.ExtStandardEntity</class>
     </persistence-unit>
 </persistence>

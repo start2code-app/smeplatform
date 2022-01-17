@@ -8,13 +8,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import com.haulmont.cuba.core.entity.StandardEntity;
+import com.gcs.gcsplatform.entity.ExtStandardEntity;
 
 @Table(name = "GCSPLATFORM_INVOICE_BANK", indexes = {
-        @Index(name = "IDX_GCSPLATFORM_INVOICE_BANK_UNQ", columnList = "CURRENCY_ID, LOCATION_ID", unique = true)
+        @Index(name = "IDX_GCSPLATFORM_INVOICE_BANK_UNQ", columnList = "CURRENCY_ID, LOCATION_ID, DELETE_TS_NN",
+                unique = true)
 })
 @Entity(name = "gcsplatform_InvoiceBank")
-public class InvoiceBank extends StandardEntity {
+public class InvoiceBank extends ExtStandardEntity {
 
     private static final long serialVersionUID = -1563996886407064776L;
 

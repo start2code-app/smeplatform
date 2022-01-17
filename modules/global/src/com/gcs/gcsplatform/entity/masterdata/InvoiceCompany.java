@@ -3,27 +3,33 @@ package com.gcs.gcsplatform.entity.masterdata;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import com.haulmont.cuba.core.entity.StandardEntity;
+import com.gcs.gcsplatform.entity.ExtStandardEntity;
 
-@Table(name = "GCSPLATFORM_INVOICE_COMPANY")
+@Table(name = "GCSPLATFORM_INVOICE_COMPANY", indexes = {
+        @Index(name = "IDX_GCSPLATFORM_INVOICE_COMPANY_UNIQ_COMPANY_ID", columnList = "COMPANY_ID, DELETE_TS_NN",
+                unique = true),
+        @Index(name = "IDX_GCSPLATFORM_INVOICE_COMPANY_UNIQ_LOCATION_ID", columnList = "LOCATION_ID, DELETE_TS_NN",
+                unique = true)
+})
 @Entity(name = "gcsplatform_InvoiceCompany")
-public class InvoiceCompany extends StandardEntity {
+public class InvoiceCompany extends ExtStandardEntity {
 
     private static final long serialVersionUID = -7835360934029415951L;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "LOCATION_ID", unique = true)
+    @JoinColumn(name = "LOCATION_ID")
     private Location location;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "COMPANY_ID", unique = true)
+    @JoinColumn(name = "COMPANY_ID")
     private Company company;
 
     @Column(name = "WORK_DOCS_FOLDER_ID")
