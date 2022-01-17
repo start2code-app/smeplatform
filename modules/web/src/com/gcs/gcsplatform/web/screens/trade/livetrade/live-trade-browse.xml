@@ -13,5 +13,19 @@
             </loader>
         </collection>
     </data>
-    <layout/>
+    <layout>
+        <groupTable id="tradesTable"
+                    multiselect="true">
+            <actions>
+                <action id="simpleCopy"
+                        trackSelection="true"/>
+            </actions>
+            <buttonsPanel>
+                <button id="simpleCopyBtn"
+                        action="tradesTable.simpleCopy"
+                        stylename="copy"
+                        caption="msg://simpleCopy.action"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
 </window>

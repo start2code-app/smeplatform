@@ -33,6 +33,7 @@
                         type="refresh"/>
                 <action id="excel"
                         type="excel"/>
+                <action id="uti"/>
             </actions>
             <columns>
                 <column id="traderef"/>
@@ -125,11 +126,9 @@
                     <button id="excelBtn"
                             action="tradesTable.excel"/>
                     <button id="utiBtn"
+                            action="tradesTable.uti"
                             stylename="warning"
                             caption="msg://uti"/>
-                    <button id="cpySimpleBtn"
-                            stylename="copy"
-                            caption="msg://simplecopy"/>
                 </hbox>
             </buttonsPanel>
         </groupTable>

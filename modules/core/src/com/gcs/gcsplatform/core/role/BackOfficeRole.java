@@ -30,11 +30,13 @@ import com.haulmont.cuba.security.app.role.annotation.EntityAccess;
 import com.haulmont.cuba.security.app.role.annotation.EntityAttributeAccess;
 import com.haulmont.cuba.security.app.role.annotation.Role;
 import com.haulmont.cuba.security.app.role.annotation.ScreenAccess;
+import com.haulmont.cuba.security.app.role.annotation.ScreenComponentAccess;
 import com.haulmont.cuba.security.app.role.annotation.SpecificAccess;
 import com.haulmont.cuba.security.entity.EntityOp;
 import com.haulmont.cuba.security.entity.FilterEntity;
 import com.haulmont.cuba.security.role.EntityAttributePermissionsContainer;
 import com.haulmont.cuba.security.role.EntityPermissionsContainer;
+import com.haulmont.cuba.security.role.ScreenComponentPermissionsContainer;
 import com.haulmont.cuba.security.role.ScreenPermissionsContainer;
 import com.haulmont.cuba.security.role.SpecificPermissionsContainer;
 
@@ -129,5 +131,21 @@ public class BackOfficeRole extends AnnotatedRoleDefinition {
     @Override
     public SpecificPermissionsContainer specificPermissions() {
         return super.specificPermissions();
+    }
+
+    @ScreenComponentAccess(screenId = "gcsplatform_DailyBlotter.browse", deny = "tradesTable<uti>")
+    @ScreenComponentAccess(screenId = "gcsplatform_OpenedTrade.browse", deny = "tradesTable<uti>")
+    @ScreenComponentAccess(screenId = "gcsplatform_OpenedTrade.browse", deny = "tradesTable<simpleCopy>")
+    @ScreenComponentAccess(screenId = "gcsplatform_CallOptionTrade.browse", deny = "tradesTable<uti>")
+    @ScreenComponentAccess(screenId = "gcsplatform_ClosedTrade.browse", deny = "tradesTable<uti>")
+    @ScreenComponentAccess(screenId = "gcsplatform_LiveTrade.browse", deny = "tradesTable<uti>")
+    @ScreenComponentAccess(screenId = "gcsplatform_LiveTrade.browse", deny = "tradesTable<simpleCopy>")
+    @ScreenComponentAccess(screenId = "gcsplatform_ClosedLiveTrade.browse", deny = "tradesTable<uti>")
+    @ScreenComponentAccess(screenId = "gcsplatform_Invoice.browse", deny = "invoicesTable<uti>")
+    @ScreenComponentAccess(screenId = "gcsplatform_InvoiceLine.browse", deny = "invoiceLinesTable<uti>")
+
+    @Override
+    public ScreenComponentPermissionsContainer screenComponentPermissions() {
+        return super.screenComponentPermissions();
     }
 }
