@@ -113,6 +113,9 @@ public class CounterpartyEdit extends StandardEditor<Counterparty> {
     @Subscribe("tradersTable.remove")
     protected void onTradersTableRemove(Action.ActionPerformedEvent event) {
         Trader selected = tradersTable.getSingleSelected();
+        if (selected.getName() == null) {
+            selected.setName(""); // Hack to avoid 'Column 'NAME' cannot be null' error if user erased the field before removing
+        }
         dataContext.remove(selected);
         tradersDc.getMutableItems().remove(selected);
         validatableFields.remove(selected.getId());

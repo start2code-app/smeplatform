@@ -127,7 +127,10 @@ public class BackOfficeRole extends AnnotatedRoleDefinition {
         return super.entityAttributePermissions();
     }
 
-    @SpecificAccess(permissions = "app.editClosedTradesWhenSnapshotTaken")
+    @SpecificAccess(permissions = {"app.editClosedTradesWhenSnapshotTaken",
+            "cuba.gui.filter.edit",
+            "cuba.gui.filter.customConditions",
+            "cuba.gui.filter.maxResults"})
     @Override
     public SpecificPermissionsContainer specificPermissions() {
         return super.specificPermissions();

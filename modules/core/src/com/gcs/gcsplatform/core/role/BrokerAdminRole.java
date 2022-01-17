@@ -22,12 +22,14 @@ import com.haulmont.cuba.security.app.role.annotation.EntityAttributeAccess;
 import com.haulmont.cuba.security.app.role.annotation.Role;
 import com.haulmont.cuba.security.app.role.annotation.ScreenAccess;
 import com.haulmont.cuba.security.app.role.annotation.ScreenComponentAccess;
+import com.haulmont.cuba.security.app.role.annotation.SpecificAccess;
 import com.haulmont.cuba.security.entity.EntityOp;
 import com.haulmont.cuba.security.entity.FilterEntity;
 import com.haulmont.cuba.security.role.EntityAttributePermissionsContainer;
 import com.haulmont.cuba.security.role.EntityPermissionsContainer;
 import com.haulmont.cuba.security.role.ScreenComponentPermissionsContainer;
 import com.haulmont.cuba.security.role.ScreenPermissionsContainer;
+import com.haulmont.cuba.security.role.SpecificPermissionsContainer;
 
 @Role(name = "Broker Admin")
 public class BrokerAdminRole extends AnnotatedRoleDefinition {
@@ -87,6 +89,14 @@ public class BrokerAdminRole extends AnnotatedRoleDefinition {
     @Override
     public EntityAttributePermissionsContainer entityAttributePermissions() {
         return super.entityAttributePermissions();
+    }
+
+    @SpecificAccess(permissions = {"cuba.gui.filter.edit",
+            "cuba.gui.filter.customConditions",
+            "cuba.gui.filter.maxResults"})
+    @Override
+    public SpecificPermissionsContainer specificPermissions() {
+        return super.specificPermissions();
     }
 
     @ScreenComponentAccess(screenId = "gcsplatform_DailyBlotter.browse", deny = "tradesTable<excel>")

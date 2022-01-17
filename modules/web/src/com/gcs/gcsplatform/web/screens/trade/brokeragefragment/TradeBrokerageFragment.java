@@ -8,8 +8,6 @@ import com.gcs.gcsplatform.entity.masterdata.Category;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.web.components.brokerage.BrokerageBean;
 import com.gcs.gcsplatform.web.events.TradeChangedEvent;
-import com.gcs.gcsplatform.web.screens.trade.TradeEdit;
-import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.components.CheckBox;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.LookupPickerField;
@@ -50,8 +48,6 @@ public class TradeBrokerageFragment extends ScreenFragment {
     protected InstanceContainer<Trade> tradeDc;
     @Inject
     protected CollectionLoader<Category> categoryDl;
-    @Inject
-    private Notifications notifications;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -131,13 +127,4 @@ public class TradeBrokerageFragment extends ScreenFragment {
     public CheckBox getSubsCheckBox() {
         return subsCheckBox;
     }
-
-    protected Trade getEditedEntity() {
-        return (Trade) getHostTradeScreen().getEditedEntity();
-    }
-
-    protected TradeEdit getHostTradeScreen() {
-        return (TradeEdit) getHostScreen();
-    }
-
 }
