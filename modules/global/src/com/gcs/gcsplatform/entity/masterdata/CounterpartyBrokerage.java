@@ -10,15 +10,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.gcs.gcsplatform.entity.ExtStandardEntity;
 import com.haulmont.chile.core.annotations.NumberFormat;
-import com.haulmont.cuba.core.entity.StandardEntity;
 
 @Table(name = "GCSPLATFORM_COUNTERPARTY_BROKERAGE", indexes = {
         @Index(name = "IDX_GCSPLATFORM_COUNTERPARTY_BROKERAGE_UNQ",
-                columnList = "COUNTERPARTY_ID, CATEGORY_ID, BROKERAGE_TYPE", unique = true)
+                columnList = "COUNTERPARTY_ID, CATEGORY_ID, BROKERAGE_TYPE, DELETE_TS_NN", unique = true)
 })
 @Entity(name = "gcsplatform_CounterpartyBrokerage")
-public class CounterpartyBrokerage extends StandardEntity {
+public class CounterpartyBrokerage extends ExtStandardEntity {
 
     private static final long serialVersionUID = 5757870870908910960L;
 

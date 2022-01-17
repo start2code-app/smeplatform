@@ -8,6 +8,7 @@ create table GCSPLATFORM_LOCATION (
     UPDATED_BY varchar(50),
     DELETE_TS datetime(3),
     DELETED_BY varchar(50),
+    DELETE_TS_NN datetime(3) not null default '1000-01-01 00:00:00.000',
     --
     NAME varchar(5) not null,
     --
@@ -24,6 +25,7 @@ create table GCSPLATFORM_COUNTERPARTY (
     UPDATED_BY varchar(50),
     DELETE_TS datetime(3),
     DELETED_BY varchar(50),
+    DELETE_TS_NN datetime(3) not null default '1000-01-01 00:00:00.000',
     --
     COUNTERPARTY varchar(30) not null,
     ADDRESS1 varchar(50),
@@ -59,6 +61,7 @@ create table GCSPLATFORM_CATEGORY (
     UPDATED_BY varchar(50),
     DELETE_TS datetime(3),
     DELETED_BY varchar(50),
+    DELETE_TS_NN datetime(3) not null default '1000-01-01 00:00:00.000',
     --
     CATEGORY varchar(50) not null,
     --
@@ -76,6 +79,7 @@ create table GCSPLATFORM_COUNTERPARTY_BROKERAGE (
     UPDATED_BY varchar(50),
     DELETE_TS datetime(3),
     DELETED_BY varchar(50),
+    DELETE_TS_NN datetime(3) not null default '1000-01-01 00:00:00.000',
     --
     COUNTERPARTY_ID varchar(32) not null,
     CATEGORY_ID varchar(32) not null,
@@ -445,6 +449,7 @@ create table GCSPLATFORM_CURRENCY (
     UPDATED_BY varchar(50),
     DELETE_TS datetime(3),
     DELETED_BY varchar(50),
+    DELETE_TS_NN datetime(3) not null default '1000-01-01 00:00:00.000' ,
     --
     CURRENCY varchar(5) not null,
     --
@@ -461,6 +466,7 @@ create table GCSPLATFORM_FX (
     UPDATED_BY varchar(50),
     DELETE_TS datetime(3),
     DELETED_BY varchar(50),
+    DELETE_TS_NN datetime(3) not null default '1000-01-01 00:00:00.000',
     --
     CURRENCY_ID varchar(32) not null,
     FX_VALUE decimal(10, 4) not null,
@@ -577,6 +583,7 @@ create table GCSPLATFORM_INVOICE_BANK (
     UPDATED_BY varchar(50),
     DELETE_TS datetime(3),
     DELETED_BY varchar(50),
+    DELETE_TS_NN datetime(3) not null default '1000-01-01 00:00:00.000',
     --
     LOCATION_ID varchar(32) not null,
     CURRENCY_ID varchar(32) not null,
@@ -622,6 +629,7 @@ create table GCSPLATFORM_BROKER (
     UPDATED_BY varchar(50),
     DELETE_TS datetime(3),
     DELETED_BY varchar(50),
+    DELETE_TS_NN datetime(3) not null default '1000-01-01 00:00:00.000',
     --
     NAME varchar(10) not null,
     USER_ID varchar(32) not null,
@@ -639,6 +647,7 @@ create table GCSPLATFORM_TRADER (
     UPDATED_BY varchar(50),
     DELETE_TS datetime(3),
     DELETED_BY varchar(50),
+    DELETE_TS_NN datetime(3) not null default '1000-01-01 00:00:00.000',
     --
     COUNTERPARTY_ID varchar(32) not null,
     NAME varchar(30) not null,
@@ -692,6 +701,7 @@ create table GCSPLATFORM_INVOICE_COMPANY (
     UPDATED_BY varchar(50),
     DELETE_TS datetime(3),
     DELETED_BY varchar(50),
+    DELETE_TS_NN datetime(3) not null default '1000-01-01 00:00:00.000',
     --
     LOCATION_ID varchar(32) not null,
     COMPANY_ID varchar(32) not null,

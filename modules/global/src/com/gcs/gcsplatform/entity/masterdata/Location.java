@@ -2,15 +2,18 @@ package com.gcs.gcsplatform.entity.masterdata;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.Table;
 
+import com.gcs.gcsplatform.entity.ExtStandardEntity;
 import com.haulmont.chile.core.annotations.NamePattern;
-import com.haulmont.cuba.core.entity.StandardEntity;
 
 @NamePattern("%s|name")
-@Table(name = "GCSPLATFORM_LOCATION")
+@Table(name = "GCSPLATFORM_LOCATION", indexes = {
+        @Index(name = "IDX_GCSPLATFORM_LOCATION_UNIQ_NAME", columnList = "NAME, DELETE_TS_NN", unique = true)
+})
 @Entity(name = "gcsplatform_Location")
-public class Location extends StandardEntity {
+public class Location extends ExtStandardEntity {
 
     private static final long serialVersionUID = -3226411038033629811L;
 

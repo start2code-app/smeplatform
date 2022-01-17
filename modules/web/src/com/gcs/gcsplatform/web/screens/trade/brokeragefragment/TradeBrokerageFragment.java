@@ -7,14 +7,12 @@ import com.gcs.gcsplatform.entity.masterdata.BrokerageType;
 import com.gcs.gcsplatform.entity.masterdata.Category;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.web.components.brokerage.BrokerageBean;
-import com.gcs.gcsplatform.web.events.TradeClosedEvent;
+import com.gcs.gcsplatform.web.events.TradeChangedEvent;
 import com.gcs.gcsplatform.web.screens.trade.TradeEdit;
-import com.haulmont.cuba.core.global.PersistenceHelper;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.components.CheckBox;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.LookupPickerField;
-import com.haulmont.cuba.gui.components.PickerField;
 import com.haulmont.cuba.gui.components.TextField;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.model.InstanceContainer;
@@ -126,7 +124,7 @@ public class TradeBrokerageFragment extends ScreenFragment {
     }
 
     @EventListener
-    protected void onTradeClosed(TradeClosedEvent event) {
+    protected void onTradeChanged(TradeChangedEvent event) {
         origtraderefField.setVisible(Boolean.TRUE.equals(tradeDc.getItem().getSubs()));
     }
 

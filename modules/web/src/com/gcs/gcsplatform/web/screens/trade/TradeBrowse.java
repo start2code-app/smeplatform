@@ -4,7 +4,7 @@ import javax.inject.Inject;
 
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.web.components.trade.TradeValidationBean;
-import com.gcs.gcsplatform.web.events.TradeClosedEvent;
+import com.gcs.gcsplatform.web.events.TradeChangedEvent;
 import com.gcs.gcsplatform.web.screens.uti.UtiScreen;
 import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.components.Button;
@@ -54,7 +54,7 @@ public abstract class TradeBrowse<T extends Trade> extends StandardLookup<T> {
     }
 
     @EventListener
-    protected void onTradeClosed(TradeClosedEvent event) {
+    protected void onTradeChanged(TradeChangedEvent event) {
         tradesDl.load();
     }
 }

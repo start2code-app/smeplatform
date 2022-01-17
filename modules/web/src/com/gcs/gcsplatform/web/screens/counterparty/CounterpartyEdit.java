@@ -26,6 +26,7 @@ import com.haulmont.cuba.gui.components.ValidationErrors;
 import com.haulmont.cuba.gui.components.data.value.ContainerValueSource;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
+import com.haulmont.cuba.gui.model.DataComponents;
 import com.haulmont.cuba.gui.model.DataContext;
 import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.EditedEntityContainer;
@@ -58,6 +59,8 @@ public class CounterpartyEdit extends StandardEditor<Counterparty> {
     protected UiComponents uiComponents;
     @Inject
     protected ScreenValidation screenValidation;
+    @Inject
+    protected DataComponents dataComponents;
 
     @Inject
     protected CollectionContainer<Trader> tradersDc;
@@ -112,14 +115,17 @@ public class CounterpartyEdit extends StandardEditor<Counterparty> {
         Trader selected = tradersTable.getSingleSelected();
         dataContext.remove(selected);
         tradersDc.getMutableItems().remove(selected);
+        validatableFields.remove(selected.getId());
     }
 
     @Install(to = "tradersTable.name", subject = "columnGenerator")
     protected Component tradersTableNameColumnGenerator(Trader trader) {
         Component component = validatableFields.get(trader.getId());
         if (component == null) {
+            InstanceContainer<Trader> instanceContainer = dataComponents.createInstanceContainer(Trader.class);
+            instanceContainer.setItem(trader);
             TextField<String> textField = uiComponents.create(TextField.class);
-            textField.setValueSource(new ContainerValueSource<>(tradersTable.getInstanceContainer(trader), "name"));
+            textField.setValueSource(new ContainerValueSource<>(instanceContainer, "name"));
             validatableFields.put(trader.getId(), textField);
             return textField;
         }

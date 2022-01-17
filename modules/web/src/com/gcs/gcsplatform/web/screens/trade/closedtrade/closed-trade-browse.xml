@@ -16,6 +16,10 @@
     </data>
     <layout>
         <groupTable id="tradesTable">
+            <actions>
+                <action id="create"
+                        enable="false"/>
+            </actions>
             <buttonsPanel>
                 <hbox>
                     <fragment id="btnPnlChartDialogFragment"

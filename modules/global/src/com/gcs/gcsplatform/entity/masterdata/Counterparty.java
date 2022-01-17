@@ -3,24 +3,28 @@ package com.gcs.gcsplatform.entity.masterdata;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.gcs.gcsplatform.entity.ExtStandardEntity;
 import com.haulmont.chile.core.annotations.NamePattern;
-import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.cuba.core.entity.annotation.PublishEntityChangedEvents;
 
 @PublishEntityChangedEvents
 @NamePattern("%s|counterparty")
-@Table(name = "GCSPLATFORM_COUNTERPARTY")
+@Table(name = "GCSPLATFORM_COUNTERPARTY", indexes = {
+        @Index(name = "IDX_GCSPLATFORM_COUNTERPARTY_UNIQ_COUNTERPARTY", columnList = "COUNTERPARTY, DELETE_TS_NN",
+                unique = true)
+})
 @Entity(name = "gcsplatform_Counterparty")
-public class Counterparty extends StandardEntity {
+public class Counterparty extends ExtStandardEntity {
 
     private static final long serialVersionUID = -1999181841396498391L;
 
-    @Column(name = "COUNTERPARTY", nullable = false, unique = true, length = 30)
+    @Column(name = "COUNTERPARTY", nullable = false, length = 30)
     private String counterparty;
 
     @Column(name = "ADDRESS1", length = 50)
