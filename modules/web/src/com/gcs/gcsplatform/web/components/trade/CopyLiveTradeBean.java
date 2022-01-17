@@ -6,7 +6,7 @@ import com.gcs.gcsplatform.entity.trade.ClosedTrade;
 import com.gcs.gcsplatform.entity.trade.LiveTrade;
 import com.gcs.gcsplatform.service.trade.TradeService;
 import com.gcs.gcsplatform.util.DateUtils;
-import com.gcs.gcsplatform.web.events.LiveTradeUpdatedEvent;
+import com.gcs.gcsplatform.web.events.TradeChangedEvent;
 import com.haulmont.cuba.core.global.Events;
 import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.core.global.MetadataTools;
@@ -47,7 +47,7 @@ public class CopyLiveTradeBean {
             metadataTools.copy(closedTrade, liveTrade);
             dataContext.setModified(dataContext.merge(liveTrade), true);
             dataContext.addPostCommitListener(postCommitEvent -> {
-                events.publish(new LiveTradeUpdatedEvent(this));
+                events.publish(new TradeChangedEvent(this));
             });
         }
     }
@@ -63,7 +63,7 @@ public class CopyLiveTradeBean {
         metadataTools.copy(closedTrade, liveTrade);
         dataContext.setModified(dataContext.merge(liveTrade), true);
         dataContext.addPostCommitListener(postCommitEvent -> {
-            events.publish(new LiveTradeUpdatedEvent(this));
+            events.publish(new TradeChangedEvent(this));
         });
     }
 }

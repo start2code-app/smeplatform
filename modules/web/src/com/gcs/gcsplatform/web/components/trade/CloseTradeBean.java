@@ -8,7 +8,7 @@ import com.gcs.gcsplatform.entity.trade.ClosedTrade;
 import com.gcs.gcsplatform.entity.trade.LiveTrade;
 import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.web.components.pnl.PnlCalculationBean;
-import com.gcs.gcsplatform.web.events.TradeClosedEvent;
+import com.gcs.gcsplatform.web.events.TradeChangedEvent;
 import com.haulmont.cuba.core.global.Events;
 import com.haulmont.cuba.core.global.MetadataTools;
 import com.haulmont.cuba.gui.model.DataContext;
@@ -81,7 +81,7 @@ public class CloseTradeBean {
 
     private void addPostCommitListener(DataContext dataContext) {
         dataContext.addPostCommitListener(postCommitEvent -> {
-            events.publish(new TradeClosedEvent(this));
+            events.publish(new TradeChangedEvent(this));
         });
     }
 }
