@@ -50,7 +50,7 @@ public class TradeValidationBean {
 
         boolean isDatesBlank = trade.getValueDate() == null
                 || trade.getTradeDate() == null
-                || trade.getInvoiceDate() == null
+                || !(trade instanceof OpenedTrade) && trade.getInvoiceDate() == null
                 || !(trade instanceof OpenedTrade) && trade.getMaturityDate() == null;
 
         return isSplitBrokerBlank

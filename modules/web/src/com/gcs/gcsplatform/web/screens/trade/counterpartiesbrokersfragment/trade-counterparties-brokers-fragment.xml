@@ -51,7 +51,7 @@
                     <column width="250px">
                         <lookupPickerField id="buyerLookupPickerField"
                                            caption="msg://com.gcs.gcsplatform.entity.trade/Trade.buyer"
-                                           optionsContainer="counterpartiesDc">
+                                           optionsContainer="counterpartiesDc" >
                             <actions>
                                 <action id="lookup"
                                         type="picker_lookup"/>

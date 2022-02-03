@@ -16,6 +16,9 @@
             <fragment id="btnCloseTradeFragment"
                       ext:index="2"
                       screen="gcsplatform_BtnCloseTradeFragment"/>
+            <fragment id="btnCopyToDailyBlotterFragment"
+                      ext:index="3"
+                      screen="gcsplatform_BtnCopyToDailyBlotterFragment"/>
         </hbox>
     </layout>
 </window>
