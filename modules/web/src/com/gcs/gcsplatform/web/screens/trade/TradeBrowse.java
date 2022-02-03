@@ -39,7 +39,7 @@ public abstract class TradeBrowse<T extends Trade> extends StandardLookup<T> {
             }
 
             if (tradeValidationBean.hasZeroBrokerage(entity)) {
-                return "v-table-row red-row";
+                return "v-table-row yellow-row";
             }
         }
         return null;

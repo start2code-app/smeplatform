@@ -144,9 +144,9 @@ public class InvoiceQuickBooksPublishServiceBean implements InvoiceQuickBooksPub
         line.setDetailType(LineDetailTypeEnum.SALES_ITEM_LINE_DETAIL);
         line.setSalesItemLineDetail(silDetails);
         if (Boolean.TRUE.equals(invoice.getShowTotalUsd())) {
-            line.setAmount(invoice.getAmount());
-        } else {
             line.setAmount(invoice.getUsdAmount());
+        } else {
+            line.setAmount(invoice.getAmount());
         }
 
         List<Line> lines = new ArrayList<>();

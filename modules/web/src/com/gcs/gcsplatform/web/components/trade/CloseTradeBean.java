@@ -31,6 +31,29 @@ public class CloseTradeBean {
     private ContractNumberBean contractNumberBean;
 
     /**
+     * Creates ClosedTrade/ClosedLiveTrade instance based on provided trade.
+     *
+     * @param trade        Original trade
+     * @param dataContext  Screen data context
+     */
+    public void newclose(Trade trade, DataContext dataContext) {
+        Trade closedTrade;
+        Trade liveTrade;
+        closedTrade = dataContext.create(ClosedTrade.class);
+        metadataTools.copy(trade, closedTrade);
+
+        closedTrade.setTradeDate(new Date());
+        closedTrade.setInvoiceDate(new Date());
+        closedTrade.setValueDate(trade.getMaturityDate());
+        closedTrade.setMaturityDate(null);
+        trade.setTraderef(contractNumberBean.getNextTradeRef());
+        liveTrade = dataContext.create(LiveTrade.class);
+        metadataTools.copy(closedTrade, liveTrade);
+        pnlCalculationBean.updatePnl(closedTrade);
+        addPostCommitListener(dataContext);
+        dataContext.commit();
+    }
+    /**
      * Creates ClosedTrade/ClosedLiveTrade instance based on provided trade and then removes original trade.
      *
      * @param trade        Original trade
