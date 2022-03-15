@@ -34,6 +34,10 @@
                 <action id="excel"
                         type="excel"/>
                 <action id="uti"/>
+                <action id="simpleCopy"
+                        trackSelection="true"/>
+                <action id="fullCopy"
+                        trackSelection="true"/>
             </actions>
             <columns>
                 <column id="traderef"/>
@@ -129,7 +133,16 @@
                             action="tradesTable.uti"
                             stylename="warning"
                             caption="msg://uti"/>
+                    <button id="simpleCopyBtn"
+                            action="tradesTable.simpleCopy"
+                            stylename="copy"
+                            caption="msg://simpleCopy.action"/>
+                    <button id="fullCopyBtn"
+                            action="tradesTable.fullCopy"
+                            stylename="copy"
+                            caption="msg://fullCopy.action"/>
                 </hbox>
+
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions"

@@ -15,7 +15,7 @@
         </collection>
     </data>
     <layout>
-        <groupTable id="tradesTable">
+        <groupTable id="tradesTable" multiselect="true">
             <actions>
                 <action id="create"
                         enable="false"/>

@@ -93,6 +93,7 @@ public abstract class Trade extends StandardEntity {
     private String origtraderef;
 
     @Column(name = "REPO_RATE", precision = 10, scale = 4)
+    @NumberFormat(pattern = "#,##0.0000")
     private BigDecimal repoRate;
 
     @Column(name = "SELLBROKER", length = 10)

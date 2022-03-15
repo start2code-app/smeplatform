@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://utiScreen.caption"
+        messagesPack="com.gcs.gcsplatform.web.screens.clpboard">
+    <dialogMode forceDialog="true"
+                modal="true"
+                width="AUTO"
+                height="AUTO"/>
+    <facets>
+        <clipboardTrigger id="clipper"
+                          button="clipBtn"
+                          input="clipboardField"/>
+    </facets>
+    <layout expand="clipboardBox"
+            spacing="true">
+        <hbox id="clipboardBox"
+              spacing="true"
+              width="100%">
+            <textArea width="330px" height="330px" id="clipboardField" editable="false" />
+
+            <button id="clipBtn"
+                    icon="font-icon:COPY"/>
+        </hbox>
+        <button id="okButton"
+                stylename="primary"
+                caption="mainMsg://actions.Ok"/>
+    </layout>
+</window>

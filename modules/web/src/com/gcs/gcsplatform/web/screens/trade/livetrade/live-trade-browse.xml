@@ -8,7 +8,7 @@
                     class="com.gcs.gcsplatform.entity.trade.LiveTrade">
             <loader id="tradesDl">
                 <query>
-                    <![CDATA[select e from gcsplatform_LiveTrade e order by e.invoiceDate desc]]>
+                    <![CDATA[select e from gcsplatform_LiveTrade e where ( @dateAfter(e.maturityDate,now) or @today(e.maturityDate) ) order by e.maturityDate asc]]>
                 </query>
             </loader>
         </collection>
@@ -20,12 +20,7 @@
                 <action id="simpleCopy"
                         trackSelection="true"/>
             </actions>
-            <buttonsPanel>
-                <button id="simpleCopyBtn"
-                        action="tradesTable.simpleCopy"
-                        stylename="copy"
-                        caption="msg://simpleCopy.action"/>
-            </buttonsPanel>
+
         </groupTable>
     </layout>
 </window>
