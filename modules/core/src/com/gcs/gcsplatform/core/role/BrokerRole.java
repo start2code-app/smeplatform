@@ -49,6 +49,7 @@ public class BrokerRole extends AnnotatedRoleDefinition {
             "gcsplatform_PnlChartScreen",
             "gcsplatform_UtiScreen",
             "gcsplatform_SimpleCopyScreen",
+            "gcsplatform_FullCopyScreen",
             "help",
             "aboutWindow",
             "settings"})
