@@ -41,7 +41,7 @@ public class ClosedTradeBrowse extends TradeBrowse<ClosedTrade> {
         btnPnlChartDialogFragment.setCaption(messageBundle.getMessage("closedTradesPnl.caption"));
     }
 
-    @Install(to = "tradesTable.edit", subject = "enabledRule")
+    //@Install(to = "tradesTable.edit", subject = "enabledRule")
     protected boolean tradesTableEditEnabledRule() {
         ClosedTrade trade = tradesTable.getSingleSelected();
         Date invoiceDate = trade.getInvoiceDate();
