@@ -46,7 +46,7 @@ public class CloseTradeBean {
         closedTrade.setInvoiceDate(new Date());
         closedTrade.setValueDate(trade.getMaturityDate());
         closedTrade.setMaturityDate(null);
-        trade.setTraderef(contractNumberBean.getNextTradeRef());
+        closedTrade.setTraderef(contractNumberBean.getNextTradeRef());
         liveTrade = dataContext.create(LiveTrade.class);
         metadataTools.copy(closedTrade, liveTrade);
         pnlCalculationBean.updatePnl(closedTrade);
