@@ -56,4 +56,14 @@ public class DailyBlotterBrowse extends TradeBrowse<ClosedTrade> {
     protected void tradesTableCreateScreenConfigurer(Screen screen) {
         ((ClosedTradeEdit) screen).setNewDailyBlotterTrade(true);
     }
+
+    @Inject
+    private Button refreshBtn;
+
+    @Subscribe
+    public void onInit(InitEvent event) {
+
+
+
+    }
 }

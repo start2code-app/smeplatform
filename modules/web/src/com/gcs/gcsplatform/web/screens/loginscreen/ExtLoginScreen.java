@@ -34,6 +34,6 @@ public class ExtLoginScreen extends LoginScreen {
     @Override
     protected void initLogoImage() {
         logoImage.setSource(RelativePathResource.class)
-                .setPath("VAADIN/brand-login-screen/gcslogohome.png");
+                .setPath("VAADIN/brand-login-screen/smeplatform.png");
     }
 }

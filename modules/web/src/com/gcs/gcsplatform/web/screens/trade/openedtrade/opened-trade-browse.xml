@@ -23,6 +23,10 @@
                 <button id="pnlChartBtn"
                         stylename="friendly"
                         caption="msg://pnl"/>
+                <button id="reratetBtn"
+                        stylename="friendly"
+                        caption="msg://rerate"/>
+
             </buttonsPanel>
         </groupTable>
     </layout>

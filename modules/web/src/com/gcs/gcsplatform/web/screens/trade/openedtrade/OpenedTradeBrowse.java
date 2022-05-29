@@ -9,7 +9,9 @@ import com.gcs.gcsplatform.entity.trade.Trade;
 import com.gcs.gcsplatform.service.trade.OpenedTradeService;
 import com.gcs.gcsplatform.web.components.pnl.PnlChartBean;
 import com.gcs.gcsplatform.web.screens.clpboard.SimpleCopyScreen;
+import com.gcs.gcsplatform.web.screens.rerate.RerateScreen;
 import com.gcs.gcsplatform.web.screens.trade.TradeBrowse;
+import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.components.Action;
 import com.haulmont.cuba.gui.components.Button;
 import com.haulmont.cuba.gui.components.GroupTable;
@@ -23,6 +25,7 @@ import com.haulmont.cuba.gui.screen.UiDescriptor;
 @UiDescriptor("opened-trade-browse.xml")
 public class OpenedTradeBrowse extends TradeBrowse<OpenedTrade> {
 
+
     @Inject
     protected PnlChartBean pnlChartBean;
     @Inject
@@ -31,6 +34,8 @@ public class OpenedTradeBrowse extends TradeBrowse<OpenedTrade> {
     protected MessageBundle messageBundle;
     @Inject
     protected GroupTable<Trade> tradesTable;
+    @Inject
+    private Notifications notifications;
 
     @Subscribe("pnlChartBtn")
     protected void onPnlChartBtnClick(Button.ClickEvent event) {
@@ -48,4 +53,26 @@ public class OpenedTradeBrowse extends TradeBrowse<OpenedTrade> {
         scs.setSelected(selected);
         scs.show();
     }
+
+    @Subscribe("reratetBtn")
+    public void onReratetBtnClick(Button.ClickEvent event) {
+        Set<Trade> selected = tradesTable.getSelected();
+        if (selected.isEmpty()) {
+
+            notifications.create(Notifications.NotificationType.WARNING)
+                    .withCaption("Please make a selection(s)"
+                    )
+                    .show();
+        }
+
+        else {
+            RerateScreen rrs = screenBuilders.screen(this)
+                    .withScreenClass(RerateScreen.class)
+                    .withOpenMode(OpenMode.DIALOG)
+                    .build();
+            rrs.setSelected(selected);
+            rrs.show();
+        }
+    }
+
 }
