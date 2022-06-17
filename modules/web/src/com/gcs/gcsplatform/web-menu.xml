@@ -54,6 +54,10 @@
               caption="mainMsg://menu_config.gcsplatform_InvoiceCompany.browse"/>
         <item screen="gcsplatform_Location.browse"
               caption="mainMsg://menu_config.gcsplatform_Location.browse"/>
+        <item screen="gcsplatform_GcsplatformKfcustomer.browse"
+              caption="mainMsg://menu_config.gcsplatform_GcsplatformKfcustomer.browse"/>
+        <item screen="gcsplatform_GcsplatformKfinvoice.browse"
+              caption="mainMsg://menu_config.gcsplatform_GcsplatformKfinvoice.browse"/>
     </menu>
     <menu id="administration"
           icon="COG">

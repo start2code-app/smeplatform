@@ -44,6 +44,12 @@ cuba {
         version = '0.1'
         isSnapshot = true
     }
+    tomcat {
+        port = '80'
+        ajpPort = '9009'
+        shutdownPort = '9005'
+        debugPort = '9787'
+    }
 }
 
 dependencies {
@@ -260,7 +266,9 @@ task buildUberJar(type: CubaUberJarBuilding) {
                      'cuba.dataSource.dbName'          : 'smeplatform',
                      'cuba.dataSource.host'            : 'localhost',
                      'cuba.dataSource.connectionParams': '?useSSL=false&allowMultiQueries=true',
-                     'cuba.dataSourceProvider'         : 'application']
+                     'cuba.dataSourceProvider'         : 'application',
+                     'cuba.dataSource.port'            : '']
+    webPort = 80
 }
 
 task printVersion() {

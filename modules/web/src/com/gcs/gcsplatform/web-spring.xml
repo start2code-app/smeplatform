@@ -73,6 +73,8 @@
                        value="com.gcs.gcsplatform.service.invoice.InvoiceQuickBooksPublishService"/>
                 <entry key="gcsplatform_RerateService"
                        value="com.gcs.gcsplatform.service.RerateService"/>
+                <entry key="gcsplatform_KFInvoiceService"
+                       value="com.gcs.gcsplatform.service.invoice.KFInvoiceService"/>
             </map>
         </property>
     </bean>

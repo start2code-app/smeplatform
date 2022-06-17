@@ -25,5 +25,7 @@
         <class>com.gcs.gcsplatform.entity.masterdata.InvoiceCompany</class>
         <class>com.gcs.gcsplatform.entity.masterdata.Location</class>
         <class>com.gcs.gcsplatform.entity.ExtStandardEntity</class>
+        <class>com.gcs.gcsplatform.entity.GcsplatformKfcustomer</class>
+        <class>com.gcs.gcsplatform.entity.GcsplatformKfinvoice</class>
     </persistence-unit>
 </persistence>
